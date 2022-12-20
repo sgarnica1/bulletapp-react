@@ -1,0 +1,23 @@
+// THEMES
+$themes: (
+  color-background: (
+    dark: $color-background-dark,
+    light: $color-background-light,
+  ),
+  color-text: (
+    dark: $color-text-dark,
+    light: $color-text-light,
+  ),
+  color-brand: (
+    dark: $color-brand,
+    light: $color-brand,
+  ),
+);
+
+.dark {
+  @include styles("dark");
+}
+
+.light {
+  @include styles("light");
+}

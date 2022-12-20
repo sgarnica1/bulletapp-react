@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useAthletes } from "../../hooks/useAthletes";
-import "./plans-card.scss";
 
 function PlansCard({ id, title, price }) {
   const { athletes, actions } = useAthletes();

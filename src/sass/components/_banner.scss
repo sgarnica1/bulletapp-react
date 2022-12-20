@@ -1,0 +1,49 @@
+.Banner {
+  margin-top: toRem(65);
+  padding: toRem(24);
+  background: $color-background-linear;
+  @include mq(md) {
+    padding: toRem(24) toRem(48);
+  }
+
+  &__title {
+    color: $color-primary;
+    font-size: toRem(36);
+    margin-bottom: toRem(16);
+  }
+
+  &__description {
+    font-weight: 500;
+    margin-bottom: toRem(30);
+    font-size: toRem(25);
+    color: $color-alternative-2;
+  }
+}
+
+.HomeBanner {
+  @extend .Banner;
+  margin-bottom: toRem(50);
+
+  &__title {
+    @extend .Banner__title;
+  }
+
+  &__description {
+    @extend .Banner__description;
+  }
+
+  &__stats {
+    margin-top: toRem(30);
+    margin-bottom: toRem(-90);
+
+    @include mq(sm) {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: toRem(20);
+    }
+
+    @include mq(xl) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

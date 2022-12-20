@@ -1,23 +1,32 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import { useTheme } from "./contexts/ThemeContext";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Header } from "./components/Header/Header";
 import { Dashboard } from "./components/Dashboard/Dashboard";
-import { Login } from "./pages/Login/Login";
-import { Home } from "./pages/Home/Home";
-import { Athletes } from "./pages/Athletes/Athletes";
-import { AddAthlete } from "./pages/AddAthlete/AddAthlete";
-import { SingleAthlete } from "./pages/SingleAthlete/SingleAthlete";
-import { NotFound } from "./pages/NotFound/NotFound";
+import { Login } from "./pages/Login";
+import { Home } from "./pages/Home";
+import { Athletes } from "./pages/Athletes";
+import { AddAthlete } from "./pages/AddAthlete";
+import { SingleAthlete } from "./pages/SingleAthlete";
+import { NotFound } from "./pages/NotFound";
 import { PrivateRoute } from "./utils/components/PrivateRoute";
 import { LoggedOutRoute } from "./utils/components/LoggedOutRoute";
+import "./sass/main.scss";
 
 function App() {
   const { user } = useAuth();
+  const { theme } = useTheme();
+
+  useEffect(() => {
+    document.body.className = theme;
+    console.log(theme);
+  }, [theme]);
 
   return (
     <Router>
-      <div className="App">
+      <div className="App" data-theme={theme}>
         <Dashboard>
           {user ? (
             <>

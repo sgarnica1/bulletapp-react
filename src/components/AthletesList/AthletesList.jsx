@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { EmptyAthleteRow } from "./EmptyAthleteRow";
 import { LoadingAthleteRow } from "./LoadingAthleteRow";
-import "./athletes-list.scss";
 
 function AthletesList(props) {
   const { setActiveView } = useDashboard();

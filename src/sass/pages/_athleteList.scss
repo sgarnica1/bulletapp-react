@@ -1,0 +1,41 @@
+.Athletes {
+  .SearchBar {
+    margin-top: toRem(-75);
+  }
+
+  .AthletesList {
+    max-height: toRem(550);
+
+    &__header .AthletesList__header-button {
+      display: none;
+    }
+
+    &__list {
+      max-height: toRem(500);
+    }
+  }
+
+  &__add-btn {
+    height: toRem(70);
+    width: toRem(70);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: $color-secondary;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    color: $color-light;
+    font-size: toRem(45);
+    font-weight: 500;
+    transition: ease-in-out 0.5s;
+  }
+
+  &__add-btn:hover,
+  &__add-btn:focus {
+    transform: rotate(225deg);
+  }
+}

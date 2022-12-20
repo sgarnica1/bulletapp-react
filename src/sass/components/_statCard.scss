@@ -1,0 +1,72 @@
+.StatCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 toRem(20);
+  margin-bottom: toRem(20);
+  height: toRem(115);
+  width: 100%;
+  max-width: toRem(450);
+  border-radius: 6px;
+  background-color: $color-light;
+  box-shadow: $hover-box-shadow;
+  transition: ease 0.5s;
+  transform: translateY(0px);
+  cursor: pointer;
+
+  @include mq(xl) {
+    height: toRem(100);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    transition: ease 0.5s;
+    box-shadow: 0px 4px 4px $color-secondary;
+  }
+
+  &__title {
+    margin-bottom: 0;
+    font-size: toRem(14);
+    color: $color-secondary;
+    text-transform: uppercase;
+  }
+
+  &__number {
+    font-weight: bold;
+    font-size: toRem(26);
+    color: $color-primary;
+  }
+
+  &__button {
+    display: inline;
+
+    span {
+      height: toRem(30);
+      width: toRem(30);
+      background: url("https://images.bulletcrossfit.com/icon/right-arrow-dark.svg");
+      @extend %icon;
+    }
+  }
+}
+
+// LOADING SKELETON
+.StatCard--loading {
+  .StatCard__info {
+    width: 100%;
+  }
+
+  .StatCard__title,
+  .StatCard__number {
+    height: 15px;
+    @extend %loading-skeleton;
+  }
+
+  .StatCard__title {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .StatCard__number {
+    width: 30%;
+  }
+}

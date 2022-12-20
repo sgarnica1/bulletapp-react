@@ -1,5 +1,3 @@
-import "./plans-card.scss";
-
 function LoadingPlansCard() {
   return (
     <article className="PlansCard PlansCard--loading">

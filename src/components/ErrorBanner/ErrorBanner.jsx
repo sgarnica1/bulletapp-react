@@ -1,5 +1,3 @@
-import "./error-banner.scss";
-
 function ErrorBanner({ description }) {
   return (
     <div className="ErrorBanner">

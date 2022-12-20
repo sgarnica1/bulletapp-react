@@ -1,0 +1,204 @@
+.Navbar.show {
+  transform: translateX(0);
+}
+
+.Navbar {
+  position: fixed;
+  width: 80%;
+  max-width: toRem(350);
+  background-color: $color-dark;
+  z-index: 9999;
+  transform: translateX(-100%);
+  transition: ease 0.5s;
+  display: flex;
+  flex-direction: column;
+
+  @include mq(lg) {
+    transform: translateX(0);
+    position: relative;
+    width: 100%;
+  }
+
+  &__close-btn {
+    outline: none;
+    border: none;
+    background: none;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 99999;
+    padding: 5px;
+
+    @include mq(lg) {
+      display: none;
+    }
+
+    span {
+      width: toRem(15);
+      height: toRem(15);
+      background: url("../../assets/icon/close.svg");
+      @extend %icon;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $color-alternative-2;
+
+    img {
+      width: 100%;
+      max-width: toRem(150);
+      margin-bottom: toRem(25);
+    }
+  }
+
+  &__content {
+    height: 92%;
+    width: 100%;
+    margin-top: 15px;
+    padding-right: toRem(10);
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  &__content::-webkit-scrollbar {
+    cursor: pointer;
+    width: 3px;
+    height: 8px;
+  }
+
+  &__content::-webkit-scrollbar-thumb {
+    background: $color-secondary;
+    border-radius: 6px;
+  }
+
+  &__container {
+    display: grid;
+    align-items: start;
+    justify-content: center;
+    grid-template-columns: 100%;
+    grid-template-rows: 80px auto;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    max-width: 350px;
+    height: 100vh;
+    padding: toRem(30) toRem(20) toRem(10) toRem(20);
+  }
+
+  &__navlist {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__subtitle {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: toRem(18);
+    margin-top: toRem(45);
+    color: $color-alternative;
+  }
+
+  &__navitem.active a,
+  &__navitem.active p {
+    color: $color-secondary;
+  }
+
+  &__navitem {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: toRem(60);
+    background: $color-dark;
+    color: $color-light;
+  }
+
+  &__navlink {
+    width: 100%;
+    height: 100%;
+    letter-spacing: toRem(1);
+    background: none;
+    outline: none;
+    border: none;
+    padding: toRem(16) 0;
+    font-weight: 400;
+    font-size: toRem(16);
+    font-family: $font-secondary;
+    color: $color-light;
+    border-bottom: 1px solid #333;
+  }
+
+  &__navlink:hover {
+    color: $color-secondary;
+  }
+
+  &__navdropdown {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    display: flex;
+
+    .navdropdown__button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @extend .Navbar__navlink;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      span {
+        background: url("../../assets/icon/dropdown-inactive.svg");
+        height: toRem(15);
+        width: toRem(15);
+        transform: rotate(0deg);
+        transition: ease 0.5s;
+        @extend %icon;
+      }
+    }
+
+    .navdropdown__button.show span {
+      transform: rotate(180deg);
+    }
+
+    .navdropdown__container.show {
+      display: block;
+    }
+
+    .navdropdown__container {
+      display: none;
+      width: 100%;
+      padding: toRem(10);
+      background-color: #0d0d0d;
+      border-radius: 0 0 6px 6px;
+
+      .navdropdown__element a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: $color-light;
+        height: toRem(50);
+      }
+
+      .navdropdown__element.active a {
+        cursor: pointer;
+        text-decoration: line-through;
+        color: $color-primary;
+      }
+      .navdropdown__element.active a:hover {
+        color: $color-primary;
+      }
+      .navdropdown__element a:hover {
+        color: $color-secondary;
+      }
+    }
+  }
+}

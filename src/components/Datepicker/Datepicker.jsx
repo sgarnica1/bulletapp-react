@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.css";
-import "./datepicker.scss";
 
 function Datepicker() {
   const [date, setDate] = useState(new Date());

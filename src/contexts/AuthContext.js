@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { messages } from "../utils/messages";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/index";
+import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
 
 // CREATE CONTEXT
@@ -33,19 +33,19 @@ const AuthProvider = ({ children }) => {
   };
 
   // VERIFY IF TOKEN EXISTS
-  const tokensExist = localStorage.getItem("BCF_TOKEN")
-    ? JSON.parse(localStorage.getItem("BCF_TOKEN"))
+  const tokensExist = localStorage.getItem(info.localStorageKeys.authToken)
+    ? JSON.parse(localStorage.getItem(info.localStorageKeys.authToken))
     : null;
 
   // VERIFY IF USER EXISTS
-  const userExist = localStorage.getItem("BCF_TOKEN")
-    ? jwt_decode(localStorage.getItem("BCF_TOKEN"))
+  const userExist = localStorage.getItem(info.localStorageKeys.authToken)
+    ? jwt_decode(localStorage.getItem(info.localStorageKeys.authToken))
     : null;
 
   // INITIAL STATES
   const [authTokens, setAuthTokens] = useState({
     token: tokensExist,
-    refreshToken: getTokenFromCookie("BCFRT"),
+    refreshToken: getTokenFromCookie(info.localStorageKeys.refreshToken),
   });
   const [user, setUser] = useState(userExist);
   const [error, setError] = useState(null);
@@ -79,15 +79,14 @@ const AuthProvider = ({ children }) => {
 
       // SET TOKEN ON LOCAL STORAGE
       localStorage.setItem(
-        "BCF_TOKEN",
+        info.localStorageKeys.authToken,
         JSON.stringify(loginData.stsTokenManager.accessToken)
       );
 
       // SET REFRESH TOKEN ON COOKIE
       let date = new Date();
       date.setDate(date.getDate() + 1);
-      document.cookie =
-        "BCFRT=" + loginData.stsTokenManager.refreshToken + "expires=" + date;
+      document.cookie = `${info.localStorageKeys.refreshToken}=${loginData.stsTokenManager.refreshToken}; expires=${date}; path=/;}`;
 
       setLoading(false);
       setLoggingIn(false);
@@ -95,12 +94,12 @@ const AuthProvider = ({ children }) => {
       setError("Ocurrió un error. Por favor intenta de nuevo");
 
       // REVIEW ERROR MESSAGE
-      if (err.message === messages.firebase.errors.auth["wrong-password"]) {
-        setError("Contraseña incorrecta");
+      if (err.message === info.firebase.errors.auth.wrongPassword) {
+        setError("Credenciales inválidas");
       }
 
-      if (err.message === messages.firebase.errors.auth["invalid-email"]) {
-        setError("Correo electrónico inválido");
+      if (err.message === info.firebase.errors.auth.invalidEmail) {
+        setError("Credenciales inválidas");
       }
 
       setLoggingIn(false);
@@ -113,9 +112,9 @@ const AuthProvider = ({ children }) => {
     setUser(null);
 
     // REMOVE TOKEN FROM LOCAL STORAGE
-    localStorage.removeItem("BCF_TOKEN");
+    localStorage.removeItem(info.localStorageKeys.authToken);
     // REMOVE TOKEN FROM COOKIE
-    document.cookie = "BCFRT=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = `${info.localStorageKeys.refreshToken}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;}`;
 
     if (callback) callback();
   };
@@ -127,7 +126,7 @@ const AuthProvider = ({ children }) => {
     // FETCH NEW TOKEN FROM SERVER
     try {
       const res = await fetch(
-        `https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
+        `${info.requests.refreshToken}${process.env.REACT_APP_FIREBASE_API_KEY}`,
         {
           method: "POST",
           headers: {
@@ -150,22 +149,24 @@ const AuthProvider = ({ children }) => {
 
         // SET TOKEN ON LOCAL STORAGE
         localStorage.setItem(
-          "BCF_TOKEN",
+          info.localStorageKeys.authToken,
           JSON.stringify(authData.access_token)
         );
 
         // SET REFRESH TOKEN ON COOKIE
         let date = new Date();
         date.setDate(date.getDate() + 1);
-        document.cookie = "BCFRT=" + authData.refresh_token + "expires=" + date;
+        document.cookie = `${info.localStorageKeys.refreshToken}=${authData.refresh_token}; expires=${date}; path=/;}`;
 
         setLoading(false);
         setLoggingIn(false);
       } else {
         logoutUser();
+        setLoggingIn(false);
       }
     } catch (err) {
       console.log(err);
+      setLoggingIn(false);
       logoutUser();
     }
     if (loading) setLoading(false);

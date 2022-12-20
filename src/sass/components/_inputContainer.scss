@@ -1,0 +1,55 @@
+.InputContainer:focus-within {
+  border-bottom-color: $color-secondary;
+}
+
+.InputContainer:first-child {
+  margin-bottom: toRem(40);
+}
+
+.InputContainer {
+  &__field {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid $color-alternative-2;
+    margin-bottom: toRem(10);
+  }
+
+  &__field.error {
+    border-bottom-color: $color-error;
+  }
+
+  &__label {
+    position: absolute;
+    transition: ease-in 0.3s;
+    bottom: 10px;
+    font-size: toRem(16);
+    font-family: $font-secondary;
+    color: $color-alternative-2;
+  }
+  &__label.focus {
+    font-size: toRem(12);
+    transition: ease-in 0.2s;
+    transform: translateY(-28px);
+    color: $color-secondary;
+  }
+
+  input {
+    width: 90%;
+    padding-top: 20px;
+    border: none;
+    outline: none;
+    height: toRem(55);
+    font-size: toRem(17);
+    font-family: $font-secondary;
+    background: $color-dark;
+    color: $color-light;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:hover {
+    box-shadow: 0 0 0 1000px #000 inset !important;
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0 1000px #000 inset !important;
+  }
+}
