@@ -1,0 +1,139 @@
+@import "../../scss/global";
+@import "../../scss/mixin";
+
+body {
+  background: $color-dark;
+}
+
+.Login {
+  width: 100vw;
+  display: grid;
+
+  @include mq(lg) {
+    grid-template-columns: repeat(2, 50%);
+  }
+
+  &__error {
+    text-align: center;
+    background: #de231620;
+    padding: toRem(10);
+    margin-top: toRem(20);
+    border-radius: toRem(6);
+    color: $color-error;
+  }
+
+  &__background-img {
+    background: url("../../assets/img/bullet-crossfit-gym.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    display: none;
+
+    @include mq(lg) {
+      display: block;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    padding: toRem(25);
+    padding-top: toRem(50);
+    position: relative;
+    background: $color-dark;
+
+    @include mq(lg) {
+      justify-content: center;
+      padding: 0;
+      padding-top: toRem(10);
+    }
+  }
+
+  &__header {
+    &-logo {
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: toRem(40);
+    }
+
+    &-title {
+      font-weight: bold;
+      font-size: toRem(32);
+      color: $color-light;
+      margin-bottom: toRem(50);
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+
+  &__form {
+    width: 100%;
+    max-width: 450px;
+  }
+  &__input-container {
+    margin-bottom: toRem(40);
+  }
+
+  .password-toggle {
+    height: toRem(20);
+    width: toRem(20);
+    cursor: pointer;
+    background: url("../../assets/icon/invisible.svg");
+    @extend %icon;
+    position: absolute;
+    bottom: 10px;
+  }
+
+  .password-toggle.visible {
+    background: url("../../assets/icon/visible.svg");
+  }
+
+  &__input:focus-within {
+    border-bottom-color: $color-secondary;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: toRem(50);
+    gap: toRem(15);
+  }
+  .Login__passrecover-btn {
+    text-decoration: none;
+    text-transform: capitalize;
+    font-size: toRem(15);
+    color: $color-light;
+  }
+
+  &__passrecover-btn:hover {
+    color: $color-alternative;
+  }
+
+  &__login-btn {
+    @extend %button;
+  }
+
+  &__login-btn--guest {
+    margin-bottom: toRem(30);
+    background: none;
+    border: 1px solid $color-secondary;
+    color: $color-secondary;
+  }
+
+  &__login-btn--guest:hover {
+    color: $color-dark;
+  }
+
+  &__privacy {
+    color: $color-alternative-2;
+  }
+
+  &__privacy:hover {
+    text-decoration: underline;
+  }
+}

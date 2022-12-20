@@ -1,0 +1,12 @@
+@import "../../scss/mixin";
+@import "../../scss/global";
+
+.ContentContainer {
+  padding: toRem(50) toRem(24);
+  padding-bottom: toRem(20);
+
+  @include mq(md) {
+    padding: toRem(50) toRem(48);
+    padding-bottom: toRem(20);
+  }
+}

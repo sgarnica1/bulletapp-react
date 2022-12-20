@@ -1,0 +1,31 @@
+@import "../../../../scss/global";
+@import "../../../../scss/mixin";
+@import "../../../../components/Banner/banner.scss";
+
+.HomeBanner {
+  @extend .Banner;
+  margin-bottom: toRem(50);
+
+  &__title {
+    @extend .Banner__title;
+  }
+
+  &__description {
+    @extend .Banner__description;
+  }
+
+  &__stats {
+    margin-top: toRem(30);
+    margin-bottom: toRem(-90);
+
+    @include mq(sm) {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: toRem(20);
+    }
+
+    @include mq(xl) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

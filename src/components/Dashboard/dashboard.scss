@@ -1,0 +1,10 @@
+@import "../../scss/mixin";
+
+.Dashboard {
+  display: grid;
+  grid-template-columns: 100%;
+
+  @include mq(lg) {
+    grid-template-columns: 18% 82%;
+  }
+}

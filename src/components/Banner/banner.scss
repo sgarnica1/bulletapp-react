@@ -1,0 +1,24 @@
+@import "../../scss/global";
+@import "../../scss/mixin";
+
+.Banner {
+  margin-top: toRem(65);
+  padding: toRem(24);
+  background: $color-background-linear;
+  @include mq(md) {
+    padding: toRem(24) toRem(48);
+  }
+
+  &__title {
+    color: $color-primary;
+    font-size: toRem(36);
+    margin-bottom: toRem(16);
+  }
+
+  &__description {
+    font-weight: 500;
+    margin-bottom: toRem(30);
+    font-size: toRem(25);
+    color: $color-alternative-2;
+  }
+}

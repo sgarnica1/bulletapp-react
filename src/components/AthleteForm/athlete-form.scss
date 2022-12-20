@@ -1,0 +1,67 @@
+@import "../../scss/global";
+@import "../../scss/mixin";
+
+.AddAthleteForm {
+  display: grid;
+  gap: toRem(20);
+  margin-bottom: toRem(50);
+
+  @include mq(sm) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__input-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    margin-bottom: toRem(10);
+    font-weight: 500;
+  }
+  input,
+  select {
+    height: toRem(45);
+    outline: none;
+    border-radius: toRem(6);
+    padding: toRem(10);
+    font-size: toRem(16);
+    font-family: $font-primary;
+    border: 1px solid $color-alternative;
+    background: $color-light;
+  }
+
+  input:focus-visible,
+  select:focus-visible {
+    border: $color-secondary 1px solid;
+  }
+
+  input.error,
+  select.error {
+    border-color: $color-error;
+  }
+
+  &__submit-btn {
+    margin-top: toRem(20);
+    grid-column: 1 / 2;
+    display: flex;
+    max-height: toRem(50);
+    justify-content: center;
+    align-items: center;
+    padding: 0.8em 3em;
+    font-weight: 800;
+    border: none;
+    outline: none;
+    font-family: $font-primary;
+    font-size: toRem(16);
+    border-radius: toRem(6);
+    color: $color-light;
+    background-color: $color-secondary;
+  }
+
+  &__submit-btn:hover,
+  &__submit-btn:focus {
+    box-shadow: $hover-box-shadow;
+  }
+}

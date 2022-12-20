@@ -1,0 +1,38 @@
+@import "../../scss/global";
+@import "../../scss/mixin";
+
+.CardsList {
+  margin-bottom: 50px;
+
+  &__header {
+    color: $color-alternative-2;
+    font-weight: 500;
+    font-size: toRem(26);
+    margin-bottom: toRem(30);
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: 100%;
+    gap: toRem(30);
+
+    @include mq(sm) {
+      grid-template-columns: repeat(2, 1fr);
+
+      .PlansCard {
+        height: 230px;
+      }
+    }
+
+    @include mq(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.PlansCard:nth-child(2n) {
+  background: $linear-gradient-1;
+}
+.PlansCard:nth-child(2n + 1) {
+  background: $linear-gradient-2;
+}

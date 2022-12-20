@@ -1,0 +1,14 @@
+@import "../../scss/global";
+
+.ErrorBanner {
+  border-radius: 6px;
+  padding: toRem(20);
+  margin-bottom: toRem(30);
+  background-color: $color-light;
+  border-left: 6px solid $color-error;
+  max-width: toRem(600);
+
+  &__title {
+    margin-bottom: toRem(10);
+  }
+}

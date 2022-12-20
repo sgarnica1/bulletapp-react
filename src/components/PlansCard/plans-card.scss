@@ -1,0 +1,65 @@
+@import "../../scss/global";
+@import "../../scss/mixin";
+
+.PlansCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: toRem(180);
+  border-radius: 6px;
+  color: $color-light;
+  box-shadow: $hover-box-shadow;
+  position: relative;
+  overflow: hidden;
+
+  .PlansCard__header {
+    width: 100%;
+    height: toRem(55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $color-light;
+
+    &-title {
+      margin-bottom: 0;
+      text-transform: uppercase;
+      font-size: toRem(20);
+    }
+  }
+
+  .PlansCard__body {
+    height: toRem(120);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .PlansCard__price {
+      font-size: toRem(36);
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+  }
+
+  .PlansCard__footer {
+    width: 100%;
+    height: toRem(55);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 toRem(20);
+
+    &-title {
+      margin-bottom: 0;
+      font-size: toRem(18);
+      font-weight: 300;
+    }
+    &-stats {
+      color: $color-secondary;
+    }
+  }
+}
+
+.PlansCard--loading {
+  @extend %loading-skeleton;
+}

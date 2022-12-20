@@ -1,0 +1,25 @@
+@import "../../scss/global";
+
+.SingleAthlete__delete {
+  display: block;
+  border-top: 1px solid $color-alternative;
+  padding-top: toRem(30);
+  margin-bottom: toRem(30);
+
+  &-title {
+    color: $color-primary;
+    font-weight: 600;
+    font-size: toRem(22);
+    margin-bottom: toRem(20);
+  }
+  &-btn {
+    @extend %button;
+    color: $color-light;
+    background-color: $color-error;
+  }
+
+  &-btn:hover {
+    opacity: 0.8;
+    background-color: $color-error;
+  }
+}
