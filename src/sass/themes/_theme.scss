@@ -1,8 +1,20 @@
 // THEMES
 $themes: (
-  color-background: (
-    dark: $color-background-dark,
-    light: $color-background-light,
+  bg-layout: (
+    dark: $bg-layout-dark,
+    light: $bg-layout-light,
+  ),
+  bg-component: (
+    dark: $bg-component-dark,
+    light: $bg-component-light,
+  ),
+  bg-body: (
+    dark: $bg-body-dark,
+    light: $bg-body-light,
+  ),
+  border-color: (
+    dark: $border-color-dark,
+    light: $border-color-light,
   ),
   color-text: (
     dark: $color-text-dark,
@@ -11,6 +23,10 @@ $themes: (
   color-brand: (
     dark: $color-brand,
     light: $color-brand,
+  ),
+  color-text-btn: (
+    dark: $color-brand,
+    light: $color-text-light,
   ),
 );
 

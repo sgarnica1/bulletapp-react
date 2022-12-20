@@ -4,6 +4,17 @@ import { useAthletes } from "../hooks/useAthletes";
 import { useSchedules } from "../hooks/useSchedules";
 import { usePlans } from "../hooks/usePlans";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./Button";
+
+// INFO
+import { info } from "../utils/info";
+
+// ICONS
+import UserIcon from "../assets/icon/user.svg";
+import EmailIcon from "../assets/icon/email.svg";
+import PhoneIcon from "../assets/icon/phone.svg";
+import BirthdayIcon from "../assets/icon/birthday.svg";
+import ClassIcon from "../assets/icon/class.svg";
 
 function AddAthleteForm(props) {
   const { athletes, actions: athleteActions } = useAthletes();
@@ -54,7 +65,11 @@ function AddAthleteForm(props) {
       onSubmit={(event) => handleSubmitData(event)}
     >
       <div className="AddAthleteForm__input-container">
-        <label htmlFor="firstname">Nombre</label>
+        <img
+          className="AddAthleteForm__input-icon"
+          src={UserIcon}
+          alt="User icon"
+        />
         <input
           type="text"
           placeholder="Nombre(s)"
@@ -64,7 +79,11 @@ function AddAthleteForm(props) {
         />
       </div>
       <div className="AddAthleteForm__input-container">
-        <label htmlFor="lastname">Apellidos</label>
+        <img
+          className="AddAthleteForm__input-icon"
+          src={UserIcon}
+          alt="User icon"
+        />
         <input
           type="text"
           placeholder="Apellidos"
@@ -74,16 +93,37 @@ function AddAthleteForm(props) {
         />
       </div>
       <div className="AddAthleteForm__input-container">
-        <label htmlFor="email">Correo electrónico</label>
+        <img
+          className="AddAthleteForm__input-icon"
+          src={EmailIcon}
+          alt="Email icon"
+        />
         <input
           type="email"
-          placeholder="usuario@correo.com"
+          placeholder="Correo electrónico"
           value={props.email}
           onChange={(event) => updateAthleteInfo(event, "email")}
         />
       </div>
       <div className="AddAthleteForm__input-container">
-        <label htmlFor="phoneNumber">Número de teléfono</label>
+        <img
+          className="AddAthleteForm__input-icon"
+          src={EmailIcon}
+          alt="Email icon"
+        />
+        <input
+          type="email"
+          placeholder="Confirmar correo electrónico"
+          value={props.email}
+          onChange={(event) => updateAthleteInfo(event, "email")}
+        />
+      </div>
+      <div className="AddAthleteForm__input-container">
+        <img
+          className="AddAthleteForm__input-icon"
+          src={PhoneIcon}
+          alt="Phone icon"
+        />
         <input
           type="number"
           placeholder="Número de teléfono"
@@ -93,7 +133,36 @@ function AddAthleteForm(props) {
         />
       </div>
       <div className="AddAthleteForm__input-container">
-        <label htmlFor="plan">Plan</label>
+        <img
+          className="AddAthleteForm__input-icon"
+          src={BirthdayIcon}
+          alt="Birthday icon"
+        />
+        <input
+          type="number"
+          className="AddAthleteForm__input-short"
+          placeholder="Día"
+          max={31}
+          min={1}
+        />
+        /
+        <select name="" id="">
+          <option value="">Mes</option>
+          {info.data.months.map((month, index) => {
+            return (
+              <option key={index} value={month}>
+                {month}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className="AddAthleteForm__input-container">
+        <img
+          className="AddAthleteForm__input-icon"
+          src={ClassIcon}
+          alt="Class icon"
+        />
         <select
           required
           onChange={(event) =>
@@ -111,7 +180,11 @@ function AddAthleteForm(props) {
         </select>
       </div>
       <div className="AddAthleteForm__input-container">
-        <label htmlFor="group">Clase</label>
+        <img
+          className="AddAthleteForm__input-icon"
+          src={ClassIcon}
+          alt="Class icon"
+        />
         <select
           required
           onChange={(event) =>
@@ -129,26 +202,13 @@ function AddAthleteForm(props) {
         </select>
       </div>
 
-      <div className="AddAthleteForm__input-container">
-        <label htmlFor="group">Beneficiario (opcional)</label>
-        <select
-          onChange={(event) =>
-            updateAthleteInfo(event, "beneficiary", `${API_BASE_URL}/athletes/`)
-          }
-        >
-          <option value="">Selecciona un atleta</option>
-          {athletes &&
-            athletes.map((athlete) => (
-              <option key={athlete.id} value={athlete.id}>
-                {athlete.first_name} {athlete.last_name}
-              </option>
-            ))}
-        </select>
-      </div>
-
-      <button type="submit" className="AddAthleteForm__submit-btn">
-        Guardar
-      </button>
+      <Button
+        type={"submit"}
+        text={"Guardar"}
+        size={"lg"}
+        style={"primary"}
+        fill={false}
+      />
     </form>
   );
 }

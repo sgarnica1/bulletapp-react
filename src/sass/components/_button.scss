@@ -1,0 +1,71 @@
+.Button {
+  display: flex;
+  max-height: toRem(50);
+  justify-content: center;
+  align-items: center;
+  padding: 0.8em 3em;
+  font-weight: 500;
+  font-family: $font-primary;
+  outline: none;
+  font-size: toRem(16);
+  border-radius: toRem(6);
+  color: $color-dark;
+  background-color: $color-secondary;
+
+  &.lg {
+    width: 100%;
+  }
+
+  &.sm {
+    width: 50%;
+  }
+
+  &.primary {
+    background: transparent;
+    border: 1px solid $color-brand;
+    color: var(--color-text-btn);
+  }
+
+  &.secondary {
+    background: transparent;
+    border: 1px solid var(--bg-component);
+    color: $color-brand;
+  }
+
+  &.primary.fill {
+    background-color: $color-brand;
+    border: 1px solid $color-brand;
+    color: $color-text-light;
+  }
+
+  &.secondary.fill {
+    background-color: var(--bg-component);
+    border: 1px solid var(--bg-component);
+    color: var(--color-text);
+  }
+
+  // HOVER
+  &.primary:hover {
+    background-color: $color-brand;
+    border: 1px solid $color-brand;
+    color: $color-text-light;
+  }
+
+  &.secondary:hover {
+    background-color: var(--bg-component);
+    border: 1px solid var(--bg-component);
+    color: var(--color-text);
+  }
+
+  &.primary.fill:hover {
+    background: transparent;
+    border: 1px solid $color-brand;
+    color: var(--color-text);
+  }
+
+  &.secondary.fill:hover {
+    background-color: transparent;
+    border: 1px solid var(--bg-component);
+    color: var(--color-text);
+  }
+}

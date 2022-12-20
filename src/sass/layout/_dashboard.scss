@@ -1,6 +1,9 @@
 .Dashboard {
   display: grid;
   grid-template-columns: 100%;
+  min-height: 100vh;
+  background: var(--bg-body);
+  transition: $theme-transition;
 
   @include mq(lg) {
     grid-template-columns: 18% 82%;

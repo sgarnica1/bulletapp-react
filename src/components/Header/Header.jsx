@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
-import { info } from "../../utils/info";
-// import "./header.scss";
+
+// ICONS
+import DarkModeIcon from "../../assets/icon/darkmode.svg";
+import LightModeIcon from "../../assets/icon/lightmode.svg";
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -24,8 +26,13 @@ function Header() {
         </button>
         <ul className="Header__nav-container">
           <li className="Header__nav-element theme">
-            <button className="theme__icon-toggler" onClick={toggleTheme}>
-              {theme}
+            <img
+              className="theme__icon"
+              src={theme === "dark" ? DarkModeIcon : LightModeIcon}
+              alt="theme"
+            />
+            <button className="theme__toggler" onClick={toggleTheme}>
+              {theme} mode
             </button>
           </li>
           <li className="Header__nav-element current-location">

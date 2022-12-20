@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { ContentContainer } from "../components/ContentContainer/ContentContainer";
 import { useDashboard } from "../contexts/DashboardContext";
+import { Button } from "../components/Button";
 
 function NotFound() {
   const { setActiveView } = useDashboard();
@@ -9,10 +9,19 @@ function NotFound() {
     <div className="NotFound">
       <ContentContainer>
         <h1 className="NotFound__title">Recurso no encontrado</h1>
-        <p className="NotFound__description">Lo sentimos, no pudimos encontrar el recurso que solicitaste.</p>
-        <Link to="/" onClick={() => setActiveView("Escritorio")} className="NotFound__return-btn">
-          Regresar al escritorio
-        </Link>
+        <p className="NotFound__description">
+          Lo sentimos, no pudimos encontrar el recurso que solicitaste.
+        </p>
+
+        <Button
+          type="link"
+          link={"/"}
+          text="Regresar al escritorio"
+          onClickHandler={() => setActiveView("Escritorio")}
+          fill={true}
+          style={"primary"}
+          size={"lg"}
+        />
       </ContentContainer>
     </div>
   );

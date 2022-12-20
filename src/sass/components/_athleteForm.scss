@@ -10,28 +10,61 @@
 
   &__input-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-brand);
+    background: var(--bg-component);
+    border-radius: 6px;
+    padding: 0 20px;
+    border: 1px solid var(--border-color);
   }
 
   label {
     margin-bottom: toRem(10);
     font-weight: 500;
   }
+
   input,
   select {
     height: toRem(45);
+    width: 100%;
     outline: none;
     border-radius: toRem(6);
     padding: toRem(10);
-    font-size: toRem(16);
+    font-size: toRem(14);
     font-family: $font-primary;
-    border: 1px solid $color-alternative;
-    background: $color-light;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    background: var(--bg-component);
+    color: var(--color-text);
   }
 
-  input:focus-visible,
-  select:focus-visible {
-    border: $color-secondary 1px solid;
+  // BIRTHDAY INPUT
+  input.AddAthleteForm__input-short {
+    width: toRem(60);
+  }
+
+  input.AddAthleteForm__input-short + select {
+    margin-left: 10px;
+  }
+  // BIRTHDAY INPUT
+
+  input::placeholder {
+    font-weight: 400;
+    color: var(--color-text);
+  }
+
+  &__input-container:focus-within {
+    border: $color-brand 1px solid;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--color-text) !important;
   }
 
   input.error,
