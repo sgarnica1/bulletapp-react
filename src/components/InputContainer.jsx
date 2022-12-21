@@ -11,8 +11,8 @@ const InputContainer = ({
   const [value, setValue] = useState("");
 
   return (
-    <div className="InputContainer">
-      <div className={`InputContainer__field ${errorMessage && "error"}`}>
+    <div className={`InputContainer ${errorMessage && "error"}`}>
+      {/* <div className={`InputContainer__field ${errorMessage && "error"}`}> */}
         <div
           htmlFor={name}
           className={`InputContainer__label ${focusInput && "focus"}`}
@@ -30,7 +30,7 @@ const InputContainer = ({
           onBlur={() => (value === "" ? setFocusInput(false) : null)}
         />
         {children}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

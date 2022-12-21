@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from "../contexts/ThemeContext";
 import { InputContainer } from "../components/InputContainer";
+import { Button } from "../components/Button";
+import { info } from "../utils/info";
+
+// IMG
+import WhiteLogo from "../assets/img/logo_white_resized.png";
+import BlackLogo from "../assets/img/logo_black_resized.png";
 
 function Login() {
   const [passInputType, setPassInputType] = useState("password");
   const { loginUser, error, setError, loading, loggingIn } = useAuth();
+  const { theme } = useTheme();
 
   return (
     <div className="Login">
-      <section className="Login__background-img"></section>
       <main className="Login__main">
         <header className="Login__header">
           <img
-            src="./assets/logo_white_resized.png"
+            src={theme === info.states.theme.dark ? WhiteLogo : BlackLogo}
             alt="Bullet CrossFit Logo"
             className="Login__header-logo"
           />
         </header>
         <form
-          // autoComplete="off"
           className="Login__form"
           onSubmit={(event) => {
             loginUser(event);
@@ -27,11 +33,12 @@ function Login() {
             setError(null);
           }}
         >
+          <h1 className="Login__welcome">Bienvenido</h1>
           <div className="Login__input-container">
             <InputContainer
               type={"text"}
               name={"username"}
-              placeholder={"Usuario"}
+              placeholder={"Correo electrónico"}
               error={error}
             />
             <InputContainer
@@ -54,19 +61,23 @@ function Login() {
             {error ? <div className="Login__error">{error}</div> : null}
           </div>
           <div className="Login__button-container">
+            <Button
+              type={info.components.button.type.submit}
+              size={info.components.button.classes.lg}
+              style={info.components.button.classes.primary}
+              text={!loggingIn ? "Ingresar" : "Iniciando sesión..."}
+              fill={true}
+            />
             <a href="/" className="Login__passrecover-btn">
               Recuperar contraseña
             </a>
-
-            <button className="Login__login-btn">
-              {!loggingIn ? "Ingresar" : "Iniciando sesión..."}
-            </button>
           </div>
         </form>
         <a href="/" className="Login__privacy">
           Aviso de privacidad
         </a>
       </main>
+      <section className="Login__background-img"></section>
     </div>
   );
 }

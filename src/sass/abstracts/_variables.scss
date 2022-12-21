@@ -25,16 +25,22 @@ $bg-layout-light: #fff;
 $bg-body-dark: #0f0f0f;
 $bg-body-light: #fafafa;
 $bg-component-dark: #262626;
-$bg-component-light: #dedede;
+// $bg-component-light: #dedede;
+$bg-component-light: #FAFAFA;
+$bg-input-dark: #333333;
+$bg-input-light: #f5f5f5;
 
 // BORDER COLORS
 $border-color-dark: #262626;
-$border-color-light: #dedede;
+$border-color-light: #f5f5f5;
 
 // TEXT COLORS
 $color-text-dark: #fff;
 $color-text-light: #0f0f0f;
 $color-brand: #a7d41f;
+
+// BOX SHADOW
+$box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
 
 // TRANSITIONS
 $theme-transition: 0.3s ease-in-out;

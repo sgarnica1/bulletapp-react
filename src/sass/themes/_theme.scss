@@ -12,6 +12,10 @@ $themes: (
     dark: $bg-body-dark,
     light: $bg-body-light,
   ),
+  bg-input: (
+    dark: $bg-input-dark,
+    light: $bg-input-light,
+  ),
   border-color: (
     dark: $border-color-dark,
     light: $border-color-light,
@@ -27,6 +31,10 @@ $themes: (
   color-text-btn: (
     dark: $color-brand,
     light: $color-text-light,
+  ),
+  box-shadow: (
+    dark: "",
+    light: $box-shadow,
   ),
 );
 

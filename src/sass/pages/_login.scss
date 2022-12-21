@@ -56,23 +56,28 @@ body {
       max-width: 200px;
       margin-bottom: toRem(40);
     }
-
-    &-title {
-      font-weight: bold;
-      font-size: toRem(32);
-      color: $color-light;
-      margin-bottom: toRem(50);
-      text-align: center;
-      text-transform: uppercase;
-    }
   }
 
   &__form {
     width: 100%;
-    max-width: 450px;
+    max-width: 400px;
+    padding: 20px;
+    background: var(--bg-component);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
   }
+
+  &__welcome {
+    font-weight: bold;
+    font-size: toRem(26);
+    color: var(--color-text);
+    margin-bottom: toRem(30);
+    text-align: center;
+  }
+
   &__input-container {
-    margin-bottom: toRem(40);
+    margin-bottom: toRem(20);
   }
 
   .password-toggle {
@@ -82,7 +87,8 @@ body {
     background: url("../../assets/icon/invisible.svg");
     @extend %icon;
     position: absolute;
-    bottom: 10px;
+    bottom: 12px;
+    right: 15px;
   }
 
   .password-toggle.visible {
@@ -95,16 +101,19 @@ body {
 
   &__button-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: toRem(50);
+    margin-bottom: toRem(10);
     gap: toRem(15);
   }
   .Login__passrecover-btn {
     text-decoration: none;
     text-transform: capitalize;
     font-size: toRem(15);
-    color: $color-light;
+    color: var(--color-text);
+    margin-top: 10px;
+    margin-bottom: 20px;
   }
 
   &__passrecover-btn:hover {

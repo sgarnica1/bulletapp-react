@@ -127,7 +127,7 @@ const AuthProvider = ({ children }) => {
 
   const updateToken = async () => {
     setLoading(true);
-    setLoggingIn(true);
+    setLoggingIn(false);
 
     // FETCH NEW TOKEN FROM SERVER
     try {
