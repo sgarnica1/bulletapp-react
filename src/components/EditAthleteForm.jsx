@@ -1,19 +1,19 @@
 import { API_BASE_URL } from "../utils/requests";
 import { useEffect, useState } from "react";
 import { useAthletes } from "../hooks/useAthletes";
-import { useSchedules } from "../hooks/useSchedules";
+import { useGroups } from "../hooks/useGroups";
 import { usePlans } from "../hooks/usePlans";
 
 function EditAthleteForm(props) {
   const { athletes, actions: athleteActions } = useAthletes();
   const { plans, getPlans } = usePlans();
-  const { schedules, getSchedules } = useSchedules();
+  const { schedules, getGroups } = useGroups();
 
   useEffect(() => {
     const abortCont = new AbortController();
     athleteActions.getAthletes(abortCont);
     getPlans();
-    getSchedules();
+    getGroups();
     return () => abortCont.abort();
   }, []);
 

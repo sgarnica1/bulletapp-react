@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useAthletes } from "../hooks/useAthletes";
 import { usePayments } from "../hooks/usePayments";
 import { usePlans } from "../hooks/usePlans";
+import { info } from "../utils/info";
 // Components
 import { HomeBanner } from "../components/HomeBanner";
 import { StatCard } from "../components/StatCard/StatCard";
@@ -18,7 +19,7 @@ import { ToolsCard } from "../components/ToolsCard";
 import { ErrorBanner } from "../components/ErrorBanner/ErrorBanner";
 
 function Home() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   // const {
   //   athletes,
@@ -48,11 +49,19 @@ function Home() {
   //   getPlans();
   // }, []);
 
+  // TODO - Add loading state
   return (
     <div className="Home">
-      <HomeBanner
-        user={user.firstName ? user.firstName : user.email}
-      ></HomeBanner>
+      {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
+      {!loading && (
+        <HomeBanner
+          user={
+            user?.data?.first_name
+              ? user.data[info.firebase.docKeys.users.firstName]
+              : user.data[info.firebase.docKeys.users.email]
+          }
+        ></HomeBanner>
+      )}
     </div>
   );
   // return (

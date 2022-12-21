@@ -32,10 +32,11 @@ const useAthletes = () => {
     }
   };
 
+  // TODO - Handle errors in UI
   const addAthlete = async (data, callback) => {
     try {
       setLoading(true);
-      await addAthleteApi(data, authTokens.access, callback);
+      await addAthleteApi(data, callback);
       setLoading(false);
     } catch (err) {
       setError(err);

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
+import { info } from "../../utils/info";
 
 // ICONS
 import DarkModeIcon from "../../assets/icon/darkmode.svg";
@@ -11,7 +12,7 @@ import LightModeIcon from "../../assets/icon/lightmode.svg";
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
   const { setShowNav, currentLocation: location } = useDashboard();
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser, loading } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigation = useNavigate();
 
@@ -42,11 +43,14 @@ function Header() {
           <li className="Header__nav-element">
             <div className="Header__user">
               <div className="Header__user-profile">
-                <span>
-                  {user.firstName
-                    ? user.firstName
-                    : user.email[0].toUpperCase()}
-                </span>
+                {loading && <span></span>}
+                {!loading && (
+                  <span>
+                    {user.data[info.firebase.docKeys.users.firstName]
+                      ? user.data[info.firebase.docKeys.users.firstName][0]
+                      : user.data[info.firebase.docKeys.users.email][0]}
+                  </span>
+                )}
               </div>
               <div className="Header__user-info Header__dropdown">
                 <button

@@ -12,7 +12,7 @@ const usePlans = () => {
   const getPlans = async () => {
     try {
       setLoading(true);
-      const res = await getPlansApi(authTokens.access, logoutUser);
+      const res = await getPlansApi();
       setPlans(res);
       setLoading(false);
     } catch (err) {

@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/index";
+import { doc, getDoc } from "firebase/firestore/lite";
+import { db, auth } from "../firebase/index";
 import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
 
@@ -52,6 +53,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [loggingIn, setLoggingIn] = useState(false);
 
+  // LOGIN USER
   const loginUser = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -62,31 +64,35 @@ const AuthProvider = ({ children }) => {
 
     // FETCH DATA FROM SERVER
     try {
-      const userCredentials = await signInWithEmailAndPassword(
+      let userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const loginData = userCredentials.user;
+      // GET USER CREDENTIALS
+      userCredentials = userCredentials.user;
+      // GET USER INFO
+      userCredentials = await getUserInfo(userCredentials, userCredentials.uid);
+
       // SET USER
-      setUser(userCredentials.user);
+      setUser(userCredentials);
 
       // SET TOKENS
       setAuthTokens({
-        token: loginData.stsTokenManager.accessToken,
-        refreshToken: loginData.stsTokenManager.refreshToken,
+        token: userCredentials.stsTokenManager.accessToken,
+        refreshToken: userCredentials.stsTokenManager.refreshToken,
       });
 
       // SET TOKEN ON LOCAL STORAGE
       localStorage.setItem(
         info.localStorageKeys.authToken,
-        JSON.stringify(loginData.stsTokenManager.accessToken)
+        JSON.stringify(userCredentials.stsTokenManager.accessToken)
       );
 
       // SET REFRESH TOKEN ON COOKIE
       let date = new Date();
       date.setDate(date.getDate() + 1);
-      document.cookie = `${info.localStorageKeys.refreshToken}=${loginData.stsTokenManager.refreshToken}; expires=${date}; path=/;}`;
+      document.cookie = `${info.localStorageKeys.refreshToken}=${userCredentials.stsTokenManager.refreshToken}; expires=${date}; path=/;}`;
 
       setLoading(false);
       setLoggingIn(false);
@@ -138,8 +144,10 @@ const AuthProvider = ({ children }) => {
       const authData = await res.json();
       // OBTAIN DATA FROM TOKENS
       if (!authData.error) {
+        // GET USER INFO
+        const userCredentials = await getUserInfo(userExist, userExist.user_id);
         // SET USER
-        setUser(userExist);
+        setUser(userCredentials);
 
         // SET NEW TOKENS
         setAuthTokens({
@@ -161,13 +169,13 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
         setLoggingIn(false);
       } else {
-        logoutUser();
+        // logoutUser();
         setLoggingIn(false);
       }
     } catch (err) {
       console.log(err);
       setLoggingIn(false);
-      logoutUser();
+      // logoutUser();
     }
     if (loading) setLoading(false);
   };
@@ -201,3 +209,16 @@ const AuthProvider = ({ children }) => {
 };
 
 export { useAuth, AuthProvider };
+
+// UTILS
+const getUserInfo = async (user, id) => {
+  try {
+    const ref = doc(db, info.firebase.collections.users, id);
+    const snapshot = await getDoc(ref);
+    user.data = snapshot.data();
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

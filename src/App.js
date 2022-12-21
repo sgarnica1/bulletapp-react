@@ -15,13 +15,16 @@ import { PrivateRoute } from "./utils/components/PrivateRoute";
 import { LoggedOutRoute } from "./utils/components/LoggedOutRoute";
 import "./sass/main.scss";
 
+// TODO - Finish Add athlete form
+// TODO - Query current user info
+
 function App() {
   const { user } = useAuth();
   const { theme } = useTheme();
 
   useEffect(() => {
     document.body.className = theme;
-    console.log(theme);
+    console.log(user)
   }, [theme]);
 
   return (

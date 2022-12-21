@@ -1,8 +1,8 @@
-import { API_BASE_URL } from "../utils/requests";
 import { useEffect, useState } from "react";
 import { useAthletes } from "../hooks/useAthletes";
-import { useSchedules } from "../hooks/useSchedules";
+import { useGroups } from "../hooks/useGroups";
 import { usePlans } from "../hooks/usePlans";
+import { useRoles } from "../hooks/useRoles";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 
@@ -16,37 +16,52 @@ import PhoneIcon from "../assets/icon/phone.svg";
 import BirthdayIcon from "../assets/icon/birthday.svg";
 import ClassIcon from "../assets/icon/class.svg";
 
+// TODO - Add validation to the form
+// TODO - Add a loading state to the form
+// TODO - Add a success state to the form
+// TODO - Add a failure state to the form
+
 function AddAthleteForm(props) {
-  const { athletes, actions: athleteActions } = useAthletes();
+  const { actions: athleteActions } = useAthletes();
   const { plans, getPlans } = usePlans();
-  const { schedules, getSchedules } = useSchedules();
+  const { groups, getGroups } = useGroups();
+  const { roles, actions: roleActions } = useRoles();
   const navigate = useNavigate();
+
+  const [athlete, setAthlete] = useState({
+    [info.firebase.docKeys.users.firstName]: "",
+    [info.firebase.docKeys.users.lastName]: "",
+    [info.firebase.docKeys.users.email]: "",
+    [info.firebase.docKeys.users.phoneNumber]: "",
+    [info.firebase.docKeys.users.plan]: "",
+    [info.firebase.docKeys.users.schedule]: "",
+    [info.firebase.docKeys.users.birthDay]: "",
+    [info.firebase.docKeys.users.birthMonth]: "",
+    [info.firebase.docKeys.users.role]: "",
+  });
 
   useEffect(() => {
     const abortCont = new AbortController();
-    athleteActions.getAthletes(abortCont);
+
+    // GET DATA
     getPlans();
-    getSchedules();
+    getGroups();
+    roleActions.getRoleById(info.firebase.values.roles.athlete);
+
+    // RETURN
     return () => abortCont.abort();
   }, []);
 
-  const [athlete, setAthlete] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone_number: "",
-    plan: "",
-    schedule: "",
-    beneficiary: "",
-  });
-
-  function updateAthleteInfo(event, attribute, endpoint) {
+  // HANDLERS
+  function updateAthleteInfo(event, attribute) {
     setAthlete((athlete) => {
-      if (endpoint) {
-        athlete[attribute] = endpoint + event.target.value + "/";
-      } else {
-        athlete[attribute] = event.target.value;
+      // ADD ATHLETE ROLE IF IT DOESN'T HAVE ONE
+      if (athlete[info.firebase.docKeys.users.role] === "") {
+        athlete[info.firebase.docKeys.users.role] = roles.id;
       }
+      // UPDATE ATHLETE ATTRIBUTE
+      athlete[attribute] = event.target.value;
+
       return athlete;
     });
   }
@@ -58,12 +73,14 @@ function AddAthleteForm(props) {
     });
   }
 
+  // RENDER
   return (
     <form
       className="AddAthleteForm"
       autoComplete="off"
       onSubmit={(event) => handleSubmitData(event)}
     >
+      {/* NAME INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -75,9 +92,12 @@ function AddAthleteForm(props) {
           placeholder="Nombre(s)"
           required
           value={props.first_name}
-          onChange={(event) => updateAthleteInfo(event, "first_name")}
+          onChange={(event) =>
+            updateAthleteInfo(event, info.firebase.docKeys.users.firstName)
+          }
         />
       </div>
+      {/* LAST NAME INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -89,9 +109,12 @@ function AddAthleteForm(props) {
           placeholder="Apellidos"
           required
           value={props.last_name}
-          onChange={(event) => updateAthleteInfo(event, "last_name")}
+          onChange={(event) =>
+            updateAthleteInfo(event, info.firebase.docKeys.users.lastName)
+          }
         />
       </div>
+      {/* EMAIL INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -102,9 +125,12 @@ function AddAthleteForm(props) {
           type="email"
           placeholder="Correo electrónico"
           value={props.email}
-          onChange={(event) => updateAthleteInfo(event, "email")}
+          onChange={(event) =>
+            updateAthleteInfo(event, info.firebase.docKeys.users.email)
+          }
         />
       </div>
+      {/* CONFIRM EMAIL INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -115,9 +141,9 @@ function AddAthleteForm(props) {
           type="email"
           placeholder="Confirmar correo electrónico"
           value={props.email}
-          onChange={(event) => updateAthleteInfo(event, "email")}
         />
       </div>
+      {/* PHONE INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -129,9 +155,12 @@ function AddAthleteForm(props) {
           placeholder="Número de teléfono"
           required
           value={props.phone_number}
-          onChange={(event) => updateAthleteInfo(event, "phone_number")}
+          onChange={(event) =>
+            updateAthleteInfo(event, info.firebase.docKeys.users.phoneNumber)
+          }
         />
       </div>
+      {/* BIRTHDAY INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -139,24 +168,34 @@ function AddAthleteForm(props) {
           alt="Birthday icon"
         />
         <input
+          required
           type="number"
           className="AddAthleteForm__input-short"
           placeholder="Día"
           max={31}
           min={1}
+          onChange={(event) =>
+            updateAthleteInfo(event, info.firebase.docKeys.users.birthDay)
+          }
         />
         /
-        <select name="" id="">
+        <select
+          required
+          onChange={(event) =>
+            updateAthleteInfo(event, info.firebase.docKeys.users.birthMonth)
+          }
+        >
           <option value="">Mes</option>
           {info.data.months.map((month, index) => {
             return (
-              <option key={index} value={month}>
+              <option key={index} value={index + 1}>
                 {month}
               </option>
             );
           })}
         </select>
       </div>
+      {/* PLANS INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -166,7 +205,7 @@ function AddAthleteForm(props) {
         <select
           required
           onChange={(event) =>
-            updateAthleteInfo(event, "plan", `${API_BASE_URL}/plans/`)
+            updateAthleteInfo(event, info.firebase.docKeys.users.plan)
           }
           value={props.plan?.id}
         >
@@ -179,6 +218,7 @@ function AddAthleteForm(props) {
             ))}
         </select>
       </div>
+      {/* SCHEDULE INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -188,13 +228,13 @@ function AddAthleteForm(props) {
         <select
           required
           onChange={(event) =>
-            updateAthleteInfo(event, "schedule", `${API_BASE_URL}/schedule/`)
+            updateAthleteInfo(event, info.firebase.docKeys.users.schedule)
           }
           value={props.schedule?.id}
         >
           <option value="">Selecciona una clase</option>
-          {schedules &&
-            schedules.map((schedule) => (
+          {groups &&
+            groups.map((schedule) => (
               <option key={schedule.id} value={schedule.id}>
                 {schedule.hour}
               </option>
@@ -202,11 +242,12 @@ function AddAthleteForm(props) {
         </select>
       </div>
 
+      {/* SUBMIT BUTTON */}
       <Button
-        type={"submit"}
+        type={info.components.button.type.submit}
         text={"Guardar"}
-        size={"lg"}
-        style={"primary"}
+        size={info.components.button.classes.large}
+        style={info.components.button.classes.primary}
         fill={false}
       />
     </form>

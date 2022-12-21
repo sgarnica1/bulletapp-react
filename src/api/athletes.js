@@ -1,3 +1,8 @@
+import { db, auth } from "../firebase";
+import { doc, setDoc, Timestamp } from "firebase/firestore/lite";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { info } from "../utils/info";
+
 import { API_BASE_URL } from "../utils/requests";
 import { formatHour, formatDate } from "../utils/utils";
 
@@ -16,20 +21,72 @@ const getAthletesApi = async (token, callback, abortCont) => {
   }
 };
 
-const addAthleteApi = async (bodyData, token, callback, signal) => {
+// TODO - Update temporary password
+// TODO - Send email to user when created to change password
+// TODO - Handle errors on UI when creating user (eg. email already exists, password too weak, etc.)
+const addAthleteApi = async (athlete, callback) => {
+  let user;
   try {
-    const res = await fetch(
-      API_BASE_URL + "/athletes/",
-      fetchConfigPOST(token, bodyData, signal)
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      athlete.email,
+      "password"
     );
-    const data = await res.json();
-    if (!res.ok) throw Error([data.email, data.phone_number]);
+    user = userCredential.user;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+
+  try {
+    const res = await setDoc(doc(db, "users", user.uid), {
+      // FIRST NAME
+      [info.firebase.docKeys.users.firstName]:
+        athlete[info.firebase.docKeys.users.firstName],
+      // LAST NAME
+      [info.firebase.docKeys.users.lastName]:
+        athlete[info.firebase.docKeys.users.lastName],
+      // EMAIL
+      [info.firebase.docKeys.users.email]:
+        athlete[info.firebase.docKeys.users.email],
+      // PHONE NUMBER
+      [info.firebase.docKeys.users.phoneNumber]:
+        athlete[info.firebase.docKeys.users.phoneNumber],
+      // PLAN ID
+      [info.firebase.docKeys.users.plan]:
+        athlete[info.firebase.docKeys.users.plan],
+      // SCHEDULE ID
+      [info.firebase.docKeys.users.schedule]:
+        athlete[info.firebase.docKeys.users.schedule],
+      // ROLE ID
+      [info.firebase.docKeys.users.role]:
+        athlete[info.firebase.docKeys.users.role],
+      // BIRTHDAY
+      [info.firebase.docKeys.users.birthDay]: parseInt(
+        athlete[info.firebase.docKeys.users.birthDay]
+      ),
+      // BIRTHMONTH
+      [info.firebase.docKeys.users.birthMonth]: parseInt(
+        athlete[info.firebase.docKeys.users.birthMonth]
+      ),
+      // ACTIVE
+      [info.firebase.docKeys.users.active]: true,
+      // TIMESTAMPS
+      timestamps: {
+        [info.firebase.docKeys.users.timestamps.createdAt]: Timestamp.fromDate(
+          new Date()
+        ),
+        [info.firebase.docKeys.users.timestamps.updatedAt]: Timestamp.fromDate(
+          new Date()
+        ),
+      },
+    });
 
     callback();
-    return res.json();
+    return res;
   } catch (err) {
-    alert("Error");
     console.log(err);
+    throw err;
   }
 };
 
@@ -44,6 +101,7 @@ const updateAthleteApi = async (bodyData, token, callback, id) => {
     return data;
   } catch (err) {
     console.log(err);
+    throw err;
   }
 };
 
@@ -62,7 +120,7 @@ const deleteAthleteApi = async (token, callback, id) => {
   }
 };
 
-const getAthleteByIdApi = async (token, callback, id,) => {
+const getAthleteByIdApi = async (token, callback, id) => {
   const endpoint = `${API_BASE_URL}/athletes/${id}/`;
   try {
     const res = await fetch(endpoint, fetchConfigGET(token));
