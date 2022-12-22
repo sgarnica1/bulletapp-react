@@ -4,10 +4,10 @@
 
 .Navbar {
   position: fixed;
-  width: 80%;
-  max-width: toRem(350);
+  width: 100%;
+  max-width: toRem(500);
   background-color: $color-dark;
-  z-index: 9999;
+  z-index: 999;
   transform: translateX(-100%);
   transition: ease 0.5s;
   display: flex;
@@ -26,7 +26,7 @@
     position: absolute;
     right: 8px;
     top: 8px;
-    z-index: 99999;
+    z-index: 9999;
     padding: 5px;
 
     @include mq(lg) {
@@ -57,7 +57,7 @@
   &__content {
     height: 92%;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 50px;
     padding-right: toRem(10);
     overflow-y: scroll;
     overflow-x: hidden;
@@ -79,12 +79,11 @@
     align-items: start;
     justify-content: center;
     grid-template-columns: 100%;
-    grid-template-rows: 80px auto;
     gap: 20px;
     position: sticky;
     top: 0;
     width: 100%;
-    max-width: 350px;
+    max-width: 550px;
     height: 100vh;
     padding: toRem(30) toRem(20) toRem(10) toRem(20);
   }

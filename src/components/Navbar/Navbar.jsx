@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Navitem } from "./utils/Navitem";
 import { Dropdown } from "./utils/Dropdown";
 import { DropdownElement } from "./utils/DropdownElement";
-import Logo from "../../assets/img/logo_white_resized.png";
 
 function Navbar() {
   const { views, showNav, setShowNav } = useDashboard();
@@ -17,9 +16,6 @@ function Navbar() {
         <span></span>
       </button>
       <nav className="Navbar__container">
-        <Link to={"/"} className="Navbar__logo">
-          <img src={Logo} alt="Logo Bullet CrossFit" />
-        </Link>
         <div className="Navbar__content">
           <ul className="Navbar__navlist">
             <Navitem title={views.escritorio} path={"/"} />

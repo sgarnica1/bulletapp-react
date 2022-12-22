@@ -29,6 +29,10 @@
     outline: none;
     border: none;
     background: transparent;
+
+    @include mq(lg) {
+      display: none;
+    }
   }
 
   &__toggler-icon {
@@ -39,6 +43,12 @@
     background-repeat: no-repeat;
     display: inline-block;
     background: url("../../assets/icon/hmbrgrbtn.svg");
+  }
+  
+  // LOGO
+  &__logo {
+    height: 100%;
+    max-height: 50px;
   }
 
   // UL
@@ -111,7 +121,6 @@
       height: toRem(40);
       border-radius: 50%;
       font-weight: 600;
-      background: var(--color-brand);
     }
   }
 

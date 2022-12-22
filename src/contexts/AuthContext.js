@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore/lite";
-import { db, auth } from "../firebase/index";
+import { auth } from "../firebase/index";
 import { getUserInfoApi } from "../api/user";
 import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
