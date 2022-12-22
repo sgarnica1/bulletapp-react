@@ -11,8 +11,13 @@ import { Athletes } from "./pages/Athletes";
 import { AddAthlete } from "./pages/AddAthlete";
 import { SingleAthlete } from "./pages/SingleAthlete";
 import { NotFound } from "./pages/NotFound";
+// PROTECTED ROUTES
 import { PrivateRoute } from "./utils/components/PrivateRoute";
+import { AdminRoute } from "./utils/components/AdminRoute";
 import { LoggedOutRoute } from "./utils/components/LoggedOutRoute";
+
+// OTHER
+import { info } from "./utils/info";
 import "./sass/main.scss";
 
 // TODO - Finish Add athlete form
@@ -24,7 +29,6 @@ function App() {
 
   useEffect(() => {
     document.body.className = theme;
-    console.log(user)
   }, [theme]);
 
   return (
@@ -44,10 +48,13 @@ function App() {
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
+            </Route>
+            <Route element={<AdminRoute />}>
               <Route path="/atletas" element={<Athletes />} />
               <Route path="/atletas/nuevo" element={<AddAthlete />} />
               <Route path="/atletas/:id" element={<SingleAthlete />} />
             </Route>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>

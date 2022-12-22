@@ -44,7 +44,7 @@ function Header() {
             <div className="Header__user">
               <div className="Header__user-profile">
                 {loading && <span></span>}
-                {!loading && (
+                {!loading && user && (
                   <span>
                     {user.data[info.firebase.docKeys.users.firstName]
                       ? user.data[info.firebase.docKeys.users.firstName][0]

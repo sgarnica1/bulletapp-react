@@ -37,4 +37,31 @@ const getUserByIdApi = async (id, callback) => {
   }
 };
 
-export { getUsersApi, getUserByIdApi };
+const getUserInfoApi = async (user, id) => {
+  try {
+    const ref = doc(db, info.firebase.collections.users, id);
+    const snapshot = await getDoc(ref);
+    const roleData = await getUserRoleApi(snapshot.data().id_role);
+    if (!user.data) {
+      user.data = snapshot.data();
+      user.data.role = roleData;
+    }
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getUserRoleApi = async (idRole) => {
+  try {
+    const ref = doc(db, info.firebase.collections.roles, idRole);
+    const snapshot = await getDoc(ref);
+    return snapshot.data().type;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { getUsersApi, getUserByIdApi, getUserInfoApi, getUserRoleApi };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { useDashboard } from "../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
 import { useAthletes } from "../hooks/useAthletes";
@@ -12,6 +13,7 @@ import { Banner } from "../components/Banner";
 import { SearchBar } from "../components/SearchBar";
 
 function Athletes() {
+
   const navigate = useNavigate();
   const [refetch, setRefetch] = useState(false);
   const { athletes, loading, error, actions } = useAthletes();
