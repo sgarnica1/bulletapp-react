@@ -1,8 +1,8 @@
-import { API_BASE_URL } from "../utils/requests";
+import { API_BASE_URL } from "../../utils/requests";
 import { useEffect, useState } from "react";
-import { useAthletes } from "../hooks/useAthletes";
-import { useGroups } from "../hooks/useGroups";
-import { usePlans } from "../hooks/usePlans";
+import { useAthletes } from "../../hooks/useAthletes";
+import { useGroups } from "../../hooks/useGroups";
+import { usePlans } from "../../hooks/usePlans";
 
 function EditAthleteForm(props) {
   const { athletes, actions: athleteActions } = useAthletes();

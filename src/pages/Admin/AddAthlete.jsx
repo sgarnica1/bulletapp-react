@@ -1,6 +1,6 @@
-import { ContentContainer } from "../components/ContentContainer/ContentContainer";
-import { Banner } from "../components/Banner";
-import { AddAthleteForm } from "../components/AddAthleteForm";
+import { ContentContainer } from "../../components/Layout/ContentContainer";
+import { Banner } from "../../components/Public/Banner";
+import { AddAthleteForm } from "../../components/Admin/AddAthleteForm";
 
 function AddAthlete() {
   return (

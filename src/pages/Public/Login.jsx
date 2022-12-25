@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useTheme } from "../contexts/ThemeContext";
-import { InputContainer } from "../components/InputContainer";
-import { Button } from "../components/Button";
-import { info } from "../utils/info";
+import { useAuth } from "../../contexts/AuthContext";
+import { useTheme } from "../../contexts/ThemeContext";
+import { InputContainer } from "../../components/Public/InputContainer";
+import { Button } from "../../components/Public/Button";
+import { info } from "../../utils/info";
 
 // IMG
-import WhiteLogo from "../assets/img/logo_white_resized.png";
-import BlackLogo from "../assets/img/logo_black_resized.png";
+import WhiteLogo from "../../assets/img/logo_white_resized.png";
+import BlackLogo from "../../assets/img/logo_black_resized.png";
 
 function Login() {
   const [passInputType, setPassInputType] = useState("password");
-  const { loginUser, error, setError, loading, loggingIn } = useAuth();
+  const { loginUser, error, setError, loggingIn } = useAuth();
   const { theme } = useTheme();
 
   return (

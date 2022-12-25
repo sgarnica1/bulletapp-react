@@ -1,15 +1,15 @@
-import { Datepicker } from "./Datepicker/Datepicker";
+import CalendarIcon from "../../assets/icon/calendar.svg";
 
 function HomeBanner({ children, user }) {
   return (
     <main className="HomeBanner">
       <section className="HomeBanner__content">
         <div className="HomeBanner__welcome">
-          <h1 className="HomeBanner__title">Bienvenido, {user}</h1>
-          <h2 className="HomeBanner__description">Resumen mensual</h2>
-        </div>
-        <div className="HomeBanner__filters">
-          <Datepicker />
+          <h1 className="HomeBanner__title">Hola, {user}</h1>
+          <div className="HomeBanner__date">
+            <img src={CalendarIcon} alt="Calendar icon" />
+            <p>{new Date().toDateString()}</p>
+          </div>
         </div>
       </section>
       <section className="HomeBanner__stats">{children}</section>

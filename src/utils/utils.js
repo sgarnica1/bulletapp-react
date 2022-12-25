@@ -1,43 +1,81 @@
-function formatHour(hour) {
-  let time = {};
-  let timeValues = hour.split(":");
+const utils = {
+  // FORMAT HOUR
+  formatHour: (hour) => {
+    let time = {};
+    let timeValues = hour.split(":");
 
-  timeValues = timeValues.map((value) =>
-    parseInt(value) !== 0 ? parseInt(value) : value
-  );
+    timeValues = timeValues.map((value) =>
+      parseInt(value) !== 0 ? parseInt(value) : value
+    );
 
-  time.hour = timeValues[0];
-  time.minutes = timeValues[1];
+    time.hour = timeValues[0];
+    time.minutes = timeValues[1];
 
-  if (time.hour === 12) return `12:${time.minutes}pm`;
-  if (time.hour === 24) return `12:${time.minutes}am`;
-  if (time.hour < 12) return `${time.hour}:${time.minutes}am`;
+    if (time.hour === 12) return `12:${time.minutes}pm`;
+    if (time.hour === 24) return `12:${time.minutes}am`;
+    if (time.hour < 12) return `${time.hour}:${time.minutes}am`;
 
-  if (time.hour > 12) {
-    let hour = (time.hour - 12).toString().split("");
-    if (hour.length > 1) return `${hour[0]}${hour[1]}:${time.minutes}pm`;
-    return `${hour[0]}:${time.minutes}pm`;
-  }
-}
+    if (time.hour > 12) {
+      let hour = (time.hour - 12).toString().split("");
+      if (hour.length > 1) return `${hour[0]}${hour[1]}:${time.minutes}pm`;
+      return `${hour[0]}:${time.minutes}pm`;
+    }
+  },
 
-function formatDate(date) {
-  const newDate = new Date(date);
+  // FORMAT DATE
+  formatDate: (date) => {
+    const newDate = new Date(date);
 
-  let day = newDate.getDate();
-  let month = newDate.getMonth() + 1;
-  const year = newDate.getFullYear();
+    let day = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    const year = newDate.getFullYear();
 
-  if (month < 10) month = `0${month}`;
-  if (day < 10) day = `0${day}`;
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
 
-  return `${day}/${month}/${year}`;
-}
+    return `${day}/${month}/${year}`;
+  },
 
-function formatCurrency(number) {
-  number = parseFloat(number);
+  // FORMAT CURRENCY
+  formatCurrency: (number) => {
+    number = parseFloat(number);
 
-  let formattedCurrency = new Intl.NumberFormat("en-US");
-  return `$${formattedCurrency.format(number)}`;
-}
+    let formattedCurrency = new Intl.NumberFormat("en-US");
+    return `$${formattedCurrency.format(number)}`;
+  },
 
-export { formatHour, formatCurrency, formatDate };
+  // FORMAT INPUT TIMER FOR SECONDS AND MINUTES
+  formatTimerInput: (value, prev) => {
+    // SET INPUT TO 00 IF IT IS 0
+    if (value == 0) value = "00";
+
+    // IF PREV VALUE WAS 0, AND NEW VALUE IS > 0 BUT < 10, ALLOW ONLY 1 DIGIT
+    if (prev == "00" && value != 0) {
+      if (value < 10) value = value.slice(1, 3);
+    }
+
+    // IF VALUE'S LENGTH IS > 2, SLICE IT
+    if (value.length >= 2) {
+      // IF PREV VALUE WAS > 10, AND NEW VALUE IS < 10, KEEP FIRST TWO DIGITS
+      if (value < 10 || prev >= 10) {
+        value = value.slice(0, 2);
+      }
+      // IF PREV VALUE WAS < 10, AND NEW VALUE IS > 10, KEEP LAST TWO DIGITS
+      if (prev < 10 && value >= 10) {
+        value = value.slice(1, 3);
+      }
+    }
+
+    // IF VALUE IS > 59, SET IT TO 59
+    if (value > 59) value = 59;
+
+    // IF VALUE IS < 10, ADD 0
+    if (value.length < 2 && value < 10 && value != 0) {
+      value = "0" + value;
+    }
+
+    return value;
+  },
+};
+
+export { utils };

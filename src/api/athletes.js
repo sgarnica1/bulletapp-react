@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { info } from "../utils/info";
 
 import { API_BASE_URL } from "../utils/requests";
-import { formatHour, formatDate } from "../utils/utils";
+import { utils } from "../utils/utils";
 
 const getAthletesApi = async (token, callback, abortCont) => {
   try {
@@ -193,14 +193,14 @@ const fetchConfigPUT = (token, data) => ({
 
 const getAthleteDetails = (token, data) => {
   const updatedAthletes = data.map((athlete) => {
-    athlete.created = formatDate(athlete.created);
+    athlete.created = utils.formatDate(athlete.created);
     const getSchedule = fetch(athlete.schedule, fetchConfigGET(token))
       .then((response) => {
         if (response.ok) return response.json();
         throw Error("Cannot fetch");
       })
       .then((data) => {
-        const hour = formatHour(data.hour);
+        const hour = utils.formatHour(data.hour);
         athlete.schedule = hour;
       });
 
@@ -218,7 +218,7 @@ const getAthleteDetails = (token, data) => {
 
 const getSingleAthleteDetails = async (token, data) => {
   const athlete = await data;
-  athlete.created = formatDate(athlete.created);
+  athlete.created = utils.formatDate(athlete.created);
 
   const getSchedule = fetch(athlete.schedule, fetchConfigGET(token))
     .then((response) => {
@@ -226,7 +226,7 @@ const getSingleAthleteDetails = async (token, data) => {
       throw Error("Cannot fetch");
     })
     .then((data) => {
-      const hour = formatHour(data.hour);
+      const hour = utils.formatHour(data.hour);
       athlete.schedule = {
         hour: hour,
         id: data.id,

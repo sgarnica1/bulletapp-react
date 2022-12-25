@@ -2,15 +2,19 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useTheme } from "./contexts/ThemeContext";
-import { Navbar } from "./components/Navbar/Navbar";
-import { Header } from "./components/Header/Header";
-import { Dashboard } from "./components/Dashboard/Dashboard";
-import { Login } from "./pages/Login";
-import { Home } from "./pages/Home";
-import { Athletes } from "./pages/Athletes";
-import { AddAthlete } from "./pages/AddAthlete";
-import { SingleAthlete } from "./pages/SingleAthlete";
-import { NotFound } from "./pages/NotFound";
+// COMPONENTS
+import { Navbar } from "./components/Layout/Navbar";
+import { Header } from "./components/Layout/Header";
+import { Dashboard } from "./components/Layout/Dashboard";
+
+// PAGES
+import { Login } from "./pages/Public/Login";
+import { NotFound } from "./pages/Public/NotFound";
+import { Home } from "./pages/Athlete/Home";
+import { Athletes } from "./pages/Admin/Athletes";
+import { AddAthlete } from "./pages/Admin/AddAthlete";
+import { SingleAthlete } from "./pages/Admin/SingleAthlete";
+
 // PROTECTED ROUTES
 import { PrivateRoute } from "./utils/components/PrivateRoute";
 import { AdminRoute } from "./utils/components/AdminRoute";
@@ -21,7 +25,6 @@ import { info } from "./utils/info";
 import "./sass/main.scss";
 
 // TODO - Finish Add athlete form
-// TODO - Query current user info
 
 function App() {
   const { user } = useAuth();

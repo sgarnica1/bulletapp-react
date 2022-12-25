@@ -1,0 +1,74 @@
+.WodScoreWidget {
+  max-width: 400px;
+  padding: toRem(15);
+  background: $bg-gradient-green;
+  border-radius: $border-radius;
+
+  &__title {
+    color: $color-white;
+    margin-bottom: 5px;
+    font-size: toRem(22);
+  }
+
+  &__description {
+    color: $color-white;
+    margin-bottom: 18px;
+    font-size: toRem(16);
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    gap: toRem(10);
+
+    &__input-container {
+      width: 50%;
+      display: flex;
+      background: $color-white;
+      border-radius: $border-radius;
+    }
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $color-text-alternative;
+      font-size: toRem(30);
+      font-weight: bold;
+    }
+
+    &__input {
+      width: 50%;
+
+      font-size: toRem(20);
+      font-family: $font-primary;
+      font-weight: 600;
+      border-radius: $border-radius;
+      outline: none;
+      border: none;
+      color: $color-text-alternative;
+      text-align: center;
+
+      @include mq("md") {
+        padding-left: toRem(10);
+      }
+    }
+    &__input:hover {
+      border-radius: $border-radius !important;
+    }
+    &__input::placeholder {
+      font-size: toRem(20);
+      color: $color-text-alternative-light;
+    }
+  }
+
+  &__error {
+    text-align: center;
+    background: $color-error;
+    padding: toRem(10);
+    margin-top: toRem(20);
+    border-radius: toRem(6);
+    color: $color-white;
+    font-weight: 600;
+  }
+}

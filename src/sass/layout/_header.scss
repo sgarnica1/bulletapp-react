@@ -88,7 +88,7 @@
   .current-location {
     display: none;
 
-    @include mq(xs) {
+    @include mq(lg) {
       display: flex;
       justify-content: center;
       align-items: center;

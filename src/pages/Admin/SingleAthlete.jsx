@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useAthletes } from "../hooks/useAthletes";
-import { ContentContainer } from "../components/ContentContainer/ContentContainer";
-import { EditAthleteForm } from "../components/EditAthleteForm";
-import { Banner } from "../components/Banner";
-import { LoadingIcon } from "../components/LoadingIcon/LoadingIcon";
-import { ErrorBanner } from "../components/ErrorBanner/ErrorBanner";
+import { useAthletes } from "../../hooks/useAthletes";
+import { ContentContainer } from "../../components/Layout/ContentContainer";
+import { EditAthleteForm } from "../../components/Admin/EditAthleteForm";
+import { Banner } from "../../components/Public/Banner";
+import { LoadingIcon } from "../../components/Public/LoadingIcon";
+import { ErrorBanner } from "../../components/Public/ErrorBanner";
 
 function SingleAthlete() {
   const { athletes: athlete, loading, error, actions } = useAthletes();

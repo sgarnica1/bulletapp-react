@@ -1,6 +1,6 @@
-import { ContentContainer } from "../components/ContentContainer/ContentContainer";
-import { useDashboard } from "../contexts/DashboardContext";
-import { Button } from "../components/Button";
+import { ContentContainer } from "../../components/Layout/ContentContainer";
+import { useDashboard } from "../../contexts/DashboardContext";
+import { Button } from "../../components/Public/Button";
 
 function NotFound() {
   const { setActiveView } = useDashboard();

@@ -1,10 +1,11 @@
 .Banner {
-  margin-top: toRem(100);
+  margin-top: toRem(70);
   padding: toRem(24);
   background: var(--bg-body);
   transition: $theme-transition;
-
+  
   @include mq(md) {
+    margin-top: toRem(100);
     padding: toRem(24) toRem(100);
   }
 
@@ -34,6 +35,15 @@
 
   &__description {
     @extend .Banner__description;
+  }
+
+  &__date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    p {
+      color: var(--color-text)
+    }
   }
 
   &__stats {

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useDashboard } from "../contexts/DashboardContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useDashboard } from "../../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
-import { useAthletes } from "../hooks/useAthletes";
+import { useAthletes } from "../../hooks/useAthletes";
 
 // Components
-import { ContentContainer } from "../components/ContentContainer/ContentContainer";
-import { AthletesList } from "../components/AthletesList/AthletesList";
-import { AthleteRow } from "../components/AthletesList/AthleteRow";
-import { ErrorBanner } from "../components/ErrorBanner/ErrorBanner";
-import { Banner } from "../components/Banner";
-import { SearchBar } from "../components/SearchBar";
+import { ContentContainer } from "../../components/Layout/ContentContainer";
+import { AthletesList } from "../../components/Admin/AthletesList";
+import { AthleteRow } from "../../components/Admin/AthleteRow";
+import { ErrorBanner } from "../../components/Public/ErrorBanner";
+import { Banner } from "../../components/Public/Banner";
+import { SearchBar } from "../../components/Public/SearchBar";
 
 function Athletes() {
 

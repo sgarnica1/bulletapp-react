@@ -20,12 +20,19 @@ const info = {
         athlete: "athlete",
         coach: "coach",
       },
+      scoreTypes: {
+        time: "time",
+        reps: "reps",
+      }
     },
     collections: {
       users: "users",
       plans: "plans",
       groups: "groups",
       roles: "roles",
+      wods: "wods",
+      wodScores: "wod_scores",
+      scoreTypes: "score_types",
     },
     docKeys: {
       users: {
@@ -44,8 +51,42 @@ const info = {
           updatedAt: "updated_at",
         },
       },
+      wods: {
+        description: "description",
+        date: "date",
+        active: "active",
+        idScoreType: "id_score_type",
+        timecap: "timecap",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+      },
+      wodScores: {
+        idWod: "id_wod",
+        idUser: "id_user",
+        score: "score",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+        active: "active",
+      },
       roles: {
         type: "type",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+        active: "active",
+      },
+      scoreTypes: {
+        active: "active",
+        name: "name",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
       },
     },
     errors: {

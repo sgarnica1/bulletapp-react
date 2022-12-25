@@ -12,6 +12,10 @@
   color: $color-dark;
   background-color: $color-secondary;
 
+  &:disabled {
+    opacity: 0.5;
+  }
+
   &.lg {
     width: 100%;
   }

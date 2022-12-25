@@ -1,24 +1,24 @@
 import { useEffect } from "react";
-import { formatCurrency } from "../utils/utils";
-import { useAuth } from "../contexts/AuthContext";
-import { useAthletes } from "../hooks/useAthletes";
-import { usePayments } from "../hooks/usePayments";
-import { usePlans } from "../hooks/usePlans";
-import { info } from "../utils/info";
+import { formatCurrency } from "../../utils/utils";
+import { useAuth } from "../../contexts/AuthContext";
+import { useAthletes } from "../../hooks/useAthletes";
+import { usePayments } from "../../hooks/usePayments";
+import { usePlans } from "../../hooks/usePlans";
+import { info } from "../../utils/info";
 // Components
-import { HomeBanner } from "../components/HomeBanner";
-import { StatCard } from "../components/StatCard/StatCard";
-import { LoadingStatCard } from "../components/StatCard/LoadingStatCard";
-import { ContentContainer } from "../components/ContentContainer/ContentContainer";
-import { AthletesList } from "../components/AthletesList/AthletesList";
-import { AthleteRow } from "../components/AthletesList/AthleteRow";
-import { CardsList } from "../components/CardsList";
-import { PlansCard } from "../components/PlansCard/PlansCard";
-import { LoadingPlansCard } from "../components/PlansCard/LoadingPlansCard";
-import { ToolsCard } from "../components/ToolsCard";
-import { ErrorBanner } from "../components/ErrorBanner/ErrorBanner";
+import { HomeBanner } from "../../components/HomeBanner";
+import { StatCard } from "../../components/StatCard/StatCard";
+import { LoadingStatCard } from "../../components/StatCard/LoadingStatCard";
+import { ContentContainer } from "../../components/ContentContainer/ContentContainer";
+import { AthletesList } from "../../components/AthletesList/AthletesList";
+import { AthleteRow } from "../../components/AthletesList/AthleteRow";
+import { CardsList } from "../../components/CardsList";
+import { PlansCard } from "../../components/PlansCard/PlansCard";
+import { LoadingPlansCard } from "../../components/PlansCard/LoadingPlansCard";
+import { ToolsCard } from "../../components/ToolsCard";
+import { ErrorBanner } from "../../components/ErrorBanner/ErrorBanner";
 
-function Home() {
+function Dashboard() {
   const { user, loading } = useAuth();
 
   // const {
@@ -51,22 +51,22 @@ function Home() {
 
   // TODO - Add loading state
   return (
-    <div className="Home">
-      {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
+    <div className="Dashboard">
+      {loading && <DashboardBanner user={"Loading..."}></DashboardBanner>}
       {!loading && (
-        <HomeBanner
+        <DashboardBanner
           user={
             user?.data?.first_name
               ? user.data[info.firebase.docKeys.users.firstName]
               : user.data[info.firebase.docKeys.users.email]
           }
-        ></HomeBanner>
+        ></DashboardBanner>
       )}
     </div>
   );
   // return (
-  //   <div className="Home">
-  //     <HomeBanner
+  //   <div className="Dashboard">
+  //     <DashboardBanner
   //       user={
   //         user.firstName
   //           ? user.firstName
@@ -98,7 +98,7 @@ function Home() {
   //           />
   //         </>
   //       )}
-  //     </HomeBanner>
+  //     </DashboardBanner>
 
   //     <ContentContainer>
   //       <AthletesList
@@ -194,4 +194,4 @@ function Home() {
   // );
 }
 
-export { Home };
+export { Dashboard };

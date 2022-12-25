@@ -1,9 +1,9 @@
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Navitem } from "./utils/Navitem";
-import { Dropdown } from "./utils/Dropdown";
-import { DropdownElement } from "./utils/DropdownElement";
+import { Navitem } from "./Navitem";
+import { Dropdown } from "./Dropdown";
+import { DropdownElement } from "./DropdownElement";
 
 function Navbar() {
   const { views, showNav, setShowNav } = useDashboard();

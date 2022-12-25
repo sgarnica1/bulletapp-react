@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { useAthletes } from "../hooks/useAthletes";
-import { useGroups } from "../hooks/useGroups";
-import { usePlans } from "../hooks/usePlans";
-import { useRoles } from "../hooks/useRoles";
+import { useAthletes } from "../../hooks/useAthletes";
+import { useGroups } from "../../hooks/useGroups";
+import { usePlans } from "../../hooks/usePlans";
+import { useRoles } from "../../hooks/useRoles";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./Button";
+import { Button } from "../Public/Button";
 
 // INFO
-import { info } from "../utils/info";
+import { info } from "../../utils/info";
 
 // ICONS
-import UserIcon from "../assets/icon/user.svg";
-import EmailIcon from "../assets/icon/email.svg";
-import PhoneIcon from "../assets/icon/phone.svg";
-import BirthdayIcon from "../assets/icon/birthday.svg";
-import ClassIcon from "../assets/icon/class.svg";
+import UserIcon from "../../assets/icon/user.svg";
+import EmailIcon from "../../assets/icon/email.svg";
+import PhoneIcon from "../../assets/icon/phone.svg";
+import BirthdayIcon from "../../assets/icon/birthday.svg";
+import ClassIcon from "../../assets/icon/class.svg";
 
 // TODO - Add validation to the form
 // TODO - Add a loading state to the form

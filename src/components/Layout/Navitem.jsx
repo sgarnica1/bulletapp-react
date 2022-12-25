@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDashboard } from "../../../contexts/DashboardContext";
+import { useDashboard } from "../../contexts/DashboardContext";
 
 function Navitem({ title, path }) {
   const { activeView, setActiveView, setShowNav } = useDashboard();
