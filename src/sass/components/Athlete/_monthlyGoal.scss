@@ -1,0 +1,18 @@
+.MonthlyGoal {
+  &__title {
+    font-size: toRem(24);
+    font-weight: bold;
+    color: $color-brand;
+    margin-bottom: toRem(10);
+  }
+
+  .progress {
+    height: toRem(5);
+    background-color: var(--bg-body);
+    opacity: 0.7;
+  }
+
+  .progress-bar {
+    background-color: $color-brand;
+  }
+}

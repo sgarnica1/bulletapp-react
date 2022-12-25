@@ -19,7 +19,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: $font-primary;
+  font-family: $font-primary !important;
 }
 
 body::-webkit-scrollbar {
@@ -36,7 +36,7 @@ a,
 button {
   cursor: pointer;
   transition: ease 0.3s;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 ul {
@@ -50,6 +50,17 @@ ul {
 
 .main-content__wrapper {
   padding-top: toRem(100);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  margin: 0;
 }
 
 // MAX WIDTH

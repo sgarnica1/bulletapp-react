@@ -4,6 +4,8 @@ import App from "./App";
 import { DashboardProvider } from "./contexts/DashboardContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./sass/main.scss";
 
 ReactDOM.render(
   <React.StrictMode>

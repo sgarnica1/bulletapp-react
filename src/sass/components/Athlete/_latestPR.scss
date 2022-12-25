@@ -1,0 +1,16 @@
+.LatestPR {
+  &__title,
+  &__value,
+  &__units {
+    font-size: toRem(24);
+    font-weight: bold;
+    color: $color-brand;
+    line-height: 1
+  }
+
+  &__value,
+  &__units {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: transparent;
+  }
+}

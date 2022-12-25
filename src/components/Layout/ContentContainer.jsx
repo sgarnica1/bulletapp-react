@@ -1,5 +1,5 @@
 function ContentContainer({ children }) {
-  return <section className="ContentContainer">{children}</section>;
+  return <main className="ContentContainer">{children}</main>;
 }
 
 export { ContentContainer };

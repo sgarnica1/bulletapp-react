@@ -2,7 +2,7 @@ import CalendarIcon from "../../assets/icon/calendar.svg";
 
 function HomeBanner({ children, user }) {
   return (
-    <main className="HomeBanner">
+    <section className="HomeBanner">
       <section className="HomeBanner__content">
         <div className="HomeBanner__welcome">
           <h1 className="HomeBanner__title">Hola, {user}</h1>
@@ -13,7 +13,7 @@ function HomeBanner({ children, user }) {
         </div>
       </section>
       <section className="HomeBanner__stats">{children}</section>
-    </main>
+    </section>
   );
 }
 

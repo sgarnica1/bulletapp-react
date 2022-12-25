@@ -9,21 +9,28 @@
 @import "base/reset";
 @import "base/typography";
 
-// COMPONENTS
-@import "components/button";
-@import "components/athleteForm";
-@import "components/athleteList";
-@import "components/banner";
-@import "components/toolsCard";
-@import "components/plansCard";
-@import "components/statCard";
-@import "components/cardsList";
-@import "components/loadingIcon";
-@import "components/errorBanner";
-@import "components/datePicker";
-@import "components/searchBar";
-@import "components/inputContainer";
-@import "components/wodScoreWidget";
+// COMPONENTS - ADMIN
+@import "components/admin/athleteForm";
+@import "components/admin/athleteList";
+@import "components/admin/toolsCard";
+@import "components/admin/plansCard";
+
+// COMPONENTS - ATHLETE
+@import "components/athlete/wodScoreWidget";
+@import "components/athlete/monthlyGoal";
+@import "components/athlete/latestPR";
+
+// COMPONENTS - PUBLIC
+@import "components/public/button";
+@import "components/public/banner";
+@import "components/public/loadingIcon";
+@import "components/public/datePicker";
+@import "components/public/searchBar";
+@import "components/public/inputContainer";
+@import "components/public/errorBanner";
+
+@import "components/public/statCard";
+@import "components/public/cardsList";
 
 // LAYOUT
 @import "layout/dashboard";

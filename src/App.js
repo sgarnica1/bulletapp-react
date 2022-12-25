@@ -22,7 +22,6 @@ import { LoggedOutRoute } from "./utils/components/LoggedOutRoute";
 
 // OTHER
 import { info } from "./utils/info";
-import "./sass/main.scss";
 
 // TODO - Finish Add athlete form
 

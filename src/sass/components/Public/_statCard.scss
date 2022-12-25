@@ -1,51 +1,44 @@
 .StatCard {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 toRem(20);
+  flex-direction: column;
+
+  padding: toRem(15);
   margin-bottom: toRem(20);
-  height: toRem(115);
   width: 100%;
   max-width: toRem(450);
-  border-radius: 6px;
-  background-color: $color-light;
-  box-shadow: $hover-box-shadow;
+  border-radius: $border-radius;
+  background-color: var(--bg-component);
+  box-shadow: var(--box-shadow);
   transition: ease 0.5s;
   transform: translateY(0px);
   cursor: pointer;
 
   @include mq(xl) {
-    height: toRem(100);
+    max-width: toRem(300);
   }
 
   &:hover {
     transform: translateY(-5px);
     transition: ease 0.5s;
-    box-shadow: 0px 4px 4px $color-secondary;
   }
 
   &__title {
-    margin-bottom: 0;
+    font-size: toRem(18);
+    color: var(--color-text);
+    margin-bottom: toRem(10);
+  }
+
+  &__additional-info {
+    margin-top: toRem(10);
     font-size: toRem(14);
-    color: $color-secondary;
-    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.7;
   }
 
   &__number {
     font-weight: bold;
     font-size: toRem(26);
-    color: $color-primary;
-  }
-
-  &__button {
-    display: inline;
-
-    span {
-      height: toRem(30);
-      width: toRem(30);
-      background: url("https://images.bulletcrossfit.com/icon/right-arrow-dark.svg");
-      @extend %icon;
-    }
+    color: $color-brand;
   }
 }
 
