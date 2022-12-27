@@ -3,9 +3,9 @@
   flex-direction: column;
 
   padding: toRem(15);
-  margin-bottom: toRem(20);
+  margin-bottom: $widget-margin-bottom;
   width: 100%;
-  max-width: toRem(450);
+  max-width: $max-width-card;
   border-radius: $border-radius;
   background-color: var(--bg-component);
   box-shadow: var(--box-shadow);

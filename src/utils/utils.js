@@ -1,4 +1,36 @@
+import { info } from "./info";
+
 const utils = {
+  getCurrentDate: () => {
+    const currentDate = new Date();
+
+    const weekDay = info.data.days[currentDate.getDay()];
+    const monthDay = currentDate.getDate();
+    const month = info.data.months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return `${weekDay}, ${monthDay} ${month} ${year}`;
+  },
+
+  getShortDate: () => {
+    const currentDate = new Date();
+
+    const monthDay = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+
+    return `${monthDay}/${month}/${year}`;
+  },
+
+  getMonthYear: () => {
+    const currentDate = new Date();
+
+    const month = info.data.months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return `${month} ${year}`;
+  },
+
   // FORMAT HOUR
   formatHour: (hour) => {
     let time = {};

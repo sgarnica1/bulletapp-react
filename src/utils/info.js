@@ -113,6 +113,15 @@ const info = {
     },
   },
   data: {
+    days: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ],
     months: [
       "Enero",
       "Febrero",

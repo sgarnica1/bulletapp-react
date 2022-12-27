@@ -17,17 +17,20 @@
 
 // COMPONENTS - ATHLETE
 @import "components/athlete/wodScoreWidget";
+@import "components/athlete/goalScoreWidget";
 @import "components/athlete/monthlyGoal";
 @import "components/athlete/latestPR";
 
 // COMPONENTS - PUBLIC
+@import "components/Public/addButton";
 @import "components/public/button";
 @import "components/public/banner";
-@import "components/public/loadingIcon";
 @import "components/public/datePicker";
-@import "components/public/searchBar";
-@import "components/public/inputContainer";
 @import "components/public/errorBanner";
+@import "components/public/inputContainer";
+@import "components/Public/infoCard";
+@import "components/public/loadingIcon";
+@import "components/public/searchBar";
 
 @import "components/public/statCard";
 @import "components/public/cardsList";

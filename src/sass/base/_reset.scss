@@ -63,6 +63,16 @@ a {
   margin: 0;
 }
 
+// PERSONAL APP CLASSES
+.App {
+  &__subtitle {
+    margin: 40px 0 20px 0;
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: toRem(20);
+  }
+}
+
 // MAX WIDTH
 .nav,
 .banner,

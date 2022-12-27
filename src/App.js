@@ -38,12 +38,14 @@ function App() {
     <Router>
       <div className="App" data-theme={theme}>
         <Dashboard>
-          {user ? (
+          <Navbar />
+          <Header />
+          {/* {user ? (
             <>
               <Navbar />
               <Header />
             </>
-          ) : null}
+          ) : null} */}
 
           <Routes>
             <Route element={<LoggedOutRoute />}>

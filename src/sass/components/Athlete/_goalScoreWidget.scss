@@ -1,4 +1,4 @@
-.WodScoreWidget {
+.BulletGoalWidget {
   max-width: 400px;
   padding: toRem(15);
   margin-bottom: $widget-margin-bottom;
@@ -9,12 +9,28 @@
     color: $color-white;
     margin-bottom: 5px;
     font-size: toRem(22);
+    font-weight: 600;
+  }
+
+  &__date {
+    display: flex;
+    align-items: center;
+    color: $color-white;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+
+    img {
+      height: toRem(18);
+      width: toRem(18);
+      margin-right: 10px;
+    }
   }
 
   &__description {
     color: $color-white;
-    margin-bottom: 18px;
-    font-size: toRem(16);
+    font-size: toRem(20);
+    font-weight: 500;
+    margin-bottom: 20px;
   }
 
   &__form {
@@ -54,9 +70,11 @@
         padding-left: toRem(10);
       }
     }
+
     &__input:hover {
       border-radius: $border-radius !important;
     }
+
     &__input::placeholder {
       font-size: toRem(20);
       color: $color-text-alternative-light;

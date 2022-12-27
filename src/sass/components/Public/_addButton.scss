@@ -1,0 +1,33 @@
+.AddButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: $max-width-card;
+  background: var(--bg-component);
+  border-radius: $border-radius;
+  margin-bottom: $widget-margin-bottom;
+
+  &__info {
+    padding: 0 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__img {
+    width: 30%;
+    max-width: 100px;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+  }
+
+  &__title {
+    color: var(--color-text);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    transition: ease 0.5s;
+  }
+}
