@@ -1,0 +1,44 @@
+.FirebaseError {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  background: var(--bg-body);
+
+  &,
+  .ContentContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__title {
+    color: var(--color-text);
+    font-size: toRem(22);
+    text-align: center;
+    margin-bottom: toRem(10);
+  }
+
+  &__description {
+    color: var(--color-text);
+    font-size: toRem(14);
+    text-align: center;
+    margin-bottom: toRem(20);
+  }
+
+  &__logo {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    max-width: 120px;
+  }
+
+  &__return-btn {
+    @extend %button;
+    max-width: 300px;
+  }
+}

@@ -75,6 +75,7 @@ const AuthProvider = ({ children }) => {
     event.preventDefault();
     setLoading(true);
     setLoggingIn(true);
+    setError(false);
 
     const email = event.target.username.value;
     const password = event.target.password.value;
@@ -140,6 +141,7 @@ const AuthProvider = ({ children }) => {
   const logoutUser = (callback) => {
     setAuthTokens(null);
     setUser(null);
+    setError(false);
 
     // REMOVE TOKEN FROM LOCAL STORAGE
     localStorage.removeItem(info.localStorageKeys.authToken);
@@ -154,6 +156,7 @@ const AuthProvider = ({ children }) => {
   const updateToken = async () => {
     setLoading(true);
     setLoggingIn(false);
+    setError(false);
     // console.log(authTokens.refreshToken);
 
     // FETCH NEW TOKEN FROM SERVER
@@ -206,7 +209,11 @@ const AuthProvider = ({ children }) => {
         setLoggingIn(false);
       }
     } catch (err) {
-      console.log(err);
+      if (err.message === info.firebase.errors.auth.networkFailed) {
+        setError("Error en la red");
+      } else {
+        setError(err);
+      }
       setLoggingIn(false);
       // logoutUser();
     }

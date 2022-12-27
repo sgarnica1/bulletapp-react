@@ -23,7 +23,7 @@ const info = {
       scoreTypes: {
         time: "time",
         reps: "reps",
-      }
+      },
     },
     collections: {
       users: "users",
@@ -93,6 +93,7 @@ const info = {
       auth: {
         wrongPassword: "Firebase: Error (auth/wrong-password).",
         invalidEmail: "Firebase: Error (auth/invalid-email).",
+        networkFailed: "Firebase: Error (auth/network-request-failed).",
       },
     },
   },
@@ -101,6 +102,7 @@ const info = {
       type: {
         submit: "submit",
         link: "link",
+        href: "href",
       },
       classes: {
         primary: "primary",

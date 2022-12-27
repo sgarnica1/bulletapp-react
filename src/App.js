@@ -10,6 +10,7 @@ import { Dashboard } from "./components/Layout/Dashboard";
 // PAGES
 import { Login } from "./pages/Public/Login";
 import { NotFound } from "./pages/Public/NotFound";
+import { FirebaseError } from "./pages/Public/FirebaseError";
 import { Home } from "./pages/Athlete/Home";
 import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
@@ -57,6 +58,7 @@ function App() {
               <Route path="/atletas/:id" element={<SingleAthlete />} />
             </Route>
 
+            <Route path="server-error" element={<FirebaseError />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>

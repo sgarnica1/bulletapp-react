@@ -36,6 +36,14 @@
     color: $color-brand;
   }
 
+  &.alert,
+  &.error,
+  &.danger {
+    background: transparent;
+    border: 1px solid $color-error;
+    color: $color-error;
+  }
+
   &.primary.fill {
     background-color: $color-brand;
     border: 1px solid $color-brand;
@@ -46,6 +54,14 @@
     background-color: var(--bg-component);
     border: 1px solid var(--bg-component);
     color: var(--color-text);
+  }
+
+  &.alert.fill,
+  &.error.fill,
+  &.danger.fill {
+    background: $color-error;
+    border: 1px solid $color-error;
+    color: $color-white;
   }
 
   // HOVER
@@ -61,6 +77,14 @@
     color: var(--color-text);
   }
 
+  &.alert:hover,
+  &.error:hover,
+  &.danger:hover {
+    background: $color-error;
+    border: 1px solid $color-error;
+    color: $color-white;
+  }
+
   &.primary.fill:hover {
     background: transparent;
     border: 1px solid $color-brand;
@@ -71,5 +95,13 @@
     background-color: transparent;
     border: 1px solid var(--bg-component);
     color: var(--color-text);
+  }
+
+  &.alert.fill:hover,
+  &.error.fill:hover,
+  &.danger.fill:hover {
+    background: transparent;
+    border: 1px solid $color-error;
+    color: $color-error;
   }
 }

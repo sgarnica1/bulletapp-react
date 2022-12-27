@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { info } from "../../utils/info";
 
 const Button = ({
   type,
@@ -10,7 +11,7 @@ const Button = ({
   disabled,
   onClickHandler,
 }) => {
-  if (type === "submit")
+  if (type === info.components.button.type.submit)
     return (
       <button
         type="submit"
@@ -21,15 +22,27 @@ const Button = ({
       </button>
     );
 
-  return (
-    <Link
-      to={link}
-      className={`Button ${size} ${style} ${fill ? "fill" : ""}`}
-      onClick={onClickHandler}
-    >
-      {text}
-    </Link>
-  );
+  if (type === info.components.button.type.link)
+    return (
+      <Link
+        to={link}
+        className={`Button ${size} ${style} ${fill ? "fill" : ""}`}
+        onClick={onClickHandler}
+      >
+        {text}
+      </Link>
+    );
+
+  if (type === info.components.button.type.href)
+    return (
+      <a
+        href={link}
+        className={`Button ${size} ${style} ${fill ? "fill" : ""}`}
+        onClick={onClickHandler}
+      >
+        {text}
+      </a>
+    );
 };
 
 export { Button };

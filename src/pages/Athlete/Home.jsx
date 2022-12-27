@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { info } from "../../utils/info";
 
@@ -10,14 +12,20 @@ import { LatestPR } from "../../components/Athlete/LatestPR";
 import { MonthlyGoal } from "../../components/Athlete/MonthlyGoal";
 
 function Home() {
-  const { user, loading } = useAuth();
+  const { user, loading, error } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) navigate("/server-error");
+  }, [error]);
 
   // TODO - Add loading state
   return (
     <div className="Home">
       {/* HOME BANNER */}
       {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
-      {!loading && (
+      {!loading && error && <HomeBanner user={"Loading..."}></HomeBanner>}
+      {!error && !loading && (
         <HomeBanner
           user={
             user?.data?.first_name
@@ -29,7 +37,6 @@ function Home() {
 
       {/* MAIN CONTENT */}
       <ContentContainer>
-
         {/* SCORE REGISTRATION */}
         <WodScoreWidget />
 

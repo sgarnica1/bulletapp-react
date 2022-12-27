@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { getAllWodsApi, getWeeklyWodsApi, getTodaysWodApi } from "../api/wods";
+import { info } from "../utils/info";
 
 const useWods = () => {
   const [wods, setWods] = useState(null);
@@ -16,7 +17,11 @@ const useWods = () => {
       setWods(res);
       setLoading(false);
     } catch (err) {
-      setError(err);
+      if (err.message === info.firebase.errors.auth.networkFailed) {
+        setError("Error en la red");
+      } else {
+        setError(err);
+      }
       setLoading(false);
     }
   };
@@ -28,7 +33,11 @@ const useWods = () => {
       setWods(res);
       setLoading(false);
     } catch (err) {
-      setError(err);
+      if (err.message === info.firebase.errors.auth.networkFailed) {
+        setError("Error en la red");
+      } else {
+        setError(err);
+      }
       setLoading(false);
     }
   };
@@ -40,8 +49,11 @@ const useWods = () => {
       setWods(res);
       setLoading(false);
     } catch (err) {
-      console.log(err)
-      setError(err);
+      if (err.message === info.firebase.errors.auth.networkFailed) {
+        setError("Error en la red");
+      } else {
+        setError(err);
+      }
       setLoading(false);
     }
   };
