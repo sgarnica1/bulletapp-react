@@ -4,7 +4,7 @@ import RightArrow from "../../assets/icon/right-arrow.svg";
 const AddButton = ({ link, img, alt, title }) => {
   return (
     <Link to={link} className="AddButton">
-      <img src={img} alt={alt} className="AddButton__img" />
+      {img && <img src={img} alt={alt} className="AddButton__img" />}
       <div className="AddButton__info">
         <p className="AddButton__title">{title}</p>
         <img

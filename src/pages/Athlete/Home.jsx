@@ -21,6 +21,9 @@ import AthleteImg from "../../assets/img/athlete.jpg";
 import HoodiesImg from "../../assets/img/sudaderas.jpg";
 import UserIcon from "../../assets/icon/user.svg";
 
+// TODO - Replace user name and user img with real one
+// TODO - Add loading state
+
 function Home() {
   const { user, loading, error } = useAuth();
   const navigate = useNavigate();
@@ -29,26 +32,29 @@ function Home() {
   //   if (error) navigate("/server-error");
   // }, [error]);
 
-  // TODO - Add loading state
   return (
     <div className="Home">
-      {/* HOME BANNER */}
-      {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
-      {error && !loading && <HomeBanner user={""}></HomeBanner>}
-      {!error && !loading && (
-        <HomeBanner
-          user={
-            user?.data?.first_name
-              ? user.data[info.firebase.docKeys.users.firstName]
-              : user.data[info.firebase.docKeys.users.email]
-          }
-        ></HomeBanner>
-      )}
-
       {/* MAIN CONTENT */}
       <ContentContainer>
+        {/* HOME BANNER */}
+        {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
+        {error && !loading && <HomeBanner user={""}></HomeBanner>}
+        {!error && !loading && (
+          <HomeBanner
+            user={
+              user?.data?.first_name
+                ? user.data[info.firebase.docKeys.users.firstName]
+                : user.data[info.firebase.docKeys.users.email]
+            }
+          ></HomeBanner>
+        )}
         {/* SCORE REGISTRATION */}
         <WodScoreWidget />
+
+        <AddButton
+          link={info.routes.leaderboard}
+          title="Leaderboard"
+        />
 
         {/* LATEST PR */}
         <StatCard
@@ -91,18 +97,18 @@ function Home() {
 
         {/* PROFILE */}
         {/* {!error && !loading && ( */}
-          <InfoCard
-            link={"#"}
-            img={HoodiesImg}
-            alt="Athletes wearing Bullet CrossFit hoodies"
-            title={"Sergio"}
-            // title={user.data[info.firebase.docKeys.users.firstName]}
-            additionalInfo="Ver perfil"
-          />
+        <InfoCard
+          link={"#"}
+          img={HoodiesImg}
+          alt="Athletes wearing Bullet CrossFit hoodies"
+          title={"Sergio"}
+          // title={user.data[info.firebase.docKeys.users.firstName]}
+          additionalInfo="Ver perfil"
+        />
         {/* )} */}
         {/* SETTINGS */}
         <InfoCard
-          link={"#"}
+          link={info.routes.settings}
           icon={UserIcon}
           alt="Setting icon"
           title={"Configuración"}

@@ -7,9 +7,10 @@
   background: var(--bg-component);
   border-radius: $border-radius;
   margin-bottom: $widget-margin-bottom;
-
+  box-shadow: var(--box-shadow);
+  
   &__info {
-    padding: 0 10px;
+    padding: 20px 10px;
     width: 100%;
     display: flex;
     justify-content: space-between;

@@ -8,6 +8,7 @@ const InfoCard = ({
   alt,
   title,
   additionalInfo,
+  onClickHandler,
 }) => {
   if (link)
     return (
@@ -29,7 +30,10 @@ const InfoCard = ({
     );
 
   return (
-    <article className="InfoCard">
+    <article
+      className={`InfoCard ${onClickHandler ? "button" : ""}`}
+      onClick={onClickHandler}
+    >
       <div className="InfoCard__img-container">
         <img
           src={img ? img : icon}

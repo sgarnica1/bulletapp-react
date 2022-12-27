@@ -1,5 +1,5 @@
 .BulletGoalWidget {
-  max-width: 400px;
+  max-width: $max-width-card;
   padding: toRem(15);
   margin-bottom: $widget-margin-bottom;
   background: $bg-gradient-green;

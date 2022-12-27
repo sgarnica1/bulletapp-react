@@ -22,18 +22,18 @@ function FirebaseError() {
 
         <Button
           type={info.components.button.type.href}
-          link={"/"}
+          link={info.routes.home}
           text="Intentar de nuevo"
           onClickHandler={() => setActiveView("Escritorio")}
           fill={true}
           style={"error"}
           size={"lg"}
         />
-        <img
+        {/* <img
           src={theme === info.states.theme.dark ? LogoWhite : LogoBlack}
           alt="Logo Bullet CrossFit"
           className="FirebaseError__logo"
-        />
+        /> */}
       </ContentContainer>
     </div>,
     document.getElementById("error")

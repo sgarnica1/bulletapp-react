@@ -1,19 +1,12 @@
 .Banner {
-  margin-top: toRem(70);
-  padding: toRem(24);
   background: var(--bg-body);
   transition: $theme-transition;
-  
-  @include mq(md) {
-    margin-top: toRem(100);
-    padding: toRem(24) toRem(100);
-  }
+  width: 100%;
 
   &__title {
     color: var(--color-text);
     font-size: toRem(26);
     margin-bottom: toRem(10);
-    
   }
 
   &__description {
@@ -27,7 +20,7 @@
 
 .HomeBanner {
   @extend .Banner;
-  margin-bottom: toRem(50);
+  margin-bottom: $widget-margin-bottom;
 
   &__title {
     @extend .Banner__title;
@@ -42,22 +35,10 @@
     align-items: center;
     gap: 10px;
     p {
-      color: var(--color-text)
+      color: var(--color-text);
     }
-  }
-
-  &__stats {
-    margin-top: toRem(30);
-    margin-bottom: toRem(-90);
-
-    @include mq(sm) {
-      display: grid;
-      grid-template-columns: repeat(2, auto);
-      gap: toRem(20);
-    }
-
-    @include mq(xl) {
-      grid-template-columns: repeat(4, 1fr);
+    img {
+      height: 20px;
     }
   }
 }

@@ -15,6 +15,7 @@ import { Home } from "./pages/Athlete/Home";
 import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
+import { Settings } from "./pages/Athlete/Settings";
 
 // PROTECTED ROUTES
 import { PrivateRoute } from "./utils/components/PrivateRoute";
@@ -49,18 +50,19 @@ function App() {
 
           <Routes>
             <Route element={<LoggedOutRoute />}>
-              <Route path={"/login"} element={<Login />} />
+              <Route path={info.routes.login} element={<Login />} />
             </Route>
             <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} />
+              <Route path={info.routes.home} element={<Home />} />
+              <Route path={info.routes.settings} element={<Settings />} />
             </Route>
             <Route element={<AdminRoute />}>
-              <Route path="/atletas" element={<Athletes />} />
-              <Route path="/atletas/nuevo" element={<AddAthlete />} />
+              <Route path={info.routes.athletes} element={<Athletes />} />
+              <Route path={info.routes.addAthlete} element={<AddAthlete />} />
               <Route path="/atletas/:id" element={<SingleAthlete />} />
             </Route>
 
-            <Route path="server-error" element={<FirebaseError />} />
+            <Route path={info.routes.serverError} element={<FirebaseError />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>

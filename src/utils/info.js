@@ -1,17 +1,43 @@
 const info = {
-  states: {
-    theme: {
-      light: "light",
-      dark: "dark",
+  components: {
+    button: {
+      type: {
+        submit: "submit",
+        link: "link",
+        href: "href",
+      },
+      classes: {
+        primary: "primary",
+        secondary: "secondary",
+        sm: "sm",
+        lg: "lg",
+      },
     },
   },
-  localStorageKeys: {
-    theme: "BFC_THEME",
-    authToken: "BCF_TOKEN",
-    refreshToken: "BCFRT",
-  },
-  requests: {
-    refreshToken: "https://securetoken.googleapis.com/v1/token?key=",
+  data: {
+    days: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ],
+    months: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ],
   },
   firebase: {
     values: {
@@ -97,45 +123,59 @@ const info = {
       },
     },
   },
-  components: {
-    button: {
-      type: {
-        submit: "submit",
-        link: "link",
-        href: "href",
-      },
-      classes: {
-        primary: "primary",
-        secondary: "secondary",
-        sm: "sm",
-        lg: "lg",
-      },
+  localStorageKeys: {
+    theme: "BFC_THEME",
+    authToken: "BCF_TOKEN",
+    refreshToken: "BCFRT",
+  },
+  requests: {
+    refreshToken: "https://securetoken.googleapis.com/v1/token?key=",
+  },
+  routes: {
+    addAthlete: "/atletas/nuevo",
+    athletes: "/atletas",
+    changePassword: "/ajustes/cambiar-contraseña",
+    dashboard: "/escritorio",
+    groups: "groups",
+    home: "/",
+    leaderboard: "/leaderboard",
+    locations: {
+      juriquilla: "/sucursales/juriquilla",
+      zibata: "sucurales/zibata",
+      grandreserva: "sucursales/grandreserva",
+    },
+    login: "/login",
+    payments: "/pagos",
+    plans: "/plans",
+    profile: "/perfil",
+    programming: "/programación",
+    serverError: "server-error",
+    settings: "/ajustes",
+    videos: "/videos",
+  },
+  states: {
+    theme: {
+      light: "light",
+      dark: "dark",
     },
   },
-  data: {
-    days: [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miércoles",
-      "Jueves",
-      "Viernes",
-      "Sábado",
-    ],
-    months: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ],
+  views: {
+    athletes: "Atletas",
+    dashboard: "Escritorio",
+    groups: "Clases",
+    home: "Home",
+    leaderboard: "Leaderboard",
+    locations: {
+      juriquilla: "Juriquilla",
+      zibata: "Zibatá",
+      grandreserva: "Grand Reserva",
+    },
+    payments: "Pagos",
+    plans: "Planes",
+    progrgamming: "Programación",
+    profile: "Perfil",
+    settings: "Ajustes",
+    videos: "Videos",
   },
 };
 

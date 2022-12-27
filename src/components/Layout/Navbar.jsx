@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Navitem } from "./Navitem";
 import { Dropdown } from "./Dropdown";
 import { DropdownElement } from "./DropdownElement";
+import { info } from "../../utils/info";
 
 function Navbar() {
-  const { views, showNav, setShowNav } = useDashboard();
+  const { showNav, setShowNav } = useDashboard();
   const { logoutUser } = useAuth();
   const navigation = useNavigate();
 
@@ -18,32 +19,35 @@ function Navbar() {
       <nav className="Navbar__container">
         <div className="Navbar__content">
           <ul className="Navbar__navlist">
-            <Navitem title={views.escritorio} path={"/"} />
+            <Navitem title={info.views.dashboard} path={info.routes.home} />
             <Dropdown>
               <DropdownElement
-                title={views.sucursales.juriquilla}
-                path={"/sucursal/juriquilla"}
+                title={info.views.locations.juriquilla}
+                path={info.routes.locations.juriquilla}
               />
               <DropdownElement
-                title={views.sucursales.zibata}
-                path={"/sucursal/zibata"}
+                title={info.views.locations.zibata}
+                path={info.routes.locations.zibata}
               />
               <DropdownElement
-                title={views.sucursales.grandreserva}
-                path={"/sucursal/grand-reserva"}
+                title={info.views.locations.grandreserva}
+                path={info.routes.locations.grandreserva}
               />
             </Dropdown>
-            <Navitem title={views.pagos} path={"/pagos"} />
-            <Navitem title={views.atletas} path={"/atletas"} />
-            <Navitem title={views.clases} path={"/clases"} />
-            <Navitem title={views.planes} path={"/planes"} />
+            <Navitem title={info.views.payments} path={info.routes.payments} />
+            <Navitem title={info.views.athletes} path={info.routes.athletes} />
+            <Navitem title={info.views.groups} path={info.routes.groups} />
+            <Navitem title={info.views.plans} path={info.routes.plans} />
 
             <h4 className="Navbar__subtitle">Recursos</h4>
-            <Navitem title={views.programacion} path={"/programacion"} />
-            <Navitem title={views.videos} path={"/videos"} />
+            <Navitem
+              title={info.views.progrgamming}
+              path={info.routes.programming}
+            />
+            <Navitem title={info.views.videos} path={info.routes.videos} />
 
             <h4 className="Navbar__subtitle">Cuenta</h4>
-            <Navitem title={views.ajustes} path={"/ajustes"} />
+            <Navitem title={info.views.settings} path={info.routes.settings} />
             <li
               className="Navbar__navitem"
               onClick={() =>
