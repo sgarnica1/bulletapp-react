@@ -1,12 +1,14 @@
-function SearchBar({ searchValue, setSearchValue, loading }) {
+import SearchIcon from "../../assets/icon/search.svg"
+
+function SearchBar({ placeholder, searchValue, setSearchValue, loading }) {
   return (
     <form action="" className="SearchBar">
       <div className="SearchBar__input-container">
-        <span className="SearchBar__icon"></span>
+        <img src={SearchIcon} alt="Search icon" className="SearchBar__icon" />
         <input
           type="text"
           className="SearchBar__input"
-          placeholder="Buscar atletas"
+          placeholder={placeholder}
           value={searchValue}
           onChange={(event) => {
             setSearchValue(event.target.value);

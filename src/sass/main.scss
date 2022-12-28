@@ -42,11 +42,12 @@
 @import "layout/navbar";
 
 // PAGES
-@import "pages/login";
 @import "pages/athleteList";
 @import "pages/athleteSingle";
-@import "pages/notFound";
 @import "pages/firebaseError";
+@import "pages/leaderboard";
+@import "pages/login";
+@import "pages/notFound";
 @import "pages/settings";
 
 // THEMES

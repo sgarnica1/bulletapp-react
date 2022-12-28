@@ -6,19 +6,20 @@
     justify-content: flex-start;
     align-items: center;
     padding: toRem(15) toRem(20);
-    border-radius: toRem(6);
-    background: $color-light;
+    border-radius: $border-radius;
+    background: var(--bg-component);
+    box-shadow: var(--box-shadow);
   }
 
   &__icon {
     height: toRem(25);
     width: toRem(25);
-    background: url("https://images.bulletcrossfit.com/icon/search.svg");
     margin-right: toRem(15);
-    @extend %icon;
   }
 
   &__input {
+    width: 100%;
+    color: var(--color-text);
     font-size: toRem(20);
     background: none;
     border: none;

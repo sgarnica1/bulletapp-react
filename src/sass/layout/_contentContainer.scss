@@ -1,14 +1,18 @@
 .ContentContainer {
   margin-top: 80px;
-  padding: toRem(20) toRem(24);
+  padding: toRem(20) 0;
   padding-bottom: toRem(20);
 
+  &.padding {
+    padding: toRem(20) toRem(24);
+  }
+
   @include mq(md) {
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    padding: toRem(15) toRem(100);
+    padding: toRem(15) 0;
     padding-bottom: toRem(20);
+
+    &.padding {
+      padding: toRem(15) toRem(100);
+    }
   }
 }

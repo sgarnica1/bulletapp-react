@@ -1,5 +1,9 @@
-function ContentContainer({ children }) {
-  return <main className="ContentContainer">{children}</main>;
+function ContentContainer({ children, sidePadding = true }) {
+  return (
+    <main className={`ContentContainer ${sidePadding ? "padding" : ""} `}>
+      {children}
+    </main>
+  );
 }
 
 export { ContentContainer };

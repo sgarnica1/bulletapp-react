@@ -3,24 +3,25 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useTheme } from "./contexts/ThemeContext";
 // COMPONENTS
-import { Navbar } from "./components/Layout/Navbar";
-import { Header } from "./components/Layout/Header";
 import { Dashboard } from "./components/Layout/Dashboard";
+import { Header } from "./components/Layout/Header";
+import { Navbar } from "./components/Layout/Navbar";
 
 // PAGES
-import { Login } from "./pages/Public/Login";
-import { NotFound } from "./pages/Public/NotFound";
-import { FirebaseError } from "./pages/Public/FirebaseError";
-import { Home } from "./pages/Athlete/Home";
 import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
+import { FirebaseError } from "./pages/Public/FirebaseError";
+import { Home } from "./pages/Athlete/Home";
+import { Leaderboard } from "./pages/Athlete/Leaderboard";
+import { Login } from "./pages/Public/Login";
+import { NotFound } from "./pages/Public/NotFound";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
 import { Settings } from "./pages/Athlete/Settings";
 
 // PROTECTED ROUTES
-import { PrivateRoute } from "./utils/components/PrivateRoute";
 import { AdminRoute } from "./utils/components/AdminRoute";
 import { LoggedOutRoute } from "./utils/components/LoggedOutRoute";
+import { PrivateRoute } from "./utils/components/PrivateRoute";
 
 // OTHER
 import { info } from "./utils/info";
@@ -54,6 +55,7 @@ function App() {
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path={info.routes.home} element={<Home />} />
+              <Route path={info.routes.leaderboard} element={<Leaderboard />} />
               <Route path={info.routes.settings} element={<Settings />} />
             </Route>
             <Route element={<AdminRoute />}>

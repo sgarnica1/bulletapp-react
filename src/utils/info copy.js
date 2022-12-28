@@ -54,43 +54,36 @@ const info = {
         ref: "S",
       },
     },
-    weekDayNumberArray: [
-      {
-        day: "sunday",
+    weekDayNumberArray: {
+      sunday: {
         num: 0,
         ref: "S",
       },
-      {
-        day: "monday",
+      monday: {
         num: 1,
         ref: "L",
       },
-      {
-        day: "tuesday",
+      tuesday: {
         num: 2,
         ref: "M",
       },
-      {
-        day: "wednesday",
+      wednesday: {
         num: 3,
         ref: "M",
       },
-      {
-        day: "thursday",
+      thursday: {
         num: 4,
         ref: "J",
       },
-      {
-        day: "friday",
+      friday: {
         num: 5,
         ref: "V",
       },
-      {
-        day: "saturday",
+      saturday: {
         num: 6,
         ref: "S",
       },
-    ],
+    },
     months: [
       "Enero",
       "Febrero",

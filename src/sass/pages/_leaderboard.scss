@@ -1,0 +1,164 @@
+.Leaderboard {
+  .SearchBar {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  &__container {
+    background: var(--bg-component);
+    border-radius: 50px 50px 0 0;
+  }
+
+  &__header {
+    padding: 30px;
+    max-width: $max-width-card;
+  }
+
+  &__title {
+    color: var(--color-text);
+    font-size: toRem(26);
+    font-weight: bold;
+    margin-bottom: toRem(5);
+  }
+
+  &__date {
+    margin-bottom: 30px;
+    font-size: toRem(15);
+    font-weight: 300;
+    color: var(--color-text);
+    opacity: 0.8;
+    letter-spacing: 2px;
+  }
+
+  &__day-picker {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  &__day-button {
+    width: 40px;
+    height: 40px;
+    color: $color-brand;
+    background: var(--bg-input);
+    border-radius: 50%;
+    border: 1px solid var(--bg-input);
+    outline: none;
+  }
+
+  &__day-button.active {
+    color: $color-white;
+    background: $color-brand;
+    border: 1px solid $color-brand;
+  }
+
+  &__day-button:hover {
+    border: 1px solid $color-brand;
+  }
+
+  &__wod {
+    border-radius: $border-radius;
+    background: var(--bg-input);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &__header {
+      padding: 10px 20px;
+      color: $color-brand;
+      font-size: toRem(26);
+      font-weight: bold;
+      letter-spacing: 5px;
+      border-bottom: 1px solid var(--color-text);
+    }
+
+    &__body {
+      padding: 10px 20px;
+    }
+
+    &__not-available {
+      padding: 20px;
+      font-size: toRem(20);
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    &__title {
+      margin-bottom: toRem(5);
+      font-weight: 600;
+      font-size: toRem(20);
+      color: var(--color-text);
+      opacity: 0.7;
+    }
+
+    &__description,
+    &__timecap {
+      margin-bottom: toRem(3);
+      font-size: toRem(16);
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    &__timecap {
+      margin-top: toRem(25);
+
+      span {
+        color: $color-brand;
+      }
+    }
+  }
+
+  // LEADERBOARD
+  &__body {
+    &__filters,
+    &__tags,
+    &__score {
+      padding: 10px 30px;
+      height: toRem(60);
+
+      color: var(--color-text);
+    }
+    &__tags,
+    &__score {
+      display: grid;
+      grid-template-columns: 15% 65% 20%;
+      align-content: center;
+    }
+
+    &__filters {
+      background: $color-brand;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      select {
+        background-color: $color-brand;
+        color: $color-white;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        outline: none;
+        border: none;
+      }
+
+      option {
+        background: $color-white;
+        color: $color-dark;
+        text-transform: none;
+      }
+    }
+
+    &__tags {
+      background: var(--bg-layout) ;
+      font-size: toRem(18);
+      font-weight: 600;
+    }
+
+    &__score {
+      background: var(--bg-input);
+    }
+
+    &__score:nth-child(2n) {
+      background: var(--bg-component);
+    }
+  }
+}
