@@ -46,7 +46,12 @@ function Header() {
           </li>
           <li className="Header__nav-element">
             <div className="Header__user">
-              <div className="Header__user-profile">
+              <div
+                className="Header__user-profile"
+                onClick={() => {
+                  navigation(info.routes.settings);
+                }}
+              >
                 <img src={UserIcon} alt="User icon" />
               </div>
             </div>

@@ -76,6 +76,7 @@ const getTodaysWodApi = async (callback) => {
     const scoreTypeData = await getWodTypeApi(data[0].id_score_type);
     data[0].score_type = scoreTypeData;
     if (callback) callback(data);
+    console.log(data)
     return data[0];
   } catch (err) {
     throw err;

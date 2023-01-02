@@ -17,7 +17,7 @@
     padding: 8px 20px;
     transition: $theme-transition;
 
-    @include mq(lg) {
+    @include mq(xl) {
       padding: 8px 40px;
     }
   }
@@ -31,7 +31,7 @@
     border: none;
     background: transparent;
 
-    @include mq(lg) {
+    @include mq(xl) {
       display: none;
     }
   }
@@ -89,7 +89,7 @@
   .current-location {
     display: none;
 
-    @include mq(lg) {
+    @include mq(xl) {
       display: flex;
       justify-content: center;
       align-items: center;

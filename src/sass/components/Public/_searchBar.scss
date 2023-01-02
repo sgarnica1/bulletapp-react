@@ -1,7 +1,9 @@
 .SearchBar {
-  margin-bottom: toRem(50);
+  margin-bottom: 16px;
+  height: 50px;
 
   &__input-container {
+    height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -12,8 +14,8 @@
   }
 
   &__icon {
-    height: toRem(25);
-    width: toRem(25);
+    height: toRem(20);
+    width: toRem(20);
     margin-right: toRem(15);
   }
 

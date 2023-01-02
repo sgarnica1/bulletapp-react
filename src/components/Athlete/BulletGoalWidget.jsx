@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useWods } from "../../hooks/useWods";
 import { useWodScores } from "../../hooks/useWodScores";
+
+// COMPONENTS
 import { Button } from "../Public/Button";
+import { CardContainer } from "../Public/CardContainer";
+
+// UTILS
 import { utils } from "../../utils/utils";
 import { info } from "../../utils/info";
 
@@ -25,7 +30,7 @@ const BulletGoalWidget = () => {
   const error = false;
   const wodScoresLoading = false;
   const wod = {
-    score_type: info.firebase.values.scoreTypes.reps,
+    score_type: info.firebase.values.scoreTypes.reps.name,
   };
   const wodScore = {};
 
@@ -37,7 +42,7 @@ const BulletGoalWidget = () => {
   //     wodScoresActions.getWodScoreByUserId(wod.id, user.uid || user.user_id);
   //   // IF THERE IS A WOD SCORE, SET THE SCORE
   //   if (wodScore && wodScore.score) {
-  //     if (wod.score_type === info.firebase.values.scoreTypes.time) {
+  //     if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
   //       setMinutes(wodScore.score.minutes);
   //       setSeconds(wodScore.score.seconds);
   //     } else {
@@ -54,7 +59,7 @@ const BulletGoalWidget = () => {
     // let score;
 
     // // REVIEW SCORE TYPE (TIME OR REPS)
-    // if (wod.score_type === info.firebase.values.scoreTypes.time) {
+    // if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
     //   score = {
     //     minutes: parseInt(minutes),
     //     seconds: parseInt(seconds),
@@ -106,7 +111,7 @@ const BulletGoalWidget = () => {
           )}
           {/* TIME INPUT */}
           {!wodScoresLoading &&
-            wod.score_type === info.firebase.values.scoreTypes.time && (
+            wod.score_type === info.firebase.values.scoreTypes.time.name && (
               <div className="BulletGoalWidget__form__input-container">
                 <input
                   type="number"
@@ -143,7 +148,7 @@ const BulletGoalWidget = () => {
             )}
           {/* REPS INPUT */}
           {!wodScoresLoading &&
-            wod.score_type === info.firebase.values.scoreTypes.reps && (
+            wod.score_type === info.firebase.values.scoreTypes.reps.name && (
               <input
                 type="number"
                 className="BulletGoalWidget__form__input"

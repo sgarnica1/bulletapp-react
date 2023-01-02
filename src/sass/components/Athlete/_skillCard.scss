@@ -1,0 +1,17 @@
+.SkillCard {
+  width: 100%;
+  padding: 15px;
+
+  &__title {
+    margin-bottom: 5px;
+
+    font-size: toRem(22);
+    font-weight: bold;
+    color: $color-brand;
+    line-height: 1;
+  }
+
+  .DateWidget {
+    text-transform: uppercase;
+  }
+}

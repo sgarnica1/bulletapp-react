@@ -29,16 +29,4 @@
   &__description {
     @extend .Banner__description;
   }
-
-  &__date {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    p {
-      color: var(--color-text);
-    }
-    img {
-      height: 20px;
-    }
-  }
 }

@@ -1,0 +1,39 @@
+.PRCard {
+  width: 100%;
+  padding: 15px;
+
+  &__description {
+    font-size: toRem(18);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: toRem(10);
+  }
+
+  &__title {
+    margin-bottom: 5px;
+  }
+
+  &__title,
+  &__value {
+    font-size: toRem(22);
+    font-weight: bold;
+    color: $color-brand;
+    line-height: 1;
+  }
+
+  &__value,
+  &__units {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__value {
+    display: block;
+    font-size: toRem(26);
+    margin-bottom: 10px;
+  }
+
+  .DateWidget {
+    text-transform: uppercase;
+  }
+}

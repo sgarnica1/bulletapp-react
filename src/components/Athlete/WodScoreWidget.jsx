@@ -28,7 +28,7 @@ const WodScoreWidget = () => {
       wodScoresActions.getWodScoreByUserId(wod.id, user.uid || user.user_id);
     // IF THERE IS A WOD SCORE, SET THE SCORE
     if (wodScore && wodScore.score) {
-      if (wod.score_type === info.firebase.values.scoreTypes.time) {
+      if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
         setMinutes(wodScore.score.minutes);
         setSeconds(wodScore.score.seconds);
       } else {
@@ -44,7 +44,7 @@ const WodScoreWidget = () => {
     let score;
 
     // REVIEW SCORE TYPE (TIME OR REPS)
-    if (wod.score_type === info.firebase.values.scoreTypes.time) {
+    if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
       score = {
         minutes: parseInt(minutes),
         seconds: parseInt(seconds),
@@ -72,7 +72,7 @@ const WodScoreWidget = () => {
   // TODO - Handle success ui
 
   // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
-  if (wod && wod !== -1) {
+  if (wod && wod != -1) {
     return (
       <article className="WodScoreWidget">
         <h1 className="WodScoreWidget__title">¿Cómo te fue hoy?</h1>
@@ -93,7 +93,7 @@ const WodScoreWidget = () => {
           )}
           {/* TIME INPUT */}
           {!wodScoresLoading &&
-            wod.score_type === info.firebase.values.scoreTypes.time && (
+            wod.score_type === info.firebase.values.scoreTypes.time.name && (
               <div className="WodScoreWidget__form__input-container">
                 <input
                   type="number"
@@ -130,7 +130,7 @@ const WodScoreWidget = () => {
             )}
           {/* REPS INPUT */}
           {!wodScoresLoading &&
-            wod.score_type === info.firebase.values.scoreTypes.reps && (
+            wod.score_type === info.firebase.values.scoreTypes.reps.name && (
               <input
                 type="number"
                 className="WodScoreWidget__form__input"

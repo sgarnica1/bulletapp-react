@@ -1,0 +1,6 @@
+.WidgetContainer {
+  @include mq(md) {
+    // display: flex;
+    // flex-wrap: wrap;
+  }
+}

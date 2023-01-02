@@ -1,9 +1,16 @@
 .BulletGoalWidget {
+  width: 100%;
   max-width: $max-width-card;
+  max-height: 240px;
   padding: toRem(15);
   margin-bottom: $widget-margin-bottom;
+  margin-right: $widget-margin-right;
   background: $bg-gradient-green;
   border-radius: $border-radius;
+
+  @include mq(md) {
+    max-width: $max-width-card-md;
+  }
 
   &__title {
     color: $color-white;

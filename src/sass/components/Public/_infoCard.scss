@@ -4,13 +4,16 @@
   align-items: center;
   width: 100%;
   max-width: $max-width-card;
+  margin-right: $widget-margin-right;
   background: var(--bg-component);
   border-radius: $border-radius;
-  margin-bottom: toRem(20);
   padding: 15px;
   transform: translateY(0px);
   transition: ease 0.5s;
-  box-shadow: var(--box-shadow);
+
+  @include mq(md) {
+    max-width: $max-width-card-md;
+  }
 
   &.button {
     cursor: pointer;
@@ -58,10 +61,5 @@
   &__additional-component {
     color: var(--color-text);
     opacity: 0.9;
-  }
-
-  &:hover {
-    transform: translateY(-5px);
-    transition: ease 0.5s;
   }
 }

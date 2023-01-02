@@ -13,6 +13,19 @@ const info = {
         lg: "lg",
       },
     },
+    addRecordForm: {
+      recordType: {
+        personalRecord: "personal_record",
+        newSkill: "new_skill",
+        personalGoal: "personal_goal",
+      },
+      recordCategories: {
+        maxLift: "Max Lift",
+        minTime: "Min Time",
+        maxReps: "Max Reps",
+        unlockSkill: "Desbloquear habilidad",
+      },
+    },
   },
   data: {
     days: [
@@ -23,6 +36,20 @@ const info = {
       "Jueves",
       "Viernes",
       "Sábado",
+    ],
+    months: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
     ],
     weekDayNumber: {
       sunday: {
@@ -91,20 +118,6 @@ const info = {
         ref: "S",
       },
     ],
-    months: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ],
   },
   firebase: {
     values: {
@@ -114,8 +127,18 @@ const info = {
         coach: "coach",
       },
       scoreTypes: {
-        time: "time",
-        reps: "reps",
+        time: {
+          name: "time",
+          units: "min",
+        },
+        reps: {
+          name: "reps",
+          units: "REPS",
+        },
+        weight: {
+          name: "weight",
+          units: "lbs",
+        },
       },
     },
     collections: {
@@ -216,6 +239,7 @@ const info = {
     plans: "/plans",
     profile: "/perfil",
     programming: "/programación",
+    records: "/records",
     serverError: "server-error",
     settings: "/ajustes",
     videos: "/videos",
@@ -241,6 +265,7 @@ const info = {
     plans: "Planes",
     progrgamming: "Programación",
     profile: "Perfil",
+    records: "Records",
     settings: "Ajustes",
     videos: "Videos",
   },

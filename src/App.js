@@ -15,8 +15,9 @@ import { Home } from "./pages/Athlete/Home";
 import { Leaderboard } from "./pages/Athlete/Leaderboard";
 import { Login } from "./pages/Public/Login";
 import { NotFound } from "./pages/Public/NotFound";
-import { SingleAthlete } from "./pages/Admin/SingleAthlete";
+import { Records } from "./pages/Athlete/Records";
 import { Settings } from "./pages/Athlete/Settings";
+import { SingleAthlete } from "./pages/Admin/SingleAthlete";
 
 // PROTECTED ROUTES
 import { AdminRoute } from "./utils/components/AdminRoute";
@@ -40,15 +41,12 @@ function App() {
     <Router>
       <div className="App" data-theme={theme}>
         <Dashboard>
-          <Navbar />
-          <Header />
-          {/* {user ? (
+          {user ? (
             <>
               <Navbar />
               <Header />
             </>
-          ) : null} */}
-
+          ) : null}
           <Routes>
             <Route element={<LoggedOutRoute />}>
               <Route path={info.routes.login} element={<Login />} />
@@ -56,6 +54,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path={info.routes.home} element={<Home />} />
               <Route path={info.routes.leaderboard} element={<Leaderboard />} />
+              <Route path={info.routes.records} element={<Records />} />
               <Route path={info.routes.settings} element={<Settings />} />
             </Route>
             <Route element={<AdminRoute />}>

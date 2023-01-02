@@ -5,19 +5,21 @@ import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 
 // Components
+import { AddButton } from "../../components/Public/AddButton";
+import { BulletGoalWidget } from "../../components/Athlete/BulletGoalWidget";
+import { CardContainer } from "../../components/Public/CardContainer";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { HomeBanner } from "../../components/Public/HomeBanner";
-import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
-import { BulletGoalWidget } from "../../components/Athlete/BulletGoalWidget";
-import { StatCard } from "../../components/Public/StatCard";
-import { LatestPR } from "../../components/Athlete/LatestPR";
-import { MonthlyGoal } from "../../components/Athlete/MonthlyGoal";
-import { AddButton } from "../../components/Public/AddButton";
 import { InfoCard } from "../../components/Public/InfoCard";
+import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
+import { PRCard } from "../../components/Athlete/PRCard";
+import { WidgetContainer } from "../../components/Layout/WidgetContainer";
+import { WidgetContainerParent } from "../../components/Layout/WidgetContainerParent";
+import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
 
 // IMG
-import GymImg from "../../assets/img/bullet-crossfit-gym.jpg";
 import AthleteImg from "../../assets/img/athlete.jpg";
+import Athlete2Img from "../../assets/img/athlete_2.jpg";
 import HoodiesImg from "../../assets/img/sudaderas.jpg";
 import UserIcon from "../../assets/icon/user.svg";
 
@@ -51,32 +53,23 @@ function Home() {
         {/* SCORE REGISTRATION */}
         <WodScoreWidget />
 
-        <AddButton
-          link={info.routes.leaderboard}
-          title="Leaderboard"
-        />
+        {/* LEADERBOARD */}
+        <AddButton link={info.routes.leaderboard} title="Leaderboard" />
 
         {/* LATEST PR */}
-        <StatCard
-          route="#"
-          title="Tu PR más reciente"
-          additionalInfo={utils.getCurrentDate()}
-        >
-          <LatestPR title="Back Squat" value={205} units="lbs" />
-        </StatCard>
-
-        {/* CURRENT GOAL */}
-        <StatCard
-          route="#"
-          title="Tu meta del mes"
-          additionalInfo="En progreso..."
-        >
-          <MonthlyGoal description="Du's" status={60} />
-        </StatCard>
+        <h2 className="subtitle">Marcas personales</h2>
+        <PRCard
+          link="#"
+          title="Back Squat"
+          value={205}
+          units="lbs"
+          date={"18 Jun 2022"}
+          latest={true}
+        />
 
         {/* ADD NEW PR */}
         <AddButton
-          link={"#"}
+          link={info.routes.records}
           img={AthleteImg}
           alt="CrossFit Athlete Front Rack Position"
           title="Añadir Nuevo PR"
@@ -84,17 +77,27 @@ function Home() {
 
         {/* ADD NEW GOAL */}
         <AddButton
-          link={"#"}
-          img={GymImg}
-          alt="Bullet CrossFit Gym"
+          link={info.routes.records}
+          img={Athlete2Img}
+          alt="Bullet CrossFit shirt"
           title="Añadir Nueva Meta"
         />
 
+        {/* CURRENT GOAL */}
+        <h3 className="subtitle">Meta personal</h3>
+        <PersonalGoal
+          link="#"
+          description="Du's"
+          progress={60}
+          status="En progreso"
+          date={"20 Ene 2023"}
+        />
+
         {/* BULLET GOAL */}
+        <h3 className="subtitle">Reto del mes</h3>
         <BulletGoalWidget />
 
-        <h4 className="App__subtitle">Más para ti</h4>
-
+        <h4 className="subtitle">Más para ti</h4>
         {/* PROFILE */}
         {/* {!error && !loading && ( */}
         <InfoCard

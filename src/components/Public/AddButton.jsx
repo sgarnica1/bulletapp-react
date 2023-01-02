@@ -1,19 +1,16 @@
-import { Link } from "react-router-dom";
-import RightArrow from "../../assets/icon/right-arrow.svg";
+import { CardContainer } from "./CardContainer";
 
-const AddButton = ({ link, img, alt, title }) => {
+const AddButton = ({ link, img, alt, title, clickHandler }) => {
   return (
-    <Link to={link} className="AddButton">
-      {img && <img src={img} alt={alt} className="AddButton__img" />}
-      <div className="AddButton__info">
+    <CardContainer
+      link={link}
+      clickHandler={clickHandler ? clickHandler : null}
+    >
+      <div className="AddButton">
+        {img && <img src={img} alt={alt} className="AddButton__img" />}
         <p className="AddButton__title">{title}</p>
-        <img
-          src={RightArrow}
-          alt="Right Green Arrow"
-          className="AddButton__icon"
-        />
       </div>
-    </Link>
+    </CardContainer>
   );
 };
 

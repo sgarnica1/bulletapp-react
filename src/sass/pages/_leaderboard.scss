@@ -2,6 +2,7 @@
   .SearchBar {
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 40px;
   }
 
   &__container {
@@ -19,15 +20,6 @@
     font-size: toRem(26);
     font-weight: bold;
     margin-bottom: toRem(5);
-  }
-
-  &__date {
-    margin-bottom: 30px;
-    font-size: toRem(15);
-    font-weight: 300;
-    color: var(--color-text);
-    opacity: 0.8;
-    letter-spacing: 2px;
   }
 
   &__day-picker {
@@ -148,7 +140,7 @@
     }
 
     &__tags {
-      background: var(--bg-layout) ;
+      background: var(--bg-layout);
       font-size: toRem(18);
       font-weight: 600;
     }

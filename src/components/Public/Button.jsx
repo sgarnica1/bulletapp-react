@@ -43,6 +43,8 @@ const Button = ({
         {text}
       </a>
     );
+
+  return null;
 };
 
 export { Button };

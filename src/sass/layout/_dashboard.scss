@@ -5,7 +5,7 @@
   background: var(--bg-body);
   transition: $theme-transition;
 
-  @include mq(lg) {
+  @include mq(xl) {
     grid-template-columns: 18% 82%;
   }
 }

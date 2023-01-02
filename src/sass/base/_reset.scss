@@ -31,6 +31,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: 6px;
 }
 
+body.noscroll {
+  overflow-y: hidden;
+}
+
 label,
 a,
 button {
@@ -65,11 +69,31 @@ a {
 
 // PERSONAL APP CLASSES
 .App {
-  &__subtitle {
+  .title {
+    color: var(--color-text);
+    font-size: toRem(24);
+    font-weight: 600;
+    margin-bottom: toRem(10);
+  }
+  .title.margin {
+    color: var(--color-text);
+    font-size: toRem(24);
+    font-weight: 600;
+    margin-bottom: toRem(30);
+  }
+  .subtitle {
     margin: 40px 0 20px 0;
     color: var(--color-text);
     font-weight: 600;
     font-size: toRem(20);
+  }
+  .date {
+    margin-bottom: 30px;
+    font-size: toRem(15);
+    font-weight: 300;
+    color: var(--color-text);
+    opacity: 0.8;
+    letter-spacing: 2px;
   }
 }
 

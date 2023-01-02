@@ -20,7 +20,7 @@ function Settings() {
   return (
     <div className="Settings">
       <ContentContainer>
-        <h1 className="Settings__title">Ajustes</h1>
+        <h1 className="title margin">Ajustes</h1>
         <InfoCard
           link={info.routes.profile}
           img={HoodiesImg}

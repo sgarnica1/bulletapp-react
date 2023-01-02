@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
+import { useWods } from "../../hooks/useWods";
+
+// COMPONENTS
 import { ContentContainer } from "../../components/Layout/ContentContainer";
+import { DateWidget } from "../../components/Public/DateWidget";
 import { SearchBar } from "../../components/Public/SearchBar";
+
+// UTILS
 import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 
 function Leaderboard() {
   // TODO - Make searchbar work
+  const { wods: wods2, actions: wodActions } = useWods();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [wod, setWod] = useState(null);
@@ -73,6 +80,8 @@ function Leaderboard() {
   ];
 
   useEffect(() => {
+    // wodActions.getWeeklyWods()
+
     setWod(null);
     wods.forEach((wod) => {
       if (wod.day === weekDay) setWod(wod);
@@ -89,7 +98,7 @@ function Leaderboard() {
         <div className="Leaderboard__container">
           <div className="Leaderboard__header">
             <h1 className="Leaderboard__title">Leaderboard</h1>
-            <p className="Leaderboard__date">{utils.getCurrentDate()}</p>
+            <DateWidget date={utils.getCurrentDate()} />
 
             {/* DAY PICKER */}
             <div className="Leaderboard__day-picker">
@@ -163,7 +172,13 @@ function Leaderboard() {
                     {score.athlete.first_name} {score.athlete.last_name}
                   </p>
                   <span className="Leaderboard__body__score-value">
-                    {score.score.minutes}:{score.score.seconds}
+                    {score.score.minutes < 10
+                      ? `0${score.score.minutes}`
+                      : `${score.score.minutes}`}
+                    :
+                    {score.score.seconds < 10
+                      ? `0${score.score.seconds}`
+                      : `${score.score.seconds}`}
                   </span>
                 </div>
               ))}

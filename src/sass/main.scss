@@ -16,15 +16,21 @@
 @import "components/admin/plansCard";
 
 // COMPONENTS - ATHLETE
-@import "components/athlete/wodScoreWidget";
+@import "components/Athlete/addRecordForm";
+@import "components/Athlete/addRecordFormContainer";
 @import "components/athlete/goalScoreWidget";
-@import "components/athlete/monthlyGoal";
-@import "components/athlete/latestPR";
+@import "components/athlete/personalGoal";
+@import "components/athlete/prCard";
+@import "components/athlete/skillCard";
+@import "components/athlete/wodScoreWidget";
 
 // COMPONENTS - PUBLIC
 @import "components/Public/addButton";
 @import "components/public/button";
 @import "components/public/banner";
+@import "components/public/cardContainer";
+@import "components/public/cardsList";
+@import "components/public/dateWidget";
 @import "components/public/datePicker";
 @import "components/public/errorBanner";
 @import "components/public/inputContainer";
@@ -32,14 +38,13 @@
 @import "components/public/loadingIcon";
 @import "components/public/searchBar";
 
-@import "components/public/statCard";
-@import "components/public/cardsList";
-
 // LAYOUT
 @import "layout/dashboard";
 @import "layout/contentContainer";
 @import "layout/header";
 @import "layout/navbar";
+@import "layout/widgetContainer";
+@import "layout/widgetContainerParent";
 
 // PAGES
 @import "pages/athleteList";
@@ -48,6 +53,7 @@
 @import "pages/leaderboard";
 @import "pages/login";
 @import "pages/notFound";
+@import "pages/records";
 @import "pages/settings";
 
 // THEMES

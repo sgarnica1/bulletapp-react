@@ -1,0 +1,18 @@
+.DateWidget {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+
+  &.mb {
+    margin-bottom: 30px;
+  }
+
+  p {
+    margin-left: 10px;
+    font-size: toRem(15);
+    font-weight: 300;
+    color: var(--color-text);
+    opacity: 0.8;
+    letter-spacing: 1px;
+  }
+}
