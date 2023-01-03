@@ -105,7 +105,7 @@
 
   &__navitem.active a,
   &__navitem.active p {
-    color: $color-secondary;
+    color: $color-brand;
   }
 
   &__navitem {
@@ -134,7 +134,7 @@
   }
 
   &__navlink:hover {
-    color: $color-secondary;
+    color: $color-brand;
   }
 
   &__navdropdown {
@@ -196,7 +196,7 @@
         color: $color-primary;
       }
       .navdropdown__element a:hover {
-        color: $color-secondary;
+        color: $color-brand;
       }
     }
   }

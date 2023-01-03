@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDashboard } from "../../contexts/DashboardContext";
 
-function Dropdown({ children }) {
+function Dropdown({ children, title }) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [activeWithin, setActiveWithin] = useState(false);
+  const { activeView } = useDashboard();
+
+  useEffect(() => {
+    setActiveWithin(false);
+    children.forEach((element) =>
+      element.props.title === activeView ? setActiveWithin(true) : null
+    );
+  }, [activeView]);
 
   return (
     <li
-      className="Navbar__navitem Navbar__navdropdown"
+      className={`Navbar__navitem Navbar__navdropdown  ${
+        activeWithin && "active"
+      }`}
       onClick={() => setShowDropdown((prevState) => !prevState)}
     >
       <button
@@ -14,7 +26,7 @@ function Dropdown({ children }) {
           showDropdown && "show"
         }`}
       >
-        <p>Sucursales</p>
+        <p>{title}</p>
         <span></span>
       </button>
       <ul className={`navdropdown__container ${showDropdown && "show"}`}>

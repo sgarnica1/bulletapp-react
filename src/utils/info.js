@@ -223,7 +223,7 @@ const info = {
       invalidPassword:
         "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
       invalidMatchingPassword: "Las contraseñas no coinciden",
-      invalidEmail: "Correo electrónico incorrecto"
+      invalidEmail: "Correo electrónico incorrecto",
     },
   },
   requests: {
@@ -246,12 +246,14 @@ const info = {
     passwordRecover: "/contrasena/recuperar",
     payments: "/pagos",
     plans: "/planes",
+    prs: "/records/prs",
     profile: "/perfil",
     programming: "/programacion",
     records: "/records",
     recordHistory: "/records/historial",
     serverError: "server-error",
     settings: "/ajustes",
+    skills: "/records/skills",
     singleAthlete: "/atletas",
     videos: "/videos",
   },
@@ -262,6 +264,7 @@ const info = {
     },
   },
   views: {
+    addAthlete: "Añadir Atleta",
     athletes: "Atletas",
     dashboard: "Escritorio",
     groups: "Clases",
@@ -274,10 +277,12 @@ const info = {
     },
     payments: "Pagos",
     plans: "Planes",
+    prs: "PRs",
     progrgamming: "Programación",
     profile: "Perfil",
-    records: "Records",
+    records: "Personal Records",
     settings: "Ajustes",
+    skills: "Skills",
     videos: "Videos",
   },
 };

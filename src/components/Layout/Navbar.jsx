@@ -1,9 +1,14 @@
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import { Navitem } from "./Navitem";
+import { useNavigate } from "react-router-dom";
+
+// COMPONENTS
 import { Dropdown } from "./Dropdown";
 import { DropdownElement } from "./DropdownElement";
+import { Navitem } from "./Navitem";
+
+// UTILS
+import { navMenu, type } from "../../utils/navMenu";
 import { info } from "../../utils/info";
 
 function Navbar() {
@@ -11,54 +16,102 @@ function Navbar() {
   const { logoutUser } = useAuth();
   const navigation = useNavigate();
 
+  const user = {
+    role: info.firebase.values.roles.athlete,
+  };
+
   return (
     <aside className={`Navbar ${showNav && "show"}`}>
+      {/* HAMBURGUER BUTTON */}
       <button className="Navbar__close-btn" onClick={() => setShowNav(false)}>
         <span></span>
       </button>
+      {/* NAVIGATION */}
       <nav className="Navbar__container">
         <div className="Navbar__content">
           <ul className="Navbar__navlist">
-            <Navitem title={info.views.dashboard} path={info.routes.home} />
-            <Dropdown>
-              <DropdownElement
-                title={info.views.locations.juriquilla}
-                path={info.routes.locations.juriquilla}
-              />
-              <DropdownElement
-                title={info.views.locations.zibata}
-                path={info.routes.locations.zibata}
-              />
-              <DropdownElement
-                title={info.views.locations.grandreserva}
-                path={info.routes.locations.grandreserva}
-              />
-            </Dropdown>
-            <Navitem title={info.views.payments} path={info.routes.payments} />
-            <Navitem title={info.views.athletes} path={info.routes.athletes} />
-            <Navitem title={info.views.groups} path={info.routes.groups} />
-            <Navitem title={info.views.plans} path={info.routes.plans} />
+            {navMenu[user?.role].map((menu, mainIndex) => {
+              // MAIN MENU
+              if (menu.type === type.mainMenu && menu.active)
+                return menu.elements.map((el) => {
+                  // ITEM
+                  if (el.type === type.item && el.active)
+                    return (
+                      <Navitem key={el.name} title={el.name} path={el.route} />
+                    );
+                  // DROPDOWN
+                  if (el.type === type.dropdown && el.active)
+                    return (
+                      <Dropdown title={el.name} key={el.name}>
+                        {el.elements.map((dropEl) => {
+                          if (dropEl.active)
+                            return (
+                              <DropdownElement
+                                key={dropEl.name}
+                                title={dropEl.name}
+                                path={dropEl.route}
+                              />
+                            );
+                        })}
+                      </Dropdown>
+                    );
+                });
+              // SUBMENUS
+              if (menu.type === type.subMenu && menu.active)
+                return (
+                  <div key={mainIndex}>
+                    {/* SUBTITLE */}
+                    <h4 key={Math.random()} className="Navbar__subtitle">
+                      {menu.subtitle}
+                    </h4>
+                    {menu.elements.map((el) => {
+                      // LOGOUT
+                      if (el.type === type.logout)
+                        return (
+                          <li
+                            key={el.name}
+                            className="Navbar__navlink"
+                            onClick={() =>
+                              logoutUser(() => {
+                                navigation("/login");
+                                setShowNav(false);
+                              })
+                            }
+                          >
+                            Salir
+                          </li>
+                        );
 
-            <h4 className="Navbar__subtitle">Recursos</h4>
-            <Navitem
-              title={info.views.progrgamming}
-              path={info.routes.programming}
-            />
-            <Navitem title={info.views.videos} path={info.routes.videos} />
+                      // ITEM
+                      if (el.type === type.item && el.active)
+                        return (
+                          <Navitem
+                            key={el.name}
+                            title={el.name}
+                            path={el.route}
+                          />
+                        );
 
-            <h4 className="Navbar__subtitle">Cuenta</h4>
-            <Navitem title={info.views.settings} path={info.routes.settings} />
-            <li
-              className="Navbar__navitem"
-              onClick={() =>
-                logoutUser(() => {
-                  navigation("/login");
-                  setShowNav(false);
-                })
-              }
-            >
-              Salir
-            </li>
+                      // DROPDOWN
+                      if (el.type === type.dropdown && el.active)
+                        return (
+                          <Dropdown title={el.name} key={el.name}>
+                            {el.elements.map((dropEl) => {
+                              if (dropEl.active)
+                                return (
+                                  <DropdownElement
+                                    key={dropEl.name}
+                                    title={dropEl.name}
+                                    path={dropEl.route}
+                                  />
+                                );
+                            })}
+                          </Dropdown>
+                        );
+                    })}
+                  </div>
+                );
+            })}
           </ul>
         </div>
       </nav>

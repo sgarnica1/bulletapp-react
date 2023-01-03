@@ -2,15 +2,13 @@ import { Link } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
 
 function DropdownElement({ title, path }) {
-  const { currentLocation, setCurrentLocation, setShowNav } = useDashboard();
+  const { activeView, setActiveView, setShowNav } = useDashboard();
 
   return (
     <li
-      className={`navdropdown__element ${
-        currentLocation === title && "active"
-      }`}
+      className={`navdropdown__element ${activeView === title && "active"}`}
       onClick={() => {
-        setCurrentLocation(title);
+        setActiveView(title);
         setShowNav(false);
       }}
     >
