@@ -13,7 +13,6 @@ import { Banner } from "../../components/Public/Banner";
 import { SearchBar } from "../../components/Public/SearchBar";
 
 function Athletes() {
-
   const navigate = useNavigate();
   const [refetch, setRefetch] = useState(false);
   const { athletes, loading, error, actions } = useAthletes();

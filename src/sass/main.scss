@@ -18,6 +18,7 @@
 // COMPONENTS - ATHLETE
 @import "components/Athlete/addRecordForm";
 @import "components/Athlete/addRecordFormContainer";
+@import "components/athlete/addRegisterWidget";
 @import "components/athlete/goalScoreWidget";
 @import "components/athlete/personalGoal";
 @import "components/athlete/prCard";
@@ -26,6 +27,7 @@
 
 // COMPONENTS - PUBLIC
 @import "components/Public/addButton";
+@import "components/Public/birthdayCelebrationWidget";
 @import "components/public/button";
 @import "components/public/banner";
 @import "components/public/cardContainer";
@@ -54,6 +56,7 @@
 @import "pages/login";
 @import "pages/notFound";
 @import "pages/records";
+@import "pages/recordHistory";
 @import "pages/settings";
 
 // THEMES

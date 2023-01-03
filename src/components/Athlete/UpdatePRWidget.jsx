@@ -6,12 +6,13 @@ import { useWodScores } from "../../hooks/useWodScores";
 // COMPONENTS
 import { Button } from "../Public/Button";
 import { AddRegisterWidgetContainer } from "./AddRegisterWidgetContainer";
+
 // UTILS
 import { utils } from "../../utils/utils";
 import { info } from "../../utils/info";
 
-const BulletGoalWidget = () => {
-  const [reps, setReps] = useState(0);
+const UpdatePRWidget = ({ title, description }) => {
+  const [reps, setReps] = useState("");
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   const [refetch, setRefetch] = useState(false);
@@ -26,24 +27,24 @@ const BulletGoalWidget = () => {
   const wodScore = {};
 
   useEffect(() => {
-    console.log("Bullet Goal Widget");
+    console.log("Update PR Form");
   }, []);
 
   // SUBMIT FUNCTION
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Adding Bullet goal score...");
+    console.log("Updating PR...");
   };
 
   // TODO - Handle errors ui
   // TODO - Handle success ui
 
+  // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
   return (
     <AddRegisterWidgetContainer
-      title="Reto Bullet"
-      description="Max Burpees (5 min)"
+      title="Actualizar PR"
+      description="Se siente bien superarse a uno mismo"
       error={error}
-      date={true}
     >
       <form
         action=""
@@ -101,7 +102,7 @@ const BulletGoalWidget = () => {
             <input
               type="number"
               className="AddRegisterWidget__form__input"
-              placeholder="0"
+              placeholder="lbs"
               value={reps}
               onChange={(e) => {
                 if (e.target.value < 0) e.target.value = 0;
@@ -115,7 +116,7 @@ const BulletGoalWidget = () => {
           style={info.components.button.classes.secondary}
           size={info.components.button.classes.sm}
           fill={true}
-          text={wodScore?.score ? "Actualizar" : "Registrar"}
+          text={loading ? "Actualizando..." : "Actualizar"}
           disabled={loading || error}
         />
       </form>
@@ -123,4 +124,4 @@ const BulletGoalWidget = () => {
   );
 };
 
-export { BulletGoalWidget };
+export { UpdatePRWidget };

@@ -1,0 +1,40 @@
+.BirthdayCelebrationWidget {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: var(--bg-component);
+  color: var(--color-text);
+  border-radius: $border-radius;
+
+  &__title,
+  &__description,
+  &__extra {
+    margin-bottom: toRem(10);
+  }
+
+  &__title {
+    font-size: toRem(22);
+    font-weight: 600;
+    color: $color-brand;
+  }
+
+  &__description {
+    font-size: toRem(16);
+  }
+
+  &__extra {
+    color: var(--color-text);
+    opacity: 0.7;
+    font-size: toRem(14);
+    margin-bottom: 20px;
+  }
+
+  &__img {
+    width: 100%;
+    max-width: 100px;
+    height: 100px;
+  }
+}

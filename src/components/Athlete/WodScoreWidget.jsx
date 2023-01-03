@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useWods } from "../../hooks/useWods";
 import { useWodScores } from "../../hooks/useWodScores";
+
+// COMPONENTS
 import { Button } from "../Public/Button";
-import { utils } from "../../utils/utils";
+import { AddRegisterWidgetContainer } from "./AddRegisterWidgetContainer";
+
+// UTILS
 import { info } from "../../utils/info";
+import { utils } from "../../utils/utils";
 
 const WodScoreWidget = () => {
   const { user } = useAuth();
@@ -14,17 +19,18 @@ const WodScoreWidget = () => {
     loading: wodScoresLoading,
     actions: wodScoresActions,
   } = useWodScores();
-  //
+
+  // INITIAL STATES
   const [reps, setReps] = useState(0);
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
-    // GET TODAYS WOD
-    if (!wod) wodActions.getTodaysWod();
-    // GET WOD SCORE FROM USER
+    if (!wod) wodActions.getTodaysWod(); // GET TODAYS WOD
+
     if (user && wod && wod != -1 && !wodScore)
+      // GET WOD SCORE FROM USER
       wodScoresActions.getWodScoreByUserId(wod.id, user.uid || user.user_id);
     // IF THERE IS A WOD SCORE, SET THE SCORE
     if (wodScore && wodScore.score) {
@@ -74,13 +80,13 @@ const WodScoreWidget = () => {
   // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
   if (wod && wod != -1) {
     return (
-      <article className="WodScoreWidget">
-        <h1 className="WodScoreWidget__title">¿Cómo te fue hoy?</h1>
-        <p className="WodScoreWidget__description">Registra tu score del día</p>
-
+      <AddRegisterWidgetContainer
+        title="¿Cómo te fue hoy?"
+        description="Registra tu score del día"
+        error={error}
+      >
         <form
-          action=""
-          className="WodScoreWidget__form"
+          className="AddRegisterWidget__form"
           onSubmit={(event) => handleSubmit(event)}
         >
           {/* LOADING INPUT */}
@@ -88,16 +94,16 @@ const WodScoreWidget = () => {
             <input
               type="text"
               readOnly
-              className="WodScoreWidget__form__input"
+              className="AddRegisterWidget__form__input"
             />
           )}
           {/* TIME INPUT */}
           {!wodScoresLoading &&
             wod.score_type === info.firebase.values.scoreTypes.time.name && (
-              <div className="WodScoreWidget__form__input-container">
+              <div className="AddRegisterWidget__form__input-container">
                 <input
                   type="number"
-                  className="WodScoreWidget__form__input"
+                  className="AddRegisterWidget__form__input"
                   placeholder="00"
                   value={minutes}
                   max={59}
@@ -113,7 +119,7 @@ const WodScoreWidget = () => {
                 <span>:</span>
                 <input
                   type="number"
-                  className="WodScoreWidget__form__input"
+                  className="AddRegisterWidget__form__input"
                   placeholder="00"
                   value={seconds}
                   max={59}
@@ -133,7 +139,7 @@ const WodScoreWidget = () => {
             wod.score_type === info.firebase.values.scoreTypes.reps.name && (
               <input
                 type="number"
-                className="WodScoreWidget__form__input"
+                className="AddRegisterWidget__form__input"
                 placeholder="0"
                 value={reps}
                 onChange={(e) => {
@@ -152,14 +158,7 @@ const WodScoreWidget = () => {
             disabled={loading || error}
           />
         </form>
-        {error && (
-          <div className="WodScoreWidget__error">
-            <p className="WodScoreWidget__error__text">
-              Ocurrió un error, por favor vuelve a intentarlo
-            </p>
-          </div>
-        )}
-      </article>
+      </AddRegisterWidgetContainer>
     );
   }
   return null;

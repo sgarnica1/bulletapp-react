@@ -129,6 +129,7 @@ function Records() {
               <option value="1">Más a menos</option>
             </select>
           </div>
+
           {/* PR LIST */}
           <div className="Records__history__list">
             {prs.map((pr, index) => (
@@ -138,6 +139,7 @@ function Records() {
                 value={pr.value}
                 units={pr.units}
                 date={pr.date}
+                link={info.routes.recordHistory + `/${index + 1}`}
               />
             ))}
           </div>

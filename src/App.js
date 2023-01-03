@@ -16,6 +16,7 @@ import { Leaderboard } from "./pages/Athlete/Leaderboard";
 import { Login } from "./pages/Public/Login";
 import { NotFound } from "./pages/Public/NotFound";
 import { Records } from "./pages/Athlete/Records";
+import { RecordHistory } from "./pages/Athlete/RecordHistory";
 import { Settings } from "./pages/Athlete/Settings";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
 
@@ -55,12 +56,19 @@ function App() {
               <Route path={info.routes.home} element={<Home />} />
               <Route path={info.routes.leaderboard} element={<Leaderboard />} />
               <Route path={info.routes.records} element={<Records />} />
+              <Route
+                path={info.routes.recordHistory + "/:id"}
+                element={<RecordHistory />}
+              />
               <Route path={info.routes.settings} element={<Settings />} />
             </Route>
             <Route element={<AdminRoute />}>
-              <Route path={info.routes.athletes} element={<Athletes />} />
               <Route path={info.routes.addAthlete} element={<AddAthlete />} />
-              <Route path="/atletas/:id" element={<SingleAthlete />} />
+              <Route path={info.routes.athletes} element={<Athletes />} />
+              <Route
+                path={info.routes.singleAthlete + "/:id"}
+                element={<SingleAthlete />}
+              />
             </Route>
 
             <Route path={info.routes.serverError} element={<FirebaseError />} />

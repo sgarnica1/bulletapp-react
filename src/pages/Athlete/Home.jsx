@@ -6,15 +6,13 @@ import { utils } from "../../utils/utils";
 
 // Components
 import { AddButton } from "../../components/Public/AddButton";
+import { BirthdayCelebrationWidget } from "../../components/Public/BirthdayCelebrationWidget";
 import { BulletGoalWidget } from "../../components/Athlete/BulletGoalWidget";
-import { CardContainer } from "../../components/Public/CardContainer";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { HomeBanner } from "../../components/Public/HomeBanner";
 import { InfoCard } from "../../components/Public/InfoCard";
 import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
 import { PRCard } from "../../components/Athlete/PRCard";
-import { WidgetContainer } from "../../components/Layout/WidgetContainer";
-import { WidgetContainerParent } from "../../components/Layout/WidgetContainerParent";
 import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
 
 // IMG
@@ -36,8 +34,10 @@ function Home() {
 
   return (
     <div className="Home">
-      {/* MAIN CONTENT */}
       <ContentContainer>
+        {/* BIRTHDAT CELEBRATION */}
+        {user && user.birthday && <BirthdayCelebrationWidget user={user} />}
+
         {/* HOME BANNER */}
         {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
         {error && !loading && <HomeBanner user={""}></HomeBanner>}
@@ -59,7 +59,7 @@ function Home() {
         {/* LATEST PR */}
         <h2 className="subtitle">Marcas personales</h2>
         <PRCard
-          link="#"
+          link={info.routes.recordHistory + `/${1}`}
           title="Back Squat"
           value={205}
           units="lbs"
