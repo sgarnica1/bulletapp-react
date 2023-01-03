@@ -5,8 +5,8 @@ import { AddAthleteForm } from "../../components/Admin/AddAthleteForm";
 function AddAthlete() {
   return (
     <div className="AddAthlete">
-      <Banner title={"Añadir nuevo atleta"} description={""} />
       <ContentContainer>
+        <Banner title={"Añadir nuevo atleta"} description={""} />
         <AddAthleteForm submitMethod={"post"} />
       </ContentContainer>
     </div>

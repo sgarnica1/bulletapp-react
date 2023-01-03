@@ -218,13 +218,21 @@ const info = {
     authToken: "BCF_TOKEN",
     refreshToken: "BCFRT",
   },
+  messages: {
+    error: {
+      invalidPassword:
+        "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
+      invalidMatchingPassword: "Las contraseñas no coinciden",
+      invalidEmail: "Correo electrónico incorrecto"
+    },
+  },
   requests: {
     refreshToken: "https://securetoken.googleapis.com/v1/token?key=",
   },
   routes: {
     addAthlete: "/atletas/nuevo",
     athletes: "/atletas",
-    changePassword: "/ajustes/cambiar-contraseña",
+    changePassword: "/contrasena/cambiar",
     dashboard: "/escritorio",
     groups: "groups",
     home: "/",
@@ -235,6 +243,7 @@ const info = {
       grandreserva: "sucursales/grandreserva",
     },
     login: "/login",
+    passwordRecover: "/contrasena/recuperar",
     payments: "/pagos",
     plans: "/planes",
     profile: "/perfil",

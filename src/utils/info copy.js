@@ -13,6 +13,19 @@ const info = {
         lg: "lg",
       },
     },
+    addRecordForm: {
+      recordType: {
+        personalRecord: "personal_record",
+        newSkill: "new_skill",
+        personalGoal: "personal_goal",
+      },
+      recordCategories: {
+        maxLift: "Max Lift",
+        minTime: "Min Time",
+        maxReps: "Max Reps",
+        unlockSkill: "Desbloquear habilidad",
+      },
+    },
   },
   data: {
     days: [
@@ -23,6 +36,20 @@ const info = {
       "Jueves",
       "Viernes",
       "Sábado",
+    ],
+    months: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
     ],
     weekDayNumber: {
       sunday: {
@@ -54,49 +81,42 @@ const info = {
         ref: "S",
       },
     },
-    weekDayNumberArray: {
-      sunday: {
+    weekDayNumberArray: [
+      {
+        day: "sunday",
         num: 0,
         ref: "S",
       },
-      monday: {
+      {
+        day: "monday",
         num: 1,
         ref: "L",
       },
-      tuesday: {
+      {
+        day: "tuesday",
         num: 2,
         ref: "M",
       },
-      wednesday: {
+      {
+        day: "wednesday",
         num: 3,
         ref: "M",
       },
-      thursday: {
+      {
+        day: "thursday",
         num: 4,
         ref: "J",
       },
-      friday: {
+      {
+        day: "friday",
         num: 5,
         ref: "V",
       },
-      saturday: {
+      {
+        day: "saturday",
         num: 6,
         ref: "S",
       },
-    },
-    months: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
     ],
   },
   firebase: {
@@ -107,8 +127,18 @@ const info = {
         coach: "coach",
       },
       scoreTypes: {
-        time: "time",
-        reps: "reps",
+        time: {
+          name: "time",
+          units: "min",
+        },
+        reps: {
+          name: "reps",
+          units: "REPS",
+        },
+        weight: {
+          name: "weight",
+          units: "lbs",
+        },
       },
     },
     collections: {
@@ -194,7 +224,7 @@ const info = {
   routes: {
     addAthlete: "/atletas/nuevo",
     athletes: "/atletas",
-    changePassword: "/ajustes/cambiar-contraseña",
+    changePassword: "/contraseña/cambiar",
     dashboard: "/escritorio",
     groups: "groups",
     home: "/",
@@ -205,12 +235,16 @@ const info = {
       grandreserva: "sucursales/grandreserva",
     },
     login: "/login",
+    passwordRecover: "/contraseña/recuperar",
     payments: "/pagos",
-    plans: "/plans",
+    plans: "/planes",
     profile: "/perfil",
-    programming: "/programación",
+    programming: "/programacion",
+    records: "/records",
+    recordHistory: "/records/historial",
     serverError: "server-error",
     settings: "/ajustes",
+    singleAthlete: "/atletas",
     videos: "/videos",
   },
   states: {
@@ -234,6 +268,7 @@ const info = {
     plans: "Planes",
     progrgamming: "Programación",
     profile: "Perfil",
+    records: "Records",
     settings: "Ajustes",
     videos: "Videos",
   },

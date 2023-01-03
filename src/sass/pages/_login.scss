@@ -53,7 +53,7 @@ body {
   &__header {
     &-logo {
       width: 100%;
-      max-width: 200px;
+      max-width: 150px;
       margin-bottom: toRem(40);
     }
   }
@@ -93,10 +93,6 @@ body {
 
   .password-toggle.visible {
     background: url("../../assets/icon/visible.svg");
-  }
-
-  &__input:focus-within {
-    border-bottom-color: $color-secondary;
   }
 
   &__button-container {

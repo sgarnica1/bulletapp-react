@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
-import { InputContainer } from "../../components/Public/InputContainer";
+
+// COMPONENTES
 import { Button } from "../../components/Public/Button";
+import { InputContainer } from "../../components/Public/InputContainer";
+
+// UTILS
 import { info } from "../../utils/info";
 
 // IMG
@@ -13,6 +18,11 @@ function Login() {
   const [passInputType, setPassInputType] = useState("password");
   const { loginUser, error, setError, loggingIn } = useAuth();
   const { theme } = useTheme();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (error) navigate("/server-error");
+  // }, [error]);
 
   return (
     <div className="Login">
@@ -58,7 +68,9 @@ function Login() {
                 }}
               ></span>
             </InputContainer>
-            {error ? <div className="Login__error">{error}</div> : null}
+            {error ? (
+              <div className="Login__error">{error?.message}</div>
+            ) : null}
           </div>
           <div className="Login__button-container">
             <Button
@@ -68,12 +80,15 @@ function Login() {
               text={!loggingIn ? "Ingresar" : "Iniciando sesión..."}
               fill={true}
             />
-            <a href="/" className="Login__passrecover-btn">
+            <Link
+              to={info.routes.passwordRecover}
+              className="Login__passrecover-btn"
+            >
               Recuperar contraseña
-            </a>
+            </Link>
           </div>
         </form>
-        <a href="/" className="Login__privacy">
+        <a href="#" className="Login__privacy">
           Aviso de privacidad
         </a>
       </main>

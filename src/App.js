@@ -10,11 +10,13 @@ import { Navbar } from "./components/Layout/Navbar";
 // PAGES
 import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
+import { ChangePassword } from "./pages/Athlete/ChangePassword";
 import { FirebaseError } from "./pages/Public/FirebaseError";
 import { Home } from "./pages/Athlete/Home";
 import { Leaderboard } from "./pages/Athlete/Leaderboard";
 import { Login } from "./pages/Public/Login";
 import { NotFound } from "./pages/Public/NotFound";
+import { PasswordRecover } from "./pages/Public/PasswordRecover";
 import { Records } from "./pages/Athlete/Records";
 import { RecordHistory } from "./pages/Athlete/RecordHistory";
 import { Settings } from "./pages/Athlete/Settings";
@@ -49,10 +51,20 @@ function App() {
             </>
           ) : null}
           <Routes>
+            {/* PUBLIC */}
             <Route element={<LoggedOutRoute />}>
               <Route path={info.routes.login} element={<Login />} />
+              <Route
+                path={info.routes.passwordRecover}
+                element={<PasswordRecover />}
+              />
             </Route>
+            {/* USER */}
             <Route element={<PrivateRoute />}>
+              <Route
+                path={info.routes.changePassword}
+                element={<ChangePassword />}
+              />
               <Route path={info.routes.home} element={<Home />} />
               <Route path={info.routes.leaderboard} element={<Leaderboard />} />
               <Route path={info.routes.records} element={<Records />} />
@@ -62,6 +74,7 @@ function App() {
               />
               <Route path={info.routes.settings} element={<Settings />} />
             </Route>
+            {/* ADMIN */}
             <Route element={<AdminRoute />}>
               <Route path={info.routes.addAthlete} element={<AddAthlete />} />
               <Route path={info.routes.athletes} element={<Athletes />} />

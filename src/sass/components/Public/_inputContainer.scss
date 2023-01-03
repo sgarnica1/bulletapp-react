@@ -26,6 +26,7 @@
     font-family: $font-secondary;
     color: var(--color-text);
   }
+  
   &__label.focus {
     font-size: toRem(12);
     transition: ease-in 0.2s;

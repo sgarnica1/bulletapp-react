@@ -28,13 +28,13 @@ function Athletes() {
 
   return (
     <div className="Athletes">
-      <Banner
-        title={"Atletas"}
-        description={
-          "Visualiza, modifica o agrega nuevos atletas en esta sección"
-        }
-      />
       <ContentContainer>
+        <Banner
+          title={"Atletas"}
+          description={
+            "Visualiza, modifica o agrega nuevos atletas en esta sección"
+          }
+        />
         <SearchBar
           searchValue={searchValue}
           setSearchValue={setSearchValue}

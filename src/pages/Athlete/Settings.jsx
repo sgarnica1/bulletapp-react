@@ -22,7 +22,7 @@ function Settings() {
       <ContentContainer>
         <h1 className="title margin">Ajustes</h1>
         <InfoCard
-          link={info.routes.profile}
+          // link={info.routes.profile}
           img={HoodiesImg}
           alt="Athletes wearing Bullet CrossFit hoodies"
           title={"Sergio Garnica González"}
