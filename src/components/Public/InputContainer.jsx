@@ -28,7 +28,7 @@ const InputContainer = ({
         type={type}
         name={name}
         value={value}
-        required
+        // required
         onChange={(event) => setValue(event.target.value)}
         onFocus={() => setFocusInput(true)}
         onBlur={() => (value === "" ? setFocusInput(false) : null)}

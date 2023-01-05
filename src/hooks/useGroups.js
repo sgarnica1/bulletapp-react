@@ -21,7 +21,9 @@ const useGroups = () => {
     }
   };
 
-  return { groups, loading, error, getGroups };
+  const actions = { getGroups };
+
+  return { groups, loading, error, actions };
 };
 
 export { useGroups };

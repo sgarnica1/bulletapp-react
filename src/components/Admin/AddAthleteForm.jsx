@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAthletes } from "../../hooks/useAthletes";
 import { useGroups } from "../../hooks/useGroups";
 import { usePlans } from "../../hooks/usePlans";
 import { useRoles } from "../../hooks/useRoles";
-import { useNavigate } from "react-router-dom";
+import { useLocations } from "../../hooks/useLocations";
+
+// COMPONENTS
 import { Button } from "../Public/Button";
 
 // INFO
@@ -22,10 +25,11 @@ import ClassIcon from "../../assets/icon/class.svg";
 // TODO - Add a failure state to the form
 
 function AddAthleteForm(props) {
-  const { actions: athleteActions } = useAthletes();
-  const { plans, getPlans } = usePlans();
-  const { groups, getGroups } = useGroups();
-  const { roles, actions: roleActions } = useRoles();
+  const { actions: athletesActions } = useAthletes();
+  const { plans, actions: plansActions } = usePlans();
+  const { groups, actions: groupsActions } = useGroups();
+  const { roles, actions: rolesActions } = useRoles();
+  const { locations, actions: locationsActions } = useLocations();
   const navigate = useNavigate();
 
   const [athlete, setAthlete] = useState({
@@ -38,37 +42,45 @@ function AddAthleteForm(props) {
     [info.firebase.docKeys.users.birthDay]: "",
     [info.firebase.docKeys.users.birthMonth]: "",
     [info.firebase.docKeys.users.role]: "",
+    [info.firebase.docKeys.users.location]: "",
   });
 
   useEffect(() => {
     const abortCont = new AbortController();
-
     // GET DATA
-    getPlans();
-    getGroups();
-    roleActions.getRoleById(info.firebase.values.roles.athlete);
-
-    // RETURN
+    plansActions.getPlans();
+    groupsActions.getGroups();
+    locationsActions.getLocations();
+    rolesActions.getRoleByType(info.firebase.values.roles.athlete);
     return () => abortCont.abort();
   }, []);
 
-  // HANDLERS
+
   function updateAthleteInfo(event, attribute) {
     setAthlete((athlete) => {
-      // ADD ATHLETE ROLE IF IT DOESN'T HAVE ONE
       if (athlete[info.firebase.docKeys.users.role] === "") {
+        // ADD ATHLETE ROLE IF IT DOESN'T HAVE ONE
         athlete[info.firebase.docKeys.users.role] = roles.id;
       }
+
+      if (athlete[info.firebase.docKeys.users.location] === "") {
+        // ADD DEFAULT USER LOCATION
+        locations.forEach((loc) => {
+          if (loc.name === info.data.locations.juriquilla)
+            athlete[info.firebase.docKeys.users.location] = loc.id;
+        });
+      }
+
       // UPDATE ATHLETE ATTRIBUTE
       athlete[attribute] = event.target.value;
-
+      console.log(athlete)
       return athlete;
     });
   }
 
   function handleSubmitData(event) {
     event.preventDefault();
-    athleteActions.addAthlete(athlete, () => {
+    athletesActions.addAthlete(athlete, () => {
       navigate("/atletas");
     });
   }

@@ -26,10 +26,10 @@ const useWods = () => {
     }
   };
 
-  const getWeeklyWods = async (date) => {
+  const getWeeklyWods = async () => {
     try {
       setLoading(true);
-      const res = await getWeeklyWodsApi(date);
+      const res = await getWeeklyWodsApi();
       setWods(res);
       setLoading(false);
     } catch (err) {

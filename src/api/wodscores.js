@@ -3,6 +3,7 @@ import {
   doc,
   getDocs,
   setDoc,
+  getDoc,
   addDoc,
   updateDoc,
   query,
@@ -14,12 +15,12 @@ import { info } from "../utils/info";
 
 const getAllWodScoresApi = async (callback) => {
   try {
-    const ref = collection(db, info.firebase.collections.wodScores);
+    const ref = collection(db, "wod_scores");
     const query_ = query(ref);
     const snapshot = await getDocs(query_);
+
     const data = snapshot.docs.map((doc) => {
-      const date = new Date(doc.data().date.seconds * 1000);
-      return { id: doc.id, locale_date: date, ...doc.data() };
+      return { id: doc.id, ...doc.data() };
     });
     if (callback) callback(data);
     return data;
@@ -41,17 +42,39 @@ const getWeeklyWodScoresApi = async (callback) => {
     const ref = collection(db, info.firebase.collections.wodScores);
     const query_ = query(
       ref,
-      where("date", "<", yestedayRef),
-      where("date", ">", sunday)
+      where("timestamps.created_at", "<", yestedayRef),
+      where("timestamps_created_at", ">", sunday)
     );
-    const snapshot = await getDocs(query_);
+    const snapshot = await getDocs(ref);
     const data = snapshot.docs.map((doc) => {
-      const date = new Date(doc.data().date.seconds * 1000);
-
-      return { id: doc.id, locale_date: date, ...doc.data() };
+      return { id: doc.id, ...doc.data() };
     });
     if (callback) callback(data);
     return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getWodScoresByWodIdApi = async (idWod, callback) => {
+  try {
+    const ref = collection(db, info.firebase.collections.wodScores);
+    const query_ = query(ref, where("id_wod", "==", idWod));
+    const snapshot = await getDocs(query_);
+    const data = snapshot.docs.map(async (doc) => {
+      const userData = await getUserInfoFromWodScoreApi(doc.data().id_user);
+      return {
+        id: doc.id,
+        user: {
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+        },
+        ...doc.data(),
+      };
+    });
+    const res = await Promise.all(data);
+    if (callback) callback(res);
+    return res;
   } catch (err) {
     throw err;
   }
@@ -78,7 +101,6 @@ const getWodScoreByUserIdApi = async (idWod, idUser, callback) => {
 };
 
 const postWodScoreApi = async (idWod, idUser, score, callback) => {
-  console.log(idWod, idUser);
   try {
     const res = await addDoc(
       collection(db, info.firebase.collections.wodScores),
@@ -120,10 +142,22 @@ const updateWodScoreApi = async (idWodScore, score, callback) => {
   }
 };
 
+const getUserInfoFromWodScoreApi = async (idUser, callback) => {
+  try {
+    const ref = doc(db, info.firebase.collections.users, idUser);
+    const snapshot = await getDoc(ref);
+    if (callback) callback(snapshot.data());
+    return snapshot.data();
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   getAllWodScoresApi,
   getWeeklyWodScoresApi,
   getWodScoreByUserIdApi,
+  getWodScoresByWodIdApi,
   postWodScoreApi,
   updateWodScoreApi,
 };

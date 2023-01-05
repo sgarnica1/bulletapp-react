@@ -122,14 +122,15 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       setLoggingIn(false);
     } catch (err) {
+      console.log(err.message);
       setError("Ocurrió un error. Por favor intenta de nuevo");
 
       // REVIEW ERROR MESSAGE
-      if (err.message === info.firebase.errors.auth.wrongPassword) {
-        setError("Credenciales inválidas");
-      }
-
-      if (err.message === info.firebase.errors.auth.invalidEmail) {
+      if (
+        err.message === info.firebase.errors.auth.wrongPassword ||
+        err.message === info.firebase.errors.auth.userNotFound ||
+        err.message === info.firebase.errors.auth.invalidEmail
+      ) {
         setError("Credenciales inválidas");
       }
 
@@ -211,8 +212,11 @@ const AuthProvider = ({ children }) => {
     } catch (err) {
       if (err.message === info.firebase.errors.auth.networkFailed) {
         setError("Error en la red");
+      } else if (err.message === info.app.errors.fetchError) {
+        setError(info.messages.error.fetchError);
       } else {
-        setError(err);
+        setError(err.message);
+        console.log(err);
       }
       setLoggingIn(false);
       // logoutUser();

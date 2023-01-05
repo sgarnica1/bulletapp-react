@@ -14,20 +14,24 @@ import HoodiesImg from "../../assets/img/sudaderas.jpg";
 // TODO - Replace user name, user img and user email with real one
 
 function Settings() {
-  // const { user } = useAuth();
+  const { user, loading, error } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="Settings">
       <ContentContainer>
         <h1 className="title margin">Ajustes</h1>
-        <InfoCard
-          // link={info.routes.profile}
-          img={HoodiesImg}
-          alt="Athletes wearing Bullet CrossFit hoodies"
-          title={"Sergio Garnica González"}
-          additionalInfo="sgarnica1902@gmail.com"
-        />
+        {!error && !loading && (
+          <InfoCard
+            // link={info.routes.profile}
+            img={HoodiesImg}
+            alt="Athletes wearing Bullet CrossFit hoodies"
+            title={`${user.data[info.firebase.docKeys.users.firstName]} ${
+              user.data[info.firebase.docKeys.users.lastName]
+            }`}
+            additionalInfo={user.data[info.firebase.docKeys.users.email]}
+          />
+        )}
         <InfoCard
           link={info.routes.changePassword}
           icon={LockIcon}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
 
 // COMPONENTS
@@ -11,10 +12,11 @@ import { info } from "../../utils/info";
 // IMG
 import WhiteLogo from "../../assets/img/logo_white_resized.png";
 import BlackLogo from "../../assets/img/logo_black_resized.png";
+import BackArrow from "../../assets/icon/back-arrow.svg";
 
 function PasswordRecover() {
   const { theme } = useTheme();
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const [invalid, setInvalid] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +24,7 @@ function PasswordRecover() {
     event.preventDefault();
     const regex = new RegExp(/[\w\._]{3,30}@[\w\.-]{2,}\.\w{2,5}(\.\w{2,2})?/i); // EMAIL
     const validation = email.match(regex);
-    if (!validation) {
+    if (!validation || email == "") {
       setInvalid(true);
     } else {
       console.log("Enviando...");
@@ -74,6 +76,10 @@ function PasswordRecover() {
             fill={false}
           />
         </form>
+        <Link to={info.routes.login} className="PasswordRecover__back-btn">
+          <img src={BackArrow} alt="Back Green Arrow" />
+          Regresar
+        </Link>
       </ContentContainer>
     </div>
   );

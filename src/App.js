@@ -38,15 +38,15 @@ function App() {
 
   useEffect(() => {
     document.body.className = theme;
-  }, [theme]);
+  }, [theme, user]);
 
   return (
     <Router>
       <div className="App" data-theme={theme}>
         <Dashboard>
-          {user ? (
+          {user? (
             <>
-              <Navbar />
+              <Navbar user={user} />
               <Header />
             </>
           ) : null}

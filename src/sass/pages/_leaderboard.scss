@@ -1,8 +1,10 @@
 .Leaderboard {
   .SearchBar {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 40px;
+    margin: 20px;
+
+    &__input-container {
+      border: 1px solid var(--bg-input-2);
+    }
   }
 
   &__container {
@@ -101,6 +103,9 @@
 
   // LEADERBOARD
   &__body {
+    padding-top: toRem(5);
+    background-color: var(--bg-body);
+
     &__filters,
     &__tags,
     &__score {
@@ -114,6 +119,10 @@
       display: grid;
       grid-template-columns: 15% 65% 20%;
       align-content: center;
+    }
+
+    &__tags {
+      height: toRem(60);
     }
 
     &__filters {

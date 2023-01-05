@@ -1,10 +1,27 @@
 import { Link } from "react-router-dom";
+import { useDashboard } from "../../contexts/DashboardContext";
+
+// UTILS
+import { info } from "../../utils/info";
+
+// ICON
 import RightArrow from "../../assets/icon/right-arrow.svg";
 
 function CardContainer({ children, link, clickHandler, extraClassName = "" }) {
+  const { setActiveView } = useDashboard();
+
+  const onClickChangeView = () => {
+    for (const route in info.routes)
+      if (info.routes[route] === link) setActiveView(info.views[route]);
+  };
+
   if (link)
     return (
-      <Link className={`CardContainer ${extraClassName}`} to={link}>
+      <Link
+        className={`CardContainer ${extraClassName}`}
+        to={link}
+        onClick={onClickChangeView}
+      >
         {children}
         <img
           src={RightArrow}

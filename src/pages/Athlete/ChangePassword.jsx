@@ -31,10 +31,9 @@ function ChangePassword() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (password !== matchingPassword || invalidPassword) {
-      setInvalidMatchingPassword(true);
-      return;
-    }
+    if (!matchingPassword || password !== matchingPassword || invalidPassword)
+      return setInvalidMatchingPassword(true);
+
     setLoading(true);
     console.log("Cambiando contraseña...");
   };

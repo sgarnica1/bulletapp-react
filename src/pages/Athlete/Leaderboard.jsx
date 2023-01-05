@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useWods } from "../../hooks/useWods";
+import { useWodScores } from "../../hooks/useWodScores";
 
 // COMPONENTS
 import { ContentContainer } from "../../components/Layout/ContentContainer";
@@ -12,11 +13,17 @@ import { utils } from "../../utils/utils";
 
 function Leaderboard() {
   // TODO - Make searchbar work
-  const { wods: wods2, actions: wodActions } = useWods();
+  const { wods, actions: wodActions, loading: wodLoading } = useWods();
+  const {
+    wodScores,
+    actions: wodScoresActions,
+    loading: wodScoresLoading,
+  } = useWodScores();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [wod, setWod] = useState(null);
   const [wodScoresSorted, setWodScoresSorted] = useState(null);
+  const [refetch, setRefetch] = useState(false);
   const [filter, setFilter] = useState("");
 
   // METHODS
@@ -28,73 +35,29 @@ function Leaderboard() {
         (b.score.minutes * 60 + b.score.seconds)
       );
     });
-
-    setWodScoresSorted(sorted);
+    return sorted;
   };
 
-  // MOCK INFO
-  const wods = [
-    {
-      description: "10 Rounds, 3 HSPU, 6 Dead Lift, 12 Pull Ups",
-      timecap: 20,
-      day: 1,
-    },
-    {
-      description: "21-15-9, Snatches, Wall Ball Shots",
-      timecap: 15,
-      day: 2,
-    },
-  ];
-
-  const wodScores = [
-    {
-      athlete: {
-        first_name: "Diego",
-        last_name: "Garnica",
-      },
-      score: {
-        minutes: 13,
-        seconds: 25,
-      },
-    },
-    {
-      athlete: {
-        first_name: "Sergio",
-        last_name: "Garnica",
-      },
-      score: {
-        minutes: 10,
-        seconds: 19,
-      },
-    },
-    {
-      athlete: {
-        first_name: "Emilio",
-        last_name: "Garnica",
-      },
-      score: {
-        minutes: 8,
-        seconds: 7,
-      },
-    },
-  ];
-
   useEffect(() => {
-    // wodActions.getWeeklyWods()
+    function getWodScoreList() {
+      wods.forEach((wod) => {
+        if (wod.locale_date.getDay() === weekDay) {
+          setWod(wod);
+          wodScoresActions.getWodScoresByWodId(wod.id);
+        }
+      });
+    }
 
     setWod(null);
-    wods.forEach((wod) => {
-      if (wod.day === weekDay) setWod(wod);
-    });
+    if (!wods) wodActions.getWeeklyWods();
+    if (wods) getWodScoreList();
 
     if (wodScores) sortAscending(wodScores);
-  }, [weekDay]);
+  }, [wods, wod, weekDay, refetch]);
 
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={false}>
-        <SearchBar placeholder="Buscar atleta" />
-
         <div className="Leaderboard__container">
           <div className="Leaderboard__header">
             <h1 className="Leaderboard__title">Leaderboard</h1>
@@ -123,53 +86,71 @@ function Leaderboard() {
               <div className="Leaderboard__wod__header">WOD</div>
               {!wod && (
                 <p className="Leaderboard__wod__not-available">
-                  No disponible todavía
+                  {wodLoading ? "Cargando..." : "No disponible"}
                 </p>
               )}
-              {wod && (
-                <div className="Leaderboard__wod__body">
-                  <p className="Leaderboard__wod__title">
-                    {wod.description.split(",")[0]}
+              {wod &&
+                new Date(wod?.date.seconds * 1000).getDate() ===
+                  new Date().getDate() && (
+                  <p className="Leaderboard__wod__not-available">
+                    No disponible
                   </p>
-                  {wod?.description
-                    .split(",")
-                    .slice(1)
-                    .map((line, index) => (
-                      <p className="Leaderboard__wod__description" key={index}>
-                        {line}
-                      </p>
-                    ))}
-                  <p className="Leaderboard__wod__timecap">
-                    Timecap: <span>{wod.timecap} min</span>
-                  </p>
-                </div>
-              )}
+                )}
+              {wod &&
+                new Date(wod?.date.seconds * 1000).getDate() !==
+                  new Date().getDate() && (
+                  <div className="Leaderboard__wod__body">
+                    <p className="Leaderboard__wod__title">
+                      {wod.description.split(",")[0]}
+                    </p>
+                    {wod?.description
+                      .split(",")
+                      .slice(1)
+                      .map((line, index) => (
+                        <p
+                          className="Leaderboard__wod__description"
+                          key={index}
+                        >
+                          {line}
+                        </p>
+                      ))}
+                    <p className="Leaderboard__wod__timecap">
+                      Time Cap: <span>{wod.timecap} min</span>
+                    </p>
+                  </div>
+                )}
             </div>
           </div>
 
           {/* LEADERBOARD LIST */}
+
           <div className="Leaderboard__body">
-            <div className="Leaderboard__body__filters">
+            {/* <div className="Leaderboard__body__filters">
               <select name="" id="">
-                <option value="">Filtros</option>
-                <option value="1">Menos a más</option>
-                <option value="1">Más a menos</option>
+              <option value="">Filtros</option>
+              <option value="1">Menos a más</option>
+              <option value="1">Más a menos</option>
               </select>
-            </div>
+            </div> */}
+            <SearchBar placeholder="Buscar atleta" />
             <div className="Leaderboard__body__tags">
               <span>#</span>
               <span>Atleta</span>
               <span>Score</span>
             </div>
             {/* LIST */}
-            {wodScoresSorted &&
-              wodScoresSorted.map((score, index) => (
+            {wodScoresLoading && (
+              <div className="Leaderboard__body__score">Cargando...</div>
+            )}
+            {!wodScoresLoading &&
+              wodScores &&
+              sortAscending(wodScores).map((score, index) => (
                 <div className="Leaderboard__body__score" key={index}>
                   <span className="Leaderboard__body__score-position">
                     {index + 1}
                   </span>
                   <p className="Leaderboard__body__score-name">
-                    {score.athlete.first_name} {score.athlete.last_name}
+                    {score.user.first_name} {score.user.last_name}
                   </p>
                   <span className="Leaderboard__body__score-value">
                     {score.score.minutes < 10

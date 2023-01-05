@@ -4,6 +4,7 @@ import {
   getAllWodScoresApi,
   getWeeklyWodScoresApi,
   getWodScoreByUserIdApi,
+  getWodScoresByWodIdApi,
   postWodScoreApi,
   updateWodScoreApi,
 } from "../api/wodscores";
@@ -27,10 +28,22 @@ const useWodScores = () => {
     }
   };
 
-  const getWeeklyWodScores = async (date) => {
+  const getWeeklyWodScores = async () => {
     try {
       setLoading(true);
-      const res = await getWeeklyWodScoresApi(date);
+      const res = await getWeeklyWodScoresApi();
+      setWodScores(res);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
+  const getWodScoresByWodId = async (idWod) => {
+    try {
+      setLoading(true);
+      const res = await getWodScoresByWodIdApi(idWod);
       setWodScores(res);
       setLoading(false);
     } catch (err) {
@@ -68,7 +81,7 @@ const useWodScores = () => {
     try {
       setLoading(true);
       const res = await updateWodScoreApi(idWodScore, score);
-      console.log(res)
+      console.log(res);
       setWodScores(res);
       setLoading(false);
     } catch (err) {
@@ -82,6 +95,7 @@ const useWodScores = () => {
     getAllWodScores,
     getWeeklyWodScores,
     getWodScoreByUserId,
+    getWodScoresByWodId,
     postWodScore,
     updateWodScore,
   };

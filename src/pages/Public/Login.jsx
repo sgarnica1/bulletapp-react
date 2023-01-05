@@ -16,6 +16,7 @@ import BlackLogo from "../../assets/img/logo_black_resized.png";
 
 function Login() {
   const [passInputType, setPassInputType] = useState("password");
+  const [errorMessage, setErrorMessage] = useState("");
   const { loginUser, error, setError, loggingIn } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -23,6 +24,26 @@ function Login() {
   // useEffect(() => {
   //   if (error) navigate("/server-error");
   // }, [error]);
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    setErrorMessage("");
+
+    const email = event.target.username.value;
+    const password = event.target.password.value;
+
+    if (!email || !password)
+      return setErrorMessage(info.messages.error.allMissingData);
+
+    const emailRegEx = new RegExp(
+      /[\w\._]{3,30}@[\w\.-]{2,}\.\w{2,5}(\.\w{2,2})?/i
+    ); // EMAIL
+
+    if (!email.match(emailRegEx))
+      return setErrorMessage(info.messages.error.invalidEmail);
+
+    return loginUser(event);
+  };
 
   return (
     <div className="Login">
@@ -36,9 +57,7 @@ function Login() {
         </header>
         <form
           className="Login__form"
-          onSubmit={(event) => {
-            loginUser(event);
-          }}
+          onSubmit={(event) => submitHandler(event)}
           onChange={() => {
             setError(null);
           }}
@@ -68,8 +87,11 @@ function Login() {
                 }}
               ></span>
             </InputContainer>
+            {errorMessage ? (
+              <div className="Login__error">{errorMessage}</div>
+            ) : null}
             {error ? (
-              <div className="Login__error">{error?.message}</div>
+              <div className="Login__error">{error}</div>
             ) : null}
           </div>
           <div className="Login__button-container">

@@ -1,3 +1,4 @@
+import { useDashboard } from "../../contexts/DashboardContext";
 import { CardContainer } from "./CardContainer";
 
 const AddButton = ({ link, img, alt, title, clickHandler }) => {

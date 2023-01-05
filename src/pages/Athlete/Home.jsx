@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { info } from "../../utils/info";
-import { utils } from "../../utils/utils";
 
-// Components
+// COMPONENTS
 import { AddButton } from "../../components/Public/AddButton";
 import { BirthdayCelebrationWidget } from "../../components/Public/BirthdayCelebrationWidget";
 import { BulletGoalWidget } from "../../components/Athlete/BulletGoalWidget";
@@ -14,6 +12,10 @@ import { InfoCard } from "../../components/Public/InfoCard";
 import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
 import { PRCard } from "../../components/Athlete/PRCard";
 import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
+
+// UTILS
+import { info } from "../../utils/info";
+import { utils } from "../../utils/utils";
 
 // IMG
 import AthleteImg from "../../assets/img/athlete.jpg";
@@ -26,11 +28,12 @@ import UserIcon from "../../assets/icon/user.svg";
 
 function Home() {
   const { user, loading, error } = useAuth();
+
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (error) navigate("/server-error");
-  // }, [error]);
+  useEffect(() => {
+    if (error) navigate("/server-error");
+  }, [error]);
 
   return (
     <div className="Home">
@@ -86,7 +89,6 @@ function Home() {
         {/* CURRENT GOAL */}
         <h3 className="subtitle">Meta personal</h3>
         <PersonalGoal
-          link="#"
           description="Du's"
           progress={60}
           status="En progreso"
@@ -99,16 +101,15 @@ function Home() {
 
         <h4 className="subtitle">Más para ti</h4>
         {/* PROFILE */}
-        {/* {!error && !loading && ( */}
-        <InfoCard
-          link={"#"}
-          img={HoodiesImg}
-          alt="Athletes wearing Bullet CrossFit hoodies"
-          title={"Sergio"}
-          // title={user.data[info.firebase.docKeys.users.firstName]}
-          additionalInfo="Ver perfil"
-        />
-        {/* )} */}
+        {!error && !loading && (
+          <InfoCard
+            link={info.routes.profile}
+            img={HoodiesImg}
+            alt="Athletes wearing Bullet CrossFit hoodies"
+            title={user.data[info.firebase.docKeys.users.firstName]}
+            additionalInfo="Ver perfil"
+          />
+        )}
         {/* SETTINGS */}
         <InfoCard
           link={info.routes.settings}

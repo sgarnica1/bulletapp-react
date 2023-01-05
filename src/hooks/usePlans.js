@@ -21,7 +21,9 @@ const usePlans = () => {
     }
   };
 
-  return { plans, loading, error, getPlans };
+  const actions = { getPlans };
+
+  return { plans, loading, error, actions };
 };
 
 export { usePlans };

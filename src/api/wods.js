@@ -29,6 +29,7 @@ const getAllWodsApi = async (callback) => {
 const getWeeklyWodsApi = async (callback) => {
   // SET TODAY, YESTERDAY, SUNDAY TO OBTAIN MONDAY THROUGH YESTERDAYS WODS
   const today = new Date();
+  const todayRef = new Date()
   const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
   const yestedayRef = new Date(today.getTime() - 24 * 60 * 60 * 1000);
   const weekDay = yesterday.getDay();
@@ -39,7 +40,7 @@ const getWeeklyWodsApi = async (callback) => {
     const ref = collection(db, info.firebase.collections.wods);
     const query_ = query(
       ref,
-      where("date", "<", yestedayRef),
+      where("date", "<=", todayRef),
       where("date", ">", sunday)
     );
     const snapshot = await getDocs(query_);
@@ -71,12 +72,11 @@ const getTodaysWodApi = async (callback) => {
       return { id: doc.id, locale_date: date, ...doc.data() };
     });
     // VERIFY IF THERE IS A WOD FOR TODAY
-    if(data.length === 0) return -1;
+    if (data.length === 0) return -1;
     // GET SCORE TYPE NAME
     const scoreTypeData = await getWodTypeApi(data[0].id_score_type);
     data[0].score_type = scoreTypeData;
     if (callback) callback(data);
-    console.log(data)
     return data[0];
   } catch (err) {
     throw err;

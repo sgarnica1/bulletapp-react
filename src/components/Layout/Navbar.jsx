@@ -11,14 +11,10 @@ import { Navitem } from "./Navitem";
 import { navMenu, type } from "../../utils/navMenu";
 import { info } from "../../utils/info";
 
-function Navbar() {
+function Navbar({ user }) {
   const { showNav, setShowNav } = useDashboard();
   const { logoutUser } = useAuth();
   const navigation = useNavigate();
-
-  const user = {
-    role: info.firebase.values.roles.athlete,
-  };
 
   return (
     <aside className={`Navbar ${showNav && "show"}`}>
@@ -30,88 +26,93 @@ function Navbar() {
       <nav className="Navbar__container">
         <div className="Navbar__content">
           <ul className="Navbar__navlist">
-            {navMenu[user?.role].map((menu, mainIndex) => {
-              // MAIN MENU
-              if (menu.type === type.mainMenu && menu.active)
-                return menu.elements.map((el) => {
-                  // ITEM
-                  if (el.type === type.item && el.active)
-                    return (
-                      <Navitem key={el.name} title={el.name} path={el.route} />
-                    );
-                  // DROPDOWN
-                  if (el.type === type.dropdown && el.active)
-                    return (
-                      <Dropdown title={el.name} key={el.name}>
-                        {el.elements.map((dropEl) => {
-                          if (dropEl.active)
-                            return (
-                              <DropdownElement
-                                key={dropEl.name}
-                                title={dropEl.name}
-                                path={dropEl.route}
-                              />
-                            );
-                        })}
-                      </Dropdown>
-                    );
-                });
-              // SUBMENUS
-              if (menu.type === type.subMenu && menu.active)
-                return (
-                  <div key={mainIndex}>
-                    {/* SUBTITLE */}
-                    <h4 key={Math.random()} className="Navbar__subtitle">
-                      {menu.subtitle}
-                    </h4>
-                    {menu.elements.map((el) => {
-                      // LOGOUT
-                      if (el.type === type.logout)
-                        return (
-                          <li
-                            key={el.name}
-                            className="Navbar__navlink"
-                            onClick={() =>
-                              logoutUser(() => {
-                                navigation("/login");
-                                setShowNav(false);
-                              })
-                            }
-                          >
-                            Salir
-                          </li>
-                        );
+            {user.data?.role &&
+              navMenu[user.data.role].map((menu, mainIndex) => {
+                // MAIN MENU
+                if (menu.type === type.mainMenu && menu.active)
+                  return menu.elements.map((el) => {
+                    // ITEM
+                    if (el.type === type.item && el.active)
+                      return (
+                        <Navitem
+                          key={el.name}
+                          title={el.name}
+                          path={el.route}
+                        />
+                      );
+                    // DROPDOWN
+                    if (el.type === type.dropdown && el.active)
+                      return (
+                        <Dropdown title={el.name} key={el.name}>
+                          {el.elements.map((dropEl) => {
+                            if (dropEl.active)
+                              return (
+                                <DropdownElement
+                                  key={dropEl.name}
+                                  title={dropEl.name}
+                                  path={dropEl.route}
+                                />
+                              );
+                          })}
+                        </Dropdown>
+                      );
+                  });
+                // SUBMENUS
+                if (menu.type === type.subMenu && menu.active)
+                  return (
+                    <div key={mainIndex}>
+                      {/* SUBTITLE */}
+                      <h4 key={Math.random()} className="Navbar__subtitle">
+                        {menu.subtitle}
+                      </h4>
+                      {menu.elements.map((el) => {
+                        // LOGOUT
+                        if (el.type === type.logout)
+                          return (
+                            <li
+                              key={el.name}
+                              className="Navbar__navlink"
+                              onClick={() =>
+                                logoutUser(() => {
+                                  navigation("/login");
+                                  setShowNav(false);
+                                })
+                              }
+                            >
+                              Salir
+                            </li>
+                          );
 
-                      // ITEM
-                      if (el.type === type.item && el.active)
-                        return (
-                          <Navitem
-                            key={el.name}
-                            title={el.name}
-                            path={el.route}
-                          />
-                        );
+                        // ITEM
+                        if (el.type === type.item && el.active)
+                          return (
+                            <Navitem
+                              key={el.name}
+                              title={el.name}
+                              path={el.route}
+                            />
+                          );
 
-                      // DROPDOWN
-                      if (el.type === type.dropdown && el.active)
-                        return (
-                          <Dropdown title={el.name} key={el.name}>
-                            {el.elements.map((dropEl) => {
-                              if (dropEl.active)
-                                return (
-                                  <DropdownElement
-                                    key={dropEl.name}
-                                    title={dropEl.name}
-                                    path={dropEl.route}
-                                  />
-                                );
-                            })}
-                          </Dropdown>
-                        );
-                    })}
-                  </div>
-                );
-            })}
+                        // DROPDOWN
+                        if (el.type === type.dropdown && el.active)
+                          return (
+                            <Dropdown title={el.name} key={el.name}>
+                              {el.elements.map((dropEl) => {
+                                if (dropEl.active)
+                                  return (
+                                    <DropdownElement
+                                      key={dropEl.name}
+                                      title={dropEl.name}
+                                      path={dropEl.route}
+                                    />
+                                  );
+                              })}
+                            </Dropdown>
+                          );
+                      })}
+                    </div>
+                  );
+              })}
           </ul>
         </div>
       </nav>

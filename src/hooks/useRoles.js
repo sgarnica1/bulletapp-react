@@ -13,7 +13,6 @@ const useRoles = () => {
     try {
       setLoading(true);
       const res = await getRolesApi();
-      console.log(res);
       setRoles(res);
       setLoading(false);
     } catch (err) {
@@ -22,7 +21,7 @@ const useRoles = () => {
     }
   };
 
-  const getRoleById = async (type) => {
+  const getRoleByType = async (type) => {
     try {
       setLoading(true);
       const res = await getRoleByTypeApi(type);
@@ -34,7 +33,7 @@ const useRoles = () => {
     }
   };
 
-  const actions = { getRoles, getRoleById };
+  const actions = { getRoles, getRoleByType };
 
   return { roles, loading, error, actions };
 };

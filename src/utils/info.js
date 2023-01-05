@@ -1,4 +1,9 @@
 const info = {
+  app: {
+    errors: {
+      fetchError: "Failed to fetch",
+    },
+  },
   components: {
     button: {
       type: {
@@ -37,6 +42,11 @@ const info = {
       "Viernes",
       "Sábado",
     ],
+    locations: {
+      juriquilla: "Juriquilla",
+      zibata: "Zibatá",
+      grandreserva: "Grand Reserva",
+    },
     months: [
       "Enero",
       "Febrero",
@@ -142,13 +152,14 @@ const info = {
       },
     },
     collections: {
-      users: "users",
-      plans: "plans",
       groups: "groups",
+      locations: "locations",
+      plans: "plans",
       roles: "roles",
+      scoreTypes: "score_types",
+      users: "users",
       wods: "wods",
       wodScores: "wod_scores",
-      scoreTypes: "score_types",
     },
     docKeys: {
       users: {
@@ -162,6 +173,7 @@ const info = {
         birthMonth: "birth_month",
         active: "active",
         role: "id_role",
+        location: "id_location",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
@@ -210,6 +222,7 @@ const info = {
         wrongPassword: "Firebase: Error (auth/wrong-password).",
         invalidEmail: "Firebase: Error (auth/invalid-email).",
         networkFailed: "Firebase: Error (auth/network-request-failed).",
+        userNotFound: "Firebase: Error (auth/user-not-found).",
       },
     },
   },
@@ -220,10 +233,13 @@ const info = {
   },
   messages: {
     error: {
+      fetchError: "Error en la conexión",
       invalidPassword:
         "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
       invalidMatchingPassword: "Las contraseñas no coinciden",
-      invalidEmail: "Correo electrónico incorrecto",
+      invalidEmail: "Por favor ingrese un correo electrónico válido",
+      missingData: "Este campo es requerido",
+      allMissingData: "Todos los campos son requeridos",
     },
   },
   requests: {
