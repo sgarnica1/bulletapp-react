@@ -1,4 +1,4 @@
-import SearchIcon from "../../assets/icon/search.svg"
+import SearchIcon from "../../assets/icon/search.svg";
 
 function SearchBar({ placeholder, searchValue, setSearchValue, loading }) {
   return (
@@ -11,6 +11,7 @@ function SearchBar({ placeholder, searchValue, setSearchValue, loading }) {
           placeholder={placeholder}
           value={searchValue}
           onChange={(event) => {
+            console.log(event.target.value);
             setSearchValue(event.target.value);
           }}
           disabled={loading ? true : false}

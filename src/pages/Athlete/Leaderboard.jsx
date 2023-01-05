@@ -16,6 +16,9 @@ function Leaderboard() {
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [wodAvailable, setWodAvailable] = useState(false);
+  const [sortedWodScores, setSortedWodScores] = useState();
+  const [refetch, setRefetch] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
 
   // METHODS
   const sortAscending = (wodScores) => {
@@ -26,7 +29,8 @@ function Leaderboard() {
         (b.score.minutes * 60 + b.score.seconds)
       );
     });
-    return sorted;
+    sorted.map((score, index) => (score.position = index + 1));
+    setSortedWodScores(sorted);
   };
 
   const setWodDate = (weekDay) => {
@@ -37,14 +41,25 @@ function Leaderboard() {
   };
 
   useEffect(() => {
+    console.log("WOD SCORES");
     const date = setWodDate(weekDay);
-    actions.getWodWithWodScoresByDate(date);
-    // SET WOD AVAILABILITY
+
+    if (refetch) actions.getWodWithWodScoresByDate(date);
     if (weekDay >= new Date().getDay()) setWodAvailable(false);
     else setWodAvailable(true);
+    setRefetch(false);
 
+    if (wodScores) sortAscending(wodScores.wodScores);
+
+    if (!loading && wodScores) {
+      const filteredUsers = utils.searchDataFromInput(
+        wodScores.wodScores,
+        searchValue
+      );
+      setSortedWodScores(filteredUsers);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weekDay]);
+  }, [weekDay, wodScores, loading, searchValue]);
 
   return (
     <div className="Leaderboard">
@@ -61,7 +76,10 @@ function Leaderboard() {
                   return (
                     <button
                       key={day.num}
-                      onClick={() => setWeekDay(day.num)}
+                      onClick={() => {
+                        setWeekDay(day.num);
+                        setRefetch(true);
+                      }}
                       className={`Leaderboard__day-button ${
                         weekDay === day.num ? "active" : ""
                       }`}
@@ -74,7 +92,6 @@ function Leaderboard() {
             </div>
 
             {/* WOD LIST */}
-            {console.log(wodScores)}
             <div className="Leaderboard__wod">
               <div className="Leaderboard__wod__header">WOD</div>
               {loading && !wodScores && (
@@ -108,12 +125,17 @@ function Leaderboard() {
           {/* LEADERBOARD LIST */}
 
           <div className="Leaderboard__body">
-            <SearchBar placeholder="Buscar atleta" />
-            <div className="Leaderboard__body__tags">
+            <SearchBar
+              placeholder="Buscar atleta"
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              loading={loading}
+            />
+            {/* <div className="Leaderboard__body__tags">
               <span>#</span>
               <span>Atleta</span>
               <span>Score</span>
-            </div>
+            </div> */}
 
             {loading && (
               <div className="Leaderboard__body__score">Cargando...</div>
@@ -121,10 +143,10 @@ function Leaderboard() {
             {!loading &&
               wodScores &&
               wodScores.wodScores &&
-              sortAscending(wodScores.wodScores).map((score, index) => (
+              sortedWodScores.map((score, index) => (
                 <div className="Leaderboard__body__score" key={index}>
                   <span className="Leaderboard__body__score-position">
-                    {index + 1}
+                    {score.position}
                   </span>
                   <p className="Leaderboard__body__score-name">
                     {score.user.first_name} {score.user.last_name}

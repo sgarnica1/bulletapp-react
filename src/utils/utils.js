@@ -30,6 +30,22 @@ const utils = {
 
     return `${month} ${year}`;
   },
+  searchDataFromInput: (data, searchedValue) => {
+    let filteredData = [];
+
+    if (!searchedValue.length > 0) {
+      filteredData = data;
+    } else {
+      filteredData = data.filter((element) => {
+        const dataText = `${element.user.first_name.toLowerCase()} ${element.user.last_name.toLowerCase()}`;
+        const searchedValueText = searchedValue.toLowerCase().trim();
+
+        return dataText.includes(searchedValueText);
+      });
+    }
+    console.log(filteredData);
+    return filteredData;
+  },
 
   // FORMAT HOUR
   formatHour: (hour) => {
