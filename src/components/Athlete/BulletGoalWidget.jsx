@@ -52,68 +52,69 @@ const BulletGoalWidget = () => {
       >
         {/* LOADING INPUT */}
         {wodScoresLoading && (
-          <input
-            type="text"
-            readOnly
-            className="AddRegisterWidget__form__input"
-          />
+          <div className="AddRegisterWidget__form__input-score">Loading...</div>
         )}
         {/* TIME INPUT */}
-        {!wodScoresLoading &&
-          wod.score_type === info.firebase.values.scoreTypes.time.name && (
-            <div className="AddRegisterWidget__form__input-container">
+        {!wodScoresLoading && (
+          <div className="AddRegisterWidget__form__input-score">
+            {wod.score_type === info.firebase.values.scoreTypes.time.name && (
+              <div className="AddRegisterWidget__form__input-container">
+                <input
+                  type="number"
+                  className="AddRegisterWidget__form__input"
+                  placeholder="00"
+                  value={minutes}
+                  max={59}
+                  min={0}
+                  onChange={(e) => {
+                    const formattedValue = utils.formatTimerInput(
+                      e.target.value,
+                      seconds
+                    );
+                    setMinutes(formattedValue);
+                  }}
+                />
+                <span>:</span>
+                <input
+                  type="number"
+                  className="AddRegisterWidget__form__input"
+                  placeholder="00"
+                  value={seconds}
+                  max={59}
+                  min={0}
+                  onChange={(e) => {
+                    const formattedValue = utils.formatTimerInput(
+                      e.target.value,
+                      seconds
+                    );
+                    setSeconds(formattedValue);
+                  }}
+                />
+              </div>
+            )}
+            {/* REPS INPUT */}
+            {wod.score_type === info.firebase.values.scoreTypes.reps.name && (
               <input
                 type="number"
                 className="AddRegisterWidget__form__input"
-                placeholder="00"
-                value={minutes}
-                max={59}
-                min={0}
+                placeholder="0"
+                value={reps}
                 onChange={(e) => {
-                  const formattedValue = utils.formatTimerInput(
-                    e.target.value,
-                    seconds
-                  );
-                  setMinutes(formattedValue);
-                }}
-              />
-              <span>:</span>
-              <input
-                type="number"
-                className="AddRegisterWidget__form__input"
-                placeholder="00"
-                value={seconds}
-                max={59}
-                min={0}
-                onChange={(e) => {
-                  const formattedValue = utils.formatTimerInput(
-                    e.target.value,
-                    seconds
-                  );
-                  setSeconds(formattedValue);
-                }}
-              />
-            </div>
-          )}
-        {/* REPS INPUT */}
-        {!wodScoresLoading &&
-          wod.score_type === info.firebase.values.scoreTypes.reps.name && (
-            <input
-              type="number"
-              className="AddRegisterWidget__form__input"
-              placeholder="0"
-              value={reps}
-              onChange={(e) => {
-                if (e.target.value < 0) e.target.value = 0;
+                  if (e.target.value < 0) e.target.value = 0;
 
-                setReps(e.target.value);
-              }}
-            />
-          )}
+                  setReps(e.target.value);
+                }}
+              />
+            )}
+            <p className="AddRegisterWidget__form__input-units">
+              {info.firebase.values.scoreTypes[wod.score_type]?.units}
+            </p>
+          </div>
+        )}
         <Button
           type={info.components.button.type.submit}
           style={info.components.button.classes.secondary}
-          size={info.components.button.classes.sm}
+          size={info.components.button.classes.lg}
           fill={true}
           text={wodScore?.score ? "Actualizar" : "Registrar"}
           disabled={loading || error}

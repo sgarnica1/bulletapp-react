@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useWods } from "../../hooks/useWods";
 import { useWodScores } from "../../hooks/useWodScores";
 
 // COMPONENTS
@@ -16,7 +15,6 @@ function Leaderboard() {
   const { wodScores, actions, loading } = useWodScores();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
-  const [wodScoresSorted, setWodScoresSorted] = useState(null);
   const [wodAvailable, setWodAvailable] = useState(false);
 
   // METHODS
@@ -44,6 +42,8 @@ function Leaderboard() {
     // SET WOD AVAILABILITY
     if (weekDay >= new Date().getDay()) setWodAvailable(false);
     else setWodAvailable(true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay]);
 
   return (
@@ -69,20 +69,22 @@ function Leaderboard() {
                       {day.ref}
                     </button>
                   );
+                return null;
               })}
             </div>
 
             {/* WOD LIST */}
+            {console.log(wodScores)}
             <div className="Leaderboard__wod">
               <div className="Leaderboard__wod__header">WOD</div>
-              {loading && (
+              {loading && !wodScores && (
                 <p className="Leaderboard__wod__not-available">Cargando...</p>
               )}
               {!loading && !wodAvailable && (
                 <p className="Leaderboard__wod__not-available">No disponible</p>
               )}
 
-              {!loading && wodAvailable && (
+              {!loading && wodAvailable && wodScores && (
                 <div className="Leaderboard__wod__body">
                   <p className="Leaderboard__wod__title">
                     {wodScores?.wod?.description.split(",")[0]}

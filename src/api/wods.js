@@ -5,7 +5,6 @@ import {
   getDoc,
   query,
   where,
-  limit,
 } from "firebase/firestore/lite";
 import { db } from "../firebase/index";
 import { info } from "../utils/info";
@@ -31,7 +30,6 @@ const getWeeklyWodsApi = async (callback) => {
   const today = new Date();
   const todayRef = new Date();
   const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-  const yestedayRef = new Date(today.getTime() - 24 * 60 * 60 * 1000);
   const weekDay = yesterday.getDay();
   const diff = yesterday.getDate() - weekDay + (weekDay === 0 ? -6 : 0);
   const sunday = new Date(yesterday.setDate(diff));

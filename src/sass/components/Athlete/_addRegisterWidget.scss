@@ -42,39 +42,39 @@
   &__form {
     width: 100%;
     display: flex;
+    flex-direction: column;
     gap: toRem(10);
 
-    &__input-container {
-      width: 50%;
+    &__input-score {
       display: flex;
-      background: $color-white;
+      align-items: center;
+      padding: 15px 20px;
       border-radius: $border-radius;
+      background: $color-white;
+      height: $height-input;
     }
 
-    span {
+    &__input-container {
+      width: 90%;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      color: $color-text-alternative;
-      font-size: toRem(30);
-      font-weight: bold;
+      border-radius: $border-radius;
     }
 
     &__input {
-      width: 50%;
-
-      font-size: toRem(20);
-      font-family: $font-primary;
-      font-weight: 600;
-      border-radius: $border-radius;
+      background: transparent;
       outline: none;
       border: none;
-      color: $color-text-alternative;
-      text-align: center;
+      width: 90%;
+      color: $bg-component-dark;
+      font-size: toRem(20);
+      font-weight: 600;
+      padding-right: 10px;
+    }
 
-      @include mq("md") {
-        padding-left: toRem(10);
-      }
+    &__input-units {
+      text-transform: uppercase;
+      color: $color-brand;
+      font-weight: 600;
     }
 
     &__input:hover {

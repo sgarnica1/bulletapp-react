@@ -108,7 +108,6 @@
     &__score {
       padding: 10px 30px;
       height: toRem(60);
-
       color: var(--color-text);
     }
     &__tags,
@@ -119,10 +118,6 @@
       border-radius: $border-radius;
       margin-bottom: 10px;
       height: 70px;
-    }
-
-    &__tags {
-      height: toRem(60);
     }
 
     &__filters {
@@ -149,7 +144,7 @@
     }
 
     &__tags {
-      background: var(--bg-layout);
+      background: var(--bg-component-2);
       font-size: toRem(18);
       font-weight: 600;
     }

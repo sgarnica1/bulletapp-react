@@ -23,7 +23,7 @@ function Login() {
 
   useEffect(() => {
     if (error) navigate("/server-error");
-  }, [error]);
+  }, [error, navigate]);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -36,7 +36,7 @@ function Login() {
       return setErrorMessage(info.messages.error.allMissingData);
 
     const emailRegEx = new RegExp(
-      /[\w\._]{3,30}@[\w\.-]{2,}\.\w{2,5}(\.\w{2,2})?/i
+      /[\w._]{3,30}@[\w.-]{2,}\.\w{2,5}(\.\w{2,2})?/i
     ); // EMAIL
 
     if (!email.match(emailRegEx))
@@ -108,7 +108,7 @@ function Login() {
             </Link>
           </div>
         </form>
-        <a href="#" className="Login__privacy">
+        <a href="/" className="Login__privacy">
           Aviso de privacidad
         </a>
       </main>

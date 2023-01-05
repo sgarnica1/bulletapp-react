@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import {
   getAllWodScoresApi,
   getWeeklyWodScoresApi,
   getWodScoreByUserIdApi,
   getWodScoresByWodIdApi,
-  getWodWithWodScoresByDateApi,
   postWodScoreApi,
   updateWodScoreApi,
 } from "../api/wodscores";
@@ -15,8 +13,6 @@ const useWodScores = () => {
   const [wodScores, setWodScores] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const { authTokens, logoutUser } = useAuth();
 
   const getAllWodScores = async () => {
     try {
@@ -58,9 +54,9 @@ const useWodScores = () => {
 
   const getWodWithWodScoresByDate = async (date) => {
     try {
-      const wod = await getWodByDateApi(date);
       setWodScores(null);
       setLoading(true);
+      const wod = await getWodByDateApi(date);
       const res = await getWodScoresByWodIdApi(wod.id);
       setWodScores({ wodScores: res, wod: wod });
       setLoading(false);

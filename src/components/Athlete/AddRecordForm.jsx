@@ -76,10 +76,12 @@ const AddRecordForm = ({ recordType }) => {
   ];
 
   useEffect(() => {
-    if (currentRecordCategory == "") {
+    if (currentRecordCategory === "") {
       setCurrentRecordCategory(recordCategories[0].name);
       setScoreType(recordCategories[0].score_type);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentRecordCategory]);
 
   if (recordType === info.components.addRecordForm.recordType.personalGoal)
@@ -126,18 +128,20 @@ const AddRecordForm = ({ recordType }) => {
                   </div>
                 );
               }
+              return null;
             })}
           </div>
           {/* MOVEMENT OPTIONS */}
           <div className="AddRecordForm__select">
             <select className="AddRecordForm__select-input">
               <option value="">EJERCICIO</option>
-              {currentRecordCategory !=
+              {currentRecordCategory !==
                 info.components.addRecordForm.recordCategories.unlockSkill &&
                 movements.map((mov, index) => {
                   if (mov.score_type === scoreType) {
                     return <option key={index}>{mov.name}</option>;
                   }
+                  return null;
                 })}
               {currentRecordCategory ===
                 info.components.addRecordForm.recordCategories.unlockSkill &&
@@ -148,8 +152,9 @@ const AddRecordForm = ({ recordType }) => {
           </div>
 
           {/* SCORE INPUT */}
-          {scoreType != "" && (
+          {scoreType !== "" && (
             <div className="AddRecordForm__input-score">
+              {/* TIME */}
               {scoreType === info.firebase.values.scoreTypes.time.name && (
                 <div className="AddRecordForm__input-container">
                   <input
@@ -185,6 +190,7 @@ const AddRecordForm = ({ recordType }) => {
                   />
                 </div>
               )}
+              {/* REPS */}
               {(scoreType === info.firebase.values.scoreTypes.reps.name ||
                 scoreType === info.firebase.values.scoreTypes.weight.name) && (
                 <input
@@ -239,7 +245,7 @@ const AddRecordForm = ({ recordType }) => {
             {/* SCORE OPTIONS */}
             <div className="AddRecordForm__radio-btn">
               {recordCategories.map((cat, index) => {
-                if (cat.score_type != "" && cat.active) {
+                if (cat.score_type !== "" && cat.active) {
                   return (
                     <div
                       className="AddRecordForm__radio-btn-container"
@@ -262,6 +268,7 @@ const AddRecordForm = ({ recordType }) => {
                     </div>
                   );
                 }
+                return null;
               })}
             </div>
             {/* MOVEMENT OPTIONS */}
@@ -272,6 +279,7 @@ const AddRecordForm = ({ recordType }) => {
                   if (mov.score_type === scoreType) {
                     return <option key={index}>{mov.name}</option>;
                   }
+                  return null;
                 })}
               </select>
             </div>

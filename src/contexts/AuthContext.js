@@ -232,7 +232,10 @@ const AuthProvider = ({ children }) => {
       if (authTokens) updateToken();
     }, fourMinutes);
     return () => clearInterval(interval);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authTokens]);
+
   return (
     <AuthContext.Provider
       value={{

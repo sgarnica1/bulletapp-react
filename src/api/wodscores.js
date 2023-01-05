@@ -2,7 +2,6 @@ import {
   collection,
   doc,
   getDocs,
-  setDoc,
   getDoc,
   addDoc,
   updateDoc,
@@ -45,7 +44,7 @@ const getWeeklyWodScoresApi = async (callback) => {
       where("timestamps.created_at", "<", yestedayRef),
       where("timestamps_created_at", ">", sunday)
     );
-    const snapshot = await getDocs(ref);
+    const snapshot = await getDocs(query_);
     const data = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
     });
