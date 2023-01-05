@@ -1,20 +1,17 @@
 .Leaderboard {
   .SearchBar {
-    margin: 20px;
-
     &__input-container {
       border: 1px solid var(--bg-input-2);
     }
   }
 
   &__container {
-    background: var(--bg-component);
     border-radius: 50px 50px 0 0;
   }
 
   &__header {
-    padding: 30px;
     max-width: $max-width-card;
+    margin-bottom: toRem(50);
   }
 
   &__title {
@@ -119,6 +116,9 @@
       display: grid;
       grid-template-columns: 15% 65% 20%;
       align-content: center;
+      border-radius: $border-radius;
+      margin-bottom: 10px;
+      height: 70px;
     }
 
     &__tags {
@@ -156,6 +156,15 @@
 
     &__score {
       background: var(--bg-input);
+
+      &-position {
+        color: $color-brand;
+        font-weight: 600;
+      }
+
+      &-name {
+        margin-right: 10px;
+      }
     }
 
     &__score:nth-child(2n) {

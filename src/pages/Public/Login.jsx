@@ -21,9 +21,9 @@ function Login() {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (error) navigate("/server-error");
-  // }, [error]);
+  useEffect(() => {
+    if (error) navigate("/server-error");
+  }, [error]);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -90,9 +90,7 @@ function Login() {
             {errorMessage ? (
               <div className="Login__error">{errorMessage}</div>
             ) : null}
-            {error ? (
-              <div className="Login__error">{error}</div>
-            ) : null}
+            {error ? <div className="Login__error">{error}</div> : null}
           </div>
           <div className="Login__button-container">
             <Button

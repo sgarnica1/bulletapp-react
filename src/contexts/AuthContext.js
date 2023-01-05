@@ -84,8 +84,8 @@ const AuthProvider = ({ children }) => {
     try {
       let userCredentials = await signInWithEmailAndPassword(
         auth,
-        email,
-        password
+        email.trim(),
+        password.trim()
       );
       // GET USER CREDENTIALS
       userCredentials = userCredentials.user;

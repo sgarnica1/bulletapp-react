@@ -5,13 +5,15 @@ import {
   getWeeklyWodScoresApi,
   getWodScoreByUserIdApi,
   getWodScoresByWodIdApi,
+  getWodWithWodScoresByDateApi,
   postWodScoreApi,
   updateWodScoreApi,
 } from "../api/wodscores";
+import { getWodByDateApi } from "../api/wods";
 
 const useWodScores = () => {
   const [wodScores, setWodScores] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const { authTokens, logoutUser } = useAuth();
@@ -42,9 +44,25 @@ const useWodScores = () => {
 
   const getWodScoresByWodId = async (idWod) => {
     try {
+      console.log("getWodScoresByWodId");
+      setWodScores(null);
       setLoading(true);
       const res = await getWodScoresByWodIdApi(idWod);
       setWodScores(res);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
+  const getWodWithWodScoresByDate = async (date) => {
+    try {
+      const wod = await getWodByDateApi(date);
+      setWodScores(null);
+      setLoading(true);
+      const res = await getWodScoresByWodIdApi(wod.id);
+      setWodScores({ wodScores: res, wod: wod });
       setLoading(false);
     } catch (err) {
       setError(err);
@@ -96,6 +114,7 @@ const useWodScores = () => {
     getWeeklyWodScores,
     getWodScoreByUserId,
     getWodScoresByWodId,
+    getWodWithWodScoresByDate,
     postWodScore,
     updateWodScore,
   };
