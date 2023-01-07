@@ -64,8 +64,6 @@ function Leaderboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wodScores, loading, searchValue]);
 
-  console.log(wodScores?.wod.date.seconds);
-
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={true}>
@@ -73,7 +71,7 @@ function Leaderboard() {
           <div className="Leaderboard__header">
             <h1 className="Leaderboard__title">WOD</h1>
             {loading && WidgetLoadingSkeleton({ type: "date" })}
-            {!loading && wodScores && wodScores.wod && (
+            {!loading && (
               <DateWidget date={utils.formatDateLong(currentDate)} />
             )}
           </div>
