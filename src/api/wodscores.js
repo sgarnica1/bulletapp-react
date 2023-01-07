@@ -157,6 +157,7 @@ const updateWodScoreApi = async (idWodScore, score, callback) => {
       [info.firebase.docKeys.wodScores.score]: score,
     });
     if (callback) callback(res);
+    console.log(res);
     return res;
   } catch (err) {
     throw err;

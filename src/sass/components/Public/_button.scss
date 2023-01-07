@@ -93,7 +93,7 @@
   }
 
   &.secondary.fill:hover {
-    background-color: transparent;
+    background-color: var(--bg-component-2);
     border: 1px solid var(--bg-component);
     color: var(--color-text);
   }

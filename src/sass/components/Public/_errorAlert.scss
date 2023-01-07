@@ -1,0 +1,30 @@
+.ErrorAlert {
+  &.show {
+    transform: translateY(90px);
+  }
+  width: 100%;
+  max-width: $max-width-input;
+  height: $height-input;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: $border-radius;
+  background: linear-gradient(to right, #d81818, #700404);
+  transform: translateY(-100px);
+  transition: ease 0.5s;
+
+  &__icon {
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__message {
+    color: $color-white;
+    font-weight: 600;
+    font-size: toRem(14);
+  }
+}

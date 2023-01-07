@@ -15,7 +15,6 @@ import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
 
 // UTILS
 import { info } from "../../utils/info";
-import { utils } from "../../utils/utils";
 
 // IMG
 import AthleteImg from "../../assets/img/athlete.jpg";
@@ -39,7 +38,7 @@ function Home() {
     <div className="Home">
       <ContentContainer>
         {/* BIRTHDAT CELEBRATION */}
-        {user && user.birthday && <BirthdayCelebrationWidget user={user} />}
+        {user && user.data && <BirthdayCelebrationWidget user={user} />}
 
         {/* HOME BANNER */}
         {loading && <HomeBanner user={"Loading..."}></HomeBanner>}

@@ -233,6 +233,8 @@ const info = {
   },
   messages: {
     error: {
+      emptyScore: "Por favor ingresa un score",
+      sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
       fetchError: "Error en la conexión",
       invalidPassword:
         "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
@@ -240,6 +242,10 @@ const info = {
       invalidEmail: "Por favor ingrese un correo electrónico válido",
       missingData: "Este campo es requerido",
       allMissingData: "Todos los campos son requeridos",
+    },
+    success: {
+      wodScoreUpdated: "Tu score se ha actualizado correctamente",
+      wodScoreCreated: "Score registrado correctamente",
     },
   },
   requests: {

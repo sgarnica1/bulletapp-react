@@ -4,7 +4,7 @@
   padding-bottom: toRem(20);
 
   &.padding {
-    padding: toRem(20) toRem(24);
+    padding: toRem(20) toRem(20);
   }
 
   @include mq(md) {

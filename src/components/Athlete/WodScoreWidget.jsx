@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useDashboard } from "../../contexts/DashboardContext";
 import { useWods } from "../../hooks/useWods";
 import { useWodScores } from "../../hooks/useWodScores";
 
@@ -13,10 +14,12 @@ import { utils } from "../../utils/utils";
 
 const WodScoreWidget = () => {
   const { user } = useAuth();
+  const { setSuccessMessage, setErrorMessage } = useDashboard();
   const { wods: wod, loading, error, actions: wodActions } = useWods();
   const {
     wodScores: wodScore,
     loading: wodScoresLoading,
+    error: wodScoresError,
     actions: wodScoresActions,
   } = useWodScores();
 
@@ -27,9 +30,10 @@ const WodScoreWidget = () => {
   const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
+    if (error || wodScoresError) setErrorMessage(error || wodScoresError);
     if (!wod) wodActions.getTodaysWod(); // GET TODAYS WOD
 
-    if (user && wod && wod != -1 && !wodScore)
+    if (user && wod && wod !== -1 && !wodScore)
       // GET WOD SCORE FROM USER
       wodScoresActions.getWodScoreByUserId(wod.id, user.uid || user.user_id);
     // IF THERE IS A WOD SCORE, SET THE SCORE
@@ -38,7 +42,6 @@ const WodScoreWidget = () => {
         setMinutes(wodScore.score.minutes);
         setSeconds(wodScore.score.seconds);
       } else {
-        console.log(wodScore.score.reps);
         setReps(parseInt(wodScore?.score?.reps));
       }
     }
@@ -51,11 +54,29 @@ const WodScoreWidget = () => {
 
     // REVIEW SCORE TYPE (TIME OR REPS)
     if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
+      // REVIEW EMPTY FIELDS
+      if (minutes === "00" && seconds === "00")
+        return setErrorMessage(info.messages.error.emptyScore);
+      // REVIEW SAME SCORE
+      if (
+        wodScore &&
+        wodScore.score &&
+        wodScore.score.minutes === minutes &&
+        wodScore.score.seconds === seconds
+      )
+        return setErrorMessage(info.messages.error.sameScore);
+      // SET SCORE
       score = {
         minutes: parseInt(minutes),
         seconds: parseInt(seconds),
       };
     } else {
+      // REVIEW EMPTY FIELDS
+      if (reps === 0) return setErrorMessage(info.messages.error.emptyScore);
+      // REVIEW SAME SCORE
+      if (wodScore && wodScore.score && wodScore.score.reps === reps)
+        return setErrorMessage(info.messages.error.sameScore);
+      // SET SCORE
       score = {
         reps: parseInt(reps),
       };
@@ -63,15 +84,20 @@ const WodScoreWidget = () => {
     // IF THERE IS NO WOD SCORE, POST ONE
     if (!wodScore) {
       setRefetch(!refetch);
-      return wodScoresActions.postWodScore(
+      const res = wodScoresActions.postWodScore(
         wod.id,
         user.uid || user.user_id,
         score
       );
+      res.then(() => setSuccessMessage(info.messages.success.wodScoreCreated));
+      return;
     }
+
     // IF THERE IS A WOD SCORE, UPDATE IT
     setRefetch(!refetch);
-    return wodScoresActions.updateWodScore(wodScore.id, score);
+    const res = wodScoresActions.updateWodScore(wodScore.id, score);
+    res.then(() => setSuccessMessage(info.messages.success.wodScoreUpdated));
+    return;
   };
 
   // TODO - Handle errors ui
@@ -91,9 +117,7 @@ const WodScoreWidget = () => {
         >
           {/* LOADING INPUT */}
           {wodScoresLoading && (
-            <div className="AddRegisterWidget__form__input-score">
-              Loading...
-            </div>
+            <div className="AddRegisterWidget__form__input-score"></div>
           )}
           {/* SCORE INPUT */}
           {!wodScoresLoading && (

@@ -40,7 +40,6 @@ const useWodScores = () => {
 
   const getWodScoresByWodId = async (idWod) => {
     try {
-      console.log("getWodScoresByWodId");
       setWodScores(null);
       setLoading(true);
       const res = await getWodScoresByWodIdApi(idWod);
@@ -99,7 +98,6 @@ const useWodScores = () => {
       setWodScores(res);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       setError(err);
       setLoading(false);
     }

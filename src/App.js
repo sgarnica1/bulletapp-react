@@ -4,8 +4,10 @@ import { useAuth } from "./contexts/AuthContext";
 import { useTheme } from "./contexts/ThemeContext";
 // COMPONENTS
 import { Dashboard } from "./components/Layout/Dashboard";
+import { ErrorAlert } from "./components/Public/ErrorAlert";
 import { Header } from "./components/Layout/Header";
 import { Navbar } from "./components/Layout/Navbar";
+import { SuccessAlert } from "./components/Public/SuccessAlert";
 
 // PAGES
 import { Athletes } from "./pages/Admin/Athletes";
@@ -43,8 +45,13 @@ function App() {
   return (
     <Router>
       <div className="App" data-theme={theme}>
+        {/* SUCCESS ALERT */}
+        <SuccessAlert />
+        {/* ERROR ALERT */}
+        <ErrorAlert />
+
         <Dashboard>
-          {user? (
+          {user ? (
             <>
               <Navbar user={user} />
               <Header />

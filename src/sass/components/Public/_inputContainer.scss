@@ -4,8 +4,7 @@
 
 .InputContainer {
   width: 100%;
-  height: 50px;
-  max-height: 50px;
+  height: $height-input;
   position: relative;
   margin-bottom: toRem(20);
   padding: 0 10px;
@@ -21,12 +20,12 @@
   &__label {
     position: absolute;
     transition: ease-in 0.3s;
-    bottom: 12px;
+    bottom: 18px;
     font-size: toRem(16);
     font-family: $font-secondary;
     color: var(--color-text);
   }
-  
+
   &__label.focus {
     font-size: toRem(12);
     transition: ease-in 0.2s;

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -19,11 +19,6 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const { loginUser, error, setError, loggingIn } = useAuth();
   const { theme } = useTheme();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (error) navigate("/server-error");
-  }, [error, navigate]);
 
   const submitHandler = (event) => {
     event.preventDefault();

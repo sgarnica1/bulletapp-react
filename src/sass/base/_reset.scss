@@ -97,6 +97,18 @@ a {
   }
 }
 
+// PORTALS
+#alert {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateY(-90px);
+}
+
 // MAX WIDTH
 .nav,
 .banner,

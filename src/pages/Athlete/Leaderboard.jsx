@@ -41,7 +41,6 @@ function Leaderboard() {
   };
 
   useEffect(() => {
-    console.log("WOD SCORES");
     const date = setWodDate(weekDay);
 
     if (refetch) actions.getWodWithWodScoresByDate(date);
@@ -68,69 +67,71 @@ function Leaderboard() {
           <div className="Leaderboard__header">
             <h1 className="Leaderboard__title">Leaderboard</h1>
             <DateWidget date={utils.getCurrentDate()} />
+          </div>
 
-            {/* DAY PICKER */}
-            <div className="Leaderboard__day-picker">
-              {info.data.weekDayNumberArray.map((day) => {
-                if (day.num !== 0 && day.num !== 6)
-                  return (
-                    <button
-                      key={day.num}
-                      onClick={() => {
-                        setWeekDay(day.num);
-                        setRefetch(true);
-                      }}
-                      className={`Leaderboard__day-button ${
-                        weekDay === day.num ? "active" : ""
-                      }`}
-                    >
-                      {day.ref}
-                    </button>
-                  );
-                return null;
-              })}
-            </div>
+          {/* DAY PICKER */}
+          <div className="Leaderboard__day-picker">
+            {info.data.weekDayNumberArray.map((day) => {
+              if (day.num !== 0 && day.num !== 6)
+                return (
+                  <button
+                    key={day.num}
+                    onClick={() => {
+                      setWeekDay(day.num);
+                      setRefetch(true);
+                    }}
+                    className={`Leaderboard__day-button ${
+                      weekDay === day.num ? "active" : ""
+                    }`}
+                  >
+                    {day.ref}
+                  </button>
+                );
+              return null;
+            })}
+          </div>
 
-            {/* WOD LIST */}
-            <div className="Leaderboard__wod">
-              <div className="Leaderboard__wod__header">WOD</div>
-              {loading && !wodScores && (
-                <p className="Leaderboard__wod__not-available">Cargando...</p>
-              )}
-              {!loading && !wodAvailable && (
-                <p className="Leaderboard__wod__not-available">No disponible</p>
-              )}
+          {/* WOD LIST */}
+          <div className="Leaderboard__wod">
+            <div className="Leaderboard__wod__header">WOD</div>
+            {loading && !wodScores && (
+              <p className="Leaderboard__wod__not-available">Cargando...</p>
+            )}
+            {!loading && !wodAvailable && (
+              <p className="Leaderboard__wod__not-available">No disponible</p>
+            )}
 
-              {!loading && wodAvailable && wodScores && (
-                <div className="Leaderboard__wod__body">
-                  <p className="Leaderboard__wod__title">
-                    {wodScores?.wod?.description.split(",")[0]}
-                  </p>
-                  {wodScores?.wod?.description
-                    .split(",")
-                    .slice(1)
-                    .map((line, index) => (
-                      <p className="Leaderboard__wod__description" key={index}>
-                        {line}
-                      </p>
-                    ))}
-                  <p className="Leaderboard__wod__timecap">
-                    Time Cap: <span>{wodScores?.wod?.timecap} min</span>
-                  </p>
-                </div>
-              )}
-            </div>
+            {!loading && wodAvailable && wodScores && (
+              <div className="Leaderboard__wod__body">
+                <p className="Leaderboard__wod__title">
+                  {wodScores?.wod?.description.split(",")[0]}
+                </p>
+                {wodScores?.wod?.description
+                  .split(",")
+                  .slice(1)
+                  .map((line, index) => (
+                    <p className="Leaderboard__wod__description" key={index}>
+                      {line}
+                    </p>
+                  ))}
+                <p className="Leaderboard__wod__timecap">
+                  Time Cap: <span>{wodScores?.wod?.timecap} min</span>
+                </p>
+              </div>
+            )}
           </div>
 
           {/* LEADERBOARD LIST */}
 
           <div className="Leaderboard__body">
-            <SearchBar
-              placeholder="Buscar atleta"
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              loading={loading}
-            />
+            {!loading && wodScores?.wodScores.length > 0 && (
+              <SearchBar
+                placeholder="Buscar atleta"
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                loading={loading}
+              />
+            )}
             {/* <div className="Leaderboard__body__tags">
               <span>#</span>
               <span>Atleta</span>

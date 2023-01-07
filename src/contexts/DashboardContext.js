@@ -18,41 +18,26 @@ function DashboardProvider({ children }) {
   // INITIAL STATES
   const [activeView, setActiveView] = useState(initialView);
   const [currentLocation, setCurrentLocation] = useState("Juriquilla");
-  const [searchValue, setSearchValue] = useState("");
   const [showAddFormModal, setShowAddFormModal] = useState(false);
   const [showNav, setShowNav] = useState(false);
-
-  function searchDataFromInput(data) {
-    let filteredData = [];
-
-    if (!searchValue.length > 0) {
-      filteredData = data;
-    } else {
-      filteredData = data.filter((element) => {
-        const dataText = `${element.first_name.toLowerCase()} ${element.last_name.toLowerCase()}`;
-        const searchValueText = searchValue.toLowerCase().trim();
-
-        return dataText.includes(searchValueText);
-      });
-    }
-
-    return filteredData;
-  }
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   return (
     <DashboardContext.Provider
       value={{
         activeView,
         currentLocation,
-        searchValue,
         showAddFormModal,
         showNav,
+        errorMessage,
+        successMessage,
         setActiveView,
         setCurrentLocation,
-        setSearchValue,
         setShowAddFormModal,
         setShowNav,
-        searchDataFromInput,
+        setErrorMessage,
+        setSuccessMessage,
       }}
     >
       {children}

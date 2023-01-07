@@ -25,9 +25,7 @@ const BulletGoalWidget = () => {
   };
   const wodScore = {};
 
-  useEffect(() => {
-    console.log("Bullet Goal Widget");
-  }, []);
+  useEffect(() => {}, []);
 
   // SUBMIT FUNCTION
   const handleSubmit = (e) => {
