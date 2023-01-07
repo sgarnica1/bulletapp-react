@@ -2,7 +2,7 @@ import React from "react";
 
 const WidgetLoadingSkeleton = ({ type = "form" }) => {
   if (type === "date")
-    return <div className="WidgetLoadingSkeleton date"></div>;
+    return <div className="WidgetLoadingSkeleton__input WidgetLoadingSkeleton__date"></div>;
 
   return (
     <div className={`WidgetLoadingSkeleton ${type}`}>

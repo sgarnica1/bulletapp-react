@@ -5,8 +5,9 @@ import { info } from "../info";
 
 const AdminRoute = () => {
   const { user, loading } = useAuth();
+  console.log(user);
 
-  if (user.data || !loading)
+  if ((user && user.data) || !loading)
     return user?.data?.role === info.firebase.values.roles.admin ? (
       <Outlet />
     ) : (

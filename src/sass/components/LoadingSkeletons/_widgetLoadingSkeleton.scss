@@ -9,14 +9,6 @@
   border-radius: $border-radius;
   padding: 20px;
 
-  &.date {
-    min-height: 20px;
-    max-height: 20px;
-    height: 20px;
-    max-width: 200px;
-    padding: 0;
-  }
-
   & * {
     border-radius: 6px;
   }
@@ -40,6 +32,17 @@
     width: 100%;
     margin-bottom: 10px;
     @extend %loading-skeleton;
+  }
+
+  &__date {
+    min-height: 20px;
+    max-height: 20px;
+    height: 20px;
+    max-width: 200px;
+    padding: 0;
+    border-radius: $border-radius;
+    margin-top: 10cpx;
+    margin-bottom: 30px
   }
 
   @extend %loading-skeleton-background;

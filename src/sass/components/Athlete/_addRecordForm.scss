@@ -55,8 +55,6 @@
     }
   }
 
-
-
   &__select {
     display: flex;
     justify-content: center;
@@ -84,7 +82,11 @@
 
   &__input-container {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    gap: 10px;
+    border-radius: $border-radius;
   }
 
   &__input-score {

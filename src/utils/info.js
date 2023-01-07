@@ -139,7 +139,10 @@ const info = {
       scoreTypes: {
         time: {
           name: "time",
-          units: "min",
+          units: {
+            min: "MIN",
+            sec: "SEG",
+          },
         },
         reps: {
           name: "reps",

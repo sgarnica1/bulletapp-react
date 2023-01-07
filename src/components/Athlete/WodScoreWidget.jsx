@@ -42,7 +42,11 @@ const WodScoreWidget = () => {
     // IF THERE IS A WOD SCORE, SET THE SCORE
     if (wodScore && wodScore.score) {
       if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
-        setMinutes(wodScore.score.minutes);
+        setMinutes(() => {
+          return wodScore.score.minutes < 10
+            ? "0" + wodScore.score.minutes
+            : wodScore.score.minutes;
+        });
         setSeconds(wodScore.score.seconds);
       } else {
         setReps(parseInt(wodScore?.score?.reps));
@@ -60,14 +64,14 @@ const WodScoreWidget = () => {
     // REVIEW SCORE TYPE (TIME OR REPS)
     if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
       // REVIEW EMPTY FIELDS
-      if (minutes === "00" && seconds === "00")
+      if (minutes == 0 && seconds == 0)
         return setErrorMessage(info.messages.error.emptyScore);
       // REVIEW SAME SCORE
       if (
         wodScore &&
         wodScore.score &&
-        wodScore.score.minutes === minutes &&
-        wodScore.score.seconds === seconds
+        wodScore.score.minutes == minutes &&
+        wodScore.score.seconds == seconds
       )
         return setErrorMessage(info.messages.error.sameScore);
       // SET SCORE
@@ -137,12 +141,14 @@ const WodScoreWidget = () => {
                     onChange={(e) => {
                       const formattedValue = utils.formatTimerInput(
                         e.target.value,
-                        seconds
+                        minutes
                       );
                       setMinutes(formattedValue);
                     }}
                   />
-                  {/* <span>:</span> */}
+                  <p className="AddRegisterWidget__form__input-units">
+                    {info.firebase.values.scoreTypes[wod.score_type]?.units.min}
+                  </p>
                   <input
                     type="number"
                     className="AddRegisterWidget__form__input"
@@ -158,25 +164,29 @@ const WodScoreWidget = () => {
                       setSeconds(formattedValue);
                     }}
                   />
+                  <p className="AddRegisterWidget__form__input-units">
+                    {info.firebase.values.scoreTypes[wod.score_type]?.units.sec}
+                  </p>
                 </div>
               )}
               {wod.score_type === info.firebase.values.scoreTypes.reps.name && (
-                <input
-                  type="number"
-                  className="AddRegisterWidget__form__input"
-                  placeholder="0"
-                  value={reps}
-                  onChange={(e) => {
-                    if (e.target.value < 0) e.target.value = 0;
+                <>
+                  <input
+                    type="number"
+                    className="AddRegisterWidget__form__input"
+                    placeholder="0"
+                    value={reps}
+                    onChange={(e) => {
+                      if (e.target.value < 0) e.target.value = 0;
 
-                    setReps(e.target.value);
-                  }}
-                />
+                      setReps(e.target.value);
+                    }}
+                  />
+                  <p className="AddRegisterWidget__form__input-units">
+                    {info.firebase.values.scoreTypes[wod.score_type]?.units}
+                  </p>
+                </>
               )}
-
-              <p className="AddRegisterWidget__form__input-units">
-                {info.firebase.values.scoreTypes[wod.score_type]?.units}
-              </p>
             </div>
           )}
           <Button

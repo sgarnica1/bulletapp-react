@@ -3,6 +3,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { info } from "../../utils/info";
 
 // COMPONENTS
+import { Button } from "../../components/Public/Button";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { InfoCard } from "../../components/Public/InfoCard";
 
@@ -14,7 +15,7 @@ import HoodiesImg from "../../assets/img/sudaderas.jpg";
 // TODO - Replace user name, user img and user email with real one
 
 function Settings() {
-  const { user, loading, error } = useAuth();
+  const { user, loading, error, logoutUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -46,6 +47,14 @@ function Settings() {
         >
           {theme === info.states.theme.dark ? "Desactivar" : "Activar"}
         </InfoCard>
+
+        <Button
+          onClickHandler={logoutUser}
+          style={info.components.button.classes.secondary}
+          size={info.components.button.classes.lg}
+          fill={false}
+          text={"Cerrar sesión"}
+        />
       </ContentContainer>
     </div>
   );

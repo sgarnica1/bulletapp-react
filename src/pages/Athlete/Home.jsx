@@ -42,7 +42,7 @@ function Home() {
         {user && user.data && <BirthdayCelebrationWidget user={user} />}
 
         {/* HOME BANNER */}
-        {loading && <HomeBanner user={"Loading..."}></HomeBanner>}
+        {loading && <HomeBanner user={""}></HomeBanner>}
         {error && !loading && <HomeBanner user={""}></HomeBanner>}
         {!error && !loading && (
           <HomeBanner

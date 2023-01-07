@@ -44,7 +44,16 @@ const Button = ({
       </a>
     );
 
-  return null;
+  return (
+    <button
+      type="button"
+      className={`Button ${size} ${style} ${fill ? "fill" : ""}`}
+      disabled={disabled}
+      onClick={onClickHandler}
+    >
+      {text}
+    </button>
+  );
 };
 
 export { Button };

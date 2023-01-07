@@ -55,8 +55,11 @@
     }
 
     &__input-container {
-      width: 90%;
-      display: flex;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      gap: 10px;
       border-radius: $border-radius;
     }
 

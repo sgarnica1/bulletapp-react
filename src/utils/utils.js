@@ -101,12 +101,15 @@ const utils = {
 
   // FORMAT INPUT TIMER FOR SECONDS AND MINUTES
   formatTimerInput: (value, prev) => {
-    // SET INPUT TO 00 IF IT IS 0
-    if (value === 0) value = "00";
+    // IF VALUE IS 0, AND PREV VALUE WAS > 0, SET VALUE TO 00
+    if (value == 0 && prev == 0) value = "00";
+    if (value == 0 && prev > 0) value = "00";
 
     // IF PREV VALUE WAS 0, AND NEW VALUE IS > 0 BUT < 10, ALLOW ONLY 1 DIGIT
-    if (prev === "00" && value != 0) {
-      if (value < 10) value = value.slice(1, 3);
+    if (value != 0) {
+      console.log("here");
+      console.log(value < 10, value.toString().length > 2);
+      if (value < 10 && value.toString().length > 2) value = value.slice(1, 3);
     }
 
     // IF VALUE'S LENGTH IS > 2, SLICE IT

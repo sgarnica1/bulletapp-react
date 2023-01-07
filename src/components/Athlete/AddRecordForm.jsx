@@ -302,7 +302,9 @@ const AddRecordForm = ({ recordType }) => {
                       setMinutes(formattedValue);
                     }}
                   />
-
+                  <p className="AddRecordForm__input-units">
+                    {info.firebase.values.scoreTypes[scoreType]?.units.min}
+                  </p>
                   <input
                     type="number"
                     className="AddRecordForm__input"
@@ -318,25 +320,30 @@ const AddRecordForm = ({ recordType }) => {
                       setSeconds(formattedValue);
                     }}
                   />
+                  <p className="AddRecordForm__input-units">
+                    {info.firebase.values.scoreTypes[scoreType]?.units.sec}
+                  </p>
                 </div>
               )}
               {(scoreType === info.firebase.values.scoreTypes.reps.name ||
                 scoreType === info.firebase.values.scoreTypes.weight.name) && (
-                <input
-                  type="number"
-                  className="AddRecordForm__input"
-                  placeholder="0"
-                  value={reps}
-                  onChange={(e) => {
-                    if (e.target.value < 0) e.target.value = 0;
+                <>
+                  <input
+                    type="number"
+                    className="AddRecordForm__input"
+                    placeholder="0"
+                    value={reps}
+                    onChange={(e) => {
+                      if (e.target.value < 0) e.target.value = 0;
 
-                    setReps(e.target.value);
-                  }}
-                />
+                      setReps(e.target.value);
+                    }}
+                  />
+                  <p className="AddRecordForm__input-units">
+                    {info.firebase.values.scoreTypes[scoreType]?.units}
+                  </p>
+                </>
               )}
-              <p className="AddRecordForm__input-units">
-                {info.firebase.values.scoreTypes[scoreType]?.units}
-              </p>
             </div>
           </>
         )}
