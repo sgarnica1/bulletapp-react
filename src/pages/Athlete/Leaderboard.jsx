@@ -5,6 +5,8 @@ import { useWodScores } from "../../hooks/useWodScores";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { DateWidget } from "../../components/Public/DateWidget";
 import { SearchBar } from "../../components/Public/SearchBar";
+import { InputLoadingSkeleton } from "../../components/Layout/LoadingSkeletons/InputLoadingSkeleton";
+import { WidgetLoadingSkeleton } from "../../components/Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
 // UTILS
 import { info } from "../../utils/info";
@@ -19,6 +21,7 @@ function Leaderboard() {
   const [sortedWodScores, setSortedWodScores] = useState();
   const [refetch, setRefetch] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   // METHODS
   const sortAscending = (wodScores) => {
@@ -42,7 +45,8 @@ function Leaderboard() {
 
   useEffect(() => {
     const date = setWodDate(weekDay);
-
+    setCurrentDate(date);
+    if (loading) setSearchValue("");
     if (refetch) actions.getWodWithWodScoresByDate(date);
     if (weekDay >= new Date().getDay()) setWodAvailable(false);
     else setWodAvailable(true);
@@ -60,13 +64,18 @@ function Leaderboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wodScores, loading, searchValue]);
 
+  console.log(wodScores?.wod.date.seconds);
+
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={true}>
         <div className="Leaderboard__container">
           <div className="Leaderboard__header">
-            <h1 className="Leaderboard__title">Leaderboard</h1>
-            <DateWidget date={utils.getCurrentDate()} />
+            <h1 className="Leaderboard__title">WOD</h1>
+            {loading && WidgetLoadingSkeleton({ type: "date" })}
+            {!loading && wodScores && wodScores.wod && (
+              <DateWidget date={utils.formatDateLong(currentDate)} />
+            )}
           </div>
 
           {/* DAY PICKER */}
@@ -93,10 +102,8 @@ function Leaderboard() {
 
           {/* WOD LIST */}
           <div className="Leaderboard__wod">
-            <div className="Leaderboard__wod__header">WOD</div>
-            {loading && !wodScores && (
-              <p className="Leaderboard__wod__not-available">Cargando...</p>
-            )}
+            {loading && !wodScores && <WidgetLoadingSkeleton wod={true} />}
+
             {!loading && !wodAvailable && (
               <p className="Leaderboard__wod__not-available">No disponible</p>
             )}
@@ -124,7 +131,17 @@ function Leaderboard() {
           {/* LEADERBOARD LIST */}
 
           <div className="Leaderboard__body">
-            {!loading && wodScores?.wodScores.length > 0 && (
+            <h2 className="subtitle">Leaderboard</h2>
+            {loading && (
+              <>
+                <InputLoadingSkeleton type="searchBar" />
+                {new Array(10).fill(0).map((_, index) => (
+                  <InputLoadingSkeleton key={index} />
+                ))}
+              </>
+            )}
+
+            {!loading && (
               <SearchBar
                 placeholder="Buscar atleta"
                 searchValue={searchValue}
@@ -132,15 +149,12 @@ function Leaderboard() {
                 loading={loading}
               />
             )}
-            {/* <div className="Leaderboard__body__tags">
-              <span>#</span>
-              <span>Atleta</span>
-              <span>Score</span>
-            </div> */}
-
-            {loading && (
-              <div className="Leaderboard__body__score">Cargando...</div>
+            {wodScores?.wodScores.length === 0 && (
+              <div className="Leaderboard__body__empty">
+                Aún no hay resultados
+              </div>
             )}
+
             {!loading &&
               wodScores &&
               wodScores.wodScores &&

@@ -1,0 +1,46 @@
+.WidgetLoadingSkeleton {
+  min-height: 130px;
+  width: 100%;
+  max-width: $max-width-card;
+  margin-bottom: $widget-margin-bottom;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: $border-radius;
+  padding: 20px;
+
+  &.date {
+    min-height: 20px;
+    max-height: 20px;
+    height: 20px;
+    max-width: 200px;
+    padding: 0;
+  }
+
+  & * {
+    border-radius: 6px;
+  }
+
+  &__title {
+    height: 20px;
+    width: 50%;
+    margin-bottom: 10px;
+    @extend %loading-skeleton;
+  }
+
+  &__description {
+    height: 20px;
+    width: 30%;
+    margin-bottom: 20px;
+    @extend %loading-skeleton;
+  }
+
+  &__input {
+    height: $height-input;
+    width: 100%;
+    margin-bottom: 10px;
+    @extend %loading-skeleton;
+  }
+
+  @extend %loading-skeleton-background;
+}

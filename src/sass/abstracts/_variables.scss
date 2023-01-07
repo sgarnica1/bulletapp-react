@@ -2,13 +2,10 @@ $color-primary: #4e4e4e;
 $color-secondary: #a7d41f;
 $color-secondary-hover: #4e4e4e;
 $color-dark: #000;
-$color-light: #fff;
 $color-background: #f5f5f5;
 $color-background-linear: linear-gradient(#f5f5f5, #dedede);
 $color-alternative: #a7a7a7;
 $color-alternative-2: #767676;
-$color-skeleton-primary: #ddd;
-$color-skeleton-secondary: #eee;
 $linear-gradient-1: linear-gradient(to left, #0f0f0f, #333333);
 $linear-gradient-2: linear-gradient(to left, #4e4e4e, #333333);
 $linear-gradient-header: linear-gradient(to left, #86aa19, #93bb1c);
@@ -71,6 +68,18 @@ $box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
 
 // TRANSITIONS
 $theme-transition: 0.3s ease-in-out;
+
+// LOADING SKELETON
+$color-light: #fff;
+$color-skeleton-primary: #262626;
+$color-skeleton-secondary: #eee;
+
+$bg-loading-transition-dark: #000;
+$bg-loading-transition-light: #fff;
+$bg-loading-primary-dark: #262626;
+$bg-loading-secondary-dark: #141414;
+$bg-loading-primary-light: #ddd;
+$bg-loading-secondary-light: #eee;
 
 // BREAKPOINTS
 $max-width: 1280px;

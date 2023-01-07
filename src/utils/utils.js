@@ -1,6 +1,14 @@
 import { info } from "./info";
 
 const utils = {
+  formatDateLong: (currentDate) => {
+    const weekDay = info.data.days[currentDate.getDay()];
+    const monthDay = currentDate.getDate();
+    const month = info.data.months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return `${weekDay}, ${monthDay} ${month} ${year}`;
+  },
   getCurrentDate: () => {
     const currentDate = new Date();
 

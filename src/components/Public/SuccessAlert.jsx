@@ -12,6 +12,7 @@ const SuccessAlert = () => {
         setSuccessMessage(null);
       }, 3000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successMessage]);
 
   return ReactDom.createPortal(

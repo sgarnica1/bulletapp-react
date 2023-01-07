@@ -12,6 +12,7 @@ const ErrorAlert = () => {
         setErrorMessage(null);
       }, 3000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorMessage]);
 
   return ReactDom.createPortal(

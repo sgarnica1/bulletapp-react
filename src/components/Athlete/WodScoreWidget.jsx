@@ -8,6 +8,9 @@ import { useWodScores } from "../../hooks/useWodScores";
 import { Button } from "../Public/Button";
 import { AddRegisterWidgetContainer } from "./AddRegisterWidgetContainer";
 
+// LOADING SKELETONS
+import { WidgetLoadingSkeleton } from "../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
+
 // UTILS
 import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
@@ -45,6 +48,8 @@ const WodScoreWidget = () => {
         setReps(parseInt(wodScore?.score?.reps));
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wod, wodScore, refetch]);
 
   // SUBMIT FUNCTION
@@ -103,8 +108,10 @@ const WodScoreWidget = () => {
   // TODO - Handle errors ui
   // TODO - Handle success ui
 
+  if (loading || wodScoresLoading) return <WidgetLoadingSkeleton />;
+
   // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
-  if (wod && wod != -1) {
+  if (!loading && !wodScoresLoading && wod && wod !== -1) {
     return (
       <AddRegisterWidgetContainer
         title="¿Cómo te fue hoy?"
@@ -115,10 +122,6 @@ const WodScoreWidget = () => {
           className="AddRegisterWidget__form"
           onSubmit={(event) => handleSubmit(event)}
         >
-          {/* LOADING INPUT */}
-          {wodScoresLoading && (
-            <div className="AddRegisterWidget__form__input-score"></div>
-          )}
           {/* SCORE INPUT */}
           {!wodScoresLoading && (
             <div className="AddRegisterWidget__form__input-score">

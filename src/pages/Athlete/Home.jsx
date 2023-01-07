@@ -32,6 +32,7 @@ function Home() {
 
   useEffect(() => {
     if (error) navigate("/server-error");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
   return (

@@ -42,6 +42,10 @@
 @import "components/public/searchBar";
 @import "components/public/successAlert";
 
+// COMPONENTS - LOADING SKELETONS
+@import "components/loadingSkeletons/inputLoadingSkeleton";
+@import "components/loadingSkeletons/widgetLoadingSkeleton";
+
 // LAYOUT
 @import "layout/dashboard";
 @import "layout/contentContainer";

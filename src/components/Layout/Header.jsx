@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
@@ -18,6 +18,12 @@ function Header() {
   const { showNav, setShowNav, currentLocation: location } = useDashboard();
   const { theme } = useTheme();
   const navigation = useNavigate();
+
+  useEffect(() => {
+    showNav
+      ? document.body.classList.add("noscroll")
+      : document.body.classList.remove("noscroll");
+  }, [showNav]);
 
   return (
     <header className="Header">

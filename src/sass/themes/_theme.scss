@@ -24,6 +24,18 @@ $themes: (
     dark: $bg-input-dark-2,
     light: $bg-input-light-2,
   ),
+  bg-loading-primary: (
+    dark: $bg-loading-primary-dark,
+    light: $bg-loading-primary-light,
+  ),
+  bg-loading-secondary: (
+    dark: $bg-loading-secondary-dark,
+    light: $bg-loading-secondary-light,
+  ),
+  bg-loading-transition: (
+    dark: $bg-loading-transition-dark,
+    light: $bg-loading-transition-light,
+  ),
   border-color: (
     dark: $border-color-dark,
     light: $border-color-light,
