@@ -73,7 +73,7 @@ function AddAthleteForm(props) {
 
       // UPDATE ATHLETE ATTRIBUTE
       athlete[attribute] = event.target.value;
-      console.log(athlete)
+      // console.log(athlete)
       return athlete;
     });
   }
@@ -81,7 +81,7 @@ function AddAthleteForm(props) {
   function handleSubmitData(event) {
     event.preventDefault();
     athletesActions.addAthlete(athlete, () => {
-      navigate("/atletas");
+      // navigate("/atletas");
     });
   }
 

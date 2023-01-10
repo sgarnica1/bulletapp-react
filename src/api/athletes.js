@@ -26,6 +26,7 @@ const getAthletesApi = async (token, callback, abortCont) => {
 // TODO - Handle errors on UI when creating user (eg. email already exists, password too weak, etc.)
 const addAthleteApi = async (athlete, callback) => {
   let user;
+
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -81,6 +82,8 @@ const addAthleteApi = async (athlete, callback) => {
         ),
       },
     });
+
+    console.log(res);
 
     callback();
     return res;

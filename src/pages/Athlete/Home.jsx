@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { auth } from "../../firebase/index";
 
 // COMPONENTS
 import { AddButton } from "../../components/Public/AddButton";
@@ -32,6 +33,7 @@ function Home() {
 
   useEffect(() => {
     if (error) navigate("/server-error");
+    // console.log(auth)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 

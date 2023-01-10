@@ -226,6 +226,8 @@ const info = {
         invalidEmail: "Firebase: Error (auth/invalid-email).",
         networkFailed: "Firebase: Error (auth/network-request-failed).",
         userNotFound: "Firebase: Error (auth/user-not-found).",
+        insufficientPermissions:
+          "Request failed with error: Missing or insufficient permissions.",
       },
     },
   },

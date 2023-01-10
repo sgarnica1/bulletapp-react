@@ -18,7 +18,7 @@ function Athletes() {
   const { athletes, loading, error, actions } = useAthletes();
   const { searchValue, setSearchValue, searchDataFromInput, setShowNav } =
     useDashboard();
-  const data = searchDataFromInput(athletes);
+  const data = athletes
 
   const onRefetch = () => setRefetch((prev) => !prev);
 

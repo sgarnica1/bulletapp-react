@@ -114,17 +114,17 @@ const AuthProvider = ({ children }) => {
         JSON.stringify(userCredentials.stsTokenManager.refreshToken)
       );
 
-      // // SET REFRESH TOKEN ON COOKIE
-      // let date = new Date();
-      // date.setDate(date.getDate() + 1);
-      // document.cookie = `${info.localStorageKeys.refreshToken}=${userCredentials.stsTokenManager.refreshToken}; expires=${date}; path=/;`;
+      // SET REFRESH TOKEN ON COOKIE
+      let date = new Date();
+      date.setDate(date.getDate() + 1);
+      document.cookie = `${info.localStorageKeys.refreshToken}=${userCredentials.stsTokenManager.refreshToken}; expires=${date}; path=/;`;
 
       setLoading(false);
       setLoggingIn(false);
     } catch (err) {
       console.log(err.message);
-      setError("Ocurrió un error. Por favor intenta de nuevo");
 
+      setError("Ocurrió un error. Por favor intenta de nuevo");
       // REVIEW ERROR MESSAGE
       if (
         err.message === info.firebase.errors.auth.wrongPassword ||
@@ -132,6 +132,10 @@ const AuthProvider = ({ children }) => {
         err.message === info.firebase.errors.auth.invalidEmail
       ) {
         setError("Credenciales inválidas");
+      }
+
+      if (err.message === info.firebase.errors.auth.insufficientPermissions) {
+        setError("No tienes permisos para acceder a esta aplicación");
       }
 
       setLoggingIn(false);
@@ -227,10 +231,17 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (loading) updateToken();
 
+    // if(user) console.log(user)
+    auth.onAuthStateChanged((updatedUser) => {
+      console.log(updatedUser);
+    });
+
     const fourMinutes = 1000 * 60 * 4; // FOUR MINUTES IN SECONDS
+
     const interval = setInterval(() => {
       if (authTokens) updateToken();
     }, fourMinutes);
+
     return () => clearInterval(interval);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

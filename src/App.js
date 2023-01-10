@@ -40,6 +40,7 @@ function App() {
 
   useEffect(() => {
     document.body.className = theme;
+    // console.log(user);
   }, [theme, user]);
 
   return (
