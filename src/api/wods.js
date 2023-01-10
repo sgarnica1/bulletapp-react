@@ -1,10 +1,12 @@
 import {
+  addDoc,
   collection,
   doc,
   getDocs,
   getDoc,
   query,
   where,
+  Timestamp,
 } from "firebase/firestore/lite";
 import { db } from "../firebase/index";
 import { info } from "../utils/info";
@@ -82,26 +84,28 @@ const getTodaysWodApi = async (callback) => {
 };
 
 const getWodByDateApi = async (date, callback) => {
-  const yesterday = new Date(date.getTime() - 24 * 60 * 60 * 1000);
+  date.setHours(0, 0, 0, 0);
 
   // VERIFY IF TODAY IS A WEEKEND
-  if (date.getDay() === 0 || date.getDay() === 6) return -1;
+  if (date.getDay() === 0 || date.getDay() === 6) return null;
 
   // GET WOD
   try {
     const ref = collection(db, info.firebase.collections.wods);
-    const query_ = query(ref, where("date", ">", yesterday));
+    const query_ = query(ref, where("date", ">=", date));
     const snapshot = await getDocs(query_);
     const data = snapshot.docs.map((doc) => {
       const date = new Date(doc.data().date.seconds * 1000);
       return { id: doc.id, locale_date: date, ...doc.data() };
     });
     // VERIFY IF THERE IS A WOD FOR TODAY
-    if (data.length === 0) return -1;
+    if (data.length === 0 || data[0].length === 0) return null;
+
     // GET SCORE TYPE NAME
     const scoreTypeData = await getWodTypeApi(data[0].id_score_type);
     data[0].score_type = scoreTypeData;
     if (callback) callback(data);
+    // console.log(data);
     return data[0];
   } catch (err) {
     throw err;
@@ -119,4 +123,41 @@ const getWodTypeApi = async (idScoreType) => {
   }
 };
 
-export { getAllWodsApi, getWeeklyWodsApi, getTodaysWodApi, getWodByDateApi };
+const postWodApi = async (wodData, callback) => {
+  const date = new Date(wodData.date);
+  date.setHours(0, 0, 0, 0);
+
+  try {
+    const ref = collection(db, info.firebase.collections.wods);
+    const docRef = await addDoc(ref, {
+      [info.firebase.docKeys.wods.active]: true, // ACTIVE
+      [info.firebase.docKeys.wods.date]: Timestamp.fromDate(date), // DATE
+      [info.firebase.docKeys.wods.description]:
+        wodData[info.firebase.docKeys.wods.description], // DESCRIPTION
+      [info.firebase.docKeys.wods.idScoreType]:
+        wodData[info.firebase.docKeys.wods.idScoreType], // SCORE TYPE
+      [info.firebase.docKeys.wods.timecap]:
+        wodData[info.firebase.docKeys.wods.timecap], // SCORE TYPE
+      timestamps: {
+        // TIMESTAMPS
+        [info.firebase.docKeys.wodScores.timestamps.createdAt]:
+          Timestamp.fromDate(new Date()),
+        [info.firebase.docKeys.wodScores.timestamps.updatedAt]:
+          Timestamp.fromDate(new Date()),
+      },
+    });
+    if (callback) callback(docRef.id);
+    return docRef.id;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export {
+  getAllWodsApi,
+  getWeeklyWodsApi,
+  getTodaysWodApi,
+  getWodByDateApi,
+  postWodApi,
+};

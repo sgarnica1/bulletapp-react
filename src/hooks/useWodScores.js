@@ -56,6 +56,7 @@ const useWodScores = () => {
       setWodScores(null);
       setLoading(true);
       const wod = await getWodByDateApi(date);
+      console.log(wod);
       const res = await getWodScoresByWodIdApi(wod.id);
       setWodScores({ wodScores: res, wod: wod });
       setLoading(false);

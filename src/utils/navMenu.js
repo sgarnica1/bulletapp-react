@@ -85,10 +85,26 @@ const navMenu = {
       active: true,
       elements: [
         {
-          type: type.item,
-          name: info.views.progrgamming,
-          route: info.routes.programming,
+          type: type.dropdown,
+          name: "Programación",
           active: true,
+          elements: [
+            {
+              name: info.views.programming,
+              route: info.routes.programming,
+              active: true,
+            },
+            {
+              name: info.views.wods,
+              route: info.routes.wods,
+              active: true,
+            },
+            {
+              name: info.views.addWod,
+              route: info.routes.addWod,
+              active: true,
+            },
+          ],
         },
         {
           type: type.item,

@@ -266,7 +266,7 @@ const info = {
     },
     payments: "Pagos",
     plans: "Planes",
-    progrgamming: "Programación",
+    programming: "Programación",
     profile: "Perfil",
     records: "Records",
     settings: "Ajustes",

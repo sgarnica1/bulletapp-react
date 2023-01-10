@@ -64,6 +64,8 @@ function Leaderboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wodScores, loading, searchValue]);
 
+  console.log(wodScores)
+
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={true}>

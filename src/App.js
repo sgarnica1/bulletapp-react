@@ -12,6 +12,7 @@ import { SuccessAlert } from "./components/Public/SuccessAlert";
 // PAGES
 import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
+import { AddWod } from "./pages/Admin/AddWod";
 import { ChangePassword } from "./pages/Athlete/ChangePassword";
 import { FirebaseError } from "./pages/Public/FirebaseError";
 import { Home } from "./pages/Athlete/Home";
@@ -19,6 +20,7 @@ import { Leaderboard } from "./pages/Athlete/Leaderboard";
 import { Login } from "./pages/Public/Login";
 import { NotFound } from "./pages/Public/NotFound";
 import { PasswordRecover } from "./pages/Public/PasswordRecover";
+import { Programming } from "./pages/Admin/Programming";
 import { Records } from "./pages/Athlete/Records";
 import { RecordHistory } from "./pages/Athlete/RecordHistory";
 import { Settings } from "./pages/Athlete/Settings";
@@ -85,7 +87,9 @@ function App() {
             {/* ADMIN */}
             <Route element={<AdminRoute />}>
               <Route path={info.routes.addAthlete} element={<AddAthlete />} />
+              <Route path={info.routes.addWod} element={<AddWod />} />
               <Route path={info.routes.athletes} element={<Athletes />} />
+              <Route path={info.routes.programming} element={<Programming />} />
               <Route
                 path={info.routes.singleAthlete + "/:id"}
                 element={<SingleAthlete />}

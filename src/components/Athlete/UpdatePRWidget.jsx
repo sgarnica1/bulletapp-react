@@ -39,7 +39,6 @@ const UpdatePRWidget = ({ title, description }) => {
   // TODO - Handle errors ui
   // TODO - Handle success ui
 
-  // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
   return (
     <AddRegisterWidgetContainer
       title="Actualizar PR"

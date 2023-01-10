@@ -61,6 +61,12 @@ const info = {
       "Noviembre",
       "Diciembre",
     ],
+    scores: {
+      time: "Tiempo",
+      reps: "Repeticiones",
+      rounds: "Rondas",
+      weight: "Peso",
+    },
     weekDayNumber: {
       sunday: {
         num: 0,
@@ -239,18 +245,23 @@ const info = {
   messages: {
     error: {
       emptyScore: "Por favor ingresa un score",
+      emptyFields: "Todos los campos son requeridos",
       sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
       fetchError: "Error en la conexión",
+      invalidDate: "El formato de fecha no es válido",
       invalidPassword:
         "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
       invalidMatchingPassword: "Las contraseñas no coinciden",
       invalidEmail: "Por favor ingrese un correo electrónico válido",
+      invalidTimeCap: "El Timecap debe ser un número igual o mayor a 0",
       missingData: "Este campo es requerido",
       allMissingData: "Todos los campos son requeridos",
+      wodAlreadyExists: "Ya existe un WOD registrado para esta fecha",
     },
     success: {
       wodScoreUpdated: "Tu score se ha actualizado correctamente",
       wodScoreCreated: "Score registrado correctamente",
+      wodCreated: "WOD registrado correctamente",
     },
   },
   requests: {
@@ -258,6 +269,7 @@ const info = {
   },
   routes: {
     addAthlete: "/atletas/nuevo",
+    addWod: "/wods/nuevo",
     athletes: "/atletas",
     changePassword: "/contrasena/cambiar",
     dashboard: "/escritorio",
@@ -283,6 +295,7 @@ const info = {
     skills: "/records/skills",
     singleAthlete: "/atletas",
     videos: "/videos",
+    wods: "/wods",
   },
   states: {
     theme: {
@@ -292,6 +305,7 @@ const info = {
   },
   views: {
     addAthlete: "Añadir Atleta",
+    addWod: "Añadir WOD",
     athletes: "Atletas",
     dashboard: "Escritorio",
     groups: "Clases",
@@ -305,12 +319,13 @@ const info = {
     payments: "Pagos",
     plans: "Planes",
     prs: "PRs",
-    progrgamming: "Programación",
+    programming: "Programación",
     profile: "Perfil",
     records: "Personal Records",
     settings: "Ajustes",
     skills: "Skills",
     videos: "Videos",
+    wods: "WODs",
   },
 };
 

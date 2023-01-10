@@ -103,7 +103,7 @@ const getWodWithWodScoresByDateApi = async (date, callback) => {
   const yesterday = new Date(date.getTime() - 24 * 60 * 60 * 1000);
 
   // VERIFY IF DATE IS A WEEKEND DAY
-  if (date.getDay() === 0 || date.getDay() === 6) return -1;
+  if (date.getDay() === 0 || date.getDay() === 6) return null;
 
   // GET WOD
   try {

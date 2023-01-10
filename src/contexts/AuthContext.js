@@ -232,9 +232,9 @@ const AuthProvider = ({ children }) => {
     if (loading) updateToken();
 
     // if(user) console.log(user)
-    auth.onAuthStateChanged((updatedUser) => {
-      console.log(updatedUser);
-    });
+    // auth.onAuthStateChanged((updatedUser) => {
+    //   console.log(updatedUser);
+    // });
 
     const fourMinutes = 1000 * 60 * 4; // FOUR MINUTES IN SECONDS
 
