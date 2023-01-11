@@ -12,6 +12,7 @@ import { SuccessAlert } from "./components/Public/SuccessAlert";
 // PAGES
 import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
+import { AddMovement } from "./pages/Admin/AddMovement";
 import { AddWod } from "./pages/Admin/AddWod";
 import { ChangePassword } from "./pages/Athlete/ChangePassword";
 import { FirebaseError } from "./pages/Public/FirebaseError";
@@ -87,6 +88,7 @@ function App() {
             {/* ADMIN */}
             <Route element={<AdminRoute />}>
               <Route path={info.routes.addAthlete} element={<AddAthlete />} />
+              <Route path={info.routes.addMovement} element={<AddMovement />} />
               <Route path={info.routes.addWod} element={<AddWod />} />
               <Route path={info.routes.athletes} element={<Athletes />} />
               <Route path={info.routes.programming} element={<Programming />} />

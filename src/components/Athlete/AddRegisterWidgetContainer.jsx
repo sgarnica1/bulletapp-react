@@ -1,12 +1,3 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import { useWods } from "../../hooks/useWods";
-import { useWodScores } from "../../hooks/useWodScores";
-
-// COMPONENTS
-import { Button } from "../Public/Button";
-import { CardContainer } from "../Public/CardContainer";
-
 // UTILS
 import { utils } from "../../utils/utils";
 

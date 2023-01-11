@@ -14,10 +14,9 @@ import { info } from "../../utils/info";
 
 // ICONS
 import ClockIcon from "../../assets/icon/time.svg";
-import EmailIcon from "../../assets/icon/email.svg";
+import DescriptionIcon from "../../assets/icon/description.svg";
 import CalendarIcon from "../../assets/icon/calendar-date.svg";
 import TitleIcon from "../../assets/icon/title.svg";
-import ClassIcon from "../../assets/icon/class.svg";
 
 // TODO - Add validation to the form
 // TODO - Add a loading state to the form
@@ -111,7 +110,8 @@ function AddWodForm() {
       [info.firebase.docKeys.wods.date]: parseDate(wodDate),
     };
 
-    wodActions.postWod(wod, () => {
+    wodActions.postWod(wod, (error) => {
+      if (error) return setErrorMessage(info.messages.error.errorWriting);
       setSuccessMessage(info.messages.success.wodCreated);
       navigate(info.routes.programming);
     });
@@ -156,8 +156,8 @@ function AddWodForm() {
         >
           <img
             className="AddWodForm__input-icon"
-            src={EmailIcon}
-            alt="Email icon"
+            src={DescriptionIcon}
+            alt="Document icon"
           />
           <textarea
             cols="30"
@@ -238,8 +238,8 @@ function AddWodForm() {
         >
           <img
             className="AddWodForm__input-icon"
-            src={ClassIcon}
-            alt="Class icon"
+            src={DescriptionIcon}
+            alt="Document icon"
           />
           <select
             onChange={(event) => setWodScoreType(event.target.value)}

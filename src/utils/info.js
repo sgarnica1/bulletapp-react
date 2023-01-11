@@ -137,6 +137,15 @@ const info = {
   },
   firebase: {
     values: {
+      movementCategories: {
+        cardio: "Cardio",
+        gymnastics: "Gymnastics",
+        kettlebell: "Kettlebell",
+        dumbell: "Dumbell",
+        barbell: "Barbell",
+        bodyweight: "Bodyweight",
+        other: "Otro",
+      },
       roles: {
         admin: "admin",
         athlete: "athlete",
@@ -154,23 +163,66 @@ const info = {
           name: "reps",
           units: "REPS",
         },
+        rounds: {
+          name: "rounds",
+          units: "ROUNDS",
+        },
         weight: {
           name: "weight",
           units: "lbs",
         },
       },
+      wodCategories: {
+        amrap: "AMRAP",
+        emom: "EMOM",
+        chipper: "Chipper",
+        roundsForTime: "Rounds For Time",
+        tabata: "Tabata",
+        ladder: "Ladder",
+      },
     },
     collections: {
       groups: "groups",
       locations: "locations",
+      movementCategories: "movement_categories",
+      movements: "movements",
       plans: "plans",
       roles: "roles",
       scoreTypes: "score_types",
       users: "users",
-      wods: "wods",
+      wodCategories: "wod_categories",
       wodScores: "wod_scores",
+      wods: "wods",
     },
     docKeys: {
+      movements: {
+        active: "active",
+        name: "name",
+        description: "description",
+        movementCategory: "id_movement_category",
+        scoreType: "id_score_type",
+        isSkill: "skill",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+      },
+      roles: {
+        type: "type",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+        active: "active",
+      },
+      scoreTypes: {
+        active: "active",
+        name: "name",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+      },
       users: {
         firstName: "first_name",
         lastName: "last_name",
@@ -209,22 +261,6 @@ const info = {
         },
         active: "active",
       },
-      roles: {
-        type: "type",
-        timestamps: {
-          createdAt: "created_at",
-          updatedAt: "updated_at",
-        },
-        active: "active",
-      },
-      scoreTypes: {
-        active: "active",
-        name: "name",
-        timestamps: {
-          createdAt: "created_at",
-          updatedAt: "updated_at",
-        },
-      },
     },
     errors: {
       auth: {
@@ -244,10 +280,12 @@ const info = {
   },
   messages: {
     error: {
+      allMissingData: "Todos los campos son requeridos",
       emptyScore: "Por favor ingresa un score",
       emptyFields: "Todos los campos son requeridos",
-      sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
+      errorWriting: "Ocurrió un error, por favor vuelve a intentarlo.",
       fetchError: "Error en la conexión",
+      insufficientPermissions: "No tienes permisos para realizar esta acción",
       invalidDate: "El formato de fecha no es válido",
       invalidPassword:
         "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
@@ -255,13 +293,14 @@ const info = {
       invalidEmail: "Por favor ingrese un correo electrónico válido",
       invalidTimeCap: "El Timecap debe ser un número igual o mayor a 0",
       missingData: "Este campo es requerido",
-      allMissingData: "Todos los campos son requeridos",
+      sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
       wodAlreadyExists: "Ya existe un WOD registrado para esta fecha",
     },
     success: {
       wodScoreUpdated: "Tu score se ha actualizado correctamente",
       wodScoreCreated: "Score registrado correctamente",
       wodCreated: "WOD registrado correctamente",
+      movementCreated: "Movimiento añadido correctamente",
     },
   },
   requests: {
@@ -269,6 +308,7 @@ const info = {
   },
   routes: {
     addAthlete: "/atletas/nuevo",
+    addMovement: "/movimientos/nuevo",
     addWod: "/wods/nuevo",
     athletes: "/atletas",
     changePassword: "/contrasena/cambiar",

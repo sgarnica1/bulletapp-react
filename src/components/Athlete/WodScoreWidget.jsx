@@ -31,9 +31,11 @@ const WodScoreWidget = () => {
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   const [refetch, setRefetch] = useState(false);
+  const [wodScoreUpdated, setWodScoreUpdated] = useState(false);
 
   useEffect(() => {
-    if (error || wodScoresError) setErrorMessage(error || wodScoresError);
+    if (error || wodScoresError)
+      setErrorMessage(error || wodScoresError);
     if (!wod) wodActions.getTodaysWod(); // GET TODAYS WOD
 
     if (user && wod && wod !== -1 && !wodScore)
@@ -53,8 +55,11 @@ const WodScoreWidget = () => {
       }
     }
 
+    if (!wodScoresError && wodScoreUpdated)
+      setSuccessMessage(info.messages.success.wodScoreUpdated);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wod, wodScore, refetch]);
+  }, [wod, wodScore, refetch, wodScoreUpdated]);
 
   // SUBMIT FUNCTION
   const handleSubmit = (e) => {
@@ -98,14 +103,16 @@ const WodScoreWidget = () => {
         user.uid || user.user_id,
         score
       );
+
       res.then(() => setSuccessMessage(info.messages.success.wodScoreCreated));
       return;
     }
 
     // IF THERE IS A WOD SCORE, UPDATE IT
     setRefetch(!refetch);
+
     const res = wodScoresActions.updateWodScore(wodScore.id, score);
-    res.then(() => setSuccessMessage(info.messages.success.wodScoreUpdated));
+    res.then(() => setWodScoreUpdated(true));
     return;
   };
 

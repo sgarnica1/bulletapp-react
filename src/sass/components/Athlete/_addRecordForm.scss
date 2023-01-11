@@ -20,11 +20,13 @@
   &__radio-btn {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
 
     &-container {
       display: flex;
+      align-items: center;
       gap: 10px;
       margin-right: 15px;
     }
@@ -38,7 +40,7 @@
       border: 2px solid;
       color: var(--bg-input-2);
       border-radius: 50%;
-
+      
       &.active {
         span {
           width: 10px;
@@ -49,8 +51,9 @@
         }
       }
     }
-
+    
     &__label {
+      font-size: toRem(18);
       color: var(--color-text);
     }
   }

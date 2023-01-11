@@ -75,7 +75,7 @@ function Records() {
         <AddButton
           img={AthleteImg}
           alt="CrossFit Athlete Front Rack Position"
-          title="Añadir Nuevo PR"
+          title="Nuevo PR"
           clickHandler={() => {
             setShowModal(true);
             setRecordType(
@@ -92,7 +92,7 @@ function Records() {
           }}
           img={GymImg}
           alt="Bullet CrossFit Gym"
-          title="Añadir Nueva Habilidad"
+          title="Nueva Habilidad Desbloqueada"
         />
 
         {/* ADD NEW GOAL */}
@@ -105,7 +105,7 @@ function Records() {
           }}
           img={Athlete2Img}
           alt="Bullet CrossFit shirt"
-          title="Añadir Nueva Meta"
+          title="Nueva Meta Mensual"
         />
 
         {/* Personal Goal */}

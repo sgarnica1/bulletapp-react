@@ -90,12 +90,14 @@ const useWods = () => {
       setWods(res);
       setLoading(false);
     } catch (err) {
-      if (err.message === info.firebase.errors.auth.networkFailed) {
-        setError("Error en la red");
-      } else {
-        setError(err);
-      }
       setLoading(false);
+      if (err.message === info.firebase.errors.auth.networkFailed)
+        return setError(info.messages.error.networkFailed);
+
+      if (err.message === info.firebase.errors.auth.insufficientPermissions)
+        return setError(info.messages.error.insufficientPermissions);
+
+      setError(err);
     }
   };
 

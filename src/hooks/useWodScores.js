@@ -8,6 +8,7 @@ import {
   updateWodScoreApi,
 } from "../api/wodscores";
 import { getWodByDateApi } from "../api/wods";
+import { info } from "../utils/info";
 
 const useWodScores = () => {
   const [wodScores, setWodScores] = useState(null);
@@ -85,9 +86,14 @@ const useWodScores = () => {
       setWodScores(res);
       setLoading(false);
     } catch (err) {
-      console.log(err);
-      setError(err);
       setLoading(false);
+      if (err.message === info.firebase.errors.auth.networkFailed)
+        return setError(info.messages.error.networkFailed);
+
+      if (err.message === info.firebase.errors.auth.insufficientPermissions)
+        return setError(info.messages.error.insufficientPermissions);
+
+      setError(err);
     }
   };
 
@@ -95,12 +101,17 @@ const useWodScores = () => {
     try {
       setLoading(true);
       const res = await updateWodScoreApi(idWodScore, score);
-      console.log(res);
       setWodScores(res);
       setLoading(false);
     } catch (err) {
-      setError(err);
       setLoading(false);
+      if (err.message === info.firebase.errors.auth.networkFailed)
+        return setError(info.messages.error.networkFailed);
+
+      if (err.message === info.firebase.errors.auth.insufficientPermissions)
+        return setError(info.messages.error.insufficientPermissions);
+
+      setError(err);
     }
   };
 

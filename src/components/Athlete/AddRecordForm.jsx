@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useMovements } from "../../hooks/useMovements";
 
 // COMPONENTS
 import { Button } from "../../components/Public/Button";
@@ -8,6 +9,7 @@ import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 
 const AddRecordForm = ({ recordType }) => {
+  const { movements: mv, actions, loading, error } = useMovements();
   // console.log(recordType, info.components.addRecordForm.recordType)
   const [currentRecordCategory, setCurrentRecordCategory] = useState("");
   const [scoreType, setScoreType] = useState();
@@ -15,29 +17,30 @@ const AddRecordForm = ({ recordType }) => {
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
 
-  const submitHandler = (event) => {
+  function submitHandler(event) {
     event.preventDefault();
     console.log("Adding...");
-  };
+  }
 
   // console.log(recordCategories);
 
   const recordCategories = [
     {
-      name: "Max Lift",
+      name: "Máximo levantamiento",
       score_type: "weight",
       active: true,
     },
     {
-      name: "Max Reps",
+      name: "Máximas repeticiones",
       score_type: "reps",
       active: true,
     },
     {
-      name: "Min Time",
+      name: "Mejor Tiempo",
       score_type: "time",
       active: true,
     },
+
     {
       name: "Desbloquear habilidad",
       score_type: "",
@@ -80,10 +83,13 @@ const AddRecordForm = ({ recordType }) => {
       setCurrentRecordCategory(recordCategories[0].name);
       setScoreType(recordCategories[0].score_type);
     }
+    if (!mv) actions.getMovements();
+    if (mv) console.log(mv);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentRecordCategory]);
+  }, [currentRecordCategory, mv]);
 
+  // PERSONAL GOAL (AÑADIR NUEVA META)
   if (recordType === info.components.addRecordForm.recordType.personalGoal)
     return (
       <div className="AddRecordForm">
@@ -110,15 +116,15 @@ const AddRecordForm = ({ recordType }) => {
                   <div
                     className="AddRecordForm__radio-btn-container"
                     key={index}
+                    onClick={() => {
+                      setCurrentRecordCategory(cat.name);
+                      setScoreType(cat.score_type);
+                    }}
                   >
                     <div
                       className={`AddRecordForm__radio-btn__input ${
                         currentRecordCategory === cat.name ? "active" : ""
                       }`}
-                      onClick={() => {
-                        setCurrentRecordCategory(cat.name);
-                        setScoreType(cat.score_type);
-                      }}
                     >
                       <span></span>
                     </div>
@@ -131,23 +137,34 @@ const AddRecordForm = ({ recordType }) => {
               return null;
             })}
           </div>
+
           {/* MOVEMENT OPTIONS */}
           <div className="AddRecordForm__select">
             <select className="AddRecordForm__select-input">
               <option value="">EJERCICIO</option>
+
               {currentRecordCategory !==
                 info.components.addRecordForm.recordCategories.unlockSkill &&
-                movements.map((mov, index) => {
-                  if (mov.score_type === scoreType) {
-                    return <option key={index}>{mov.name}</option>;
-                  }
-                  return null;
-                })}
+                mv &&
+                mv
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((mov, index) => {
+                    if (mov.scoreTypes.includes(scoreType)) {
+                      return <option key={index}>{mov.name}</option>;
+                    }
+                    return null;
+                  })}
+
               {currentRecordCategory ===
                 info.components.addRecordForm.recordCategories.unlockSkill &&
-                skills.sort().map((skill, index) => {
-                  return <option key={index}>{skill}</option>;
-                })}
+                mv &&
+                mv
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((mov, index) => {
+                    if (mov.skill)
+                      return <option key={index}>{mov.name}</option>;
+                    return null;
+                  })}
             </select>
           </div>
 
@@ -172,7 +189,9 @@ const AddRecordForm = ({ recordType }) => {
                       setMinutes(formattedValue);
                     }}
                   />
-
+                  <p className="AddRecordForm__input-units">
+                    {info.firebase.values.scoreTypes[scoreType]?.units.min}
+                  </p>
                   <input
                     type="number"
                     className="AddRecordForm__input"
@@ -188,26 +207,31 @@ const AddRecordForm = ({ recordType }) => {
                       setSeconds(formattedValue);
                     }}
                   />
+                  <p className="AddRecordForm__input-units">
+                    {info.firebase.values.scoreTypes[scoreType]?.units.sec}
+                  </p>
                 </div>
               )}
               {/* REPS */}
               {(scoreType === info.firebase.values.scoreTypes.reps.name ||
                 scoreType === info.firebase.values.scoreTypes.weight.name) && (
-                <input
-                  type="number"
-                  className="AddRecordForm__input"
-                  placeholder="0"
-                  value={reps}
-                  onChange={(e) => {
-                    if (e.target.value < 0) e.target.value = 0;
+                <>
+                  <input
+                    type="number"
+                    className="AddRecordForm__input"
+                    placeholder="0"
+                    value={reps}
+                    onChange={(e) => {
+                      if (e.target.value < 0) e.target.value = 0;
 
-                    setReps(e.target.value);
-                  }}
-                />
+                      setReps(e.target.value);
+                    }}
+                  />
+                  <p className="AddRecordForm__input-units">
+                    {info.firebase.values.scoreTypes[scoreType]?.units}
+                  </p>
+                </>
               )}
-              <p className="AddRecordForm__input-units">
-                {info.firebase.values.scoreTypes[scoreType]?.units}
-              </p>
             </div>
           )}
 
@@ -223,6 +247,7 @@ const AddRecordForm = ({ recordType }) => {
       </div>
     );
 
+  // PERSONAL RECORD (AÑADIR NUEVO PR) AND UNLOCK SKILL (AÑADIR NUEVA HABILIDAD)
   return (
     <div className="AddRecordForm">
       <header className="AddRecordForm__header">
@@ -250,15 +275,15 @@ const AddRecordForm = ({ recordType }) => {
                     <div
                       className="AddRecordForm__radio-btn-container"
                       key={index}
+                      onClick={() => {
+                        setCurrentRecordCategory(cat.name);
+                        setScoreType(cat.score_type);
+                      }}
                     >
                       <div
                         className={`AddRecordForm__radio-btn__input ${
                           currentRecordCategory === cat.name ? "active" : ""
                         }`}
-                        onClick={() => {
-                          setCurrentRecordCategory(cat.name);
-                          setScoreType(cat.score_type);
-                        }}
                       >
                         <span></span>
                       </div>
@@ -271,18 +296,23 @@ const AddRecordForm = ({ recordType }) => {
                 return null;
               })}
             </div>
+
             {/* MOVEMENT OPTIONS */}
             <div className="AddRecordForm__select">
               <select className="AddRecordForm__select-input">
                 <option value="">EJERCICIO</option>
-                {movements.map((mov, index) => {
-                  if (mov.score_type === scoreType) {
-                    return <option key={index}>{mov.name}</option>;
-                  }
-                  return null;
-                })}
+                {mv &&
+                  mv
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((mov, index) => {
+                      if (mov.scoreTypes.includes(scoreType)) {
+                        return <option key={index}>{mov.name}</option>;
+                      }
+                      return null;
+                    })}
               </select>
             </div>
+
             {/* SCORE INPUT */}
             <div className="AddRecordForm__input-score">
               {scoreType === info.firebase.values.scoreTypes.time.name && (
@@ -353,9 +383,14 @@ const AddRecordForm = ({ recordType }) => {
           <div className="AddRecordForm__select">
             <select className="AddRecordForm__select-input">
               <option value="">EJERCICIO</option>
-              {skills.sort().map((skill, index) => {
-                return <option key={index}>{skill}</option>;
-              })}
+              {mv &&
+                mv
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((mov, index) => {
+                    if (mov.skill)
+                      return <option key={index}>{mov.name}</option>;
+                    return null;
+                  })}
             </select>
           </div>
         )}

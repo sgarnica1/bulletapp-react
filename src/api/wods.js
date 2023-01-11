@@ -146,10 +146,10 @@ const postWodApi = async (wodData, callback) => {
           Timestamp.fromDate(new Date()),
       },
     });
-    if (callback) callback(docRef.id);
+    if (callback) callback();
     return docRef.id;
   } catch (err) {
-    console.log(err);
+    if (callback) callback(err);
     throw err;
   }
 };
