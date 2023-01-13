@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddRecordFormHeader = ({ title, description }) => {
+const SubHeader = ({ title, description }) => {
   return (
     <header className="AddRecordForm__header">
       <h2 className="AddRecordForm__title">{title}</h2>
@@ -9,4 +9,4 @@ const AddRecordFormHeader = ({ title, description }) => {
   );
 };
 
-export { AddRecordFormHeader };
+export { SubHeader };

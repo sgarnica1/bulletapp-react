@@ -65,8 +65,6 @@ function Leaderboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wods, loading, searchValue]);
 
-  // console.log(wods)
-
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={true}>
@@ -102,9 +100,8 @@ function Leaderboard() {
           </div>
 
           {/* WOD LIST */}
+          {loading && !wods && <WidgetLoadingSkeleton wod={true} />}
           <div className="Leaderboard__wod">
-            {loading && !wods && <WidgetLoadingSkeleton wod={true} />}
-
             {!loading && !wodAvailable && (
               <p className="Leaderboard__wod__not-available">No disponible</p>
             )}
@@ -154,6 +151,9 @@ function Leaderboard() {
               <div className="Leaderboard__body__empty">
                 Aún no hay resultados
               </div>
+            )}
+            {sortedWodScores.length === 0 && (
+              <div className="Leaderboard__body__empty">No hay resultados</div>
             )}
 
             {!loading &&

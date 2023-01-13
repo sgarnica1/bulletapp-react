@@ -1,0 +1,12 @@
+.BackButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: fit-content;
+  gap: toRem(10);
+
+  &.mb,
+  &.mt {
+    margin-bottom: toRem(20);
+  }
+}

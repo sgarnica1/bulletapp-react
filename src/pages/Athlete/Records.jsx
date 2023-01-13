@@ -3,8 +3,6 @@ import { useDashboard } from "../../contexts/DashboardContext";
 
 // COMPONENTS
 import { AddButton } from "../../components/Public/AddButton";
-import { AddRecordForm } from "../../components/Athlete/AddRecord/AddRecordForm";
-import { AddRecordModal } from "../../components/Athlete/AddRecord/AddRecordModal";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { DateWidget } from "../../components/Public/DateWidget";
 import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
@@ -164,8 +162,6 @@ function Records() {
           </div>
         </section>
       </ContentContainer>
-
-      <AddRecordModal recordType={recordType} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import SearchIcon from "../../assets/icon/search.svg";
 
 function SearchBar({ placeholder, searchValue, setSearchValue, loading }) {
   return (
-    <form action="" className="SearchBar">
+    <form action="" className="SearchBar" onSubmit={e => e.preventDefault()}>
       <div className="SearchBar__input-container">
         <img src={SearchIcon} alt="Search icon" className="SearchBar__icon" />
         <input

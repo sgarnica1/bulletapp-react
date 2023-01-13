@@ -11,6 +11,7 @@ const MovementsSelectInput = ({
   resetError,
   submitError,
   setSubmitError,
+  setMovement,
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [value, setValue] = useState("");
@@ -36,7 +37,7 @@ const MovementsSelectInput = ({
             setSubmitError(false);
             setErrorMessage("");
             setValue(event.target.value);
-
+            setMovement(event.target.value.slice(1)); // RETURN ORIGINAL ID
             if (event.target.value === "")
               setErrorMessage("Selecciona un movimiento");
           }}
