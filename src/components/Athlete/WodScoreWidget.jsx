@@ -20,7 +20,6 @@ const WodScoreWidget = () => {
   const { setSuccessMessage, setErrorMessage } = useDashboard();
   const { wods: wod, loading, error, actions: wodActions } = useWods();
   const {
-    wodScores: wodScore,
     loading: wodScoresLoading,
     error: wodScoresError,
     actions: wodScoresActions,
@@ -30,36 +29,34 @@ const WodScoreWidget = () => {
   const [reps, setReps] = useState(0);
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
-  const [refetch, setRefetch] = useState(false);
+  const [wodScore, setWodScore] = useState("");
+
   const [wodScoreUpdated, setWodScoreUpdated] = useState(false);
 
   useEffect(() => {
-    if (error || wodScoresError)
-      setErrorMessage(error || wodScoresError);
-    if (!wod) wodActions.getTodaysWod(); // GET TODAYS WOD
+    if (error || wodScoresError) setErrorMessage(error || wodScoresError);
+    if (!wod || wodScoreUpdated) {
+      wodActions.getTodaysWod();
+      setWodScoreUpdated(false);
+    } // GET TODAYS WOD
 
-    if (user && wod && wod !== -1 && !wodScore)
-      // GET WOD SCORE FROM USER
-      wodScoresActions.getWodScoreByUserId(wod.id, user.uid || user.user_id);
-    // IF THERE IS A WOD SCORE, SET THE SCORE
-    if (wodScore && wodScore.score) {
-      if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
-        setMinutes(() => {
-          return wodScore.score.minutes < 10
-            ? "0" + wodScore.score.minutes
-            : wodScore.score.minutes;
-        });
-        setSeconds(wodScore.score.seconds);
-      } else {
-        setReps(parseInt(wodScore?.score?.reps));
-      }
+    // SET WODSCORE IF EXISTS
+    if (wod && wod !== -1 && wod.scores) {
+      wod.scores.forEach((doc) => {
+        if (doc.uid === user.uid || doc.uid === user.user_id) {
+          setWodScore(doc);
+          setReps(doc.score.reps);
+          setMinutes(doc.score.minutes);
+          setSeconds(doc.score.seconds);
+        }
+      });
     }
 
     if (!wodScoresError && wodScoreUpdated)
       setSuccessMessage(info.messages.success.wodScoreUpdated);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wod, wodScore, refetch, wodScoreUpdated]);
+  }, [wod, wodScore, wodScoreUpdated]);
 
   // SUBMIT FUNCTION
   const handleSubmit = (e) => {
@@ -97,27 +94,21 @@ const WodScoreWidget = () => {
     }
     // IF THERE IS NO WOD SCORE, POST ONE
     if (!wodScore) {
-      setRefetch(!refetch);
-      const res = wodScoresActions.postWodScore(
-        wod.id,
-        user.uid || user.user_id,
-        score
-      );
+      const res = wodScoresActions.postWodScore(wod.id, {
+        uid: user.uid || user.user_id,
+        username: `${user.data.first_name} ${user.data.last_name}`,
+        score,
+      });
 
       res.then(() => setSuccessMessage(info.messages.success.wodScoreCreated));
       return;
     }
 
     // IF THERE IS A WOD SCORE, UPDATE IT
-    setRefetch(!refetch);
-
-    const res = wodScoresActions.updateWodScore(wodScore.id, score);
+    const res = wodScoresActions.updateWodScore(wod.id, wodScore.id, score);
     res.then(() => setWodScoreUpdated(true));
     return;
   };
-
-  // TODO - Handle errors ui
-  // TODO - Handle success ui
 
   if (loading || wodScoresLoading) return <WidgetLoadingSkeleton />;
 

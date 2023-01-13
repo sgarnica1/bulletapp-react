@@ -1,0 +1,17 @@
+.ErrorInput {
+  &.show {
+    display: flex;
+  }
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: $height-input;
+  background: #de231620;
+  padding: toRem(10);
+  margin: toRem(20) 0 ;
+  border-radius: toRem(6);
+  color: $color-error;
+  font-size: toRem(17);
+  text-align: center;
+}

@@ -18,7 +18,7 @@
 
 // COMPONENTS - ATHLETE
 @import "components/Athlete/addRecordForm";
-@import "components/Athlete/addRecordFormContainer";
+@import "components/Athlete/addRecordModal";
 @import "components/athlete/addRegisterWidget";
 @import "components/athlete/goalScoreWidget";
 @import "components/athlete/personalGoal";
@@ -37,6 +37,8 @@
 @import "components/public/datePicker";
 @import "components/public/errorAlert";
 @import "components/public/errorBanner";
+@import "components/public/errorInput";
+@import "components/public/input";
 @import "components/public/inputContainer";
 @import "components/Public/infoCard";
 @import "components/public/loadingIcon";

@@ -53,15 +53,14 @@ const addAthleteApi = async (athlete, callback) => {
       // PHONE NUMBER
       [info.firebase.docKeys.users.phoneNumber]:
         athlete[info.firebase.docKeys.users.phoneNumber],
-      // PLAN ID
+      // PLAN
       [info.firebase.docKeys.users.plan]:
         athlete[info.firebase.docKeys.users.plan],
-      // SCHEDULE ID
+      // SCHEDULE
       [info.firebase.docKeys.users.schedule]:
         athlete[info.firebase.docKeys.users.schedule],
-      // ROLE ID
-      [info.firebase.docKeys.users.role]:
-        athlete[info.firebase.docKeys.users.role],
+      // ROLE
+      [info.firebase.docKeys.users.role]: info.firebase.values.roles.athlete,
       // BIRTHDAY
       [info.firebase.docKeys.users.birthDay]: parseInt(
         athlete[info.firebase.docKeys.users.birthDay]

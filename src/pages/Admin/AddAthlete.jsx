@@ -7,7 +7,7 @@ function AddAthlete() {
     <div className="AddAthlete">
       <ContentContainer>
         <Banner title={"Añadir nuevo atleta"} description={""} />
-        <AddAthleteForm submitMethod={"post"} />
+        <AddAthleteForm />
       </ContentContainer>
     </div>
   );

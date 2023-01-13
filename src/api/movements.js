@@ -4,7 +4,9 @@ import {
   collection,
   getDocs,
   getDoc,
+  updateDoc,
   query,
+  where,
   Timestamp,
 } from "firebase/firestore/lite";
 import { db } from "../firebase/index";
@@ -13,20 +15,10 @@ import { info } from "../utils/info";
 const getMovementsApi = async (callback) => {
   try {
     const ref = collection(db, info.firebase.collections.movements);
-    const query_ = query(ref);
+    const query_ = query(ref, where("active", "==", true));
     const snapshot = await getDocs(query_);
-    const data = snapshot.docs.map((doc) => {
-      const scoreTypesArray = [];
-
-      doc.data().id_score_type.map(async (id) => {
-        const scoreType = await getMovementScoreType(id);
-        scoreTypesArray.push(scoreType);
-      });
-
-      return { id: doc.id, scoreTypes: scoreTypesArray, ...doc.data() };
-    });
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     if (callback) callback(data);
-
     return data;
   } catch (err) {
     throw err;
@@ -80,16 +72,5 @@ const addMovementApi = async (movement, callback) => {
     throw err;
   }
 };
-
-// HELPERS
-async function getMovementScoreType(idScoreType) {
-  try {
-    const ref = doc(db, info.firebase.collections.scoreTypes, idScoreType);
-    const snapshot = await getDoc(ref);
-    return snapshot.data().name;
-  } catch (err) {
-    throw err;
-  }
-}
 
 export { getMovementsApi, getMovementCategoriesApi, addMovementApi };

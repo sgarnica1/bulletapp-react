@@ -146,6 +146,28 @@ const info = {
         bodyweight: "Bodyweight",
         other: "Otro",
       },
+      recordCategories: {
+        maxLift: {
+          name: "Máximo levantamiento",
+          score_type: "weight",
+          active: true,
+        },
+        maxReps: {
+          name: "Máximas repeticiones",
+          score_type: "reps",
+          active: true,
+        },
+        bestTime: {
+          name: "Mejor Tiempo",
+          score_type: "time",
+          active: true,
+        },
+        newSkill: {
+          name: "Desbloquear habilidad",
+          score_type: "",
+          active: true,
+        },
+      },
       roles: {
         admin: "admin",
         athlete: "athlete",
@@ -155,17 +177,17 @@ const info = {
         time: {
           name: "time",
           units: {
-            min: "MIN",
-            sec: "SEG",
+            min: "min",
+            sec: "seg",
           },
         },
         reps: {
           name: "reps",
-          units: "REPS",
+          units: "reps",
         },
         rounds: {
           name: "rounds",
-          units: "ROUNDS",
+          units: "rounds",
         },
         weight: {
           name: "weight",
@@ -182,10 +204,12 @@ const info = {
       },
     },
     collections: {
+      athletes: "athletes",
       groups: "groups",
       locations: "locations",
       movementCategories: "movement_categories",
       movements: "movements",
+      personalRecords: "personal_records",
       plans: "plans",
       roles: "roles",
       scoreTypes: "score_types",
@@ -193,6 +217,14 @@ const info = {
       wodCategories: "wod_categories",
       wodScores: "wod_scores",
       wods: "wods",
+    },
+    subcollections: {
+      users: {
+        personalRecords: "personal_records",
+      },
+      wods: {
+        scores: "scores",
+      },
     },
     docKeys: {
       movements: {
@@ -202,6 +234,22 @@ const info = {
         movementCategory: "id_movement_category",
         scoreType: "id_score_type",
         isSkill: "skill",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+      },
+      personalRecords: {
+        movement: "movement",
+        idMovement: "id_movement",
+        movementCategory: "movement_category",
+        score_type: "score_type",
+        scores: {
+          name: "scores",
+          value: "value",
+          date: "date",
+        },
+        units: "units",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
@@ -228,13 +276,13 @@ const info = {
         lastName: "last_name",
         email: "email",
         phoneNumber: "phone_number",
-        plan: "id_plan",
-        schedule: "id_schedule",
+        plan: "plan",
+        schedule: "group",
         birthDay: "birth_day",
         birthMonth: "birth_month",
         active: "active",
-        role: "id_role",
-        location: "id_location",
+        role: "role",
+        location: "location",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
@@ -244,7 +292,7 @@ const info = {
         description: "description",
         date: "date",
         active: "active",
-        idScoreType: "id_score_type",
+        scoreType: "score_type",
         timecap: "timecap",
         timestamps: {
           createdAt: "created_at",
@@ -252,14 +300,13 @@ const info = {
         },
       },
       wodScores: {
-        idWod: "id_wod",
-        idUser: "id_user",
+        uid: "uid",
+        username: "username",
         score: "score",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
         },
-        active: "active",
       },
     },
     errors: {

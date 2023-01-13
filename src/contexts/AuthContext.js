@@ -122,6 +122,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       setLoggingIn(false);
     } catch (err) {
+      console.log(err);
       console.log(err.message);
 
       setError("Ocurrió un error. Por favor intenta de nuevo");

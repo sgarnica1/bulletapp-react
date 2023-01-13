@@ -28,7 +28,6 @@ function AddAthleteForm(props) {
   const { actions: athletesActions } = useAthletes();
   const { plans, actions: plansActions } = usePlans();
   const { groups, actions: groupsActions } = useGroups();
-  const { roles, actions: rolesActions } = useRoles();
   const { locations, actions: locationsActions } = useLocations();
   const navigate = useNavigate();
 
@@ -51,16 +50,15 @@ function AddAthleteForm(props) {
     plansActions.getPlans();
     groupsActions.getGroups();
     locationsActions.getLocations();
-    rolesActions.getRoleByType(info.firebase.values.roles.athlete);
     return () => abortCont.abort();
   }, []);
-
 
   function updateAthleteInfo(event, attribute) {
     setAthlete((athlete) => {
       if (athlete[info.firebase.docKeys.users.role] === "") {
         // ADD ATHLETE ROLE IF IT DOESN'T HAVE ONE
-        athlete[info.firebase.docKeys.users.role] = roles.id;
+        athlete[info.firebase.docKeys.users.role] =
+          info.firebase.values.roles.athlete;
       }
 
       if (athlete[info.firebase.docKeys.users.location] === "") {
@@ -73,13 +71,13 @@ function AddAthleteForm(props) {
 
       // UPDATE ATHLETE ATTRIBUTE
       athlete[attribute] = event.target.value;
-      // console.log(athlete)
       return athlete;
     });
   }
 
   function handleSubmitData(event) {
     event.preventDefault();
+    console.log(athlete);
     athletesActions.addAthlete(athlete, () => {
       // navigate("/atletas");
     });
@@ -219,18 +217,19 @@ function AddAthleteForm(props) {
           onChange={(event) =>
             updateAthleteInfo(event, info.firebase.docKeys.users.plan)
           }
-          value={props.plan?.id}
+          value={props.plan?.name}
         >
           <option value={""}>Selecciona un plan</option>
           {plans &&
             plans.map((plan) => (
-              <option key={plan.id} value={plan.id}>
+              <option key={plan.id} value={plan.name}>
                 {plan.name}
               </option>
             ))}
         </select>
       </div>
-      {/* SCHEDULE INPUT */}
+
+      {/* GROUP INPUT */}
       <div className="AddAthleteForm__input-container">
         <img
           className="AddAthleteForm__input-icon"
@@ -242,12 +241,12 @@ function AddAthleteForm(props) {
           onChange={(event) =>
             updateAthleteInfo(event, info.firebase.docKeys.users.schedule)
           }
-          value={props.schedule?.id}
+          value={props.schedule?.hour}
         >
           <option value="">Selecciona una clase</option>
           {groups &&
             groups.map((schedule) => (
-              <option key={schedule.id} value={schedule.id}>
+              <option key={schedule.id} value={schedule.hour}>
                 {schedule.hour}
               </option>
             ))}

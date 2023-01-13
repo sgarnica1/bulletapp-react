@@ -26,8 +26,10 @@
 
   &__title {
     color: var(--color-text);
-    margin-left: 15px;
+    margin-left: 25px;
     padding: 10px 0;
     text-align: left;
+    font-weight: 600;
+    font-size: toRem(17);
   }
 }

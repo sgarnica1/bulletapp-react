@@ -3,8 +3,8 @@ import { useDashboard } from "../../contexts/DashboardContext";
 
 // COMPONENTS
 import { AddButton } from "../../components/Public/AddButton";
-import { AddRecordForm } from "../../components/Athlete/AddRecordForm";
-import { AddRecordFormContainer } from "../../components/Athlete/AddRecordFormContainer";
+import { AddRecordForm } from "../../components/Athlete/AddRecord/AddRecordForm";
+import { AddRecordModal } from "../../components/Athlete/AddRecord/AddRecordModal";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { DateWidget } from "../../components/Public/DateWidget";
 import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
@@ -75,7 +75,7 @@ function Records() {
         <AddButton
           img={AthleteImg}
           alt="CrossFit Athlete Front Rack Position"
-          title="Nuevo PR"
+          title="Añadir nuevo PR"
           clickHandler={() => {
             setShowModal(true);
             setRecordType(
@@ -92,7 +92,7 @@ function Records() {
           }}
           img={GymImg}
           alt="Bullet CrossFit Gym"
-          title="Nueva Habilidad Desbloqueada"
+          title="Añadir nueva habilidad desbloqueada"
         />
 
         {/* ADD NEW GOAL */}
@@ -105,7 +105,7 @@ function Records() {
           }}
           img={Athlete2Img}
           alt="Bullet CrossFit shirt"
-          title="Nueva Meta Mensual"
+          title="Añadir nueva meta personal"
         />
 
         {/* Personal Goal */}
@@ -165,9 +165,7 @@ function Records() {
         </section>
       </ContentContainer>
 
-      <AddRecordFormContainer>
-        <AddRecordForm recordType={recordType} />
-      </AddRecordFormContainer>
+      <AddRecordModal recordType={recordType} />
     </div>
   );
 }

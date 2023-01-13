@@ -73,9 +73,7 @@ const getTodaysWodApi = async (callback) => {
     });
     // VERIFY IF THERE IS A WOD FOR TODAY
     if (data.length === 0) return -1;
-    // GET SCORE TYPE NAME
-    const scoreTypeData = await getWodTypeApi(data[0].id_score_type);
-    data[0].score_type = scoreTypeData;
+
     if (callback) callback(data);
     return data[0];
   } catch (err) {
@@ -101,24 +99,10 @@ const getWodByDateApi = async (date, callback) => {
     // VERIFY IF THERE IS A WOD FOR TODAY
     if (data.length === 0 || data[0].length === 0) return null;
 
-    // GET SCORE TYPE NAME
-    const scoreTypeData = await getWodTypeApi(data[0].id_score_type);
-    data[0].score_type = scoreTypeData;
     if (callback) callback(data);
     // console.log(data);
     return data[0];
   } catch (err) {
-    throw err;
-  }
-};
-
-const getWodTypeApi = async (idScoreType) => {
-  try {
-    const ref = doc(db, info.firebase.collections.scoreTypes, idScoreType);
-    const snapshot = await getDoc(ref);
-    return snapshot.data().name;
-  } catch (err) {
-    console.log(err);
     throw err;
   }
 };

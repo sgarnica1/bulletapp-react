@@ -25,6 +25,7 @@
     margin-bottom: 40px;
 
     &-container {
+      width: fit-content;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -40,7 +41,7 @@
       border: 2px solid;
       color: var(--bg-input-2);
       border-radius: 50%;
-      
+
       &.active {
         span {
           width: 10px;
@@ -51,11 +52,15 @@
         }
       }
     }
-    
+
     &__label {
       font-size: toRem(18);
       color: var(--color-text);
     }
+  }
+
+  &__select-container {
+    margin-bottom: 20px;
   }
 
   &__select {
@@ -67,8 +72,12 @@
     border-radius: $border-radius;
     background: var(--bg-input-2);
     padding: 15px 20px;
-    margin-bottom: 20px;
     color: var(--color-text);
+    border: 1px solid var(--bg-input-2);
+
+    &.error {
+      border: 2px solid $color-error;
+    }
 
     select {
       color: var(--color-text);
@@ -100,7 +109,7 @@
     background: var(--bg-input-2);
     color: var(--color-text);
     opacity: 0.9;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     input {
       background: transparent;

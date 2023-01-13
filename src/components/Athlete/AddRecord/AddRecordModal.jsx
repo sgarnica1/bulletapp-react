@@ -1,11 +1,13 @@
 import ReactDom from "react-dom";
 import { useEffect, useState } from "react";
-import { useDashboard } from "../../contexts/DashboardContext";
+import { useDashboard } from "../../../contexts/DashboardContext";
+
+import { AddRecordForm } from "./AddRecordForm";
 
 // ICON
-import CloseIcon from "../../assets/icon/close.svg";
+import CloseIcon from "../../../assets/icon/close.svg";
 
-const AddRecordFormContainer = ({ children }) => {
+const AddRecordModal = ({ recordType }) => {
   const { showAddFormModal: show, setShowAddFormModal: setShow } =
     useDashboard();
 
@@ -16,18 +18,18 @@ const AddRecordFormContainer = ({ children }) => {
   }, [show]);
 
   return ReactDom.createPortal(
-    <section className={`AddRecordFormContainer ${show ? "show" : ""} `}>
-      <div className="AddRecordFormContainer__content">
-        <div className="AddRecordFormContainer__closebtn">
+    <section className={`AddRecordModal ${show ? "show" : ""} `}>
+      <div className="AddRecordModal__content">
+        <div className="AddRecordModal__closebtn">
           <button onClick={() => setShow(false)}>
             <img src={CloseIcon} alt="Times icon" />
           </button>
         </div>
-        {children}
+        <AddRecordForm recordType={recordType} closeModal={!show} />
       </div>
     </section>,
     document.getElementById("modal")
   );
 };
 
-export { AddRecordFormContainer };
+export { AddRecordModal };

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   getAllWodScoresApi,
-  getWeeklyWodScoresApi,
   getWodScoreByUserIdApi,
   getWodScoresByWodIdApi,
   postWodScoreApi,
@@ -19,18 +18,6 @@ const useWodScores = () => {
     try {
       setLoading(true);
       const res = await getAllWodScoresApi();
-      setWodScores(res);
-      setLoading(false);
-    } catch (err) {
-      setError(err);
-      setLoading(false);
-    }
-  };
-
-  const getWeeklyWodScores = async () => {
-    try {
-      setLoading(true);
-      const res = await getWeeklyWodScoresApi();
       setWodScores(res);
       setLoading(false);
     } catch (err) {
@@ -58,8 +45,10 @@ const useWodScores = () => {
       setLoading(true);
       const wod = await getWodByDateApi(date);
       console.log(wod);
-      const res = await getWodScoresByWodIdApi(wod.id);
-      setWodScores({ wodScores: res, wod: wod });
+      // const res = await getWodScoresByWodIdApi(wod.id);
+      // // const res = []
+      // setWodScores({ wodScores: res, wod: wod });
+      setWodScores(wod);
       setLoading(false);
     } catch (err) {
       setError(err);
@@ -79,10 +68,12 @@ const useWodScores = () => {
     }
   };
 
-  const postWodScore = async (idWod, idUser, score) => {
+  // WRITE
+
+  const postWodScore = async (idWod, data, callback) => {
     try {
       setLoading(true);
-      const res = await postWodScoreApi(idWod, idUser, score);
+      const res = await postWodScoreApi(idWod, data, callback);
       setWodScores(res);
       setLoading(false);
     } catch (err) {
@@ -97,10 +88,10 @@ const useWodScores = () => {
     }
   };
 
-  const updateWodScore = async (idWodScore, score) => {
+  const updateWodScore = async (idWod, idWodScore, score) => {
     try {
       setLoading(true);
-      const res = await updateWodScoreApi(idWodScore, score);
+      const res = await updateWodScoreApi(idWod, idWodScore, score);
       setWodScores(res);
       setLoading(false);
     } catch (err) {
@@ -117,7 +108,6 @@ const useWodScores = () => {
 
   const actions = {
     getAllWodScores,
-    getWeeklyWodScores,
     getWodScoreByUserId,
     getWodScoresByWodId,
     getWodWithWodScoresByDate,

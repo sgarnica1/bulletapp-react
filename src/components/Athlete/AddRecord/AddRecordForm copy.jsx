@@ -1,93 +1,105 @@
 import { useState, useEffect } from "react";
-import { useMovements } from "../../hooks/useMovements";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useMovements } from "../../../hooks/useMovements";
+import { usePRs } from "../../../hooks/usePRs";
 
 // COMPONENTS
-import { Button } from "../../components/Public/Button";
+import { Button } from "../../Public/Button";
+import { ErrorInput } from "../../Public/ErrorInput";
+import { Input } from "../../Public/Input";
 
 // UTILS
-import { info } from "../../utils/info";
-import { utils } from "../../utils/utils";
+import { info } from "../../../utils/info";
+import { utils } from "../../../utils/utils";
 
 const AddRecordForm = ({ recordType }) => {
-  const { movements: mv, actions, loading, error } = useMovements();
-  // console.log(recordType, info.components.addRecordForm.recordType)
+  const { user } = useAuth();
+  const { movements, actions: actionsMov, loading, error } = useMovements();
+  const {
+    prs,
+    actions: actionsPRs,
+    loading: loadingPRs,
+    error: errorPRs,
+  } = usePRs();
+
+  // STATES
   const [currentRecordCategory, setCurrentRecordCategory] = useState("");
   const [scoreType, setScoreType] = useState();
+  const [currentMovement, setCurrentMovement] = useState("");
+  const [units, setUnits] = useState("");
   const [reps, setReps] = useState("");
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
 
-  function submitHandler(event) {
-    event.preventDefault();
-    console.log("Adding...");
+  // FUNCTIONS
+  function movementChangeHandler(event) {
+    const value = event.target.querySelector(`[data-id=${event.target.value}]`);
+    if (!value) return;
+    setCurrentMovement({
+      [info.firebase.docKeys.personalRecords.idMovement]: value.dataset.id,
+      [info.firebase.docKeys.personalRecords.movement]: value.dataset.name,
+      [info.firebase.docKeys.personalRecords.movementCategory]:
+        value.dataset.category,
+    });
   }
 
-  // console.log(recordCategories);
+  function submitHandler(event) {
+    event.preventDefault();
+    console.log("submitHandler");
+    // TODO - DATA VALIDATION
+    if (!currentRecordCategory) return;
+    if (!currentMovement) return;
+    if (!scoreType) return;
 
-  const recordCategories = [
-    {
-      name: "Máximo levantamiento",
-      score_type: "weight",
-      active: true,
-    },
-    {
-      name: "Máximas repeticiones",
-      score_type: "reps",
-      active: true,
-    },
-    {
-      name: "Mejor Tiempo",
-      score_type: "time",
-      active: true,
-    },
+    const newPR = {
+      [info.firebase.docKeys.personalRecords.movement]:
+        currentMovement[info.firebase.docKeys.personalRecords.movement],
+      [info.firebase.docKeys.personalRecords.movementCategory]:
+        currentMovement[info.firebase.docKeys.personalRecords.movementCategory],
+      [info.firebase.docKeys.personalRecords.idMovement]:
+        currentMovement[info.firebase.docKeys.personalRecords.idMovement],
+      [info.firebase.docKeys.personalRecords.score_type]: scoreType,
+      [info.firebase.docKeys.personalRecords.scores.value]: 0,
+    };
 
-    {
-      name: "Desbloquear habilidad",
-      score_type: "",
-      active: true,
-    },
-  ];
+    // VERIFY SCORETYPE
+    if (scoreType === info.firebase.values.scoreTypes.time.name) {
+      newPR[info.firebase.docKeys.personalRecords.scores.value] =
+        utils.timeToSeconds(`${minutes}:${seconds}`);
+    } else if (
+      scoreType === info.firebase.values.scoreTypes.reps.name ||
+      scoreType === info.firebase.values.scoreTypes.weight.name
+    ) {
+      newPR[info.firebase.docKeys.personalRecords.scores.value] = reps;
+    }
 
-  const movements = [
-    {
-      name: "Power Clean",
-      score_type: "weight",
-    },
-    {
-      name: "Muscle Ups",
-      score_type: "reps",
-    },
-    {
-      name: "Apple Run",
-      score_type: "time",
-    },
-  ];
+    if (scoreType === info.firebase.values.scoreTypes.weight.name) {
+      newPR[info.firebase.docKeys.personalRecords.units] = "lbs";
+    } else if (scoreType === info.firebase.values.scoreTypes.reps.name) {
+      newPR[info.firebase.docKeys.personalRecords.units] = "reps";
+    } else if (scoreType === info.firebase.values.scoreTypes.time.name) {
+      newPR[info.firebase.docKeys.personalRecords.units] = ["minutes, seconds"];
+    }
 
-  const skills = [
-    "Bar Muscle Ups",
-    "Ring Muscle Ups",
-    "Double Unders",
-    "Triple Unders",
-    "Pistol Squats",
-    "Apple Run",
-    "C2B",
-    "T2B",
-    "Pull Ups",
-    "Hand Stand",
-    "Hand Stand Push Ups",
-    "Hand Stand Walk",
-  ];
+    console.log(newPR);
+    // SET ERROR AND SUCCESS MESSAGES
+    actionsPRs.addPR(user.user_id || user.uid, newPR);
+
+    // TODO - CHECK IF PR ALREADY EXISTS
+    // TODO - ALLOW PR UPDATE
+  }
 
   useEffect(() => {
     if (currentRecordCategory === "") {
-      setCurrentRecordCategory(recordCategories[0].name);
-      setScoreType(recordCategories[0].score_type);
+      setCurrentRecordCategory(
+        info.firebase.values.recordCategories.maxLift.name
+      );
+      setScoreType(info.firebase.values.recordCategories.maxLift.score_type);
     }
-    if (!mv) actions.getMovements();
-    if (mv) console.log(mv);
-
+    // if (!prs) actionsPRs.getPRs(user?.user_id || user?.uid);
+    // if (!movements) actionsMov.getMovements();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentRecordCategory, mv]);
+  }, [currentRecordCategory]);
 
   // PERSONAL GOAL (AÑADIR NUEVA META)
   if (recordType === info.components.addRecordForm.recordType.personalGoal)
@@ -110,32 +122,34 @@ const AddRecordForm = ({ recordType }) => {
         >
           {/* SCORE OPTIONS */}
           <div className="AddRecordForm__radio-btn">
-            {recordCategories.map((cat, index) => {
-              if (cat.active) {
-                return (
-                  <div
-                    className="AddRecordForm__radio-btn-container"
-                    key={index}
-                    onClick={() => {
-                      setCurrentRecordCategory(cat.name);
-                      setScoreType(cat.score_type);
-                    }}
-                  >
+            {Object.values(info.firebase.values.recordCategories).map(
+              (cat, index) => {
+                if (cat.active) {
+                  return (
                     <div
-                      className={`AddRecordForm__radio-btn__input ${
-                        currentRecordCategory === cat.name ? "active" : ""
-                      }`}
+                      className="AddRecordForm__radio-btn-container"
+                      key={index}
+                      onClick={() => {
+                        setCurrentRecordCategory(cat.name);
+                        setScoreType(cat.score_type);
+                      }}
                     >
-                      <span></span>
+                      <div
+                        className={`AddRecordForm__radio-btn__input ${
+                          currentRecordCategory === cat.name ? "active" : ""
+                        }`}
+                      >
+                        <span></span>
+                      </div>
+                      <p className="AddRecordForm__radio-btn__label">
+                        {cat.name}
+                      </p>
                     </div>
-                    <p className="AddRecordForm__radio-btn__label">
-                      {cat.name}
-                    </p>
-                  </div>
-                );
+                  );
+                }
+                return null;
               }
-              return null;
-            })}
+            )}
           </div>
 
           {/* MOVEMENT OPTIONS */}
@@ -145,11 +159,11 @@ const AddRecordForm = ({ recordType }) => {
 
               {currentRecordCategory !==
                 info.components.addRecordForm.recordCategories.unlockSkill &&
-                mv &&
-                mv
+                movements &&
+                movements
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((mov, index) => {
-                    if (mov.scoreTypes.includes(scoreType)) {
+                    if (mov.score_types.includes(scoreType)) {
                       return <option key={index}>{mov.name}</option>;
                     }
                     return null;
@@ -157,8 +171,8 @@ const AddRecordForm = ({ recordType }) => {
 
               {currentRecordCategory ===
                 info.components.addRecordForm.recordCategories.unlockSkill &&
-                mv &&
-                mv
+                movements &&
+                movements
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((mov, index) => {
                     if (mov.skill)
@@ -269,44 +283,61 @@ const AddRecordForm = ({ recordType }) => {
           <>
             {/* SCORE OPTIONS */}
             <div className="AddRecordForm__radio-btn">
-              {recordCategories.map((cat, index) => {
-                if (cat.score_type !== "" && cat.active) {
-                  return (
-                    <div
-                      className="AddRecordForm__radio-btn-container"
-                      key={index}
-                      onClick={() => {
-                        setCurrentRecordCategory(cat.name);
-                        setScoreType(cat.score_type);
-                      }}
-                    >
+              {Object.values(info.firebase.values.recordCategories).map(
+                (cat, index) => {
+                  if (cat.score_type !== "" && cat.active) {
+                    return (
                       <div
-                        className={`AddRecordForm__radio-btn__input ${
-                          currentRecordCategory === cat.name ? "active" : ""
-                        }`}
+                        className="AddRecordForm__radio-btn-container"
+                        key={index}
+                        onClick={() => {
+                          setCurrentRecordCategory(cat.name);
+                          setScoreType(cat.score_type);
+                        }}
                       >
-                        <span></span>
+                        <div
+                          className={`AddRecordForm__radio-btn__input ${
+                            currentRecordCategory === cat.name ? "active" : ""
+                          }`}
+                        >
+                          <span></span>
+                        </div>
+                        <p className="AddRecordForm__radio-btn__label">
+                          {cat.name}
+                        </p>
                       </div>
-                      <p className="AddRecordForm__radio-btn__label">
-                        {cat.name}
-                      </p>
-                    </div>
-                  );
+                    );
+                  }
+                  return null;
                 }
-                return null;
-              })}
+              )}
             </div>
 
             {/* MOVEMENT OPTIONS */}
             <div className="AddRecordForm__select">
-              <select className="AddRecordForm__select-input">
+              <select
+                className="AddRecordForm__select-input"
+                onChange={(event) => {
+                  movementChangeHandler(event);
+                }}
+              >
                 <option value="">EJERCICIO</option>
-                {mv &&
-                  mv
+                {movements &&
+                  movements
                     .sort((a, b) => a.name.localeCompare(b.name))
                     .map((mov, index) => {
-                      if (mov.scoreTypes.includes(scoreType)) {
-                        return <option key={index}>{mov.name}</option>;
+                      if (mov.score_types.includes(scoreType)) {
+                        return (
+                          <option
+                            key={index}
+                            data-id={mov.id}
+                            data-name={mov.name}
+                            data-category={mov.movement_category}
+                            value={mov.id}
+                          >
+                            {mov.name}
+                          </option>
+                        );
                       }
                       return null;
                     })}
@@ -375,6 +406,12 @@ const AddRecordForm = ({ recordType }) => {
                 </>
               )}
             </div>
+            <Input
+              type="number"
+              placeholder="0"
+              units={info.firebase.values.scoreTypes[scoreType]?.units}
+              validationHandler={() => {}}
+            />
           </>
         )}
 
@@ -383,8 +420,8 @@ const AddRecordForm = ({ recordType }) => {
           <div className="AddRecordForm__select">
             <select className="AddRecordForm__select-input">
               <option value="">EJERCICIO</option>
-              {mv &&
-                mv
+              {movements &&
+                movements
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((mov, index) => {
                     if (mov.skill)
@@ -394,6 +431,8 @@ const AddRecordForm = ({ recordType }) => {
             </select>
           </div>
         )}
+
+        {/* <ErrorInput errorMessage="Error" show={true} /> */}
 
         {/* SUBMIT BUTTON */}
         <Button

@@ -41,14 +41,7 @@ const getUserInfoApi = async (user, id) => {
   try {
     const ref = doc(db, info.firebase.collections.users, id);
     const snapshot = await getDoc(ref);
-    const roleData = await getUserRoleApi(snapshot.data().id_role);
-
-    // const r = await getDoc(snapshot.data().role_ref);
-
-    if (!user.data) {
-      user.data = snapshot.data();
-      user.data.role = roleData;
-    }
+    if (!user.data) user.data = snapshot.data();
     return user;
   } catch (err) {
     console.log(err);

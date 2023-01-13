@@ -1,12 +1,12 @@
-.AddRecordFormContainer.show {
+.AddRecordModal.show {
   transform: translateY(0);
 
-  .AddRecordFormContainer__content {
+  .AddRecordModal__content {
     transform: translateY(0);
   }
 }
 
-.AddRecordFormContainer {
+.AddRecordModal {
   // transition: 0.4s ease-out;
   display: flex;
   justify-content: center;
@@ -36,6 +36,11 @@
       background: none;
       outline: none;
       border: none;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
     }
   }
 }

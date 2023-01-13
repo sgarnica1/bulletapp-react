@@ -45,7 +45,7 @@ const utils = {
       filteredData = data;
     } else {
       filteredData = data.filter((element) => {
-        const dataText = `${element.user.first_name.toLowerCase()} ${element.user.last_name.toLowerCase()}`;
+        const dataText = `${element.username.toLowerCase()}`;
         const searchedValueText = searchedValue.toLowerCase().trim();
 
         return dataText.includes(searchedValueText);
@@ -107,8 +107,6 @@ const utils = {
 
     // IF PREV VALUE WAS 0, AND NEW VALUE IS > 0 BUT < 10, ALLOW ONLY 1 DIGIT
     if (value != 0) {
-      console.log("here");
-      console.log(value < 10, value.toString().length > 2);
       if (value < 10 && value.toString().length > 2) value = value.slice(1, 3);
     }
 
@@ -133,6 +131,15 @@ const utils = {
     }
 
     return value;
+  },
+
+  timeToSeconds: (time) => {
+    let timeValues = time.split(":");
+    timeValues = timeValues.map((value) => parseInt(value));
+
+    let seconds = timeValues[0] * 60 + timeValues[1];
+
+    return seconds;
   },
 };
 

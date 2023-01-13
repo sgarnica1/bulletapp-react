@@ -57,23 +57,19 @@ const getWeeklyWodScoresApi = async (callback) => {
 
 const getWodScoresByWodIdApi = async (idWod, callback) => {
   try {
-    const ref = collection(db, info.firebase.collections.wodScores);
-    const query_ = query(ref, where("id_wod", "==", idWod));
-    const snapshot = await getDocs(query_);
-    const data = snapshot.docs.map(async (doc) => {
-      const userData = await getUserInfoFromWodScoreApi(doc.data().id_user);
-      return {
-        id: doc.id,
-        user: {
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-        },
-        ...doc.data(),
-      };
-    });
-    const res = await Promise.all(data);
-    if (callback) callback(res);
-    return res;
+    const ref = collection(
+      db,
+      `/${info.firebase.collections.wods}/${idWod}/${info.firebase.subcollections.wods.scores}`
+    );
+    const snapshot = await getDocs(ref);
+    // console.log(snapshot.docs.map((doc) => doc.data()));
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (callback) callback(data);
+    return data;
   } catch (err) {
     throw err;
   }
@@ -121,19 +117,20 @@ const getWodWithWodScoresByDateApi = async (date, callback) => {
   }
 };
 
-const postWodScoreApi = async (idWod, idUser, score, callback) => {
+const postWodScoreApi = async (idWod, data, callback) => {
   try {
     const res = await addDoc(
-      collection(db, info.firebase.collections.wodScores),
+      collection(
+        db,
+        `/${info.firebase.collections.wods}/${idWod}/${info.firebase.subcollections.wods.scores}`
+      ),
       {
-        // ID WOD
-        [info.firebase.docKeys.wodScores.idWod]: idWod,
         // ID USER
-        [info.firebase.docKeys.wodScores.idUser]: idUser,
+        [info.firebase.docKeys.wodScores.uid]: data.uid,
+        // USERNAME
+        [info.firebase.docKeys.wodScores.username]: data.username,
         // SCORE
-        [info.firebase.docKeys.wodScores.score]: score,
-        // ACTIVE
-        [info.firebase.docKeys.wodScores.active]: true,
+        [info.firebase.docKeys.wodScores.score]: data.score,
         // TIMESTAMPS
         timestamps: {
           [info.firebase.docKeys.wodScores.timestamps.createdAt]:
@@ -150,26 +147,18 @@ const postWodScoreApi = async (idWod, idUser, score, callback) => {
   }
 };
 
-const updateWodScoreApi = async (idWodScore, score, callback) => {
+const updateWodScoreApi = async (idWod, idWodScore, score, callback) => {
   try {
-    const ref = doc(db, info.firebase.collections.wodScores, idWodScore);
+    const ref = doc(
+      db,
+      `/${info.firebase.collections.wods}/${idWod}/${info.firebase.subcollections.wods.scores}/${idWodScore}`
+    );
     const res = await updateDoc(ref, {
       [info.firebase.docKeys.wodScores.score]: score,
     });
     if (callback) callback(res);
     console.log(res);
     return res;
-  } catch (err) {
-    throw err;
-  }
-};
-
-const getUserInfoFromWodScoreApi = async (idUser, callback) => {
-  try {
-    const ref = doc(db, info.firebase.collections.users, idUser);
-    const snapshot = await getDoc(ref);
-    if (callback) callback(snapshot.data());
-    return snapshot.data();
   } catch (err) {
     throw err;
   }

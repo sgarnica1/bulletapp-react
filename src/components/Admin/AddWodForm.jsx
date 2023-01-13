@@ -106,7 +106,7 @@ function AddWodForm() {
       [info.firebase.docKeys.wods.timecap]: wodTimeCap,
       [info.firebase.docKeys.wods
         .description]: `${wodTitle}, ${wodDescription}`,
-      [info.firebase.docKeys.wods.idScoreType]: wodScoreType,
+      [info.firebase.docKeys.wods.scoreType]: wodScoreType,
       [info.firebase.docKeys.wods.date]: parseDate(wodDate),
     };
 
@@ -250,7 +250,7 @@ function AddWodForm() {
               scoreTypes.map((score) => {
                 if (score.name === "weight") return null;
                 return (
-                  <option key={score.id} value={score.id}>
+                  <option key={score.id} value={score.name}>
                     {info.data.scores[score.name]}
                   </option>
                 );

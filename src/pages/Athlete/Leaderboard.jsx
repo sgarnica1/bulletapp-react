@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useWodScores } from "../../hooks/useWodScores";
+import { useWods } from "../../hooks/useWods";
 
 // COMPONENTS
 import { ContentContainer } from "../../components/Layout/ContentContainer";
@@ -13,8 +14,7 @@ import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 
 function Leaderboard() {
-  // TODO - Make searchbar work
-  const { wodScores, actions, loading } = useWodScores();
+  const { wods, actions, loading } = useWods();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [wodAvailable, setWodAvailable] = useState(false);
@@ -24,8 +24,8 @@ function Leaderboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   // METHODS
-  const sortAscending = (wodScores) => {
-    const sorted = wodScores.sort((a, b) => {
+  const sortAscending = (wods) => {
+    const sorted = wods.sort((a, b) => {
       return (
         a.score.minutes * 60 +
         a.score.seconds -
@@ -44,27 +44,28 @@ function Leaderboard() {
   };
 
   useEffect(() => {
+    if (loading) setSearchValue("");
     const date = setWodDate(weekDay);
     setCurrentDate(date);
-    if (loading) setSearchValue("");
-    if (refetch) actions.getWodWithWodScoresByDate(date);
+
+    // FETCH DATA
+    if (refetch) actions.getWodByDateWithScores(date);
+
+    // CHECK IF WOD IS AVAILABLE
     if (weekDay >= new Date().getDay()) setWodAvailable(false);
     else setWodAvailable(true);
     setRefetch(false);
 
-    if (wodScores) sortAscending(wodScores.wodScores);
+    if (wods && wods.scores) sortAscending(wods.scores);
 
-    if (!loading && wodScores) {
-      const filteredUsers = utils.searchDataFromInput(
-        wodScores.wodScores,
-        searchValue
-      );
+    if (!loading && wods) {
+      const filteredUsers = utils.searchDataFromInput(wods.scores, searchValue);
       setSortedWodScores(filteredUsers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weekDay, wodScores, loading, searchValue]);
+  }, [weekDay, wods, loading, searchValue]);
 
-  console.log(wodScores)
+  // console.log(wods)
 
   return (
     <div className="Leaderboard">
@@ -102,18 +103,18 @@ function Leaderboard() {
 
           {/* WOD LIST */}
           <div className="Leaderboard__wod">
-            {loading && !wodScores && <WidgetLoadingSkeleton wod={true} />}
+            {loading && !wods && <WidgetLoadingSkeleton wod={true} />}
 
             {!loading && !wodAvailable && (
               <p className="Leaderboard__wod__not-available">No disponible</p>
             )}
 
-            {!loading && wodAvailable && wodScores && (
+            {!loading && wodAvailable && wods && (
               <div className="Leaderboard__wod__body">
                 <p className="Leaderboard__wod__title">
-                  {wodScores?.wod?.description.split(",")[0]}
+                  {wods.description.split(",")[0]}
                 </p>
-                {wodScores?.wod?.description
+                {wods?.description
                   .split(",")
                   .slice(1)
                   .map((line, index) => (
@@ -122,7 +123,7 @@ function Leaderboard() {
                     </p>
                   ))}
                 <p className="Leaderboard__wod__timecap">
-                  Time Cap: <span>{wodScores?.wod?.timecap} min</span>
+                  Time Cap: <span>{wods?.timecap} min</span>
                 </p>
               </div>
             )}
@@ -149,22 +150,22 @@ function Leaderboard() {
                 loading={loading}
               />
             )}
-            {wodScores?.wodScores.length === 0 && (
+            {(!wods?.scores || wods?.scores?.length === 0) && (
               <div className="Leaderboard__body__empty">
                 Aún no hay resultados
               </div>
             )}
 
             {!loading &&
-              wodScores &&
-              wodScores.wodScores &&
+              wods &&
+              wods.scores &&
               sortedWodScores.map((score, index) => (
                 <div className="Leaderboard__body__score" key={index}>
                   <span className="Leaderboard__body__score-position">
                     {score.position}
                   </span>
                   <p className="Leaderboard__body__score-name">
-                    {score.user.first_name} {score.user.last_name}
+                    {score.username}
                   </p>
                   <span className="Leaderboard__body__score-value">
                     {score.score.minutes < 10

@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import {
   getAllWodsApi,
-  getWeeklyWodsApi,
   getTodaysWodApi,
   getWodByDateApi,
   postWodApi,
 } from "../api/wods";
+import { getWodScoresByWodIdApi } from "../api/wodscores";
 import { info } from "../utils/info";
 
 const useWods = () => {
   const [wods, setWods] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const { authTokens, logoutUser } = useAuth();
 
   const getAllWods = async () => {
     try {
@@ -32,27 +29,13 @@ const useWods = () => {
     }
   };
 
-  const getWeeklyWods = async () => {
-    try {
-      setLoading(true);
-      const res = await getWeeklyWodsApi();
-      setWods(res);
-      setLoading(false);
-    } catch (err) {
-      if (err.message === info.firebase.errors.auth.networkFailed) {
-        setError("Error en la red");
-      } else {
-        setError(err);
-      }
-      setLoading(false);
-    }
-  };
-
   const getTodaysWod = async () => {
     try {
       setLoading(true);
-      const res = await getTodaysWodApi();
-      setWods(res);
+      const wod = await getTodaysWodApi();
+      const scores = await getWodScoresByWodIdApi(wod.id);
+      wod.scores = scores;
+      setWods(wod);
       setLoading(false);
     } catch (err) {
       if (err.message === info.firebase.errors.auth.networkFailed) {
@@ -69,7 +52,27 @@ const useWods = () => {
       setWods(null);
       setLoading(true);
       const res = await getWodByDateApi(date);
+      console.log(res);
       setWods(res);
+      setLoading(false);
+    } catch (err) {
+      if (err.message === info.firebase.errors.auth.networkFailed) {
+        setError("Error en la red");
+      } else {
+        setError(err);
+      }
+      setLoading(false);
+    }
+  };
+
+  const getWodByDateWithScores = async (date) => {
+    try {
+      setWods(null);
+      setLoading(true);
+      const wod = await getWodByDateApi(date);
+      const scores = await getWodScoresByWodIdApi(wod.id);
+      wod.scores = scores;
+      setWods(wod);
       setLoading(false);
     } catch (err) {
       if (err.message === info.firebase.errors.auth.networkFailed) {
@@ -106,8 +109,8 @@ const useWods = () => {
   const actions = {
     getAllWods,
     getTodaysWod,
-    getWeeklyWods,
     getWodByDate,
+    getWodByDateWithScores,
     postWod,
     resetWodsState,
   };
