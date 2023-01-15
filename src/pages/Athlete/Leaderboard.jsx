@@ -3,6 +3,7 @@ import { useWodScores } from "../../hooks/useWodScores";
 import { useWods } from "../../hooks/useWods";
 
 // COMPONENTS
+import { BackButton } from "../../components/Public/BackButton";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { DateWidget } from "../../components/Public/DateWidget";
 import { SearchBar } from "../../components/Public/SearchBar";
@@ -59,7 +60,7 @@ function Leaderboard() {
     if (wods && wods.scores) sortAscending(wods.scores);
 
     if (!loading && wods) {
-      const filteredUsers = utils.searchDataFromInput(wods.scores, searchValue);
+      const filteredUsers = utils.searchDataFromInput(wods.scores, searchValue, "username");
       setSortedWodScores(filteredUsers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,6 +69,7 @@ function Leaderboard() {
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={true}>
+        <BackButton link={info.routes.home} mb={true} />
         <div className="Leaderboard__container">
           <div className="Leaderboard__header">
             <h1 className="Leaderboard__title">WOD</h1>
@@ -127,7 +129,6 @@ function Leaderboard() {
           </div>
 
           {/* LEADERBOARD LIST */}
-
           <div className="Leaderboard__body">
             <h2 className="subtitle">Leaderboard</h2>
             {loading && (
@@ -152,7 +153,7 @@ function Leaderboard() {
                 Aún no hay resultados
               </div>
             )}
-            {sortedWodScores.length === 0 && (
+            {sortedWodScores && sortedWodScores.length === 0 && (
               <div className="Leaderboard__body__empty">No hay resultados</div>
             )}
 

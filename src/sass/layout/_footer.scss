@@ -1,0 +1,13 @@
+.Footer {
+  background-color: var(--bg-layout);
+  color: $color-white;
+  padding: 20px;
+
+  &__copyright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+}

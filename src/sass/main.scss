@@ -29,9 +29,10 @@
 // COMPONENTS - PUBLIC
 @import "components/Public/addButton";
 @import "components/Public/backButton";
+@import "components/public/banner";
 @import "components/Public/birthdayCelebrationWidget";
 @import "components/public/button";
-@import "components/public/banner";
+@import "components/public/buttonSelectFilter";
 @import "components/public/cardContainer";
 @import "components/public/cardsList";
 @import "components/public/dateWidget";
@@ -44,6 +45,7 @@
 @import "components/Public/infoCard";
 @import "components/public/loadingIcon";
 @import "components/public/searchBar";
+@import "components/public/sortByFilter";
 @import "components/public/successAlert";
 
 // COMPONENTS - LOADING SKELETONS
@@ -53,6 +55,7 @@
 // LAYOUT
 @import "layout/dashboard";
 @import "layout/contentContainer";
+@import "layout/footer";
 @import "layout/header";
 @import "layout/navbar";
 @import "layout/widgetContainer";

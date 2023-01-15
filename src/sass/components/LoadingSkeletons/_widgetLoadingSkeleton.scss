@@ -1,7 +1,7 @@
 .WidgetLoadingSkeleton {
   min-height: 130px;
   width: 100%;
-  max-width: $max-width-card;
+  max-width: 768px;
   margin-bottom: $widget-margin-bottom;
   display: flex;
   justify-content: center;
@@ -42,7 +42,11 @@
     padding: 0;
     border-radius: $border-radius;
     margin-top: 10cpx;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+  }
+
+  &.record-card {
+    max-height: 114px;
   }
 
   @extend %loading-skeleton-background;

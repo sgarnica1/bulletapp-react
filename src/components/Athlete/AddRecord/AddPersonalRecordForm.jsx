@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDashboard } from "../../../contexts/DashboardContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useMovements } from "../../../hooks/useMovements";
 import { usePRs } from "../../../hooks/usePRs";
 
 // COMPONENTS
-import { BackButton } from "../../Public/BackButton";
 import { Button } from "../../Public/Button";
 import { ErrorInput } from "../../Public/ErrorInput";
 import { Input } from "../../Public/Input";
@@ -16,8 +17,11 @@ import { SubHeader } from "./SubHeader";
 import { info } from "../../../utils/info";
 import { utils } from "../../../utils/utils";
 
-const AddPersonalRecordForm = ({ previousRoute }) => {
+const AddPersonalRecordForm = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
+  const { successMessage, setSuccessMessage, errorMessage, setErrorMessage } =
+    useDashboard();
   const { movements, actions: actionsMov, loading, error } = useMovements();
   const {
     prs,
@@ -31,6 +35,7 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
   const [scoreType, setScoreType] = useState();
   const [validScore, setValidScore] = useState(false);
   const [validTimeScore, setValidTimeScore] = useState(false);
+  const [validDate, setValidDate] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
   const [existingPRList, setExistingPRList] = useState([]);
@@ -43,7 +48,6 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
     if (!prs && !movements) actionsMov.getMovements();
 
     // SET CURRENT RECORD CATEGORY, SCORE TYPE AND FORM ERROR
-    // if (submitError && closeModal) setSubmitError(false);
 
     if (currentRecordCategory === "") {
       setCurrentRecordCategory(
@@ -69,7 +73,6 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
   // PERSONAL RECORD (AÑADIR NUEVO PR) AND UNLOCK SKILL (AÑADIR NUEVA HABILIDAD)
   return (
     <div className="AddRecordForm">
-      <BackButton link={previousRoute} mb={true} />
       <SubHeader
         title={"Cuéntanos, ¿qué lograste hoy?"}
         description={"Festejamos contigo este nuevo logro"}
@@ -131,6 +134,22 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
           />
         )}
 
+        <Input
+          type="date"
+          name="date"
+          units={"Fecha"}
+          validationHandler={(value) => {
+            if (!value) return false;
+
+            const today = new Date();
+            const date = new Date(value);
+            return date <= today ? true : false;
+          }}
+          setValidData={setValidDate}
+          submitError={submitError}
+          setSubmitError={setSubmitError}
+        />
+
         <ErrorInput
           errorMessage={"Ya tienes un PR registrado para este movimiento"}
           show={prExists}
@@ -172,6 +191,7 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
     const movID = info.firebase.docKeys.personalRecords.idMovement;
     const scoreT = info.firebase.docKeys.personalRecords.score_type;
     const scoreVal = info.firebase.docKeys.personalRecords.scores.value;
+    const dateField = info.firebase.docKeys.personalRecords.scores.date;
     const units = info.firebase.docKeys.personalRecords.units;
     const lbs = info.firebase.values.scoreTypes.weight.units;
     const min = info.firebase.values.scoreTypes.time.units.min;
@@ -183,6 +203,8 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
       event.target,
       event.target.movement.value
     );
+
+    if (!validDate) return setSubmitError(true);
 
     // VALID TIME SCORE
     if (scoreType === time && !validTimeScore) return setSubmitError(true);
@@ -206,6 +228,7 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
       [movID]: movementData[movID],
       [scoreT]: scoreType,
       [scoreVal]: score,
+      [dateField]: utils.parseDate(event.target.date.value),
     };
 
     // // VERIFY SCORETYPE
@@ -220,7 +243,11 @@ const AddPersonalRecordForm = ({ previousRoute }) => {
 
     console.log("submitting...", newPR);
     // SET ERROR AND SUCCESS MESSAGES
-    // actionsPRs.addPR(user.user_id || user.uid, newPR);
+    actionsPRs.addPR(user.user_id || user.uid, newPR, (error) => {
+      if (error) return setSubmitError(true);
+      setSuccessMessage("PR registrado correctamente")
+      navigate(info.routes.prs);
+    });
 
     // TODO - CHECK IF PR ALREADY EXISTS
     // TODO - ALLOW PR UPDATE

@@ -5,6 +5,19 @@ const info = {
     },
   },
   components: {
+    addRecordForm: {
+      recordType: {
+        personalRecord: "personal_record",
+        newSkill: "new_skill",
+        personalGoal: "personal_goal",
+      },
+      recordCategories: {
+        maxLift: "Max Lift",
+        minTime: "Min Time",
+        maxReps: "Max Reps",
+        unlockSkill: "Desbloquear habilidad",
+      },
+    },
     button: {
       type: {
         submit: "submit",
@@ -18,17 +31,17 @@ const info = {
         lg: "lg",
       },
     },
-    addRecordForm: {
-      recordType: {
-        personalRecord: "personal_record",
-        newSkill: "new_skill",
-        personalGoal: "personal_goal",
+    buttonSelectFilter: {
+      values: {
+        all: "all",
       },
-      recordCategories: {
-        maxLift: "Max Lift",
-        minTime: "Min Time",
-        maxReps: "Max Reps",
-        unlockSkill: "Desbloquear habilidad",
+    },
+    sortby: {
+      label: "Ordenar",
+      options: {
+        mostRecent: "Más reciente",
+        oldest: "Más antiguo",
+        alphabetic: "Alfabético",
       },
     },
   },

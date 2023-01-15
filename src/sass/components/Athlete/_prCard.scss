@@ -10,24 +10,20 @@
   }
 
   &__title {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: toRem(18);
+    color: var(--color-text);
   }
 
   &__title,
   &__value {
-    font-size: toRem(22);
     font-weight: bold;
-    color: $color-brand;
     line-height: 1;
   }
-
-  &__value,
-  &__units {
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-fill-color: transparent;
-  }
-
+  
   &__value {
+    color: $color-brand;
+    font-size: toRem(22);
     display: block;
     font-size: toRem(26);
     margin-bottom: 10px;

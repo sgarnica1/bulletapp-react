@@ -1,0 +1,71 @@
+.ButtonSelectFilter {
+  display: flex;
+  overflow-x: scroll;
+  margin-bottom: 30px;
+
+  &::-webkit-scrollbar {
+    height: 0px;
+  }
+
+  @include mq("md") {
+    overflow-x: hidden;
+  }
+
+  &__input-container {
+    display: flex;
+    flex-wrap: nowrap;
+    transform: translateX(-50px);
+    transition: ease 0.5s;
+
+    &.translate,
+    &.loading {
+      transform: translateX(0);
+    }
+  }
+
+  &__input,
+  &__input-close {
+    margin: 0 5px;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--color-text);
+    font-weight: 500;
+    background: transparent;
+    color: var(--color-text);
+    outline: none;
+
+    &.active {
+      background: $color-brand;
+      border-color: $color-brand;
+      color: var(--bg-body);
+    }
+  }
+  
+  &__input-close {
+    height: toRem(36);
+    width: toRem(36);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-weight: 600;
+    transform: scale(0);
+    transition: ease 0.5s;
+    background: none;
+    border: 1px solid $color-brand;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    &.show {
+      transform: scale(1);
+    }
+  }
+
+  &__input.loading {
+    width: 100px;
+    height: 36px;
+  }
+}

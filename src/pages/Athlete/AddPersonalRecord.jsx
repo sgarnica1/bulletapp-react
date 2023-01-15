@@ -3,13 +3,15 @@ import { info } from "../../utils/info";
 
 // COMPONENTS
 import { AddPersonalRecordForm } from "../../components/Athlete/AddRecord/AddPersonalRecordForm";
+import { BackButton } from "../../components/Public/BackButton";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 
 const AddPersonalRecord = () => {
   return (
     <div className="AddPersonalRecord">
       <ContentContainer>
-        <AddPersonalRecordForm previousRoute={info.routes.prs} />
+        <BackButton link={info.routes.prs} mb={true} />
+        <AddPersonalRecordForm />
       </ContentContainer>
     </div>
   );

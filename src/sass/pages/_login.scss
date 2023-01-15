@@ -38,7 +38,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    padding: toRem(25);
+    padding: toRem(20);
     padding-top: toRem(50);
     position: relative;
     background: var(--bg-body);
@@ -61,11 +61,11 @@ body {
   &__form {
     width: 100%;
     max-width: 400px;
-    padding: 20px;
-    background: var(--bg-component);
+    // padding: 20px 10px;
+    // background: var(--bg-component);
     border-radius: 20px;
-    margin-bottom: 20px;
-    box-shadow: var(--box-shadow);
+    margin: 20px 0;
+    // box-shadow: var(--box-shadow);
   }
 
   &__welcome {

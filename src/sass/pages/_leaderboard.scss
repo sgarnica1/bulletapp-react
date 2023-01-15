@@ -107,8 +107,9 @@
       text-align: center;
       height: 60px;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
+      margin-left: 10px;
     }
 
     &__filters,
@@ -158,7 +159,7 @@
     }
 
     &__score {
-      background: var(--bg-input);
+      background: var(--bg-component);
 
       &-position {
         color: $color-brand;
@@ -170,8 +171,8 @@
       }
     }
 
-    &__score:nth-child(2n) {
-      background: var(--bg-component);
-    }
+    // &__score:nth-child(2n) {
+    //   background: var(--bg-loading-secondary);
+    // }
   }
 }

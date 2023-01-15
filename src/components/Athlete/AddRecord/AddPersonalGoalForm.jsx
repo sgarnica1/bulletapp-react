@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMovements } from "../../../hooks/useMovements";
 
 // COMPONENTS
-import { BackButton } from "../../Public/BackButton";
+
 import { Button } from "../../Public/Button";
 import { ErrorInput } from "../../Public/ErrorInput";
 import { Input } from "../../Public/Input";
@@ -14,7 +14,7 @@ import { SubHeader } from "./SubHeader";
 import { info } from "../../../utils/info";
 import { utils } from "../../../utils/utils";
 
-const AddPersonalGoalForm = ({ previousRoute }) => {
+const AddPersonalGoalForm = () => {
   const { movements, actions: actionsMov, loading, error } = useMovements();
 
   // STATES
@@ -43,7 +43,6 @@ const AddPersonalGoalForm = ({ previousRoute }) => {
   // PERSONAL GOAL (AÑADIR NUEVA META)
   return (
     <div className="AddRecordForm">
-      <BackButton link={previousRoute} mb={true} />
       <SubHeader
         title={"¿Qué quieres proponerte lograr?"}
         description={

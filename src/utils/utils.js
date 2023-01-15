@@ -1,6 +1,19 @@
 import { info } from "./info";
 
 const utils = {
+  formatDate: (date) => {
+    const newDate = new Date(date);
+
+    let day = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    const year = newDate.getFullYear();
+
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
+
+    return `${day}/${month}/${year}`;
+  },
+
   formatDateLong: (currentDate) => {
     const weekDay = info.data.days[currentDate.getDay()];
     const monthDay = currentDate.getDate();
@@ -9,52 +22,7 @@ const utils = {
 
     return `${weekDay}, ${monthDay} ${month} ${year}`;
   },
-  getCurrentDate: () => {
-    const currentDate = new Date();
 
-    const weekDay = info.data.days[currentDate.getDay()];
-    const monthDay = currentDate.getDate();
-    const month = info.data.months[currentDate.getMonth()];
-    const year = currentDate.getFullYear();
-
-    return `${weekDay}, ${monthDay} ${month} ${year}`;
-  },
-
-  getShortDate: () => {
-    const currentDate = new Date();
-
-    const monthDay = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-
-    return `${monthDay}/${month}/${year}`;
-  },
-
-  getMonthYear: () => {
-    const currentDate = new Date();
-
-    const month = info.data.months[currentDate.getMonth()];
-    const year = currentDate.getFullYear();
-
-    return `${month} ${year}`;
-  },
-  searchDataFromInput: (data, searchedValue) => {
-    let filteredData = [];
-
-    if (!searchedValue.length > 0) {
-      filteredData = data;
-    } else {
-      filteredData = data.filter((element) => {
-        const dataText = `${element.username.toLowerCase()}`;
-        const searchedValueText = searchedValue.toLowerCase().trim();
-
-        return dataText.includes(searchedValueText);
-      });
-    }
-    return filteredData;
-  },
-
-  // FORMAT HOUR
   formatHour: (hour) => {
     let time = {};
     let timeValues = hour.split(":");
@@ -77,21 +45,6 @@ const utils = {
     }
   },
 
-  // FORMAT DATE
-  formatDate: (date) => {
-    const newDate = new Date(date);
-
-    let day = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    const year = newDate.getFullYear();
-
-    if (month < 10) month = `0${month}`;
-    if (day < 10) day = `0${day}`;
-
-    return `${day}/${month}/${year}`;
-  },
-
-  // FORMAT CURRENCY
   formatCurrency: (number) => {
     number = parseFloat(number);
 
@@ -99,7 +52,6 @@ const utils = {
     return `$${formattedCurrency.format(number)}`;
   },
 
-  // FORMAT INPUT TIMER FOR SECONDS AND MINUTES
   formatTimerInput: (value, prev) => {
     // IF VALUE IS 0, AND PREV VALUE WAS > 0, SET VALUE TO 00
     if (value == 0 && prev == 0) value = "00";
@@ -131,6 +83,91 @@ const utils = {
     }
 
     return value;
+  },
+
+  getCurrentDate: () => {
+    const currentDate = new Date();
+
+    const weekDay = info.data.days[currentDate.getDay()];
+    const monthDay = currentDate.getDate();
+    const month = info.data.months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return `${weekDay}, ${monthDay} ${month} ${year}`;
+  },
+
+  getShortDate: () => {
+    const currentDate = new Date();
+
+    const monthDay = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+
+    return `${monthDay}/${month}/${year}`;
+  },
+
+  getMonthYear: () => {
+    const currentDate = new Date();
+
+    const month = info.data.months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return `${month} ${year}`;
+  },
+
+  parseDate: (date) => {
+    const newDate = new Date(date);
+    const nextDay = new Date(newDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setHours(0, 0, 0, 0);
+    return nextDay;
+  },
+
+  searchDataFromInput: (data, searchedValue, attribute) => {
+    if (searchedValue === "") return data;
+    let filteredData = [];
+
+    if (!searchedValue.length > 0) {
+      filteredData = data;
+    } else {
+      filteredData = data.filter((element) => {
+        const dataText = `${element[attribute].toLowerCase()}`;
+        const searchedValueText = searchedValue.toLowerCase().trim();
+
+        return dataText.includes(searchedValueText);
+      });
+    }
+    return filteredData;
+  },
+
+  secondsToTime: (seconds) => {
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+
+    minutes = minutes % 60;
+    seconds = seconds % 60;
+
+    if (hours < 10) hours = `0${hours}`;
+    if (minutes < 10) minutes = `0${minutes}`;
+    if (seconds < 10) seconds = `0${seconds}`;
+
+    return `${hours}:${minutes}:${seconds}`;
+  },
+
+  sortPrsByMostRecent: (data) => {
+    return data.sort(
+      (a, b) => b.scores[0].date.seconds - a.scores[0].date.seconds
+    );
+  },
+
+  sortPrsByOldest: (data) => {
+    return data.sort(
+      (a, b) => a.scores[0].date.seconds - b.scores[0].date.seconds
+    );
+  },
+
+  sortPrsByAlphabeticalOrder: (data) => {
+    return data.sort((a, b) => a.movement.localeCompare(b.movement));
   },
 
   timeToSeconds: (time) => {

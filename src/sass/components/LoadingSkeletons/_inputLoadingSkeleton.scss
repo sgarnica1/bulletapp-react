@@ -9,10 +9,10 @@
   border-radius: $border-radius;
   padding: 0 20px;
 
-&.search-bar{
-  min-height: 50px;
-  margin-bottom: 25px;
-}
+  &.search-bar {
+    min-height: 40px;
+    margin-bottom: 0;
+  }
 
   &__content {
     display: grid;
@@ -29,8 +29,8 @@
   }
 
   &__icon {
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
   }
 
   @extend %loading-skeleton-background;

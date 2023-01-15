@@ -5,7 +5,7 @@ import {
   addDoc,
   Timestamp,
 } from "firebase/firestore/lite";
-import { db } from "../firebase/index";
+import { db, auth } from "../firebase/index";
 import { info } from "../utils/info";
 
 const getPersonalRecordsApi = async (idUser, callback) => {
@@ -48,13 +48,18 @@ const postPersonalRecordApi = async (idUser, data, callback) => {
         // SCORE TYPE
         [info.firebase.docKeys.personalRecords.score_type]:
           data[info.firebase.docKeys.personalRecords.score_type],
-        // ID MOVEMENT
-        scores: {
-          [info.firebase.docKeys.personalRecords.scores.date]:
-            Timestamp.fromDate(new Date()),
-          [info.firebase.docKeys.personalRecords.scores.value]:
-            data[info.firebase.docKeys.personalRecords.scores.value],
-        },
+        // SCORE
+        scores: [
+          {
+            [info.firebase.docKeys.personalRecords.scores.date]:
+              Timestamp.fromDate(
+                data[info.firebase.docKeys.personalRecords.scores.date]
+              ),
+            [info.firebase.docKeys.personalRecords.scores.value]: parseFloat(
+              data[info.firebase.docKeys.personalRecords.scores.value]
+            ),
+          },
+        ],
         // TIMESTAMPS
         timestamps: {
           [info.firebase.docKeys.wodScores.timestamps.createdAt]:
@@ -64,9 +69,10 @@ const postPersonalRecordApi = async (idUser, data, callback) => {
         },
       }
     );
-    if (callback) callback(res);
+    if (callback) callback();
     return res.id;
   } catch (err) {
+    if (callback) callback(err);
     console.log(err);
     throw err;
   }

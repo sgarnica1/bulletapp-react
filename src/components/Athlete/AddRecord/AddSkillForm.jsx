@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useMovements } from "../../../hooks/useMovements";
 
 // COMPONENTS
-import { BackButton } from "../../Public/BackButton";
 import { Button } from "../../Public/Button";
 import { ErrorInput } from "../../Public/ErrorInput";
 import { MovementsSelectInput } from "./MovementsSelectInput";
@@ -11,7 +10,7 @@ import { SubHeader } from "./SubHeader";
 // UTILS
 import { info } from "../../../utils/info";
 
-const AddSkillForm = ({ previousRoute }) => {
+const AddSkillForm = () => {
   const { movements, actions: actionsMov, loading, error } = useMovements();
 
   // STATES
@@ -28,7 +27,6 @@ const AddSkillForm = ({ previousRoute }) => {
   // PERSONAL RECORD (AÑADIR NUEVO PR) AND UNLOCK SKILL (AÑADIR NUEVA HABILIDAD)
   return (
     <div className="AddRecordForm">
-      <BackButton link={previousRoute} mb={true} />
       <SubHeader
         title={"Cuéntanos, ¿qué lograste hoy?"}
         description={"Festejamos contigo este nuevo logro"}

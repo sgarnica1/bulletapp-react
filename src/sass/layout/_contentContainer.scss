@@ -1,18 +1,21 @@
 .ContentContainer {
-  margin-top: 100px;
+  margin-top: 80px;
   padding: toRem(20) 0;
-  padding-bottom: toRem(20);
+  padding-bottom: toRem(50);
+  max-width: $max-width;
 
   &.padding {
     padding: toRem(20) toRem(20);
+    padding-bottom: toRem(50);
   }
 
   @include mq(md) {
     padding: toRem(15) 0;
-    padding-bottom: toRem(20);
+    padding-bottom: toRem(50);
 
     &.padding {
       padding: toRem(15) toRem(100);
+      padding-bottom: toRem(50);
     }
   }
 }

@@ -1,0 +1,25 @@
+.SortByFilter {
+  width: 100%;
+  max-width: 100px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: var(--bg-input);
+  &.loading {
+    background: var(--bg-loading-secondary);
+  }
+
+  &__select {
+    width: 100%;
+    height: 40px;
+    max-width: 100px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-text);
+    padding: 0 5px;
+  }
+
+  &__option {
+    color: $color-dark;
+  }
+}

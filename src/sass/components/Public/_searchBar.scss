@@ -1,28 +1,29 @@
 .SearchBar {
-  margin-bottom: $widget-margin-bottom;
-  height: 50px;
+  margin-bottom: $input-margin-bottom;
+  height: 40px;
+  width: 100%;
 
   &__input-container {
     height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: toRem(15) toRem(20);
-    border-radius: $border-radius;
-    background: var(--bg-loading-secondary);
+    padding: 0 toRem(15);
+    border-radius: 30px;
+    background: var(--bg-input);
     box-shadow: var(--box-shadow);
   }
 
   &__icon {
-    height: toRem(20);
-    width: toRem(20);
-    margin-right: toRem(15);
+    height: toRem(14);
+    width: toRem(14);
+    margin-right: toRem(10);
   }
 
   &__input {
     width: 100%;
     color: var(--color-text);
-    font-size: toRem(17);
+    font-size: toRem(14);
     background: none;
     border: none;
     outline: none;
@@ -30,7 +31,7 @@
 
   &__input::placeholder {
     color: var(--color-text);
-    opacity: 0.7;
-    font-size: toRem(17);
+    opacity: 0.9;
+    font-size: toRem(14);
   }
 }

@@ -23,6 +23,7 @@ const Input = ({
 
   const invalidFielMessage = "Campo incorrecto";
   const requiredFieldMessage = "Campo requerido";
+  const invalidDateMessage = "Fecha inválida";
 
   function onChangeHandler(event, value, setFunction) {
     setSubmitError(false);
@@ -41,6 +42,7 @@ const Input = ({
     if (res) return setValidData(true);
     if (!res) {
       setValidData(false);
+      if (type === "date") return setErrorMessage(invalidDateMessage);
       setErrorMessage(invalidFielMessage);
     }
   }
@@ -124,7 +126,17 @@ const Input = ({
           disabled={disabled}
           onChange={(event) => onChangeHandler(event, value, setValue)}
         />
-        <p className={`Input__units ${errorMessage && "error"}`}>{units}</p>
+        {type !== "date" && (
+          <p className={`Input__units ${errorMessage && "error"}`}>{units}</p>
+        )}
+        {type === "date" && (
+          <p
+            className={`Input__units ${errorMessage && "error"}`}
+            onClick={() => setValue(new Date().toISOString().slice(0, 10))}
+          >
+            HOY
+          </p>
+        )}
       </div>
       <div className={`Input__error ${errorMessage && "show"}`}>
         <img className="Input__error-icon" src={ErrorIcon} alt="Error icon" />
