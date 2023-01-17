@@ -24,6 +24,11 @@
     color: var(--color-text);
     font-size: toRem(20);
     padding-right: 10px;
+
+    &.readonly  {
+      cursor: not-allowed;
+      opacity: 0.5
+    }
   }
 
   &__units {

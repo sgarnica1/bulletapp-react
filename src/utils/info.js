@@ -366,7 +366,7 @@ const info = {
   requests: {
     refreshToken: "https://securetoken.googleapis.com/v1/token?key=",
   },
-  routes: {
+  routes2: {
     addAthlete: "/atletas/nuevo",
     addMovement: "/movimientos/nuevo",
     addPersonalGoal: "/metas/nuevo",
@@ -390,16 +390,183 @@ const info = {
     personalGoals: "/metas",
     plans: "/planes",
     prs: "/prs",
+    prsHistory: "/prs/historial",
     profile: "/perfil",
     programming: "/programacion",
     records: "/records",
-    recordHistory: "/records/historial",
     serverError: "server-error",
     settings: "/ajustes",
     skills: "/skills",
     singleAthlete: "/atletas",
     videos: "/videos",
     wods: "/wods",
+  },
+  routes: {
+    home: "/",
+    notFound: "/recurso-no-encontrado",
+    leaderboard: {
+      path: "/leaderboard",
+      value: "leaderboard",
+    },
+    prs: {
+      path: "/prs",
+      value: "prs",
+      nested: {
+        history: {
+          absolutePath: "/prs/:id",
+            absolutePathNoParms: "/prs",
+          path: "/:id",
+          value: ":id",
+        },
+        add: {
+          absolutePath: "/prs/nuevo",
+          path: "/nuevo",
+          value: "nuevo",
+        },
+        update: {
+          absolutePath: "/prs/:id/actualizar",
+          path: "/actualizar",
+          value: "/actualizar",
+        }
+      },
+    },
+    athlete: {
+      path: "/atletas",
+      value: "atletas",
+      nested: {
+        add: {
+          absolutePath: "/atletas/nuevo",
+          path: "/nuevo",
+          value: "nuevo",
+        },
+        single: {
+          absolutePath: "/atletas/:id",
+          path: "/:id",
+          value: ":id",
+        },
+      },
+    },
+    movements: {
+      path: "/movimientos",
+      value: "movimientos",
+      nested: {
+        add: {
+          absolutePath: "/movimientos/nuevo",
+          path: "/nuevo",
+          value: "nuevo",
+        },
+        single: {
+          absolutePath: "/movimientos/:id",
+          path: "/:id",
+          value: ":id",
+        },
+      },
+    },
+    skills: {
+      path: "/skills",
+      value: "skills",
+      nested: {
+        add: {
+          absolutePath: "/skills/nuevo",
+          path: "/nuevo",
+          value: "nuevo",
+        },
+      },
+    },
+    personalGoals: {
+      path: "/metas",
+      value: "metas",
+      nested: {
+        add: {
+          absolutePath: "/metas/nuevo",
+          path: "/nuevo",
+          value: "nuevo",
+        },
+      },
+    },
+    wods: {
+      path: "/wods",
+      value: "wods",
+      nested: {
+        add: {
+          absolutePath: "/wods/nuevo",
+          path: "/nuevo",
+          value: "nuevo",
+        },
+      },
+    },
+    programming: {
+      path: "/programacion",
+      value: "programacion",
+    },
+    videos: {
+      path: "/videos",
+      value: "videos",
+    },
+    settings: {
+      path: "/ajustes",
+      value: "ajustes",
+      nested: {
+        changePassword: {
+          absolutePath: "/ajustes/contrasena/cambiar",
+          path: "/contrasena/cambiar",
+          value: "contrasena/cambiar",
+        },
+      },
+    },
+    dashboard: {
+      path: "/escritorio",
+      value: "escritorio",
+    },
+    locations: {
+      path: "/sucursales",
+      value: "sucursales",
+      nested: {
+        juriquilla: {
+          absolutePath: "/sucursales/juriquilla",
+          path: "/juriquilla",
+          value: "juriquilla",
+        },
+        zibata: {
+          absolutePath: "/sucursales/zibata",
+          path: "/zibata",
+          value: "zibata",
+        },
+        grandreserva: {
+          absolutePath: "/sucursales/grandreserva",
+          path: "/grandreserva",
+          value: "grandreserva",
+        },
+      },
+    },
+    login: {
+      path: "/login",
+      value: "login",
+    },
+    serverError: {
+      path: "/server-error",
+      value: "server-error",
+    },
+    payments: {
+      path: "/pagos",
+      value: "pagos",
+    },
+    plans: {
+      path: "/planes",
+      value: "planes",
+    },
+    groups: {
+      path: "/grupos",
+      value: "grupos",
+    },
+    profile: {
+      path: "/perfil",
+      value: "perfil",
+    },
+    passwordRecover: {
+      path: "/contrasena/recuperar",
+      value: "contrasena/recuperar",
+    },
   },
   states: {
     theme: {

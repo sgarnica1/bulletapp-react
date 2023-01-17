@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { auth } from "../../firebase/index";
+import { usePRs } from "../../hooks/usePRs";
 
 // COMPONENTS
 import { AddButton } from "../../components/Public/AddButton";
@@ -13,9 +13,11 @@ import { InfoCard } from "../../components/Public/InfoCard";
 import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
 import { PRCard } from "../../components/Athlete/PRCard";
 import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
+import { WidgetLoadingSkeleton } from "../../components/Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
 // UTILS
 import { info } from "../../utils/info";
+import { utils } from "../../utils/utils";
 
 // IMG
 import AthleteImg from "../../assets/img/athlete.jpg";
@@ -23,19 +25,34 @@ import Athlete2Img from "../../assets/img/athlete_2.jpg";
 import HoodiesImg from "../../assets/img/sudaderas.jpg";
 import UserIcon from "../../assets/icon/user.svg";
 
-// TODO - Replace user name and user img with real one
-// TODO - Add loading state
-
 function Home() {
   const { user, loading, error } = useAuth();
+  const { prs, actions, loading: loadingPR, error: errorPR } = usePRs();
+
+  const [latestPR, setLatestPR] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (error) navigate("/server-error");
-    // console.log(auth)
+    if (error) navigate(info.routes.serverError.path);
+    if (!prs) actions.getPRs(user.uid || user.user_id);
+
+    if (prs && !latestPR) {
+      prs.forEach((pr) =>
+        pr.scores.sort((a, b) => b.date.seconds - a.date.seconds)
+      );
+
+      const sorted = prs.sort(
+        (a, b) => b.scores[0].date.seconds - a.scores[0].date.seconds
+      );
+      console.log(sorted[0]);
+      setLatestPR(sorted[0]);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, [error, prs]);
+
+  // console.log(latesPR);
 
   return (
     <div className="Home">
@@ -59,18 +76,24 @@ function Home() {
         <WodScoreWidget />
 
         {/* LEADERBOARD */}
-        <AddButton link={info.routes.leaderboard} title="Leaderboard" />
+        <AddButton link={info.routes.leaderboard.path} title="Leaderboard" />
 
         {/* LATEST PR */}
         <h2 className="subtitle">Marcas personales</h2>
-        <PRCard
-          link={info.routes.recordHistory + `/${1}`}
-          title="Back Squat"
-          value={205}
-          units="lbs"
-          date={"18 Jun 2022"}
-          latest={true}
-        />
+        {loadingPR && <WidgetLoadingSkeleton />}
+        {!loadingPR && latestPR && (
+          <PRCard
+            link={
+              info.routes.prs.nested.history.absolutePathNoParms +
+              `/${utils.formatTitleToUrl(latestPR.movement)}-${latestPR.id}`
+            }
+            title={latestPR.movement}
+            value={latestPR.scores[0].value}
+            units={latestPR.units}
+            seconds={latestPR.scores[0].date.seconds}
+            // latest={true}
+          />
+        )}
 
         {/* ADD NEW PR */}
         <AddButton
@@ -105,7 +128,7 @@ function Home() {
         {/* PROFILE */}
         {!error && !loading && (
           <InfoCard
-            link={info.routes.profile}
+            link={info.routes.profile.path}
             img={HoodiesImg}
             alt="Athletes wearing Bullet CrossFit hoodies"
             title={user.data[info.firebase.docKeys.users.firstName]}
@@ -114,7 +137,7 @@ function Home() {
         )}
         {/* SETTINGS */}
         <InfoCard
-          link={info.routes.settings}
+          link={info.routes.settings.path}
           icon={UserIcon}
           alt="Setting icon"
           title={"Configuración"}

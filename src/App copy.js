@@ -75,98 +75,59 @@ function App() {
           <Routes>
             {/* ---------- PUBLIC ---------- */}
             <Route element={<LoggedOutRoute />}>
-              <Route path={info.routes.login.path} element={<Login />} />
+              <Route path={info.routes.login} element={<Login />} />
               <Route
-                path={info.routes.passwordRecover.path}
+                path={info.routes.passwordRecover}
                 element={<PasswordRecover />}
               />
             </Route>
 
             {/* ---------- USER ---------- */}
             <Route element={<PrivateRoute />}>
-              <Route path={info.routes.home} element={<Home />} />
-
               <Route
-                path={info.routes.leaderboard.path}
-                element={<Leaderboard />}
+                path={info.routes.addPersonalGoal}
+                element={<AddPersonalGoal />}
               />
-
-              {/* /goals */}
-              <Route path={info.routes.personalGoals.path}>
-                <Route index={true} element={<PersonalGoals />} />
-                <Route
-                  path={info.routes.personalGoals.nested.add.value}
-                  element={<AddPersonalGoal />}
-                />
-              </Route>
-
-              {/* /prs */}
-              <Route path={info.routes.prs.path + "/*"}>
-                <Route index={true} element={<PersonalRecords />} />
-                <Route
-                  path={info.routes.prs.nested.add.value}
-                  element={<AddPersonalRecord />}
-                />
-                <Route
-                  path={info.routes.prs.nested.history.value + "/*"}
-                  element={<PersonalRecordHistory />}
-                />
-              </Route>
-
-              {/* /skills */}
-              <Route path={info.routes.skills.path}>
-                <Route index={true} element={<Skills />} />
-                <Route
-                  path={info.routes.skills.nested.add.value}
-                  element={<AddSkill />}
-                />
-              </Route>
-
-              {/* /ajustes */}
-              <Route path={info.routes.settings.path}>
-                <Route index={true} element={<Settings />} />
-                <Route
-                  path={info.routes.settings.nested.changePassword.value}
-                  element={<ChangePassword />}
-                />
-              </Route>
+              <Route
+                path={info.routes.addPersonalRecord}
+                element={<AddPersonalRecord />}
+              />
+              <Route path={info.routes.addSkill} element={<AddSkill />} />
+              <Route
+                path={info.routes.changePassword}
+                element={<ChangePassword />}
+              />
+              <Route path={info.routes.home} element={<Home />} />
+              <Route path={info.routes.leaderboard} element={<Leaderboard />} />
+              <Route path={info.routes.records} element={<Records />} />
+              <Route
+                path={info.routes.prsHistory + "/:id"}
+                element={<PersonalRecordHistory />}
+              />
+              <Route
+                path={info.routes.personalGoals}
+                element={<PersonalGoals />}
+              />
+              <Route path={info.routes.prs} element={<PersonalRecords />} />
+              <Route path={info.routes.settings} element={<Settings />} />
+              <Route path={info.routes.skills} element={<Skills />} />
             </Route>
 
             {/* ---------- ADMIN ---------- */}
             <Route element={<AdminRoute />}>
+              <Route path={info.routes.addAthlete} element={<AddAthlete />} />
+              <Route path={info.routes.addMovement} element={<AddMovement />} />
+              <Route path={info.routes.addWod} element={<AddWod />} />
+              <Route path={info.routes.athletes} element={<Athletes />} />
+              <Route path={info.routes.programming} element={<Programming />} />
               <Route
-                path={info.routes.movements.nested.add.path}
-                element={<AddMovement />}
-              />
-              <Route
-                path={info.routes.wods.nested.add.path}
-                element={<AddWod />}
-              />
-
-              {/* /atletas */}
-              <Route path={info.routes.athlete.path}>
-                <Route index={true} element={<Athletes />} />
-                <Route
-                  path={info.routes.athlete.nested.add.value}
-                  element={<AddAthlete />}
-                />
-                <Route
-                  path={info.routes.athlete.nested.single.value}
-                  element={<SingleAthlete />}
-                />
-              </Route>
-
-              <Route
-                path={info.routes.programming.path}
-                element={<Programming />}
+                path={info.routes.singleAthlete + "/:id"}
+                element={<SingleAthlete />}
               />
             </Route>
 
             {/* ---------- OTHER ---------- */}
-            <Route
-              path={info.routes.serverError.value}
-              element={<FirebaseError />}
-            />
+            <Route path={info.routes.serverError} element={<FirebaseError />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>

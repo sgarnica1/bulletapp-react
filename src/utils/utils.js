@@ -1,17 +1,32 @@
 import { info } from "./info";
 
 const utils = {
-  formatDate: (date) => {
-    const newDate = new Date(date);
+  formatDate: (currentDate) => {
+    const newDate = new Date(currentDate);
 
-    let day = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    const year = newDate.getFullYear();
+    // let day = newDate.getDate();
+    // let month = newDate.getMonth() + 1;
+    // const year = newDate.getFullYear();
+
+    // if (month < 10) month = `0${month}`;
+    // if (day < 10) day = `0${day}`;
+
+    // return `${day}/${month}/${year}`;
+    const monthDay = currentDate.getDate();
+    const month = info.data.months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return `${monthDay} ${month} ${year}`;
+  },
+  formatISODate: (currentDate) => {
+    let day = currentDate.getDate();
+    let month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
 
     if (month < 10) month = `0${month}`;
     if (day < 10) day = `0${day}`;
 
-    return `${day}/${month}/${year}`;
+    return `${year}-${month}-${day}`;
   },
 
   formatDateLong: (currentDate) => {
@@ -85,6 +100,48 @@ const utils = {
     return value;
   },
 
+  formatTitleToUrl: (title) => {
+    let url = title.toLowerCase();
+    url = url.replace(/ /g, "-");
+    url = url.replace(/á/g, "a");
+    url = url.replace(/é/g, "e");
+    url = url.replace(/í/g, "i");
+    url = url.replace(/ó/g, "o");
+    url = url.replace(/ú/g, "u");
+    url = url.replace(/ñ/g, "n");
+    url = url.replace(/,/g, "");
+    url = url.replace(/:/g, "");
+    url = url.replace(/;/g, "");
+    url = url.replace(/"/g, "");
+    url = url.replace(/'/g, "");
+    url = url.replace(/\./g, "");
+    url = url.replace(/\?/g, "");
+    url = url.replace(/!/g, "");
+    url = url.replace(/¡/g, "");
+    url = url.replace(/¿/g, "");
+    url = url.replace(/-/g, "-");
+    url = url.replace(/\(/g, "");
+    url = url.replace(/\)/g, "");
+    url = url.replace(/%/g, "-");
+    url = url.replace(/&/g, "-");
+    url = url.replace(/=/g, "-");
+    url = url.replace(/_/g, "-");
+    url = url.replace(/#/g, "-");
+    url = url.replace(/\$/g, "-");
+    url = url.replace(/@/g, "-");
+    url = url.replace(/\+/g, "-");
+    url = url.replace(/\*/g, "-");
+    url = url.replace(/~/g, "-");
+    url = url.replace(/`/g, "-");
+    return url;
+  },
+
+  getIdFromTitleUrl: (titleUrl) => {
+    let id = titleUrl.split("-");
+    id = id[id.length - 1];
+    return id;
+  },
+
   getCurrentDate: () => {
     const currentDate = new Date();
 
@@ -123,6 +180,20 @@ const utils = {
     return nextDay;
   },
 
+  parseDateWithTime: (date) => {
+    const newDate = new Date(date);
+    const nextDay = new Date(newDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    const today = new Date();
+    const hours = today.getHours();
+    const minutes = today.getMinutes();
+    const seconds = today.getSeconds();
+
+    nextDay.setHours(hours, minutes, seconds, 0);
+    return nextDay;
+  },
+
   searchDataFromInput: (data, searchedValue, attribute) => {
     if (searchedValue === "") return data;
     let filteredData = [];
@@ -152,6 +223,15 @@ const utils = {
     if (seconds < 10) seconds = `0${seconds}`;
 
     return `${hours}:${minutes}:${seconds}`;
+  },
+  secondsToDate: (seconds) => {
+    const date = new Date(seconds * 1000);
+
+    const monthDay = date.getDate();
+    const month = info.data.months[date.getMonth()].slice(0, 3).toUpperCase();
+    const year = date.getFullYear();
+
+    return `${monthDay} ${month} ${year}`;
   },
 
   sortPrsByMostRecent: (data) => {

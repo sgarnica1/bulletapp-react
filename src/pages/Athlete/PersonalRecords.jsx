@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { usePRs } from "../../hooks/usePRs";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -106,10 +106,11 @@ const PersonalRecords = () => {
     <div className="PersonalRecords">
       <ContentContainer>
         <BackButton link={info.routes.home} mb={true} />
+
         <header className="Records__header">
           <h1 className="Records__header__title">Tus records personales</h1>
           <Link
-            to={info.routes.addPersonalRecord}
+            to={info.routes.prs.nested.add.absolutePath}
             className="Records__header__add-btn"
           >
             <img src={AddIcon} alt="Plus sign" />
@@ -172,12 +173,16 @@ const PersonalRecords = () => {
                   units={pr.units}
                   seconds={pr.scores[0].date.seconds}
                   scoreType={pr.score_type}
-                  link={info.routes.recordHistory + `/${index + 1}`}
+                  link={
+                    info.routes.prs.nested.history.absolutePathNoParms +
+                    `/${utils.formatTitleToUrl(pr.movement)}-${pr.id}`
+                  }
                 />
               ))}
           </div>
         </section>
       </ContentContainer>
+      <Outlet />
     </div>
   );
 };

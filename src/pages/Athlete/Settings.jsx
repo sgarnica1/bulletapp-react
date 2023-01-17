@@ -24,7 +24,7 @@ function Settings() {
         <h1 className="title margin">Ajustes</h1>
         {!error && !loading && (
           <InfoCard
-            // link={info.routes.profile}
+            // link={info.routes.profile.path}
             img={HoodiesImg}
             alt="Athletes wearing Bullet CrossFit hoodies"
             title={`${user.data[info.firebase.docKeys.users.firstName]} ${
@@ -34,7 +34,7 @@ function Settings() {
           />
         )}
         <InfoCard
-          link={info.routes.changePassword}
+          link={info.routes.settings.nested.changePassword.absolutePath}
           icon={LockIcon}
           alt="Lock icon"
           title={"Cambiar contraseña"}

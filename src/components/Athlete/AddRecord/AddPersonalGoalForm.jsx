@@ -203,7 +203,7 @@ const AddPersonalGoalForm = () => {
 
     console.log("submitting...", newGoal);
     // SET ERROR AND SUCCESS MESSAGES
-    // actionsPRs.addPR(user.user_id || user.uid, newPR);
+    // actionsPRs.postPR(user.user_id || user.uid, newPR);
 
     // TODO - CHECK IF PR ALREADY EXISTS
     // TODO - ALLOW PR UPDATE

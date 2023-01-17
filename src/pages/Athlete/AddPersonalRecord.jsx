@@ -10,7 +10,7 @@ const AddPersonalRecord = () => {
   return (
     <div className="AddPersonalRecord">
       <ContentContainer>
-        <BackButton link={info.routes.prs} mb={true} />
+        <BackButton link={info.routes.prs.path} mb={true} />
         <AddPersonalRecordForm />
       </ContentContainer>
     </div>

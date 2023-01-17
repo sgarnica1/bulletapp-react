@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { utils } from "../../utils/utils";
 import ErrorIcon from "../../assets/icon/error-alert.svg";
 
 const Input = ({
@@ -6,6 +7,8 @@ const Input = ({
   setValidData,
   disabled,
   placeholder,
+  readOnly,
+  readValue,
   name,
   max,
   min,
@@ -39,12 +42,15 @@ const Input = ({
   function validateData(value, extraVal) {
     if (!value) return setErrorMessage(requiredFieldMessage);
     const res = validationHandler(value, extraVal);
-    if (res) return setValidData(true);
-    if (!res) {
-      setValidData(false);
-      if (type === "date") return setErrorMessage(invalidDateMessage);
-      setErrorMessage(invalidFielMessage);
+
+    if (res) {
+      setErrorMessage("");
+      return setValidData(true);
     }
+
+    setValidData(false);
+    if (type === "date") return setErrorMessage(invalidDateMessage);
+    return setErrorMessage(invalidFielMessage);
   }
 
   useEffect(() => {
@@ -56,8 +62,28 @@ const Input = ({
       }
     }
     if (resetError) setErrorMessage("");
-    if (value) validateData(value);
+    if (value) {
+      if (type === "time") {
+        validateData(minutes, seconds);
+      } else {
+        validateData(value);
+      }
+    }
   }, [submitError, resetError, value]);
+
+  if (readOnly)
+    return (
+      <div className="Input">
+        <div className="Input__container">
+          <input
+            type={type}
+            readOnly
+            className="Input__input readonly"
+            value={readValue ? readValue : ""}
+          />
+        </div>
+      </div>
+    );
 
   if (type === "time")
     return (
@@ -69,6 +95,7 @@ const Input = ({
               setValidData(false);
               return setErrorMessage(requiredFieldMessage);
             }
+            validateData(minutes, seconds);
             setErrorMessage("");
           }}
         >
@@ -80,6 +107,7 @@ const Input = ({
             name="minutes"
             max={59}
             min={0}
+            readOnly={readOnly}
             disabled={disabled}
             onChange={(event) => onChangeHandler(event, minutes, setMinutes)}
           />
@@ -92,6 +120,7 @@ const Input = ({
             name="seconds"
             max={59}
             min={0}
+            readOnly={readOnly}
             disabled={disabled}
             onChange={(event) => onChangeHandler(event, seconds, setSeconds)}
           />
@@ -116,6 +145,7 @@ const Input = ({
         }
       >
         <input
+          readOnly={readOnly}
           type={type}
           className="Input__input"
           placeholder={placeholder}
@@ -132,7 +162,11 @@ const Input = ({
         {type === "date" && (
           <p
             className={`Input__units ${errorMessage && "error"}`}
-            onClick={() => setValue(new Date().toISOString().slice(0, 10))}
+            onClick={() => {
+              console.log("Hoy");
+              setValue(utils.formatISODate(new Date()));
+              validateData(utils.formatISODate(new Date()));
+            }}
           >
             HOY
           </p>

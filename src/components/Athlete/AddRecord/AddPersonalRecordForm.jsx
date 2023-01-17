@@ -7,7 +7,6 @@ import { usePRs } from "../../../hooks/usePRs";
 
 // COMPONENTS
 import { Button } from "../../Public/Button";
-import { ErrorInput } from "../../Public/ErrorInput";
 import { Input } from "../../Public/Input";
 import { MovementsSelectInput } from "./MovementsSelectInput";
 import { ScoreOptionsRadioButton } from "./ScoreOptionsRadioButton";
@@ -20,15 +19,14 @@ import { utils } from "../../../utils/utils";
 const AddPersonalRecordForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { successMessage, setSuccessMessage, errorMessage, setErrorMessage } =
-    useDashboard();
-  const { movements, actions: actionsMov, loading, error } = useMovements();
+  const { setSuccessMessage, setErrorMessage } = useDashboard();
   const {
-    prs,
-    actions: actionsPRs,
-    loading: loadingPRs,
-    error: errorPRs,
-  } = usePRs();
+    movements,
+    actions: actionsMov,
+    loading: loadingMov,
+    error,
+  } = useMovements();
+  const { prs, actions: actionsPRs, loading: loadingPRs } = usePRs();
 
   // STATES
   const [currentRecordCategory, setCurrentRecordCategory] = useState("");
@@ -39,7 +37,7 @@ const AddPersonalRecordForm = () => {
   const [submitError, setSubmitError] = useState(false);
 
   const [existingPRList, setExistingPRList] = useState([]);
-  const [selectedMovement, setSelectedMovement] = useState(null);
+  const [selectedMovementId, setSelectedMovementId] = useState(null);
   const [prExists, setPrExists] = useState(false);
 
   useEffect(() => {
@@ -62,13 +60,13 @@ const AddPersonalRecordForm = () => {
       setExistingPRList(names);
     }
 
-    if (existingPRList.length && selectedMovement) {
-      if (existingPRList.includes(selectedMovement)) setPrExists(true);
+    if (existingPRList.length && selectedMovementId) {
+      if (existingPRList.includes(selectedMovementId)) setPrExists(true);
       else setPrExists(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentRecordCategory, prs, selectedMovement]);
+  }, [currentRecordCategory, prs, selectedMovementId]);
 
   // PERSONAL RECORD (AÑADIR NUEVO PR) AND UNLOCK SKILL (AÑADIR NUEVA HABILIDAD)
   return (
@@ -98,71 +96,84 @@ const AddPersonalRecordForm = () => {
           scoreType={scoreType}
           submitError={submitError}
           setSubmitError={setSubmitError}
-          setMovement={setSelectedMovement}
+          setMovement={setSelectedMovementId}
         />
 
         {/* TIME SCORE INPUT */}
-        {scoreType === info.firebase.values.scoreTypes.time.name && (
-          <Input
-            type="time"
-            placeholder="00"
-            setValidData={setValidTimeScore}
-            validationHandler={(min, sec) => {
-              if (min == 0 && sec == 0) return false;
-              if (min > 59 || min < 0 || sec > 59 || sec < 0) return false;
-              return true;
-            }}
-            onChangeCallback={utils.formatTimerInput}
-            submitError={submitError}
-            setSubmitError={setSubmitError}
-          />
-        )}
+        {!prExists &&
+          scoreType === info.firebase.values.scoreTypes.time.name && (
+            <Input
+              type="time"
+              placeholder="00"
+              setValidData={setValidTimeScore}
+              validationHandler={(min, sec) => {
+                if (min == 0 && sec == 0) return false;
+                if (min > 59 || min < 0 || sec > 59 || sec < 0) return false;
+                return true;
+              }}
+              onChangeCallback={utils.formatTimerInput}
+              submitError={submitError}
+              setSubmitError={setSubmitError}
+            />
+          )}
         {/* REPS / WEIGHT SCORE INPUT*/}
-        {(scoreType === info.firebase.values.scoreTypes.reps.name ||
-          scoreType === info.firebase.values.scoreTypes.weight.name) && (
+        {!prExists &&
+          (scoreType === info.firebase.values.scoreTypes.reps.name ||
+            scoreType === info.firebase.values.scoreTypes.weight.name) && (
+            <Input
+              type="number"
+              name="score"
+              placeholder="0"
+              units={info.firebase.values.scoreTypes[scoreType]?.units}
+              validationHandler={(value) =>
+                value >= 0 && typeof parseFloat(value) === "number"
+                  ? true
+                  : false
+              }
+              setValidData={setValidScore}
+              submitError={submitError}
+              setSubmitError={setSubmitError}
+            />
+          )}
+
+        {!prExists && (
           <Input
-            type="number"
-            name="score"
-            placeholder="0"
-            units={info.firebase.values.scoreTypes[scoreType]?.units}
-            validationHandler={(value) =>
-              value >= 0 && typeof parseFloat(value) === "number" ? true : false
-            }
-            setValidData={setValidScore}
+            type="date"
+            name="date"
+            units={"Fecha"}
+            validationHandler={(value) => {
+              if (!value) return false;
+
+              const today = new Date();
+              const date = new Date(value);
+              return date <= today ? true : false;
+            }}
+            setValidData={setValidDate}
             submitError={submitError}
             setSubmitError={setSubmitError}
           />
         )}
-
-        <Input
-          type="date"
-          name="date"
-          units={"Fecha"}
-          validationHandler={(value) => {
-            if (!value) return false;
-
-            const today = new Date();
-            const date = new Date(value);
-            return date <= today ? true : false;
-          }}
-          setValidData={setValidDate}
-          submitError={submitError}
-          setSubmitError={setSubmitError}
-        />
-
-        <ErrorInput
-          errorMessage={"Ya tienes un PR registrado para este movimiento"}
-          show={prExists}
-        />
 
         {/* SUBMIT BUTTON */}
-        <Button
-          text="Guardar"
-          type={info.components.button.type.submit}
-          size={info.components.button.classes.lg}
-          style={info.components.button.classes.primary}
-          fill={true}
-        />
+        {prExists && (
+          <Button
+            text="Actualizar"
+            link={`${info.routes.prsHistory}/${selectedMovementId}`}
+            type={info.components.button.type.link}
+            size={info.components.button.classes.lg}
+            style={info.components.button.classes.primary}
+            fill={true}
+          />
+        )}
+        {!prExists && (
+          <Button
+            text={loadingPRs ? "Cargando..." : "Guardar"}
+            type={info.components.button.type.submit}
+            size={info.components.button.classes.lg}
+            style={info.components.button.classes.primary}
+            fill={true}
+          />
+        )}
       </form>
     </div>
   );
@@ -182,6 +193,8 @@ const AddPersonalRecordForm = () => {
   function submitHandler(event) {
     event.preventDefault();
 
+    if (prExists) return;
+
     // CONSTANTS
     const time = info.firebase.values.scoreTypes.time.name;
     const reps = info.firebase.values.scoreTypes.reps.name;
@@ -198,19 +211,24 @@ const AddPersonalRecordForm = () => {
     const sec = info.firebase.values.scoreTypes.time.units.sec;
 
     // MOVEMENT VALIDATION AND DATA
+    // console.log("here");
     if (!event.target.movement.value) return setSubmitError(true);
     const movementData = getMovementData(
       event.target,
       event.target.movement.value
     );
+    console.log("valid movement");
 
+    // VALID DATE
     if (!validDate) return setSubmitError(true);
+    console.log("valid date");
 
     // VALID TIME SCORE
     if (scoreType === time && !validTimeScore) return setSubmitError(true);
 
     // VALID SCORE
     if (scoreType !== time && !validScore) return setSubmitError(true);
+    console.log("valid score");
 
     // GET SCORE
     let score;
@@ -228,10 +246,10 @@ const AddPersonalRecordForm = () => {
       [movID]: movementData[movID],
       [scoreT]: scoreType,
       [scoreVal]: score,
-      [dateField]: utils.parseDate(event.target.date.value),
+      [dateField]: utils.parseDateWithTime(event.target.date.value),
     };
 
-    // // VERIFY SCORETYPE
+    // VERIFY SCORETYPE
 
     if (scoreType === weight) {
       newPR[units] = lbs;
@@ -243,13 +261,15 @@ const AddPersonalRecordForm = () => {
 
     console.log("submitting...", newPR);
     // SET ERROR AND SUCCESS MESSAGES
-    actionsPRs.addPR(user.user_id || user.uid, newPR, (error) => {
-      if (error) return setSubmitError(true);
-      setSuccessMessage("PR registrado correctamente")
-      navigate(info.routes.prs);
+    actionsPRs.postPR(user.user_id || user.uid, newPR, (error) => {
+      if (error) {
+        setErrorMessage(info.messages.error.errorWriting);
+        return setSubmitError(true);
+      }
+      setSuccessMessage("PR registrado correctamente");
+      navigate(info.routes.prs.path);
     });
 
-    // TODO - CHECK IF PR ALREADY EXISTS
     // TODO - ALLOW PR UPDATE
   }
 };

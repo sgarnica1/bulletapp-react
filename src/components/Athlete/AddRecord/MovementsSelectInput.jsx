@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import ErrorIcon from "../../../assets/icon/error-alert.svg";
+import { useDashboard } from "../../../contexts/DashboardContext";
 import { info } from "../../../utils/info";
+import ErrorIcon from "../../../assets/icon/error-alert.svg";
 
 const MovementsSelectInput = ({
   title,

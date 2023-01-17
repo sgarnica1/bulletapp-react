@@ -96,7 +96,7 @@ function Login() {
               fill={true}
             />
             <Link
-              to={info.routes.passwordRecover}
+              to={info.routes.passwordRecover.path}
               className="Login__passrecover-btn"
             >
               Recuperar contraseña

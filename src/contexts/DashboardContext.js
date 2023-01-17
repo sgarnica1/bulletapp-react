@@ -18,8 +18,10 @@ function DashboardProvider({ children }) {
   // INITIAL STATES
   const [activeView, setActiveView] = useState(initialView);
   const [currentLocation, setCurrentLocation] = useState("Juriquilla");
-  const [showAddFormModal, setShowAddFormModal] = useState(false);
   const [showNav, setShowNav] = useState(false);
+
+  const [showAddFormModal, setShowAddFormModal] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 

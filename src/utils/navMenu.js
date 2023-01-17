@@ -21,7 +21,7 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.dashboard,
-          route: info.routes.dashboard,
+          route: info.routes.dashboard.path,
           active: true,
         },
         {
@@ -31,12 +31,12 @@ const navMenu = {
           elements: [
             {
               name: info.views.locations.juriquilla,
-              route: info.routes.locations.juriquilla,
+              route: info.routes.locations.nested.juriquilla.absolutePath,
               active: true,
             },
             {
               name: info.views.locations.grandreserva,
-              route: info.routes.locations.grandreserva,
+              route: info.routes.locations.nested.grandreserva.absolutePath,
               active: true,
             },
           ],
@@ -48,12 +48,12 @@ const navMenu = {
           elements: [
             {
               name: info.views.athletes,
-              route: info.routes.athletes,
+              route: info.routes.athlete.path,
               active: true,
             },
             {
               name: info.views.addAthlete,
-              route: info.routes.addAthlete,
+              route: info.routes.athlete.nested.add.absolutePath,
               active: true,
             },
           ],
@@ -62,19 +62,19 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.payments,
-          route: info.routes.payments,
+          route: info.routes.payments.path,
           active: true,
         },
         {
           type: type.item,
           name: info.views.groups,
-          route: info.routes.groups,
+          route: info.routes.groups.path,
           active: true,
         },
         {
           type: type.item,
           name: info.views.plans,
-          route: info.routes.plans,
+          route: info.routes.plans.path,
           active: true,
         },
       ],
@@ -91,17 +91,17 @@ const navMenu = {
           elements: [
             {
               name: info.views.programming,
-              route: info.routes.programming,
+              route: info.routes.programming.path,
               active: true,
             },
             {
               name: info.views.wods,
-              route: info.routes.wods,
+              route: info.routes.wods.path,
               active: true,
             },
             {
               name: info.views.addWod,
-              route: info.routes.addWod,
+              route: info.routes.wods.nested.add.absolutePath,
               active: true,
             },
           ],
@@ -109,7 +109,7 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.videos,
-          route: info.routes.videos,
+          route: info.routes.videos.path,
           active: true,
         },
       ],
@@ -122,13 +122,13 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.settings,
-          route: info.routes.settings,
+          route: info.routes.settings.path,
           active: true,
         },
         {
           type: type.item,
           name: info.views.profile,
-          route: info.routes.profile,
+          route: info.routes.profile.path,
           active: true,
         },
         {
@@ -153,7 +153,7 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.leaderboard,
-          route: info.routes.leaderboard,
+          route: info.routes.leaderboard.path,
           active: true,
         },
 
@@ -163,18 +163,13 @@ const navMenu = {
           active: true,
           elements: [
             {
-              name: info.views.records,
-              route: info.routes.records,
-              active: true,
-            },
-            {
               name: info.views.prs,
-              route: info.routes.prs,
+              route: info.routes.prs.path,
               active: true,
             },
             {
               name: info.views.skills,
-              route: info.routes.skills,
+              route: info.routes.skills.path,
               active: true,
             },
           ],
@@ -189,7 +184,7 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.videos,
-          route: info.routes.videos,
+          route: info.routes.videos.path,
           active: true,
         },
       ],
@@ -202,13 +197,13 @@ const navMenu = {
         {
           type: type.item,
           name: info.views.settings,
-          route: info.routes.settings,
+          route: info.routes.settings.path,
           active: true,
         },
         {
           type: type.item,
           name: info.views.profile,
-          route: info.routes.profile,
+          route: info.routes.profile.path,
           active: true,
         },
         {
