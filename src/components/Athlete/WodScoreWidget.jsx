@@ -101,7 +101,7 @@ const WodScoreWidget = () => {
       });
 
       res.then(() => {
-        setSuccessMessage(info.messages.success.wodScoreCreated)
+        setSuccessMessage(info.messages.success.wodScoreCreated);
         setWodScoreUpdated(true);
       });
       return;

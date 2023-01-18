@@ -24,13 +24,14 @@ function PersonalRecordHistory() {
   const navigate = useNavigate();
   const params = useParams();
   const timeScoreType = info.firebase.values.scoreTypes.time.name;
+  const [weightPercents, setWeightPercents] = useState([]);
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const isUpdate = window.location.pathname.match(new RegExp(/actualizar/));
     isUpdate ? setUpdate(true) : setUpdate(false);
 
-    if (!loading && !pr)
+    if (loading && !pr)
       actions.getSinglePR(
         user.uid || user.user_id,
         utils.getIdFromTitleUrl(params.id)
@@ -38,12 +39,13 @@ function PersonalRecordHistory() {
 
     if (pr === -1) return navigate(info.routes.notFound);
 
-    if (pr) return pr.scores.sort((a, b) => b.date.seconds - a.date.seconds);
+    if (pr) pr.scores.sort((a, b) => b.date.seconds - a.date.seconds);
+    if (pr && pr.score_type === info.firebase.values.scoreTypes.weight.name) {
+      const weightPercents = utils.getWeightPercents(pr.scores[0].value);
+      setWeightPercents(weightPercents);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update, pr]);
-
-  if (pr) {
-    console.log(pr);
-  }
 
   return (
     <div className="PersonalRecordHistory">
@@ -72,7 +74,9 @@ function PersonalRecordHistory() {
           {!loading && (
             <section className="PersonalRecordHistory__meta-info">
               <p className="PersonalRecordHistory__meta-info--item">
-              <span className="PersonalRecordHistory__meta-info--tag">Categoría: </span>
+                <span className="PersonalRecordHistory__meta-info--tag">
+                  Categoría:{" "}
+                </span>
                 {pr?.movement_category || ""}
               </p>
             </section>
@@ -104,6 +108,30 @@ function PersonalRecordHistory() {
             </div>
           )}
 
+          {!loading && weightPercents.length > 0 && (
+            <h3 className="subtitle">Tabla de porcentajes</h3>
+          )}
+
+          {!loading && weightPercents.length > 0 && (
+            <section className="PersonalRecordHistory__percentage-table">
+              {weightPercents.map((percent, index) => (
+                <article
+                  className="PersonalRecordHistory__percentage-table__item"
+                  key={index}
+                  onClick={() => console.log("clicked")}
+                >
+                  <p className="PersonalRecordHistory__percentage-table__item__value">
+                    {percent}
+                    <span> lbs</span>
+                  </p>
+                  <span className="PersonalRecordHistory__percentage-table__item__percent">
+                    {info.data.weightPercents[index]}%
+                  </span>
+                </article>
+              ))}
+            </section>
+          )}
+
           {loading && <TextLoadingSkeleton type="subtitle" />}
 
           {!loading && pr?.scores.length > 1 && (
@@ -114,11 +142,16 @@ function PersonalRecordHistory() {
             new Array(5)
               .fill(0)
               .map((_, index) => <InputLoadingSkeleton key={index} />)}
+
           {!loading && pr && (
-            <section className="PersonalRecordHistory__prs-container">
+            <div className="PersonalRecordHistory__prs-container">
               {pr.scores.slice(1).map((score, index) => {
                 return (
-                  <div className="PersonalRecordHistory__pr" key={index}>
+                  <div
+                    className="PersonalRecordHistory__pr"
+                    key={index}
+                    onClick={() => console.log("clicked here")}
+                  >
                     {pr.score_type === timeScoreType && (
                       <p className="PersonalRecordHistory__pr__value">
                         {utils.secondsToTime(score.value)}
@@ -136,7 +169,7 @@ function PersonalRecordHistory() {
                   </div>
                 );
               })}
-            </section>
+            </div>
           )}
         </ContentContainer>
       )}

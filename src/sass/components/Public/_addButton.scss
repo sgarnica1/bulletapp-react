@@ -6,7 +6,6 @@
   max-height: 85px;
   margin-right: $widget-margin-right;
   max-width: $max-width-card;
-  background: var(--bg-component);
   border-radius: $border-radius;
 
   @include mq("md") {

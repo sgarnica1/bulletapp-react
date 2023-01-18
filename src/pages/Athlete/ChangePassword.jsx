@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 // COMPONENTS
+import { BackButton } from "../../components/Public/BackButton";
 import { Button } from "../../components/Public/Button";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 
@@ -43,6 +44,7 @@ function ChangePassword() {
   return (
     <div className="ChangePassword">
       <ContentContainer>
+        <BackButton link={info.routes.settings.path} mb={true} />
         <h2 className="title">Cambiar contraseña</h2>
         <form
           className="ChangePassword__form"

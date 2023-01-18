@@ -17,13 +17,20 @@ const InfoCard = ({
         className={`InfoCard ${onClickHandler ? "button" : ""}`}
         onClick={onClickHandler}
       >
-        <div className="InfoCard__img-container">
-          <img
-            src={img ? img : icon}
-            alt={alt}
-            className={img ? "InfoCard__img" : "InfoCard__icon"}
-          />
-        </div>
+        {(img || icon) && (
+          <div className="InfoCard__img-container">
+            <img
+              src={img ? img : icon}
+              alt={alt}
+              className={img ? "InfoCard__img" : "InfoCard__icon"}
+            />
+          </div>
+        )}
+        {!img && !icon && (
+          <div className="InfoCard__img-container">
+            <p className="InfoCard__img-placeholder">{title[0]}</p>
+          </div>
+        )}
         <div className="InfoCard__info">
           <h3 className="InfoCard__title">{title}</h3>
           {additionalInfo && (

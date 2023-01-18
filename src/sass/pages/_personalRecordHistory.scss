@@ -27,6 +27,41 @@
     }
   }
 
+  &__percentage-table {
+    display: flex;
+    overflow-x: scroll;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-linear-gradient);
+      width: 100px;
+      height: 100px;
+      border-radius: $border-radius;
+      color: white;
+      padding: 10px 0;
+      margin-right: 15px;
+
+      &__value {
+        width: 100px;
+        text-align: center;
+        font-size: toRem(18);
+
+        span {
+          font-size: toRem(12);
+          opacity: 0.7;
+        }
+      }
+
+      &__percent {
+        color: $color-brand;
+        font-size: toRem(14);
+      }
+    }
+  }
+
   &__pr {
     display: flex;
     justify-content: space-between;

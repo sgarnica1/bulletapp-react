@@ -19,6 +19,10 @@
   $max-type: type-of($max);
 
   @if $min-type==string {
+    @if $min==xxs {
+      $min: "(min-width: #{map-get($breakpoints, xxs)})";
+    }
+
     @if $min==xs {
       $min: "(min-width: #{map-get($breakpoints, xs)})";
     }
@@ -40,7 +44,7 @@
     }
 
     @else {
-      @warn "mq mixin supports: sm, md, lg, xl";
+      @warn "mq mixin supports: xxs, xs, sm, md, lg, xl";
     }
   }
 
@@ -49,6 +53,10 @@
   }
 
   @if $max-type==string {
+    @if $max==xxs {
+      $max: "(max-width: #{map-get($breakpoints, xxs) - 1})";
+    }
+
     @if $max==xs {
       $max: "(max-width: #{map-get($breakpoints, xs) - 1})";
     }
@@ -70,7 +78,7 @@
     }
 
     @else {
-      @warn "mq mixin supports: xs, sm, md, lg, xl";
+      @warn "mq mixin supports: xxs, xs, sm, md, lg, xl";
     }
   }
 

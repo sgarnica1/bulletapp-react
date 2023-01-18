@@ -3,15 +3,6 @@ import { info } from "./info";
 const utils = {
   formatDate: (currentDate) => {
     const newDate = new Date(currentDate);
-
-    // let day = newDate.getDate();
-    // let month = newDate.getMonth() + 1;
-    // const year = newDate.getFullYear();
-
-    // if (month < 10) month = `0${month}`;
-    // if (day < 10) day = `0${day}`;
-
-    // return `${day}/${month}/${year}`;
     const monthDay = currentDate.getDate();
     const month = info.data.months[currentDate.getMonth()];
     const year = currentDate.getFullYear();
@@ -172,6 +163,18 @@ const utils = {
     return `${month} ${year}`;
   },
 
+  getWeightPercents: (weight) => {
+    const percents = info.data.weightPercents;
+    const percentsArray = [];
+
+    percents.forEach((percent) => {
+      const newPercent = percent * weight / 100;
+      percentsArray.push(newPercent);
+    });
+
+    return percentsArray;
+  },
+
   parseDate: (date) => {
     const newDate = new Date(date);
     const nextDay = new Date(newDate);
@@ -232,6 +235,18 @@ const utils = {
     const year = date.getFullYear();
 
     return `${monthDay} ${month} ${year}`;
+  },
+
+  sortSkillsByMostRecent: (data) => {
+    return data.sort((a, b) => b.date.seconds - a.date.seconds);
+  },
+
+  sortSkillsByOldest: (data) => {
+    return data.sort((a, b) => a.date.seconds - b.date.seconds);
+  },
+
+  sortSkillsByAlphabeticalOrder: (data) => {
+    return data.sort((a, b) => a.movement.localeCompare(b.movement));
   },
 
   sortPrsByMostRecent: (data) => {

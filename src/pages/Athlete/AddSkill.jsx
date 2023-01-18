@@ -10,7 +10,7 @@ const AddSkill = () => {
   return (
     <div className="AddSkill">
       <ContentContainer>
-        <BackButton link={info.routes.skills} mb={true} />
+        <BackButton link={info.routes.skills.path} mb={true} />
         <AddSkillForm  />
       </ContentContainer>
     </div>

@@ -8,7 +8,7 @@ import {
 
 const usePRs = () => {
   const [prs, setPrs] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const getPRs = async (idUser, callback) => {

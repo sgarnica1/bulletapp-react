@@ -1,0 +1,77 @@
+.StatWidget {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  background: var(--bg-linear-gradient);
+  border-radius: $border-radius;
+  max-width: $max-width-card-md;
+  min-height: 140px;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+    max-width: $max-width-card;
+
+    @include mq(md) {
+      max-width: $max-width-card-md;
+    }
+  }
+
+  &__meta-description {
+    font-size: toRem(12);
+    font-weight: 400;
+    color: var(--color-text);
+  }
+
+  &__title {
+    font-size: toRem(14);
+    font-weight: 600;
+    color: var(--color-text);
+
+    @include mq(xxs) {
+      font-size: toRem(18);
+    }
+
+    &.active {
+      color: $color-brand;
+      font-size: toRem(18);
+      line-height: 24px;
+      
+      @include mq(xxs) {
+        font-size: toRem(24);
+      }
+    }
+  }
+
+  &__value {
+    font-size: toRem(20);
+    font-weight: 600;
+    color: $color-brand;
+    @include mq(xxs) {
+      font-size: toRem(26);
+    }
+  }
+
+  .DateWidget {
+    img {
+      display: none;
+    }
+    p {
+      font-size: toRem(12);
+      margin-left: 0;
+    }
+    @include mq(xxs) {
+      p {
+        font-size: toRem(14);
+        margin-left: toRem(10);
+      }
+
+      img {
+        display: block;
+      }
+    }
+  }
+}

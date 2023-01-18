@@ -70,7 +70,6 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [loggingIn, setLoggingIn] = useState(false);
 
-  
   // LOGIN USER
   const loginUser = async (event) => {
     event.preventDefault();

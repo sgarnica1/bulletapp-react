@@ -9,7 +9,7 @@
   margin-right: $widget-margin-right;
   margin-bottom: $widget-margin-bottom;
   border-radius: $border-radius;
-  background-color: var(--bg-component);
+  background: var(--bg-linear-gradient);
   box-shadow: var(--box-shadow);
   transition: ease 0.5s;
   transform: translateY(0px);

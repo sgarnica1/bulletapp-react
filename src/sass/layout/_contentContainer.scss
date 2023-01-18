@@ -9,7 +9,7 @@
     padding-bottom: toRem(50);
   }
 
-  @include mq(md) {
+  @include mq(sm) {
     padding: toRem(15) 0;
     padding-bottom: toRem(50);
 

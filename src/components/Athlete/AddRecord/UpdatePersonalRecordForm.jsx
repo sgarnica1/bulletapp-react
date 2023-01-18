@@ -23,11 +23,14 @@ const UpdatePersonalRecordForm = ({ prID, movementName, prScoreType }) => {
   const [validScore, setValidScore] = useState(false);
   const [validTimeScore, setValidTimeScore] = useState(false);
   const [validDate, setValidDate] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
+    if (submitError) setUpdating(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prID]);
+  }, [prID, submitError]);
 
   return (
     <div className="AddRecordForm">
@@ -98,7 +101,7 @@ const UpdatePersonalRecordForm = ({ prID, movementName, prScoreType }) => {
 
         {/* SUBMIT BUTTON */}
         <Button
-          text={loading ? "Actualizando..." : "Actualizar"}
+          text={updating ? "Actualizando..." : "Actualizar"}
           type={info.components.button.type.submit}
           size={info.components.button.classes.lg}
           style={info.components.button.classes.primary}
@@ -154,6 +157,7 @@ const UpdatePersonalRecordForm = ({ prID, movementName, prScoreType }) => {
         if (error) return setErrorMessage(info.messages.error.errorWriting);
         setSuccessMessage("PR actualizado correctamente");
         navigate(info.routes.prs.path);
+        setUpdating(false);
       }
     );
   }

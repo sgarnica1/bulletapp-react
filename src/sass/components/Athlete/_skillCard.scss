@@ -1,6 +1,9 @@
 .SkillCard {
   width: 100%;
   padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   &__title {
     margin-bottom: 5px;
@@ -13,5 +16,11 @@
 
   .DateWidget {
     text-transform: uppercase;
+  }
+
+  &__icon {
+    display: none;
+    width: 30px;
+    height: 30px;
   }
 }

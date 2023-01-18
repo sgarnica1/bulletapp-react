@@ -55,7 +55,7 @@ function Header() {
               <div
                 className="Header__user-profile"
                 onClick={() => {
-                  navigation(info.routes.settings);
+                  navigation(info.routes.settings.path);
                 }}
               >
                 <img src={UserIcon} alt="User icon" />

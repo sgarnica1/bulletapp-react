@@ -36,6 +36,10 @@ $themes: (
     dark: $bg-loading-transition-dark,
     light: $bg-loading-transition-light,
   ),
+  bg-linear-gradient: (
+    dark: $bg-gradient-dark,
+    light: $bg-gradient-light,
+  ),
   border-color: (
     dark: $border-color-dark,
     light: $border-color-light,

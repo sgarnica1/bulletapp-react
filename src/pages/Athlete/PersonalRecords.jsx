@@ -39,7 +39,7 @@ const PersonalRecords = () => {
 
   useEffect(() => {
     if (loading) setSearch("");
-    if (!loading && !prs) actions.getPRs(user.uid || user.user_id);
+    if (loading && !prs) actions.getPRs(user.uid || user.user_id);
 
     if (prs && sortedPRs.length === 0) {
       prs.forEach((pr) =>
@@ -100,6 +100,8 @@ const PersonalRecords = () => {
           break;
       }
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [prs, loading, search, category, orderByValue]);
 
   return (

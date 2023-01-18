@@ -147,6 +147,7 @@ const info = {
         ref: "S",
       },
     ],
+    weightPercents: [95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30],
   },
   firebase: {
     values: {
@@ -234,6 +235,7 @@ const info = {
     subcollections: {
       users: {
         personalRecords: "personal_records",
+        unlockedSkills: "unlocked_skills",
       },
       wods: {
         scores: "scores",
@@ -275,6 +277,16 @@ const info = {
           updatedAt: "updated_at",
         },
         active: "active",
+      },
+      skills: {
+        movement: "movement",
+        idMovement: "id_movement",
+        movementCategory: "movement_category",
+        date: "date",
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
       },
       scoreTypes: {
         active: "active",
@@ -414,7 +426,7 @@ const info = {
       nested: {
         history: {
           absolutePath: "/prs/:id",
-            absolutePathNoParms: "/prs",
+          absolutePathNoParms: "/prs",
           path: "/:id",
           value: ":id",
         },
@@ -427,7 +439,7 @@ const info = {
           absolutePath: "/prs/:id/actualizar",
           path: "/actualizar",
           value: "/actualizar",
-        }
+        },
       },
     },
     athlete: {

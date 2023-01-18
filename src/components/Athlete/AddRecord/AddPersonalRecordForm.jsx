@@ -116,6 +116,7 @@ const AddPersonalRecordForm = () => {
               setSubmitError={setSubmitError}
             />
           )}
+
         {/* REPS / WEIGHT SCORE INPUT*/}
         {!prExists &&
           (scoreType === info.firebase.values.scoreTypes.reps.name ||
@@ -136,6 +137,7 @@ const AddPersonalRecordForm = () => {
             />
           )}
 
+        {/* DATE INPUT */}
         {!prExists && (
           <Input
             type="date"
@@ -211,7 +213,6 @@ const AddPersonalRecordForm = () => {
     const sec = info.firebase.values.scoreTypes.time.units.sec;
 
     // MOVEMENT VALIDATION AND DATA
-    // console.log("here");
     if (!event.target.movement.value) return setSubmitError(true);
     const movementData = getMovementData(
       event.target,
@@ -250,7 +251,6 @@ const AddPersonalRecordForm = () => {
     };
 
     // VERIFY SCORETYPE
-
     if (scoreType === weight) {
       newPR[units] = lbs;
     } else if (scoreType === reps) {

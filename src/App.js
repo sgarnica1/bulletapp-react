@@ -40,6 +40,7 @@ import { Programming } from "./pages/Admin/Programming";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
 
 // PROTECTED ROUTES
+import ScrollToTop from "./utils/components/ScrollToTop";
 import { AdminRoute } from "./utils/components/AdminRoute";
 import { LoggedOutRoute } from "./utils/components/LoggedOutRoute";
 import { PrivateRoute } from "./utils/components/PrivateRoute";
@@ -60,6 +61,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="App" data-theme={theme}>
         {/* ALERTS */}
         <SuccessAlert />
@@ -170,7 +172,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>
-        <Footer />
+        {user ? <Footer /> : null}
       </div>
     </Router>
   );

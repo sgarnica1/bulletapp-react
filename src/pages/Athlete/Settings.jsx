@@ -3,6 +3,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { info } from "../../utils/info";
 
 // COMPONENTS
+import { BackButton } from "../../components/Public/BackButton";
 import { Button } from "../../components/Public/Button";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { InfoCard } from "../../components/Public/InfoCard";
@@ -21,12 +22,10 @@ function Settings() {
   return (
     <div className="Settings">
       <ContentContainer>
+        <BackButton link={info.routes.home} mb={true} />
         <h1 className="title margin">Ajustes</h1>
         {!error && !loading && (
           <InfoCard
-            // link={info.routes.profile.path}
-            img={HoodiesImg}
-            alt="Athletes wearing Bullet CrossFit hoodies"
             title={`${user.data[info.firebase.docKeys.users.firstName]} ${
               user.data[info.firebase.docKeys.users.lastName]
             }`}
