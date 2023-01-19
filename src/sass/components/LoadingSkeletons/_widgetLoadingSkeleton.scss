@@ -53,6 +53,11 @@
     max-height: 114px;
   }
 
+  &.movement-card {
+    max-height: 75px;
+    min-height: 75px;
+  }
+
   &.stat {
     max-height: 140px;
   }

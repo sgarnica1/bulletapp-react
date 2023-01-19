@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import { useWods } from "../../hooks/useWods";
-import { useWodScores } from "../../hooks/useWodScores";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useWods } from "../../../hooks/useWods";
+import { useWodScores } from "../../../hooks/useWodScores";
 
 // COMPONENTS
-import { Button } from "../Public/Button";
+import { Button } from "../../Public/Button";
 import { AddRegisterWidgetContainer } from "./AddRegisterWidgetContainer";
 // UTILS
-import { utils } from "../../utils/utils";
-import { info } from "../../utils/info";
+import { utils } from "../../../utils/utils";
+import { info } from "../../../utils/info";
 
 const BulletGoalWidget = () => {
   const [reps, setReps] = useState(0);

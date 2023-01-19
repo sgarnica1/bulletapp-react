@@ -44,7 +44,7 @@ function Settings() {
           title={"Modo Obscuro"}
           onClickHandler={toggleTheme}
         >
-          {theme === info.states.theme.dark ? "Desactivar" : "Activar"}
+          {theme === info.theme.dark ? "Desactivar" : "Activar"}
         </InfoCard>
 
         <Button

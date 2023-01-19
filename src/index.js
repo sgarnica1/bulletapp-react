@@ -4,8 +4,6 @@ import App from "./App";
 import { DashboardProvider } from "./contexts/DashboardContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import ScrollToTop from "./utils/components/ScrollToTop";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./sass/main.scss";
 

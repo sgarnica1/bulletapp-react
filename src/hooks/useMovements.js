@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   getMovementsApi,
+  getMovementByIdApi,
   getMovementCategoriesApi,
   addMovementApi,
 } from "../api/movements";
@@ -23,6 +24,17 @@ const useMovements = () => {
     }
   };
 
+  const getMovementById = async (idMovement, callback) => {
+    try {
+      setLoading(true);
+      const res = await getMovementByIdApi(idMovement, callback);
+      setMovements(res);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
   const getMovementCategories = async () => {
     try {
       setLoading(true);
@@ -49,7 +61,12 @@ const useMovements = () => {
     }
   };
 
-  const actions = { getMovements, getMovementCategories, addMovement };
+  const actions = {
+    getMovements,
+    getMovementById,
+    getMovementCategories,
+    addMovement,
+  };
 
   return { movements, loading, error, actions };
 };

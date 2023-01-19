@@ -8,11 +8,12 @@ import {
   addDoc,
   arrayUnion,
   Timestamp,
+  setDoc,
 } from "firebase/firestore/lite";
 import { db, auth } from "../firebase/index";
 import { info } from "../utils/info";
 
-const getSkillsApi = async (idUser, callback) => {
+const getSkillsByUserIdApi = async (idUser, callback) => {
   try {
     const ref = collection(
       db,
@@ -30,9 +31,28 @@ const getSkillsApi = async (idUser, callback) => {
   }
 };
 
-const getSingleSkillApi = async (idUser, idSkill, callback) => {
+const getSkillsNameListByUserIdApi = async (idUser, callback) => {
   try {
-    const ref = doc(db, "/users/" + idUser + "/skills/" + idSkill);
+    const ref = collection(
+      db,
+      `${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.unlockedSkills}`
+    );
+    const snapshot = await getDocs(ref);
+    const data = snapshot.docs.map((doc) => doc.data().movement);
+
+    if (callback) callback(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getUserSkillByIdApi = async (idUser, idSkill, callback) => {
+  try {
+    const ref = doc(
+      db,
+      `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.unlockedSkills}/${idSkill}`
+    );
     const snapshot = await getDoc(ref);
     if (callback) callback(snapshot.data());
     if (snapshot.data() == undefined) return -1;
@@ -42,18 +62,15 @@ const getSingleSkillApi = async (idUser, idSkill, callback) => {
   }
 };
 
-const postSkillApi = async (idUser, data, callback) => {
+const postSkillApi = async (idUser, idMov, data, callback) => {
   console.log("addskill", data);
   try {
-    const res = await addDoc(
-      collection(
+    const res = await setDoc(
+      doc(
         db,
-        `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.unlockedSkills}`
+        `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.unlockedSkills}/${idMov}`
       ),
       {
-        // ID MOVEMENT
-        [info.firebase.docKeys.skills.idMovement]:
-          data[info.firebase.docKeys.skills.idMovement],
         // MOVEMENT
         [info.firebase.docKeys.skills.movement]:
           data[info.firebase.docKeys.skills.movement],
@@ -64,17 +81,10 @@ const postSkillApi = async (idUser, data, callback) => {
         [info.firebase.docKeys.skills.date]: Timestamp.fromDate(
           data[info.firebase.docKeys.skills.date]
         ),
-        // TIMESTAMPS
-        timestamps: {
-          [info.firebase.docKeys.skills.timestamps.createdAt]:
-            Timestamp.fromDate(new Date()),
-          [info.firebase.docKeys.skills.timestamps.updatedAt]:
-            Timestamp.fromDate(new Date()),
-        },
       }
     );
     if (callback) callback();
-    return res.id;
+    return res;
   } catch (err) {
     if (callback) callback(err);
     console.log(err);
@@ -82,4 +92,9 @@ const postSkillApi = async (idUser, data, callback) => {
   }
 };
 
-export { getSkillsApi, getSingleSkillApi, postSkillApi };
+export {
+  getSkillsByUserIdApi,
+  getSkillsNameListByUserIdApi,
+  getUserSkillByIdApi,
+  postSkillApi,
+};

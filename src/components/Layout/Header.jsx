@@ -41,7 +41,7 @@ function Header() {
         {/* LOGO */}
         <img
           className="Header__logo"
-          src={theme === info.states.theme.dark ? WhiteLogo : BlackLogo}
+          src={theme === info.theme.dark ? WhiteLogo : BlackLogo}
           alt="Bullet Logo"
         />
         {/* NAVIGATION */}

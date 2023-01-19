@@ -5,13 +5,13 @@
   }
 
   &__title {
-    color: var(--color-text);
+    color: $color-brand;
     font-weight: 600;
     font-size: toRem(22);
     margin-bottom: 6px;
   }
   &__description {
-    color: $color-brand;
+    color: var(--color-text);
     font-size: toRem(18);
     font-weight: 400;
   }

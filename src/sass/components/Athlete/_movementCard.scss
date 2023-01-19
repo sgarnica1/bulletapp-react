@@ -1,0 +1,41 @@
+.MovementCard {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+
+  &.locked {
+    opacity: 0.5;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    font-size: toRem(18);
+    color: var(--color-text);
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  &__categories {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__category {
+    padding: 1px 7px;
+    border-radius: 20px;
+    background: var(--bg-input-2);
+    font-weight: 500;
+    font-size: toRem(10);
+    color: var(--color-text);
+    opacity: 0.8;
+    outline: none;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+}

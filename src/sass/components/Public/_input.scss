@@ -16,6 +16,15 @@
     }
   }
 
+  &__sign {
+    // width: toRem(20);
+    // height: toRem(20);
+    font-size: toRem(14);
+    transform: translateY(-5px);
+    opacity: 0.5;
+    text-align: center;
+  }
+
   &__input {
     background: transparent;
     outline: none;
@@ -25,9 +34,9 @@
     font-size: toRem(20);
     padding-right: 10px;
 
-    &.readonly  {
+    &.readonly {
       cursor: not-allowed;
-      opacity: 0.5
+      opacity: 0.5;
     }
   }
 
@@ -38,6 +47,27 @@
     &.error {
       color: $color-error;
     }
+  }
+
+  &__label {
+    color: $color-brand;
+    font-size: toRem(12);
+    text-align: center;
+
+    &.error {
+      color: $color-error;
+    }
+  }
+
+  &__option {
+    color: $color-dark;
+  }
+
+  &__checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
   }
 
   &__error {
@@ -71,6 +101,42 @@
       align-items: center;
       gap: 10px;
       border-radius: 10px;
+    }
+  }
+
+  &.weight {
+    .Input__container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 19% 5% 19% 5% 22% 19%;
+      align-items: flex-end;
+      gap: 5px;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .Input__input {
+      width: 100%;
+      padding: 0;
+      text-align: center;
+    }
+  }
+
+  &.sets {
+    .Input__container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 46% 4% 46%;
+      align-items: flex-end;
+      gap: 5px;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .Input__input {
+      width: 100;
+      padding: 0;
+      text-align: center;
     }
   }
 

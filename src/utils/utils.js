@@ -114,7 +114,6 @@ const utils = {
     url = url.replace(/\(/g, "");
     url = url.replace(/\)/g, "");
     url = url.replace(/%/g, "-");
-    url = url.replace(/&/g, "-");
     url = url.replace(/=/g, "-");
     url = url.replace(/_/g, "-");
     url = url.replace(/#/g, "-");
@@ -131,6 +130,17 @@ const utils = {
     let id = titleUrl.split("-");
     id = id[id.length - 1];
     return id;
+  },
+
+  getTitleFromTitleUrl: (titleUrl) => {
+    let title = titleUrl.split("-");
+    title.pop();
+    title = title.join(" ");
+    // capitalize all words
+    title = title.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+    return title;
   },
 
   getCurrentDate: () => {
@@ -168,7 +178,7 @@ const utils = {
     const percentsArray = [];
 
     percents.forEach((percent) => {
-      const newPercent = percent * weight / 100;
+      const newPercent = (percent * weight) / 100;
       percentsArray.push(newPercent);
     });
 
@@ -263,6 +273,14 @@ const utils = {
 
   sortPrsByAlphabeticalOrder: (data) => {
     return data.sort((a, b) => a.movement.localeCompare(b.movement));
+  },
+
+  sortMovementsAZOrder: (data) => {
+    return data.sort((a, b) => a.name.localeCompare(b.name));
+  },
+
+  sortMovementsZAOrder: (data) => {
+    return data.sort((a, b) => b.name.localeCompare(a.name));
   },
 
   timeToSeconds: (time) => {

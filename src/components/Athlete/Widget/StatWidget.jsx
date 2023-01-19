@@ -1,7 +1,7 @@
 import React from "react";
-import { CardContainer } from "../../Public/CardContainer";
 import { DateWidget } from "../../Public/DateWidget";
 import { utils } from "../../../utils/utils";
+import CheckIcon from "../../../assets/icon/check-circle.svg";
 
 const StatWidget = ({
   link,
@@ -10,17 +10,21 @@ const StatWidget = ({
   units,
   seconds,
   metaDescription,
-  scoreType,
+  timescore,
+  checkIcon = false,
 }) => {
   const date = utils.formatDate(new Date(seconds * 1000));
   return (
     <div className="StatWidget">
-      <span className="StatWidget__meta-description">{metaDescription}</span>
-      <p className={`StatWidget__title ${!value && "active"}`}>{title}</p>
-      <span className="StatWidget__value">
-        {scoreType === "time" ? utils.secondsToTime(value) : value}{" "}
-        {scoreType === "time" ? null : units}
-      </span>
+      <div className="StatWidget__content">
+        {checkIcon && <img src={CheckIcon} alt="Check icon" className="StatWidget__icon"/>}
+        <span className="StatWidget__meta-description">{metaDescription}</span>
+        <p className={`StatWidget__title ${!value && "active"}`}>{title}</p>
+        <span className="StatWidget__value">
+          {timescore ? utils.secondsToTime(value) : value}{" "}
+          {timescore ? null : units}
+        </span>
+      </div>
       <DateWidget date={date} mb={false} />
     </div>
   );

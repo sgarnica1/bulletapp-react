@@ -4,6 +4,10 @@
   align-items: center;
   width: fit-content;
   gap: toRem(10);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
 
   &.mb,
   &.mt {

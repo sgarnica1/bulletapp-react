@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { usePRs } from "../../hooks/usePRs";
+import { useRecords } from "../../hooks/useRecords";
 import { useSkills } from "../../hooks/useSkills";
 
 // COMPONENTS
@@ -10,9 +10,8 @@ import { BirthdayCelebrationWidget } from "../../components/Public/BirthdayCeleb
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { HomeBanner } from "../../components/Public/HomeBanner";
 import { InfoCard } from "../../components/Public/InfoCard";
-import { PersonalGoal } from "../../components/Athlete/PersonalGoal";
 import { StatWidget } from "../../components/Athlete/Widget/StatWidget";
-import { WodScoreWidget } from "../../components/Athlete/WodScoreWidget";
+import { WodScoreWidget } from "../../components/Athlete/Widget/WodScoreWidget";
 import { TextLoadingSkeleton } from "../../components/Layout/LoadingSkeletons/TextLoadingSkeleton";
 import { WidgetLoadingSkeleton } from "../../components/Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
@@ -28,11 +27,11 @@ import UserIcon from "../../assets/icon/user.svg";
 function Home() {
   const { user, loading, error } = useAuth();
   const {
-    prs,
-    actions: actionsPR,
-    loading: loadingPR,
-    error: errorPR,
-  } = usePRs();
+    records: repMax,
+    actions: actionsRecord,
+    loading: loadingRecord,
+    error: errorRecord,
+  } = useRecords();
   const {
     skills,
     actions: actionsSkills,
@@ -40,44 +39,34 @@ function Home() {
     error: errorSkills,
   } = useSkills();
 
-  const [latestPR, setLatestPR] = useState(false);
   const [latestSkill, setLatestSkill] = useState(false);
-  const [refetchPRs, setRefetchPRs] = useState(true);
+  const [refetchRecords, setRefetchRecords] = useState(true);
   const [refetchSkills, setRefetchSkills] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    // REDIRECT TO ERROR PAGE IF ERROR
     if (error) navigate(info.routes.serverError.path);
 
-    if (refetchPRs && loadingPR && !prs) {
-      setRefetchPRs(false);
-      actionsPR.getPRs(user.uid || user.user_id);
+    // FETCH RECORDS AND SKILLS
+    if (refetchRecords && loadingRecord && !repMax) {
+      setRefetchRecords(false);
+      actionsRecord.getLastRepMax(user.uid || user.user_id);
     }
-    if (refetchSkills && prs && loadingSkills && !skills) {
+
+    if (refetchSkills && repMax && loadingSkills && !skills) {
       setRefetchSkills(false);
-      actionsSkills.getSkills(user.uid || user.user_id);
+      actionsSkills.getSkillsByUserId(user.uid || user.user_id);
     }
 
-    if (prs && !latestPR) {
-      prs.forEach((pr) =>
-        pr.scores.sort((a, b) => b.date.seconds - a.date.seconds)
-      );
-
-      const sorted = prs.sort(
-        (a, b) => b.scores[0].date.seconds - a.scores[0].date.seconds
-      );
-      setLatestPR(sorted[0]);
-    }
     if (skills && !latestSkill) {
       const sorted = skills.sort((a, b) => b.date.seconds - a.date.seconds);
       setLatestSkill(sorted[0]);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, prs, skills]);
-
-  // console.log("skills", skills);
+  }, [error, repMax, skills]);
 
   return (
     <div className="Home">
@@ -103,27 +92,26 @@ function Home() {
         {/* LEADERBOARD */}
         <AddButton link={info.routes.leaderboard.path} title="Leaderboard" />
 
-        {/* LATEST PR */}
-        {(loadingPR || loadingSkills) && <TextLoadingSkeleton />}
-        {(!prs || !skills) && (
-          <h2 className="subtitle">Marcas personales</h2>
-        )}
-        {loadingPR && (
+        {/* LATEST Record */}
+        {(loadingRecord || loadingSkills) && <TextLoadingSkeleton />}
+
+        {(repMax || skills) && <h2 className="subtitle">Marcas personales</h2>}
+        {loadingRecord && (
           <div className="StatWidget__container">
             <WidgetLoadingSkeleton type={"stat"} />
             <WidgetLoadingSkeleton type={"stat"} />
           </div>
         )}
 
-        {!loadingPR && latestPR && !loadingSkills && latestSkill && (
+        {!loadingRecord && !loadingSkills && latestSkill && (
           <div className="StatWidget__container">
             <StatWidget
-              metaDescription={"PR más reciente"}
-              title={latestPR.movement}
-              value={latestPR.scores[0].value}
-              units={latestPR.units}
-              seconds={latestPR.scores[0].date.seconds}
-              scoreType={latestPR.score_type}
+              metaDescription={"1RM más reciente"}
+              title={`${repMax.movement}`}
+              value={repMax.weight}
+              units={repMax.units}
+              seconds={repMax.date.seconds}
+              timescore={repMax.timescore}
             />
             <StatWidget
               metaDescription={"Skill más reciente"}
@@ -134,30 +122,21 @@ function Home() {
         )}
 
         <h3 className="subtitle">Añade un nuevo logro</h3>
-        {/* ADD NEW PR */}
+        {/* ADD NEW Record */}
         <AddButton
-          link={info.routes.prs.nested.add.absolutePath}
+          link={info.routes.movements.path}
           img={AthleteImg}
           alt="CrossFit Athlete Front Rack Position"
-          title="Añadir Nuevo PR"
+          title="Añadir Nuevo Record"
         />
 
         {/* ADD NEW GOAL */}
         <AddButton
-          link={info.routes.skills.nested.add.absolutePath}
+          link={info.routes.skills.path}
           img={Athlete2Img}
           alt="Bullet CrossFit shirt"
-          title="Añadir Nueva Habilidad"
+          title="Desbloquear Habilidad"
         />
-
-        {/* CURRENT GOAL */}
-        {/* <h3 className="subtitle">Meta personal</h3>
-        <PersonalGoal
-          description="Du's"
-          progress={60}
-          status="En progreso"
-          date={"20 Ene 2023"}
-        /> */}
 
         <h4 className="subtitle">Más para ti</h4>
         {/* PROFILE */}

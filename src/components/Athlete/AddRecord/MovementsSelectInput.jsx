@@ -26,8 +26,7 @@ const MovementsSelectInput = ({
     if (resetError) setErrorMessage("");
   }, [submitError, resetError]);
 
-  const unlockSkill =
-    info.components.addRecordForm.recordCategories.unlockSkill;
+  const skills = info.firebase.values.movementCategories.skills;
 
   return (
     <div className="AddRecordForm__select-container">
@@ -47,7 +46,7 @@ const MovementsSelectInput = ({
           <option value="">{title}</option>
 
           {!skillsOnly &&
-            recordCategory !== unlockSkill &&
+            movements.movement_category.include(skills) &&
             movements &&
             movements
               .sort((a, b) => a.name.localeCompare(b.name))
@@ -69,7 +68,7 @@ const MovementsSelectInput = ({
                 return null;
               })}
 
-          {(skillsOnly || recordCategory === unlockSkill) &&
+          {(skillsOnly || movements.movement_category.include(skills)) &&
             movements &&
             movements
               .sort((a, b) => a.name.localeCompare(b.name))

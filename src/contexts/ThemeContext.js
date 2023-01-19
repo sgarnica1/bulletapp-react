@@ -14,7 +14,7 @@ function ThemeProvider({ children }) {
   // VERIFY IF USER HAS A THEME PREFERENCE IN LOCAL STORAGE
   const localStorageTheme = localStorage.getItem(info.localStorageKeys.theme);
 
-  let initialTheme = darkDefault ? info.states.theme.dark : info.states.theme.light;
+  let initialTheme = darkDefault ? info.theme.dark : info.theme.light;
 
   if (localStorageTheme) {
     initialTheme = localStorageTheme;
@@ -24,15 +24,15 @@ function ThemeProvider({ children }) {
 
   const toggleTheme = () => {
     setTheme(
-      theme === info.states.theme.light
-        ? info.states.theme.dark
-        : info.states.theme.light
+      theme === info.theme.light
+        ? info.theme.dark
+        : info.theme.light
     );
     localStorage.setItem(
       info.localStorageKeys.theme,
-      theme === info.states.theme.light
-        ? info.states.theme.dark
-        : info.states.theme.light
+      theme === info.theme.light
+        ? info.theme.dark
+        : info.theme.light
     );
   };
 

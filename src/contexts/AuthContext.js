@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/index";
 import { getUserInfoApi } from "../api/user";
 import { info } from "../utils/info";
+import { REFRESH_TOKEN_API } from "../utils/requests";
 import jwt_decode from "jwt-decode";
 
 // CREATE CONTEXT
@@ -168,7 +169,7 @@ const AuthProvider = ({ children }) => {
     // FETCH NEW TOKEN FROM SERVER
     try {
       const res = await fetch(
-        `${info.requests.refreshToken}${process.env.REACT_APP_FIREBASE_API_KEY}`,
+        `${REFRESH_TOKEN_API}${process.env.REACT_APP_FIREBASE_API_KEY}`,
         {
           method: "POST",
           headers: {

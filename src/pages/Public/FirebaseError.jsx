@@ -30,7 +30,7 @@ function FirebaseError() {
           size={"lg"}
         />
         {/* <img
-          src={theme === info.states.theme.dark ? LogoWhite : LogoBlack}
+          src={theme === info.theme.dark ? LogoWhite : LogoBlack}
           alt="Logo Bullet CrossFit"
           className="FirebaseError__logo"
         /> */}

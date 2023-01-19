@@ -37,7 +37,7 @@ function PasswordRecover() {
       <ContentContainer>
         <header className="PasswordRecover__header">
           <img
-            src={theme === info.states.theme.dark ? WhiteLogo : BlackLogo}
+            src={theme === info.theme.dark ? WhiteLogo : BlackLogo}
             alt="Bullet CrossFit Logo"
             className="Login__header-logo"
           />

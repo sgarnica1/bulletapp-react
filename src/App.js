@@ -18,16 +18,12 @@ import { NotFound } from "./pages/Public/NotFound";
 import { PasswordRecover } from "./pages/Public/PasswordRecover";
 
 // ATHLETE PAGES
-import { AddPersonalGoal } from "./pages/Athlete/AddPersonalGoal";
-import { AddPersonalRecord } from "./pages/Athlete/AddPersonalRecord";
 import { AddSkill } from "./pages/Athlete/AddSkill";
 import { ChangePassword } from "./pages/Athlete/ChangePassword";
 import { Home } from "./pages/Athlete/Home";
 import { Leaderboard } from "./pages/Athlete/Leaderboard";
-import { PersonalGoals } from "./pages/Athlete/PersonalGoals";
-import { PersonalRecords } from "./pages/Athlete/PersonalRecords";
-import { Records } from "./pages/Athlete/Records";
-import { PersonalRecordHistory } from "./pages/Athlete/PersonalRecordHistory";
+import { MovementsLibrary } from "./pages/Athlete/MovementsLibrary";
+import { MovementTracking } from "./pages/Athlete/MovementTracking";
 import { Settings } from "./pages/Athlete/Settings";
 import { Skills } from "./pages/Athlete/Skills";
 
@@ -88,39 +84,26 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path={info.routes.home} element={<Home />} />
 
+              {/* /leaderboard */}
               <Route
                 path={info.routes.leaderboard.path}
                 element={<Leaderboard />}
               />
 
-              {/* /goals */}
-              <Route path={info.routes.personalGoals.path}>
-                <Route index={true} element={<PersonalGoals />} />
+              {/* /movements */}
+              <Route path={info.routes.movements.path}>
+                <Route index={true} element={<MovementsLibrary />} />
                 <Route
-                  path={info.routes.personalGoals.nested.add.value}
-                  element={<AddPersonalGoal />}
-                />
-              </Route>
-
-              {/* /prs */}
-              <Route path={info.routes.prs.path + "/*"}>
-                <Route index={true} element={<PersonalRecords />} />
-                <Route
-                  path={info.routes.prs.nested.add.value}
-                  element={<AddPersonalRecord />}
-                />
-                <Route
-                  path={info.routes.prs.nested.history.value + "/*"}
-                  element={<PersonalRecordHistory />}
+                  path={info.routes.movements.nested.tracking.value}
+                  element={<MovementTracking />}
                 />
               </Route>
 
               {/* /skills */}
               <Route path={info.routes.skills.path}>
-                <Route index={true} element={<Skills />} />
                 <Route
-                  path={info.routes.skills.nested.add.value}
-                  element={<AddSkill />}
+                  index={true}
+                  element={<MovementsLibrary skillsOnly={true} />}
                 />
               </Route>
 
@@ -172,7 +155,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>
-        {user ? <Footer /> : null}
+        {/* {user ? <Footer /> : null} */}
       </div>
     </Router>
   );

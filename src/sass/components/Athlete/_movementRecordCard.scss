@@ -1,0 +1,22 @@
+.MovementRecordCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $height-input;
+  background-color: var(--bg-input);
+  border-radius: $border-radius;
+  padding: 0 toRem(20);
+  margin-bottom: toRem(10);
+  color: var(--color-text);
+
+  &__value {
+    font-size: toRem(18);
+    font-weight: 600;
+    color: $color-brand;
+  }
+
+  &__date {
+    opacity: 0.8;
+    font-size: toRem(14);
+  }
+}

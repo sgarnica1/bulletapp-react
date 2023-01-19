@@ -164,7 +164,7 @@ const navMenu = {
           elements: [
             {
               name: info.views.prs,
-              route: info.routes.prs.path,
+              route: info.routes.movements.path,
               active: true,
             },
             {

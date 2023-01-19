@@ -25,6 +25,21 @@ const getMovementsApi = async (callback) => {
   }
 };
 
+const getMovementByIdApi = async (idMovement, callback) => {
+  try {
+    const ref = doc(
+      db,
+      `/${info.firebase.collections.movements}/${idMovement}`
+    );
+    const snapshot = await getDoc(ref);
+    if (callback) callback(snapshot.data());
+    if (snapshot.data() == undefined) return -1;
+    return snapshot.data();
+  } catch (err) {
+    throw err;
+  }
+};
+
 const getMovementCategoriesApi = async (callback) => {
   try {
     const ref = collection(db, info.firebase.collections.movementCategories);
@@ -73,4 +88,9 @@ const addMovementApi = async (movement, callback) => {
   }
 };
 
-export { getMovementsApi, getMovementCategoriesApi, addMovementApi };
+export {
+  getMovementsApi,
+  getMovementByIdApi,
+  getMovementCategoriesApi,
+  addMovementApi,
+};

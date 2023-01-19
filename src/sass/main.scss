@@ -18,11 +18,13 @@
 
 // COMPONENTS - ATHLETE
 @import "components/Athlete/addRecordForm";
-@import "components/Athlete/addRecordModal";
-@import "components/athlete/addRegisterWidget";
-@import "components/athlete/goalScoreWidget";
+// @import "components/Athlete/addRecordModal";
+@import "components/athlete/formWidgetContainer";
+@import "components/athlete/bulletGoalWidget";
 @import "components/athlete/personalGoal";
-@import "components/athlete/prCard";
+@import "components/athlete/movementCard"; 
+@import "components/athlete/movementRecordCard"; 
+@import "components/athlete/prCard"; 
 @import "components/athlete/skillCard";
 @import "components/athlete/wodScoreWidget";
 
@@ -70,10 +72,12 @@
 @import "pages/firebaseError";
 @import "pages/leaderboard";
 @import "pages/login";
+@import "pages/movementsLibrary";
+@import "pages/movementTracking";
 @import "pages/notFound";
 @import "pages/passwordRecover";
 @import "pages/records";
-@import "pages/personalRecordHistory";
+// @import "pages/personalRecordHistory";
 @import "pages/settings";
 
 // THEMES

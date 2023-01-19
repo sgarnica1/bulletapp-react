@@ -11,18 +11,13 @@ const info = {
         newSkill: "new_skill",
         personalGoal: "personal_goal",
       },
-      recordCategories: {
-        maxLift: "Max Lift",
-        minTime: "Min Time",
-        maxReps: "Max Reps",
-        unlockSkill: "Desbloquear habilidad",
-      },
     },
     button: {
       type: {
         submit: "submit",
         link: "link",
         href: "href",
+        button: "button",
       },
       classes: {
         primary: "primary",
@@ -36,12 +31,27 @@ const info = {
         all: "all",
       },
     },
+    input: {
+      type: {
+        text: "text",
+        email: "email",
+        password: "password",
+        number: "number",
+        date: "date",
+        time: "time",
+        weight: "weight",
+        sets: "sets",
+        checkbox: "checkbox",
+      },
+    },
     sortby: {
       label: "Ordenar",
       options: {
-        mostRecent: "Más reciente",
-        oldest: "Más antiguo",
-        alphabetic: "Alfabético",
+        // mostRecent: "Más reciente",
+        // oldest: "Más antiguo",
+        // alphabetic: "Alfabético",
+        az: "A-Z",
+        za: "Z-A",
       },
     },
   },
@@ -147,41 +157,21 @@ const info = {
         ref: "S",
       },
     ],
-    weightPercents: [95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30],
+    weightPercents: [95, 90, 85, 80, 70, 60, 50, 40, 30],
   },
   firebase: {
     values: {
       movementCategories: {
-        cardio: "Cardio",
-        gymnastics: "Gymnastics",
-        kettlebell: "Kettlebell",
-        dumbell: "Dumbell",
         barbell: "Barbell",
         bodyweight: "Bodyweight",
-        other: "Otro",
+        cardio: "Cardio",
+        dumbell: "Dumbell",
+        gymnastics: "Gymnastics",
+        kettlebell: "Kettlebell",
+        skills: "Skills",
+        weightlifting: "Weightlifting",
       },
-      recordCategories: {
-        maxLift: {
-          name: "Máximo levantamiento",
-          score_type: "weight",
-          active: true,
-        },
-        maxReps: {
-          name: "Máximas repeticiones",
-          score_type: "reps",
-          active: true,
-        },
-        bestTime: {
-          name: "Mejor Tiempo",
-          score_type: "time",
-          active: true,
-        },
-        newSkill: {
-          name: "Desbloquear habilidad",
-          score_type: "",
-          active: true,
-        },
-      },
+
       roles: {
         admin: "admin",
         athlete: "athlete",
@@ -192,7 +182,7 @@ const info = {
           name: "time",
           units: {
             min: "min",
-            sec: "seg",
+            sec: "sec",
           },
         },
         reps: {
@@ -205,7 +195,18 @@ const info = {
         },
         weight: {
           name: "weight",
-          units: "lbs",
+          units: {
+            lbs: "lb",
+            kg: "kg",
+          },
+        },
+        distance: {
+          name: "distance",
+          units: {
+            m: "m",
+            km: "km",
+            mi: "mi",
+          },
         },
       },
       wodCategories: {
@@ -236,6 +237,7 @@ const info = {
       users: {
         personalRecords: "personal_records",
         unlockedSkills: "unlocked_skills",
+        records: "records",
       },
       wods: {
         scores: "scores",
@@ -246,9 +248,10 @@ const info = {
         active: "active",
         name: "name",
         description: "description",
-        movementCategory: "id_movement_category",
-        scoreType: "id_score_type",
+        movementCategory: "movement_category",
+        scoreType: "score_types",
         isSkill: "skill",
+        timescore: "timescore",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
@@ -270,6 +273,24 @@ const info = {
           updatedAt: "updated_at",
         },
       },
+      records: {
+        movement: "movement",
+        idMovement: "id_movement",
+        movementCategory: "movement_category",
+        timescore: "timescore",
+        scores: {
+          date: "date",
+          reps: "reps",
+          sets: "sets",
+          units: "units",
+          weight: "weight",
+          seconds: "seconds",
+        },
+        timestamps: {
+          createdAt: "created_at",
+          updatedAt: "updated_at",
+        },
+      },
       roles: {
         type: "type",
         timestamps: {
@@ -280,13 +301,8 @@ const info = {
       },
       skills: {
         movement: "movement",
-        idMovement: "id_movement",
         movementCategory: "movement_category",
         date: "date",
-        timestamps: {
-          createdAt: "created_at",
-          updatedAt: "updated_at",
-        },
       },
       scoreTypes: {
         active: "active",
@@ -375,44 +391,6 @@ const info = {
       movementCreated: "Movimiento añadido correctamente",
     },
   },
-  requests: {
-    refreshToken: "https://securetoken.googleapis.com/v1/token?key=",
-  },
-  routes2: {
-    addAthlete: "/atletas/nuevo",
-    addMovement: "/movimientos/nuevo",
-    addPersonalGoal: "/metas/nuevo",
-    addPersonalRecord: "/prs/nuevo",
-    addSkill: "/skills/nuevo",
-    addWod: "/wods/nuevo",
-    athletes: "/atletas",
-    changePassword: "/contrasena/cambiar",
-    dashboard: "/escritorio",
-    groups: "groups",
-    home: "/",
-    leaderboard: "/leaderboard",
-    locations: {
-      juriquilla: "/sucursales/juriquilla",
-      zibata: "sucurales/zibata",
-      grandreserva: "sucursales/grandreserva",
-    },
-    login: "/login",
-    passwordRecover: "/contrasena/recuperar",
-    payments: "/pagos",
-    personalGoals: "/metas",
-    plans: "/planes",
-    prs: "/prs",
-    prsHistory: "/prs/historial",
-    profile: "/perfil",
-    programming: "/programacion",
-    records: "/records",
-    serverError: "server-error",
-    settings: "/ajustes",
-    skills: "/skills",
-    singleAthlete: "/atletas",
-    videos: "/videos",
-    wods: "/wods",
-  },
   routes: {
     home: "/",
     notFound: "/recurso-no-encontrado",
@@ -471,6 +449,12 @@ const info = {
           absolutePath: "/movimientos/:id",
           path: "/:id",
           value: ":id",
+        },
+        tracking: {
+          absolutePath: "/movimientos/tracking/:id",
+          absolutePathNoParms: "/movimientos/tracking",
+          path: "/tracking/:id",
+          value: "tracking/:id",
         },
       },
     },
@@ -580,12 +564,10 @@ const info = {
       value: "contrasena/recuperar",
     },
   },
-  states: {
     theme: {
       light: "light",
       dark: "dark",
     },
-  },
   views: {
     addAthlete: "Añadir Atleta",
     addWod: "Añadir WOD",
@@ -601,7 +583,7 @@ const info = {
     },
     payments: "Pagos",
     plans: "Planes",
-    prs: "PRs",
+    prs: "Records Personales",
     programming: "Programación",
     profile: "Perfil",
     records: "Personal Records",

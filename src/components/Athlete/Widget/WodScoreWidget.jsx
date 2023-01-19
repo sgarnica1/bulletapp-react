@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import { useDashboard } from "../../contexts/DashboardContext";
-import { useWods } from "../../hooks/useWods";
-import { useWodScores } from "../../hooks/useWodScores";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useDashboard } from "../../../contexts/DashboardContext";
+import { useWods } from "../../../hooks/useWods";
+import { useWodScores } from "../../../hooks/useWodScores";
 
 // COMPONENTS
-import { Button } from "../Public/Button";
-import { AddRegisterWidgetContainer } from "./AddRegisterWidgetContainer";
+import { Button } from "../../Public/Button";
+import { FormWidgetContainer } from "./FormWidgetContainer";
 
 // LOADING SKELETONS
-import { WidgetLoadingSkeleton } from "../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
+import { WidgetLoadingSkeleton } from "../../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
 // UTILS
-import { info } from "../../utils/info";
-import { utils } from "../../utils/utils";
+import { info } from "../../../utils/info";
+import { utils } from "../../../utils/utils";
 
 const WodScoreWidget = () => {
   const { user } = useAuth();
@@ -118,23 +118,23 @@ const WodScoreWidget = () => {
   // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
   if (!loading && !wodScoresLoading && wod && wod !== -1) {
     return (
-      <AddRegisterWidgetContainer
+      <FormWidgetContainer
         title="¿Cómo te fue hoy?"
         description="Registra tu score del día"
         error={error}
       >
         <form
-          className="AddRegisterWidget__form"
+          className="FormWidgetContainer__form"
           onSubmit={(event) => handleSubmit(event)}
         >
           {/* SCORE INPUT */}
           {!wodScoresLoading && (
-            <div className="AddRegisterWidget__form__input-score">
+            <div className="FormWidgetContainer__form__input-score">
               {wod.score_type === info.firebase.values.scoreTypes.time.name && (
-                <div className="AddRegisterWidget__form__input-container">
+                <div className="FormWidgetContainer__form__input-container">
                   <input
                     type="number"
-                    className="AddRegisterWidget__form__input"
+                    className="FormWidgetContainer__form__input"
                     placeholder="00"
                     value={minutes}
                     max={59}
@@ -147,12 +147,12 @@ const WodScoreWidget = () => {
                       setMinutes(formattedValue);
                     }}
                   />
-                  <p className="AddRegisterWidget__form__input-units">
+                  <p className="FormWidgetContainer__form__input-units">
                     {info.firebase.values.scoreTypes[wod.score_type]?.units.min}
                   </p>
                   <input
                     type="number"
-                    className="AddRegisterWidget__form__input"
+                    className="FormWidgetContainer__form__input"
                     placeholder="00"
                     value={seconds}
                     max={59}
@@ -165,7 +165,7 @@ const WodScoreWidget = () => {
                       setSeconds(formattedValue);
                     }}
                   />
-                  <p className="AddRegisterWidget__form__input-units">
+                  <p className="FormWidgetContainer__form__input-units">
                     {info.firebase.values.scoreTypes[wod.score_type]?.units.sec}
                   </p>
                 </div>
@@ -174,7 +174,7 @@ const WodScoreWidget = () => {
                 <>
                   <input
                     type="number"
-                    className="AddRegisterWidget__form__input"
+                    className="FormWidgetContainer__form__input"
                     placeholder="0"
                     value={reps}
                     onChange={(e) => {
@@ -183,7 +183,7 @@ const WodScoreWidget = () => {
                       setReps(e.target.value);
                     }}
                   />
-                  <p className="AddRegisterWidget__form__input-units">
+                  <p className="FormWidgetContainer__form__input-units">
                     {info.firebase.values.scoreTypes[wod.score_type]?.units}
                   </p>
                 </>
@@ -199,7 +199,7 @@ const WodScoreWidget = () => {
             disabled={loading || error}
           />
         </form>
-      </AddRegisterWidgetContainer>
+      </FormWidgetContainer>
     );
   }
   return null;
