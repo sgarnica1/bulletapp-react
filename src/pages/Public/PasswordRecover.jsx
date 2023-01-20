@@ -4,6 +4,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 
 // COMPONENTS
 import { Button } from "../../components/Public/Button";
+import { BackButton } from "../../components/Public/BackButton";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 
 // UTILS
@@ -78,10 +79,7 @@ function PasswordRecover() {
             fill={false}
           />
         </form>
-        <Link to={info.routes.login} className="PasswordRecover__back-btn">
-          <img src={BackArrow} alt="Back Green Arrow" />
-          Regresar
-        </Link>
+        <BackButton link={info.routes.login.path} text="Regresar" mt={true}/>
       </ContentContainer>
     </div>
   );

@@ -61,11 +61,15 @@ body {
   &__form {
     width: 100%;
     max-width: 400px;
-    // padding: 20px 10px;
-    // background: var(--bg-component);
+    padding: 20px 10px;
+    background: var(--bg-component);
     border-radius: 20px;
     margin: 20px 0;
     // box-shadow: var(--box-shadow);
+
+    @include mq(lg) {
+      padding: 20px;
+    }
   }
 
   &__welcome {

@@ -8,6 +8,10 @@
   border: none;
   cursor: pointer;
   outline: none;
+  color: var(--color-text);
+  font-size: toRem(15);
+  font-weight: 500;
+  text-transform: uppercase;
 
   &.mb,
   &.mt {

@@ -63,7 +63,7 @@ function App() {
         <SuccessAlert />
         <ErrorAlert />
 
-        <Dashboard>
+        <Dashboard fullscreen={user ? false : true}>
           {user ? (
             <>
               <Navbar user={user} />

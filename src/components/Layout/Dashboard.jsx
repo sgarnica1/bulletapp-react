@@ -1,5 +1,7 @@
-function Dashboard({ children }) {
-  return <div className="Dashboard">{children}</div>;
+function Dashboard({ fullscreen, children }) {
+  return (
+    <div className={`Dashboard ${fullscreen && "fullscreen"}`}>{children}</div>
+  );
 }
 
 export { Dashboard };

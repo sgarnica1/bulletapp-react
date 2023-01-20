@@ -7,5 +7,13 @@
 
   @include mq(xl) {
     grid-template-columns: 18% 82%;
+
+    &.fullscreen {
+      grid-template-columns: 100%;
+
+      .ContentContainer {
+        margin: 0 auto;
+      }
+    }
   }
 }
