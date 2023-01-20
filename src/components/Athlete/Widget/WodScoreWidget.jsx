@@ -26,7 +26,8 @@ const WodScoreWidget = () => {
   } = useWodScores();
 
   // INITIAL STATES
-  const [reps, setReps] = useState(0);
+  const [reps, setReps] = useState();
+  const [rounds, setRounds] = useState();
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   const [wodScore, setWodScore] = useState("");
@@ -64,7 +65,7 @@ const WodScoreWidget = () => {
     let score;
 
     // REVIEW SCORE TYPE (TIME OR REPS)
-    if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
+    if (wod.timescore === true) {
       // REVIEW EMPTY FIELDS
       if (parseInt(minutes) === 0 && parseInt(seconds) === 0)
         return setErrorMessage(info.messages.error.emptyScore);
@@ -82,13 +83,19 @@ const WodScoreWidget = () => {
         seconds: parseInt(seconds),
       };
     } else {
-      // REVIEW EMPTY FIELDS
-      if (reps === 0) return setErrorMessage(info.messages.error.emptyScore);
+      if (parseInt(rounds) === 0 && parseInt(reps) === 0)
+        return setErrorMessage(info.messages.error.emptyScore);
       // REVIEW SAME SCORE
-      if (wodScore && wodScore.score && wodScore.score.reps === reps)
+      if (
+        wodScore &&
+        wodScore.score &&
+        parseInt(wodScore.score.rounds) === parseInt(rounds) &&
+        parseInt(wodScore.score.reps) === parseInt(reps)
+      )
         return setErrorMessage(info.messages.error.sameScore);
       // SET SCORE
       score = {
+        rounds: parseInt(rounds),
         reps: parseInt(reps),
       };
     }
@@ -127,69 +134,52 @@ const WodScoreWidget = () => {
           className="FormWidgetContainer__form"
           onSubmit={(event) => handleSubmit(event)}
         >
-          {/* SCORE INPUT */}
           {!wodScoresLoading && (
             <div className="FormWidgetContainer__form__input-score">
-              {wod.score_type === info.firebase.values.scoreTypes.time.name && (
-                <div className="FormWidgetContainer__form__input-container">
-                  <input
-                    type="number"
-                    className="FormWidgetContainer__form__input"
-                    placeholder="00"
-                    value={minutes}
-                    max={59}
-                    min={0}
-                    onChange={(e) => {
-                      const formattedValue = utils.formatTimerInput(
-                        e.target.value,
-                        minutes
-                      );
-                      setMinutes(formattedValue);
-                    }}
-                  />
-                  <p className="FormWidgetContainer__form__input-units">
-                    {info.firebase.values.scoreTypes[wod.score_type]?.units.min}
-                  </p>
-                  <input
-                    type="number"
-                    className="FormWidgetContainer__form__input"
-                    placeholder="00"
-                    value={seconds}
-                    max={59}
-                    min={0}
-                    onChange={(e) => {
-                      const formattedValue = utils.formatTimerInput(
-                        e.target.value,
-                        seconds
-                      );
-                      setSeconds(formattedValue);
-                    }}
-                  />
-                  <p className="FormWidgetContainer__form__input-units">
-                    {info.firebase.values.scoreTypes[wod.score_type]?.units.sec}
-                  </p>
-                </div>
-              )}
-              {wod.score_type === info.firebase.values.scoreTypes.reps.name && (
-                <>
-                  <input
-                    type="number"
-                    className="FormWidgetContainer__form__input"
-                    placeholder="0"
-                    value={reps}
-                    onChange={(e) => {
-                      if (e.target.value < 0) e.target.value = 0;
+              <div className="FormWidgetContainer__form__input-container">
+                <input
+                  type="number"
+                  className="FormWidgetContainer__form__input"
+                  placeholder={wod.timescore ? "00" : "0"}
+                  value={wod.timescore ? minutes : rounds}
+                  max={wod.timescore ? 59 : null}
+                  min={0}
+                  onChange={(event) => {
+                    if (!wod.timescore) return setRounds(event.target.value);
 
-                      setReps(e.target.value);
-                    }}
-                  />
-                  <p className="FormWidgetContainer__form__input-units">
-                    {info.firebase.values.scoreTypes[wod.score_type]?.units}
-                  </p>
-                </>
-              )}
+                    const formattedValue = utils.formatTimerInput(
+                      event.target.value,
+                      minutes
+                    );
+                    setMinutes(formattedValue);
+                  }}
+                />
+                <p className="FormWidgetContainer__form__input-units">
+                  {wod.timescore ? "MIN" : "RDS"}
+                </p>
+                <input
+                  type="number"
+                  className="FormWidgetContainer__form__input"
+                  placeholder={wod.timescore ? "00" : "0"}
+                  value={wod.timescore ? seconds : reps}
+                  max={wod.timescore ? 59 : null}
+                  min={0}
+                  onChange={(event) => {
+                    if (!wod.timescore) return setReps(event.target.value);
+                    const formattedValue = utils.formatTimerInput(
+                      event.target.value,
+                      seconds
+                    );
+                    setSeconds(formattedValue);
+                  }}
+                />
+                <p className="FormWidgetContainer__form__input-units">
+                  {wod.timescore ? "SEG" : "REPS"}
+                </p>
+              </div>
             </div>
           )}
+
           <Button
             type={info.components.button.type.submit}
             style={info.components.button.classes.secondary}

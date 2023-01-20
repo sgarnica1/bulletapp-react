@@ -46,9 +46,8 @@ function AddWodForm() {
     // Fetch wod categories from the database
     if (!wodCategories) wodCategoriesActions.getWodCategories();
 
-    // Handle wod on same date
-    if(error) {
-      setErrorMessage(error.message)
+    if (error) {
+      setErrorMessage(error.message);
     }
 
     return () => abortCont.abort();
@@ -100,8 +99,6 @@ function AddWodForm() {
       [roundsKey]: rounds,
       [timeScoreKey]: timescore,
     };
-
-    // console.log(newWod);
 
     wodActions.postWod(newWod, (error) => {
       if (error) return setErrorMessage(info.messages.error.errorWriting);
@@ -177,10 +174,10 @@ function AddWodForm() {
 
       <Input
         type={info.components.input.type.textarea}
-        label={"Descripción (Separar ejercicios con comas)"}
+        label={"Descripción (Separar ejercicios con un salto de línea)"}
         name="description"
         placeholder={
-          "10 Pull Ups, \n20 Push Ups,\n30 Air Squats,\n(Separar ejercicios con comas)\n..."
+          "10 Pull Ups\n20 Push Ups\n30 Air Squats\n(Separar ejercicios con un salto de línea)\n..."
         }
         validationHandler={(value) => (!value || value == "" ? false : true)}
         setValidData={setValidDescription}

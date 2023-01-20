@@ -81,20 +81,27 @@ const getWeeklyWodsApi = async (callback) => {
 
 const getTodaysWodApi = async (callback) => {
   const today = new Date();
-  const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+  const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+  today.setHours(0, 0, 0, 0);
+  tomorrow.setHours(0, 0, 0, 0);
 
-  // VERIFY IF TODAY IS A WEEKEND
+  // Verify if it is saturday or sunday
   if (today.getDay() === 0 || today.getDay() === 6) return -1;
 
   try {
     const ref = collection(db, info.firebase.collections.wods);
-    const query_ = query(ref, where("date", ">=", yesterday));
+    const query_ = query(
+      ref,
+      where("date", ">=", today),
+      where("date", "<", tomorrow)
+    );
     const snapshot = await getDocs(query_);
     const data = snapshot.docs.map((doc) => {
       const date = new Date(doc.data().date.seconds * 1000);
       return { id: doc.id, locale_date: date, ...doc.data() };
     });
-    // VERIFY IF THERE IS A WOD FOR TODAY
+
+    // Verify if there is a wod for today, if not return -1
     if (data.length === 0) return -1;
 
     if (callback) callback(data);
@@ -105,25 +112,36 @@ const getTodaysWodApi = async (callback) => {
 };
 
 const getWodByDateApi = async (date, callback) => {
+  const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000);
   date.setHours(0, 0, 0, 0);
 
   // VERIFY IF TODAY IS A WEEKEND
-  if (date.getDay() === 0 || date.getDay() === 6) return null;
+  if (date.getDay() === 0 || date.getDay() === 6) return -1;
 
   // GET WOD
   try {
     const ref = collection(db, info.firebase.collections.wods);
-    const query_ = query(ref, where("date", ">=", date));
+    const query_ = query(
+      ref,
+      where("date", ">=", date),
+      where("date", "<", tomorrow)
+    );
     const snapshot = await getDocs(query_);
-    const data = snapshot.docs.map((doc) => {
-      const date = new Date(doc.data().date.seconds * 1000);
-      return { id: doc.id, locale_date: date, ...doc.data() };
+
+    let data = [];
+
+    snapshot.docs.map((doc) => {
+      const woddate = new Date(doc.data().date.seconds * 1000);
+      // Get the wod for the date
+      if (woddate.getDate() === date.getDate())
+        data.push({ id: doc.id, locale_date: woddate, ...doc.data() });
+      return doc.data();
     });
-    // VERIFY IF THERE IS A WOD FOR TODAY
-    if (data.length === 0 || data[0].length === 0) return null;
+
+    // Verify if there is a wod for today, if not return -1
+    if (data.length === 0 || data[0].length === 0) return -1;
 
     if (callback) callback(data);
-    // console.log(data);
     return data[0];
   } catch (err) {
     throw err;
@@ -149,10 +167,12 @@ const postWodApi = async (wodData, callback) => {
       [roundsKey]: wodData[roundsKey],
       timestamps: {
         // TIMESTAMPS
-        [info.firebase.docKeys.wods.timestamps.createdAt]:
-          Timestamp.fromDate(new Date()),
-        [info.firebase.docKeys.wods.timestamps.updatedAt]:
-          Timestamp.fromDate(new Date()),
+        [info.firebase.docKeys.wods.timestamps.createdAt]: Timestamp.fromDate(
+          new Date()
+        ),
+        [info.firebase.docKeys.wods.timestamps.updatedAt]: Timestamp.fromDate(
+          new Date()
+        ),
       },
     });
     if (callback) callback();

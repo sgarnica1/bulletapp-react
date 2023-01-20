@@ -26,8 +26,8 @@ function Leaderboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
-    setActiveView(info.views.leaderboard);
     if (loading) setSearchValue("");
+    setActiveView(info.views.leaderboard);
     const date = setWodDate(weekDay);
     setCurrentDate(date);
 
@@ -90,23 +90,20 @@ function Leaderboard() {
           {/* WOD LIST */}
           {loading && !wods && <WidgetLoadingSkeleton wod={true} />}
           <div className="Leaderboard__wod">
-            {!loading && !wodAvailable && (
+            {!loading && (!wodAvailable || !wods) && (
               <p className="Leaderboard__wod__not-available">No disponible</p>
             )}
 
             {!loading && wodAvailable && wods && (
               <div className="Leaderboard__wod__body">
                 <p className="Leaderboard__wod__title">
-                  {wods.description.split(",")[0]}
+                  {wods.title}
                 </p>
-                {wods?.description
-                  .split(",")
-                  .slice(1)
-                  .map((line, index) => (
-                    <p className="Leaderboard__wod__description" key={index}>
-                      {line}
-                    </p>
-                  ))}
+                {wods?.description.split("\n").map((line, index) => (
+                  <p className="Leaderboard__wod__description" key={index}>
+                    {line}
+                  </p>
+                ))}
                 <p className="Leaderboard__wod__timecap">
                   Time Cap: <span>{wods?.timecap} min</span>
                 </p>
