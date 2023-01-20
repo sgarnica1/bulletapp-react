@@ -375,6 +375,7 @@ const info = {
       emptyScore: "Por favor ingresa un score",
       emptyFields: "Todos los campos son requeridos",
       errorWriting: "Ocurrió un error, por favor vuelve a intentarlo.",
+      errorUpdating: "Ocurrió un error, por favor vuelve a intentarlo.",
       fetchError: "Error en la conexión",
       insufficientPermissions: "No tienes permisos para realizar esta acción",
       invalidDate: "El formato de fecha no es válido",
@@ -392,6 +393,7 @@ const info = {
       wodScoreCreated: "Score registrado correctamente",
       wodCreated: "WOD registrado correctamente",
       movementCreated: "Movimiento añadido correctamente",
+      passwordUpdated: "Contraseña actualizada correctamente",
     },
   },
   routes: {

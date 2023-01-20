@@ -49,15 +49,4 @@ const getUserInfoApi = async (user, id) => {
   }
 };
 
-const getUserRoleApi = async (idRole) => {
-  try {
-    const ref = doc(db, info.firebase.collections.roles, idRole);
-    const snapshot = await getDoc(ref);
-    return snapshot.data().type;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-export { getUsersApi, getUserByIdApi, getUserInfoApi, getUserRoleApi };
+export { getUsersApi, getUserByIdApi, getUserInfoApi };
