@@ -368,6 +368,7 @@ const info = {
     theme: "BFC_THEME",
     authToken: "BCF_TOKEN",
     refreshToken: "BCFRT",
+    movements: "BCF_MOVEMENTS",
   },
   messages: {
     error: {

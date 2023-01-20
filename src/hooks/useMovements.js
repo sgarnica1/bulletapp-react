@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocalStorage } from "./useLocalStorage";
 import {
   getMovementsApi,
   getMovementByIdApi,
@@ -12,10 +13,22 @@ const useMovements = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const [storedMovements, setStoredMovements] = useLocalStorage(
+    info.localStorageKeys.movements,
+    []
+  );
+
   const getMovements = async () => {
     try {
       setLoading(true);
+      if (storedMovements.length > 0) {
+        await setMovements(storedMovements);
+        await setLoading(false);
+        return;
+      }
+
       const res = await getMovementsApi();
+      setStoredMovements(res);
       setMovements(res);
       setLoading(false);
     } catch (err) {

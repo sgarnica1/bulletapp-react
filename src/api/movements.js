@@ -12,6 +12,7 @@ import { db } from "../firebase/index";
 import { info } from "../utils/info";
 
 const getMovementsApi = async (callback) => {
+  console.log("getMovementsApi");
   try {
     const ref = collection(db, info.firebase.collections.movements);
     const query_ = query(ref, where("active", "==", true));

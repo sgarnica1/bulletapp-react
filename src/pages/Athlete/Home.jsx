@@ -88,26 +88,35 @@ function Home() {
         {/* LATEST RECORDS */}
         {latestactivity && <h2 className="subtitle">Marcas personales</h2>}
         {!loadingRecord && latestactivity && (
-          <div className="StatWidget__container">
+          <div className="StatWidget__container grid">
+            {/* Last register */}
             {latestactivity.register && (
               <StatWidget
                 metaDescription={"Última actividad"}
-                title={
-                  latestactivity.register.movement +
-                  ` (${latestactivity.register.scores[0].sets}x${latestactivity.register.scores[0].reps})`
-                }
+                title={`${latestactivity.register.movement} ${
+                  !latestactivity.register.timescore
+                    ? "(" +
+                      latestactivity.register.scores[0].sets +
+                      "x" +
+                      latestactivity.register.scores[0].reps +
+                      ")"
+                    : ""
+                }`}
                 seconds={latestactivity.register.scores[0].date.seconds}
                 value={
                   latestactivity.register.scores[0].weight > 0
                     ? latestactivity.register.scores[0].weight
+                    : latestactivity.register.scores[0].seconds
+                }
+                units={
+                  latestactivity.register.scores[0].weight > 0
+                    ? latestactivity.register.scores[0].units
                     : ""
                 }
-                units={latestactivity.register.scores[0].weight > 0
-                    ? latestactivity.register.scores[0].units
-                    : ""}
                 timescore={latestactivity.register.timescore}
               />
             )}
+            {/* Rep max */}
             {latestactivity.repmax && (
               <StatWidget
                 metaDescription={"1RM más reciente"}

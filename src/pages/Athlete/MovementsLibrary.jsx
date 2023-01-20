@@ -44,18 +44,22 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
   );
 
   useEffect(() => {
-    skillsOnly ? setActiveView(info.views.skills) : setActiveView(info.views.records);
+    skillsOnly
+      ? setActiveView(info.views.skills)
+      : setActiveView(info.views.records);
     if (loading) setSearch("");
 
-    // FETCH DATA
-    if (loading && !movements && !skills) actions.getMovements();
+    // Fetch movements and skills
+    if (loading && !movements && !skills) {
+      console.log("FETCHING MOVEMENTS");
+      actions.getMovements();
+    }
     if (loadingSkills && movements && !skills)
       actionsSkills.getSkillsNameListByUserId(user.uid || user.user_id);
 
-    // SORT MOVEMENTS
+    // Sort movements
     if (movements && sortedMovements.length === 0) {
-      // GET PARAMS FROM URL AND SET SKILLS ONLY
-
+      // Get params from urls and set skills only
       const sorted = movements.sort((a, b) => a.name.localeCompare(b.name));
       setSortedMovements(sorted);
       setFilteredMovements(sorted);
