@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { useDashboard } from "../../contexts/DashboardContext";
 
 // COMPONENTS
 import { BackButton } from "../../components/Public/BackButton";
@@ -13,6 +16,10 @@ import InvisibleIcon from "../../assets/icon/invisible.svg";
 import VisibleIcon from "../../assets/icon/visible.svg";
 
 function ChangePassword() {
+  const { changePassword } = useAuth();
+  const { setErrorMessage, setSuccessMessage } = useDashboard();
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(false);
   const [password, setPassword] = useState("");
   const [matchingPassword, setMatchingPassword] = useState("");
@@ -35,7 +42,15 @@ function ChangePassword() {
       return setInvalidMatchingPassword(true);
 
     setLoading(true);
-    console.log("Cambiando contraseña...");
+    changePassword(
+      password,
+      setSuccessMessage,
+      setErrorMessage,
+      setLoading,
+      () => {
+        navigate(info.routes.home);
+      }
+    );
   };
 
   useEffect(() => {}, [password, matchingPassword]);
@@ -93,6 +108,10 @@ function ChangePassword() {
                   setMatchingPassword(event.target.value);
                   setInvalidMatchingPassword(false);
                 }}
+                onBlur={(event) => {
+                  passwordVerifier();
+                  setInvalidMatchingPassword(!matchingPassword || password !== matchingPassword)
+                }}
               />
             </div>
             {invalidMatchingPassword && (
@@ -107,6 +126,11 @@ function ChangePassword() {
             size={info.components.button.classes.lg}
             style={info.components.button.classes.primary}
             fill={true}
+            disabled={
+              !matchingPassword ||
+              password !== matchingPassword ||
+              invalidPassword
+            }
           />
         </form>
       </ContentContainer>

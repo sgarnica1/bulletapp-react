@@ -1,8 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { signInWithEmailAndPassword, updateCurrentUser} from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  updatePassword,
+  sendPasswordResetEmail,
+  updateCurrentUser,
+} from "firebase/auth";
 import { auth } from "../firebase/index";
-import { getUserInfoApi } from "../api/user";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { getUserInfoApi } from "../api/user";
 import { REFRESH_TOKEN_API } from "../utils/requests";
 import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
@@ -77,14 +82,20 @@ const AuthProvider = ({ children }) => {
   );
 
   // LOGIN USER
-  const loginUser = async (event) => {
-    event.preventDefault();
+  const loginUser = async (event, loginData) => {
+    if (event) event.preventDefault();
     setLoading(true);
     setLoggingIn(true);
     setError(false);
 
-    const email = event.target.username.value;
-    const password = event.target.password.value;
+    const email =
+      loginData && loginData.email
+        ? loginData.email
+        : event.target.username.value;
+    const password =
+      loginData && loginData.password
+        ? loginData.password
+        : event.target.password.value;
 
     // FETCH DATA FROM SERVER
     try {
@@ -150,12 +161,12 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = (callback) => {
+  // LOGOUT USER
+  function logoutUser(callback) {
     setAuthTokens(null);
     setUser(null);
     setError(false);
     updateCurrentUser(auth, null);
-    setStoredMovements([]);
 
     // REMOVE TOKEN FROM LOCAL STORAGE
     localStorage.removeItem(info.localStorageKeys.authToken);
@@ -164,10 +175,10 @@ const AuthProvider = ({ children }) => {
     // document.cookie = `${info.localStorageKeys.refreshToken}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 
     if (callback) callback();
-  };
+  }
 
   // UPDATE TOKEN
-  const updateToken = async () => {
+  async function updateToken() {
     setLoading(true);
     setLoggingIn(false);
     setError(false);
@@ -236,15 +247,53 @@ const AuthProvider = ({ children }) => {
       // logoutUser();
     }
     if (loading) setLoading(false);
-  };
+  }
+
+  // UPDATE PASSWORD
+  function changePassword(
+    newPassword,
+    setSuccessMessage,
+    setErrorMessage,
+    setLoading,
+    callback
+  ) {
+    const user = auth.currentUser;
+
+    updatePassword(user, newPassword)
+      .then(() => {
+        setSuccessMessage(info.messages.success.passwordUpdated);
+        setLoading(false);
+        callback();
+        return loginUser(null, { email: user.email, password: newPassword });
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        return setErrorMessage(info.messages.error.errorUpdating);
+      });
+  }
+
+  // SEND PASSWORD RESET EMAIL
+  function sendPasswordReset(email, setSuccess, setError, callback) {
+    console.log(auth);
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        console.log("Email sent");
+        setSuccess(true);
+        callback();
+      })
+      .catch((error) => {
+        callback();
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        setError(errorMessage);
+      });
+  }
 
   useEffect(() => {
     if (loading) updateToken();
-
-    // if(user) console.log(user)
-    // auth.onAuthStateChanged((updatedUser) => {
-    //   console.log(updatedUser);
-    // });
 
     const fourMinutes = 1000 * 60 * 4; // FOUR MINUTES IN SECONDS
 
@@ -267,6 +316,8 @@ const AuthProvider = ({ children }) => {
         loggingIn,
         loginUser,
         logoutUser,
+        changePassword,
+        sendPasswordReset,
         setError,
       }}
     >

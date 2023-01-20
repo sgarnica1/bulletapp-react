@@ -6,7 +6,6 @@ import { useTheme } from "./contexts/ThemeContext";
 // COMPONENTS
 import { Dashboard } from "./components/Layout/Dashboard";
 import { ErrorAlert } from "./components/Public/ErrorAlert";
-import { Footer } from "./components/Layout/Footer";
 import { Header } from "./components/Layout/Header";
 import { Navbar } from "./components/Layout/Navbar";
 import { SuccessAlert } from "./components/Public/SuccessAlert";
@@ -18,14 +17,12 @@ import { NotFound } from "./pages/Public/NotFound";
 import { PasswordRecover } from "./pages/Public/PasswordRecover";
 
 // ATHLETE PAGES
-import { AddSkill } from "./pages/Athlete/AddSkill";
 import { ChangePassword } from "./pages/Athlete/ChangePassword";
 import { Home } from "./pages/Athlete/Home";
 import { Leaderboard } from "./pages/Athlete/Leaderboard";
 import { MovementsLibrary } from "./pages/Athlete/MovementsLibrary";
 import { MovementTracking } from "./pages/Athlete/MovementTracking";
 import { Settings } from "./pages/Athlete/Settings";
-import { Skills } from "./pages/Athlete/Skills";
 
 // ADMIN PAGES
 import { Athletes } from "./pages/Admin/Athletes";
@@ -155,7 +152,6 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Dashboard>
-        {/* {user ? <Footer /> : null} */}
       </div>
     </Router>
   );
