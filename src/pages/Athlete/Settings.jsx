@@ -56,7 +56,7 @@ function Settings() {
 
         <Button
           onClickHandler={logoutUser}
-          style={info.components.button.classes.secondary}
+          style={info.components.button.classes.primary}
           size={info.components.button.classes.lg}
           fill={false}
           text={"Cerrar sesión"}

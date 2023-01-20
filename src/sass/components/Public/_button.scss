@@ -1,7 +1,7 @@
 .Button {
   display: flex;
   height: $height-input;
-  max-width: $max-width-input;
+  max-width: $max-width-card;
   justify-content: center;
   align-items: center;
   padding: 0.8em 3em;
@@ -12,6 +12,10 @@
   border-radius: toRem(6);
   color: $color-dark;
   background-color: $color-secondary;
+
+  @include mq(md) {
+    max-width: $max-width-card-md;
+  }
 
   &:disabled {
     opacity: 0.5;

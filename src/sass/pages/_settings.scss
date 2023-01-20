@@ -1,5 +1,15 @@
 .Settings {
+  // .CardContainer, .InfoCard {
+  //   max-width: 1280px;
+  // }
+
   .Button {
     margin-top: 30px;
+  }
+
+  @include mq(xl) {
+    .Button {
+      display: none;
+    }
   }
 }

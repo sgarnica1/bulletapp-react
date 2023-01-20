@@ -22,6 +22,7 @@ import { Home } from "./pages/Athlete/Home";
 import { Leaderboard } from "./pages/Athlete/Leaderboard";
 import { MovementsLibrary } from "./pages/Athlete/MovementsLibrary";
 import { MovementTracking } from "./pages/Athlete/MovementTracking";
+import { Profile } from "./pages/Athlete/Profile";
 import { Settings } from "./pages/Athlete/Settings";
 
 // ADMIN PAGES
@@ -112,6 +113,8 @@ function App() {
                   element={<ChangePassword />}
                 />
               </Route>
+
+              <Route path={info.routes.profile.path} element={<Profile />} />
             </Route>
 
             {/* ---------- ADMIN ---------- */}

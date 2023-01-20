@@ -50,7 +50,7 @@
       color: $color-brand;
       border-radius: 50%;
       font-weight: 600;
-      font-size: toRem(20);
+      font-size: toRem(18);
       text-transform: uppercase;
     }
   }
@@ -61,7 +61,7 @@
   }
 
   &__title {
-    font-size: toRem(18);
+    font-size: toRem(16);
     color: var(--color-text);
   }
 
