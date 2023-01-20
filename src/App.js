@@ -120,10 +120,12 @@ function App() {
                 path={info.routes.movements.nested.add.path}
                 element={<AddMovement />}
               />
-              <Route
-                path={info.routes.wods.nested.add.path}
-                element={<AddWod />}
-              />
+              <Route path={info.routes.wods.path}>
+                <Route
+                  path={info.routes.wods.nested.add.value}
+                  element={<AddWod />}
+                />
+              </Route>
 
               {/* /atletas */}
               <Route path={info.routes.athlete.path}>

@@ -12,13 +12,10 @@ import { REFRESH_TOKEN_API } from "../utils/requests";
 import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
 
-// CREATE CONTEXT
 const AuthContext = createContext();
 
-// CONTEXT HOOK
 const useAuth = () => useContext(AuthContext);
 
-// PROVIDER
 const AuthProvider = ({ children }) => {
   // GET TOKEN FROM COOKIE AND SET IT TO STATE
   // const getTokenFromCookie = (name, callback) => {
@@ -76,8 +73,12 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loggingIn, setLoggingIn] = useState(false);
-  const [storedMovements, setStoredMovements] = useLocalStorage(
+  const [, setStoredMovements] = useLocalStorage(
     info.localStorageKeys.movements,
+    []
+  );
+  const [, setStoredWodCategories] = useLocalStorage(
+    info.localStorageKeys.wodCategories,
     []
   );
 
@@ -143,7 +144,7 @@ const AuthProvider = ({ children }) => {
       console.log(err.message);
 
       setError("Ocurrió un error. Por favor intenta de nuevo");
-      // REVIEW ERROR MESSAGE
+      // Review error messages
       if (
         err.message === info.firebase.errors.auth.wrongPassword ||
         err.message === info.firebase.errors.auth.userNotFound ||
@@ -161,31 +162,34 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // LOGOUT USER
   function logoutUser(callback) {
+    // Clean states
     setAuthTokens(null);
     setUser(null);
     setError(false);
+
+    // Logout from firebase
     updateCurrentUser(auth, null);
 
-    // REMOVE TOKEN FROM LOCAL STORAGE
+    // Clean local storage
+    setStoredMovements([]);
+    setStoredWodCategories([]);
+
+    // Remove tokens
     localStorage.removeItem(info.localStorageKeys.authToken);
     localStorage.removeItem(info.localStorageKeys.refreshToken);
-    // REMOVE TOKEN FROM COOKIE
     // document.cookie = `${info.localStorageKeys.refreshToken}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 
     if (callback) callback();
   }
 
-  // UPDATE TOKEN
   async function updateToken() {
     setLoading(true);
     setLoggingIn(false);
     setError(false);
     setStoredMovements([]);
-    // console.log(authTokens.refreshToken);
 
-    // FETCH NEW TOKEN FROM SERVER
+    // Fetch new tokens
     try {
       const res = await fetch(
         `${REFRESH_TOKEN_API}${process.env.REACT_APP_FIREBASE_API_KEY}`,

@@ -160,8 +160,6 @@ const AddRecordForm = ({
     </div>
   );
 
-  // FUNCTIONS;
-
   function submitHandler(event) {
     event.preventDefault();
 

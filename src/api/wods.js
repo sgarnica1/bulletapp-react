@@ -9,6 +9,17 @@ import {
 import { db } from "../firebase/index";
 import { info } from "../utils/info";
 
+// Firebase Keys
+const activeKey = info.firebase.docKeys.wods.active;
+const titleKey = info.firebase.docKeys.wods.title;
+const descriptionKey = info.firebase.docKeys.wods.description;
+const timecapKey = info.firebase.docKeys.wods.timecap;
+const categoryKey = info.firebase.docKeys.wods.category;
+const dateKey = info.firebase.docKeys.wods.date;
+const repsKey = info.firebase.docKeys.wods.reps;
+const roundsKey = info.firebase.docKeys.wods.rounds;
+const timeScoreKey = info.firebase.docKeys.wods.timescore;
+
 const getAllWodsApi = async (callback) => {
   try {
     const ref = collection(db, info.firebase.collections.wods);
@@ -17,6 +28,20 @@ const getAllWodsApi = async (callback) => {
     const data = snapshot.docs.map((doc) => {
       const date = new Date(doc.data().date.seconds * 1000);
       return { id: doc.id, locale_date: date, ...doc.data() };
+    });
+    if (callback) callback(data);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getWodCategoriesApi = async (callback) => {
+  try {
+    const ref = collection(db, info.firebase.collections.wodCategories);
+    const snapshot = await getDocs(ref);
+    const data = snapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
     if (callback) callback(data);
     return data;
@@ -108,23 +133,25 @@ const getWodByDateApi = async (date, callback) => {
 const postWodApi = async (wodData, callback) => {
   const date = new Date(wodData.date);
   date.setHours(0, 0, 0, 0);
+  console.log(wodData);
 
   try {
     const ref = collection(db, info.firebase.collections.wods);
     const docRef = await addDoc(ref, {
-      [info.firebase.docKeys.wods.active]: true, // ACTIVE
-      [info.firebase.docKeys.wods.date]: Timestamp.fromDate(date), // DATE
-      [info.firebase.docKeys.wods.description]:
-        wodData[info.firebase.docKeys.wods.description], // DESCRIPTION
-      [info.firebase.docKeys.wods.idScoreType]:
-        wodData[info.firebase.docKeys.wods.idScoreType], // SCORE TYPE
-      [info.firebase.docKeys.wods.timecap]:
-        wodData[info.firebase.docKeys.wods.timecap], // SCORE TYPE
+      [activeKey]: true,
+      [dateKey]: Timestamp.fromDate(date),
+      [titleKey]: wodData[titleKey],
+      [descriptionKey]: wodData[descriptionKey],
+      [categoryKey]: wodData[categoryKey],
+      [timecapKey]: wodData[timecapKey],
+      [timeScoreKey]: wodData[timeScoreKey],
+      [repsKey]: wodData[repsKey],
+      [roundsKey]: wodData[roundsKey],
       timestamps: {
         // TIMESTAMPS
-        [info.firebase.docKeys.wodScores.timestamps.createdAt]:
+        [info.firebase.docKeys.wods.timestamps.createdAt]:
           Timestamp.fromDate(new Date()),
-        [info.firebase.docKeys.wodScores.timestamps.updatedAt]:
+        [info.firebase.docKeys.wods.timestamps.updatedAt]:
           Timestamp.fromDate(new Date()),
       },
     });
@@ -141,5 +168,6 @@ export {
   getWeeklyWodsApi,
   getTodaysWodApi,
   getWodByDateApi,
+  getWodCategoriesApi,
   postWodApi,
 };

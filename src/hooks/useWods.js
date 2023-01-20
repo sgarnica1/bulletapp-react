@@ -88,8 +88,12 @@ const useWods = () => {
     try {
       setLoading(true);
       const wod = await getWodByDateApi(wodData.date);
+      // console.log(wod);
       if (wod) throw new Error(info.messages.error.wodAlreadyExists);
+      console.log("here")
+       
       const res = await postWodApi(wodData, callback);
+      setError(false);
       setWods(res);
       setLoading(false);
     } catch (err) {

@@ -5,12 +5,13 @@ import ErrorIcon from "../../assets/icon/error-alert.svg";
 
 const Input = ({
   type,
+  name,
+  label,
   setValidData,
   disabled,
   placeholder,
   readOnly,
   readValue,
-  name,
   max,
   min,
   units,
@@ -35,6 +36,8 @@ const Input = ({
   const typeNumber = info.components.input.type.number;
   const typeTime = info.components.input.type.time;
   const typeCheckbox = info.components.input.type.checkbox;
+  const typeTextArea = info.components.input.type.textarea;
+  const typeRounds = info.components.input.type.rounds;
 
   // ERROR MESSAGES
   const invalidFielMessage = "Campo incorrecto";
@@ -42,6 +45,11 @@ const Input = ({
   const invalidDateMessage = "Fecha inválida";
 
   useEffect(() => {
+    if (type === typeRounds) {
+      setReps("");
+      setSets("");
+    }
+
     if (submitError) {
       if (type === typeTime) {
         validateData(minutes, seconds);
@@ -102,6 +110,11 @@ const Input = ({
   if (type === typeTime)
     return (
       <div className="Input time">
+        {label && (
+          <label className="Input__label" htmlFor="minutes">
+            {label}
+          </label>
+        )}
         <div
           className={`Input__container ${errorMessage && "error"}`}
           onBlur={() => {
@@ -119,6 +132,7 @@ const Input = ({
             placeholder={placeholder}
             value={minutes}
             name="minutes"
+            id="minutes"
             max={59}
             min={0}
             readOnly={readOnly}
@@ -152,6 +166,11 @@ const Input = ({
   if (type === typeWeight)
     return (
       <div className="Input weight">
+        {label && (
+          <label className="Input__label" htmlFor={"sets"}>
+            {label}
+          </label>
+        )}
         <div className={`Input__container ${errorMessage && "error"}`}>
           {/* SETS */}
           <div className="Input__container--label">
@@ -161,6 +180,7 @@ const Input = ({
               className="Input__input"
               value={sets}
               name="sets"
+              id="sets"
               min={1}
               placeholder={0}
               readOnly={readOnly}
@@ -250,6 +270,11 @@ const Input = ({
   if (type === typeSets)
     return (
       <div className="Input sets">
+        {label && (
+          <label className="Input__label" htmlFor="sets">
+            {label}
+          </label>
+        )}
         <div className={`Input__container ${errorMessage && "error"}`}>
           {/* SETS */}
           <div className="Input__container--label">
@@ -259,6 +284,7 @@ const Input = ({
               className="Input__input"
               value={sets}
               name="sets"
+              id={name}
               min={1}
               placeholder={0}
               readOnly={readOnly}
@@ -304,10 +330,103 @@ const Input = ({
         </div>
       </div>
     );
+  // SCORE RECORD INPUT
+  if (type === typeRounds)
+    return (
+      <div className="Input rounds">
+        {label && (
+          <label className="Input__label" htmlFor="rounds">
+            {label}
+          </label>
+        )}
+        <div className={`Input__container ${errorMessage && "error"}`}>
+          {/* Rounds */}
+          <input
+            type="number"
+            className="Input__input"
+            value={sets}
+            name="rounds"
+            id={name}
+            min={1}
+            placeholder={0}
+            readOnly={readOnly}
+            disabled={disabled}
+            onChange={(event) => {
+              if (event.target.value < 0) return setSets(1);
+              onChangeHandler(event, sets, setSets);
+            }}
+          />
+
+          {/* Reps */}
+          <span className="Input__sign">X</span>
+          <input
+            type="number"
+            className="Input__input"
+            value={reps}
+            name="reps"
+            min={1}
+            placeholder={0}
+            readOnly={readOnly}
+            disabled={disabled}
+            onChange={(event) => {
+              if (event.target.value < 0) return setReps(1);
+              onChangeHandler(event, reps, setReps);
+
+              if (parseInt(event.target.value) === 0 || parseInt(sets) === 0) {
+                setValidData(false);
+                setErrorMessage(requiredFieldMessage);
+              }
+            }}
+          />
+        </div>
+        <div className={`Input__error ${errorMessage && "show"}`}>
+          <img className="Input__error-icon" src={ErrorIcon} alt="Error icon" />
+          <p className="Input__error-message">{errorMessage}</p>
+        </div>
+      </div>
+    );
+
+  // TEXTAREA INPUT
+  if (type === typeTextArea)
+    return (
+      <div className="Input textarea">
+        {label && (
+          <label className="Input__label" htmlFor={name}>
+            {label}
+          </label>
+        )}
+        <div
+          className={`Input__container ${errorMessage && "error"}`}
+          onBlur={(event) =>
+            event.target.value === ""
+              ? setErrorMessage(requiredFieldMessage)
+              : validateData(event.target.value)
+          }
+        >
+          <textarea
+            className="Input__input"
+            name={name}
+            id={name}
+            value={value}
+            placeholder={placeholder}
+            onChange={(event) => onChangeHandler(event, value, setValue)}
+          />
+        </div>
+        <div className={`Input__error ${errorMessage && "show"}`}>
+          <img className="Input__error-icon" src={ErrorIcon} alt="Error icon" />
+          <p className="Input__error-message">{errorMessage}</p>
+        </div>
+      </div>
+    );
 
   // OTHER INPUT TYPES (NUMBER, TEXT, DATE, EMAIL, PASSWORD)
   return (
-    <div className="Input">
+    <div className={`Input ${name}`}>
+      {label && (
+        <label className="Input__label" htmlFor={name}>
+          {label}
+        </label>
+      )}
       <div
         className={`Input__container ${errorMessage && "error"}`}
         onBlur={(event) =>
@@ -322,20 +441,24 @@ const Input = ({
           placeholder={placeholder}
           value={value}
           name={name}
+          id={name}
           max={max}
           min={min}
           disabled={disabled}
           readOnly={readOnly}
-          onChange={(event) => onChangeHandler(event, value, setValue)}
+          onChange={(event) => {
+            if (type === typeNumber && event.target.value < 0)
+              return setValue(0);
+            onChangeHandler(event, value, setValue);
+          }}
         />
         {type !== typeDate && (
           <p className={`Input__units ${errorMessage && "error"}`}>{units}</p>
         )}
         {type === typeDate && (
           <p
-            className={`Input__units ${errorMessage && "error"}`}
+            className={`Input__units button ${errorMessage && "error"}`}
             onClick={() => {
-              console.log("Hoy");
               setValue(utils.formatISODate(new Date()));
               validateData(utils.formatISODate(new Date()));
             }}
@@ -356,9 +479,6 @@ const Input = ({
     setSubmitError(false);
     setErrorMessage(false);
     let newValue = event.target.value;
-
-    if (type === typeNumber && event.target.value < 0) event.target.value = 0;
-
     if (onChangeCallback) newValue = onChangeCallback(newValue, value);
 
     setFunction(newValue);

@@ -42,7 +42,9 @@ const info = {
         time: "time",
         weight: "weight",
         sets: "sets",
+        rounds: "rounds",
         checkbox: "checkbox",
+        textarea: "textarea",
       },
     },
     sortby: {
@@ -333,11 +335,16 @@ const info = {
         },
       },
       wods: {
+        active: "active",
+        title: "title",
         description: "description",
         date: "date",
-        active: "active",
-        scoreType: "score_type",
+        category: "category",
         timecap: "timecap",
+        reps: "reps",
+        rounds: "rounds",
+        timescore: "timescore",
+        scoreType: "score_type",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
@@ -369,6 +376,7 @@ const info = {
     authToken: "BCF_TOKEN",
     refreshToken: "BCFRT",
     movements: "BCF_MOVEMENTS",
+    wodCategories: "BCF_WOD_CATEGORIES",
   },
   messages: {
     error: {

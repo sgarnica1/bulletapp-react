@@ -1,0 +1,38 @@
+.Select {
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    height: $height-input;
+    margin-bottom: 20px;
+    border-radius: $border-radius;
+    background: var(--bg-input);
+    border: 1px solid var(--bg-input);
+    color: var(--color-text);
+
+    @include mq(md) {
+      max-width: 280px;
+    }
+  }
+
+  &__select {
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 100%;
+    color: var(--color-text);
+    font-size: toRem(14);
+    padding-right: 10px;
+    cursor: pointer;
+  }
+
+  &__option {
+    color: $color-dark;
+  }
+
+  &__label {
+    color: $color-brand;
+    font-size: toRem(12);
+    text-align: center;
+  }
+}
