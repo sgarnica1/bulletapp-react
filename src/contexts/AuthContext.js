@@ -1,14 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, updateCurrentUser} from "firebase/auth";
 import { auth } from "../firebase/index";
 import { getUserInfoApi } from "../api/user";
-<<<<<<< Updated upstream
-=======
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { REFRESH_TOKEN_API } from "../utils/requests";
->>>>>>> Stashed changes
 import { info } from "../utils/info";
-import { REFRESH_TOKEN_API } from "../utils/requests";
 import jwt_decode from "jwt-decode";
 
 // CREATE CONTEXT
@@ -158,11 +154,8 @@ const AuthProvider = ({ children }) => {
     setAuthTokens(null);
     setUser(null);
     setError(false);
-<<<<<<< Updated upstream
-=======
     updateCurrentUser(auth, null);
     setStoredMovements([]);
->>>>>>> Stashed changes
 
     // REMOVE TOKEN FROM LOCAL STORAGE
     localStorage.removeItem(info.localStorageKeys.authToken);

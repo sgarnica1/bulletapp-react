@@ -22,7 +22,7 @@ const StatWidget = ({
         <span className="StatWidget__meta-description">{metaDescription}</span>
         <p className={`StatWidget__title ${!value && "active"}`}>{title}</p>
         <span className="StatWidget__value">
-          {timescore ? utils.secondsToTime(value) : value}{" "}
+          {timescore ? utils.secondsToTime(value) : value !== 0 ? value : ""}{" "}
           {timescore ? null : units}
         </span>
       </div>

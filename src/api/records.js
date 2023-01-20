@@ -149,9 +149,7 @@ const updateLatestAcivityApi = async (
   callback
 ) => {
   const lastactivity = await getLatestActitvityApi(idUser);
-  // console.log("lastactivity", lastactivity.repmax[dateKey].seconds);
-  // console.log("data", data, newSkill, updateSkill);
-  // console.log(data[repsKey] === 1 && data[setsKey] === 1 && data[weightKey] > 0)
+  console.log(updateSkill, newSkill);
 
   let newrepmax = null;
   const isRepMax =
@@ -173,7 +171,14 @@ const updateLatestAcivityApi = async (
       : 0;
   const currentDate = data[dateKey].getTime() / 1000;
 
-  if (previousDate > currentDate || !isRepMax) newrepmax = lastactivity.repmax;
+  if (
+    lastactivity &&
+    lastactivity.repmax &&
+    ((isRepMax && previousDate > currentDate) || !isRepMax)
+  )
+    newrepmax = lastactivity.repmax;
+
+  newrepmax = newrepmax ? newrepmax : null;
 
   try {
     const res = await setDoc(
@@ -183,7 +188,11 @@ const updateLatestAcivityApi = async (
       ),
       {
         repmax: newrepmax,
-        skill: updateSkill ? newSkill : lastactivity && lastactivity.skill ? lastactivity.skill : newSkill,
+        skill: updateSkill
+          ? newSkill
+          : lastactivity && lastactivity.skill
+          ? lastactivity.skill
+          : null,
         register: {
           [movementKey]: data[movementKey],
           [movementCategoryKey]: data[movementCategoryKey],

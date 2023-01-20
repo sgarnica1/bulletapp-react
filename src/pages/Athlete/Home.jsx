@@ -50,6 +50,7 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, latestactivity]);
 
+
   return (
     <div className="Home">
       <ContentContainer>

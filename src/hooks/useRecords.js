@@ -93,6 +93,7 @@ const useRecords = () => {
       setLoading(false);
       return res;
     } catch (err) {
+      console.log(err);
       setError(err);
       setLoading(false);
     }
