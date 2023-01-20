@@ -2,7 +2,6 @@ import { info } from "./info";
 
 const utils = {
   formatDate: (currentDate) => {
-    const newDate = new Date(currentDate);
     const monthDay = currentDate.getDate();
     const month = info.data.months[currentDate.getMonth()];
     const year = currentDate.getFullYear();
@@ -60,11 +59,11 @@ const utils = {
 
   formatTimerInput: (value, prev) => {
     // IF VALUE IS 0, AND PREV VALUE WAS > 0, SET VALUE TO 00
-    if (value == 0 && prev == 0) value = "00";
-    if (value == 0 && prev > 0) value = "00";
+    if (parseInt(value) === 0 && parseInt(prev) === 0) value = "00";
+    if (parseInt(value) === 0 && parseInt(prev) > 0) value = "00";
 
     // IF PREV VALUE WAS 0, AND NEW VALUE IS > 0 BUT < 10, ALLOW ONLY 1 DIGIT
-    if (value != 0) {
+    if (parseFloat(value) !== 0) {
       if (value < 10 && value.toString().length > 2) value = value.slice(1, 3);
     }
 
@@ -84,7 +83,7 @@ const utils = {
     if (value > 59) value = 59;
 
     // IF VALUE IS < 10, ADD 0
-    if (value.length < 2 && value < 10 && value != 0) {
+    if (value.length < 2 && value < 10 && parseFloat(value) !== 0) {
       value = "0" + value;
     }
 

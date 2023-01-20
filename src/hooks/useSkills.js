@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   getSkillsByUserIdApi,
   getSkillsNameListByUserIdApi,
-  getUserSkillByIdApi,
   postSkillApi,
 } from "../api/skills";
 
@@ -35,22 +34,10 @@ const useSkills = () => {
     }
   };
 
-  const getUserSkillById = async (idUser, idSkill, callback) => {
+  const postSkill = async (idUser, data, callback) => {
     try {
       setLoading(true);
-      const res = await getUserSkillByIdApi(idUser, idSkill, callback);
-      setSkills(res);
-      setLoading(false);
-    } catch (err) {
-      setError(err);
-      setLoading(false);
-    }
-  };
-
-  const postSkill = async (idUser, idMov, data, callback) => {
-    try {
-      setLoading(true);
-      const res = await postSkillApi(idUser, idMov, data, callback);
+      const res = await postSkillApi(idUser, data, callback);
       setLoading(false);
       return res;
     } catch (err) {
@@ -62,7 +49,6 @@ const useSkills = () => {
   const actions = {
     getSkillsByUserId,
     getSkillsNameListByUserId,
-    getUserSkillById,
     postSkill,
   };
 

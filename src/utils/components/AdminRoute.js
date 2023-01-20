@@ -1,5 +1,4 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { info } from "../info";
 

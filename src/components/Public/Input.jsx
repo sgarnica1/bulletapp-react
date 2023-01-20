@@ -61,6 +61,8 @@ const Input = ({
         validateData(value);
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitError, resetError, value]);
 
   // READ ONLY INPUT
@@ -103,7 +105,7 @@ const Input = ({
         <div
           className={`Input__container ${errorMessage && "error"}`}
           onBlur={() => {
-            if (minutes == 0 && seconds == 0) {
+            if (parseInt(minutes) === 0 && parseInt(seconds) === 0) {
               setValidData(false);
               return setErrorMessage(requiredFieldMessage);
             }
@@ -187,7 +189,10 @@ const Input = ({
                 if (event.target.value < 0) return setReps(1);
                 onChangeHandler(event, reps, setReps);
 
-                if (event.target.value == 0 || sets == 0) {
+                if (
+                  parseInt(event.target.value) === 0 ||
+                  parseInt(sets) === 0
+                ) {
                   setValidData(false);
                   setErrorMessage(requiredFieldMessage);
                 }
@@ -213,7 +218,7 @@ const Input = ({
 
                 onChangeHandler(event, value, setValue);
 
-                if (event.target.value == 0) {
+                if (parseInt(event.target.value) === 0) {
                   setValidData(false);
                   setErrorMessage(requiredFieldMessage);
                 }
@@ -282,7 +287,10 @@ const Input = ({
                 if (event.target.value < 0) return setReps(1);
                 onChangeHandler(event, reps, setReps);
 
-                if (event.target.value == 0 || sets == 0) {
+                if (
+                  parseInt(event.target.value) === 0 ||
+                  parseInt(sets) === 0
+                ) {
                   setValidData(false);
                   setErrorMessage(requiredFieldMessage);
                 }
@@ -303,7 +311,7 @@ const Input = ({
       <div
         className={`Input__container ${errorMessage && "error"}`}
         onBlur={(event) =>
-          event.target.value == ""
+          event.target.value === ""
             ? setErrorMessage(requiredFieldMessage)
             : validateData(event.target.value)
         }

@@ -23,7 +23,7 @@ import AddIcon from "../../assets/icon/add-green.svg";
 
 function MovementTracking() {
   const { user } = useAuth();
-  const { records: record, actions, loading, error } = useRecords();
+  const { records: record, actions, loading } = useRecords();
   const {
     movements,
     actions: actionsMovements,
@@ -51,7 +51,7 @@ function MovementTracking() {
       );
     }
 
-    if (record === -1 && !movements) {
+    if (record === -1 && !movements && loadingMovement) {
       // GET MOVEMENT IF RECORD DOES NOT EXIST
       return actionsMovements.getMovementById(
         utils.getIdFromTitleUrl(params.id)
@@ -59,7 +59,7 @@ function MovementTracking() {
     }
 
     // SORT SCORES BY DATE AND GET ONE REP MAX (REPS = 1, SETS = 1)
-    if (record && record != -1 && !refetch && !addRecord) {
+    if (record && record !== -1 && !refetch && !addRecord) {
       if (
         record.movement_category.includes(
           info.firebase.values.movementCategories.skills
@@ -97,7 +97,7 @@ function MovementTracking() {
       record.scores.sort((a, b) => b.date.seconds - a.date.seconds);
     }
 
-    if (movements && movements != -1) {
+    if (movements && movements !== -1) {
       // CHECK IF MOVEMENT IS A SKILL
       if (
         movements.movement_category.includes(
@@ -143,7 +143,7 @@ function MovementTracking() {
             <h2 className="MovementTracking__title">
               {utils.getTitleFromTitleUrl(params.id)}
             </h2>
-            {record && record != -1 && (
+            {record && record !== -1 && (
               <button
                 onClick={() => setAddRecord(!addRecord)}
                 className={`Records__header__add-btn ${addRecord && "close"}`}
@@ -163,17 +163,17 @@ function MovementTracking() {
             movementID={utils.getIdFromTitleUrl(params.id)}
             movementName={utils.getTitleFromTitleUrl(params.id)}
             movementCategories={
-              record != -1
+              record !== -1
                 ? record.movement_category
                 : movements?.movement_category
             }
-            timescore={record != -1 ? record?.timescore : movements?.timescore}
+            timescore={record !== -1 ? record?.timescore : movements?.timescore}
             setRefetch={setRefetch}
           />
         )}
 
         {/* LOADED STATE CONTENT */}
-        {!loading && record && record != -1 && (
+        {!loading && record && record !== -1 && (
           <section className="MovementTacking__content">
             <div className="StatWidget__container">
               {oneRepMax && oneRepMax.weight > 0 && !isSkill && (

@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useDashboard } from "../../contexts/DashboardContext";
+
 import { info } from "../../utils/info";
 
 // COMPONENTS
@@ -11,13 +14,17 @@ import { InfoCard } from "../../components/Public/InfoCard";
 // IMG - ICONS
 import LockIcon from "../../assets/icon/lock.svg";
 import DarkModeIcon from "../../assets/icon/darkmode.svg";
-import HoodiesImg from "../../assets/img/sudaderas.jpg";
 
 // TODO - Replace user name, user img and user email with real one
 
 function Settings() {
   const { user, loading, error, logoutUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const { setActiveView } = useDashboard();
+
+  useEffect(() => {
+    setActiveView(info.views.settings);
+  }, []);
 
   return (
     <div className="Settings">

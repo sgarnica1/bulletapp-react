@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAthletes } from "../../hooks/useAthletes";
 import { useGroups } from "../../hooks/useGroups";
 import { usePlans } from "../../hooks/usePlans";
-import { useRoles } from "../../hooks/useRoles";
 import { useLocations } from "../../hooks/useLocations";
 
 // COMPONENTS
@@ -29,7 +27,17 @@ function AddAthleteForm(props) {
   const { plans, actions: plansActions } = usePlans();
   const { groups, actions: groupsActions } = useGroups();
   const { locations, actions: locationsActions } = useLocations();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+    // GET DATA
+    plansActions.getPlans();
+    groupsActions.getGroups();
+    locationsActions.getLocations();
+    return () => abortCont.abort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [athlete, setAthlete] = useState({
     [info.firebase.docKeys.users.firstName]: "",
@@ -43,15 +51,6 @@ function AddAthleteForm(props) {
     [info.firebase.docKeys.users.role]: "",
     [info.firebase.docKeys.users.location]: "",
   });
-
-  useEffect(() => {
-    const abortCont = new AbortController();
-    // GET DATA
-    plansActions.getPlans();
-    groupsActions.getGroups();
-    locationsActions.getLocations();
-    return () => abortCont.abort();
-  }, []);
 
   function updateAthleteInfo(event, attribute) {
     setAthlete((athlete) => {
@@ -78,9 +77,7 @@ function AddAthleteForm(props) {
   function handleSubmitData(event) {
     event.preventDefault();
     console.log(athlete);
-    athletesActions.addAthlete(athlete, () => {
-      // navigate("/atletas");
-    });
+    athletesActions.addAthlete(athlete);
   }
 
   // RENDER

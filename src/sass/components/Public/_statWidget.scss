@@ -8,14 +8,22 @@
   padding: 10px 15px;
   background: var(--bg-linear-gradient);
   border-radius: $border-radius;
-  // min-height: 140px;
+
+  &:nth-child(1) {
+    grid-row: 1 / 3;
+  }
 
   &__container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 15px;
     margin-bottom: 20px;
     max-width: $max-width-card;
+
+    .stat {
+      margin-bottom: 0;
+    }
 
     @include mq(md) {
       max-width: $max-width-card-md;
@@ -37,6 +45,7 @@
     font-weight: 600;
     color: var(--color-text);
     overflow-wrap: break-word;
+    margin-bottom: 10px;
 
     @include mq(xxs) {
       font-size: toRem(18);
@@ -70,7 +79,7 @@
       font-size: toRem(12);
       margin-left: 0;
     }
-    @include mq(xxs) {
+    @include mq(xs) {
       p {
         font-size: toRem(14);
         margin-left: toRem(10);

@@ -4,7 +4,6 @@ import { utils } from "../../../utils/utils";
 import CheckIcon from "../../../assets/icon/check-circle.svg";
 
 const StatWidget = ({
-  link,
   title,
   value,
   units,

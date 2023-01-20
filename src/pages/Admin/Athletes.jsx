@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
 import { useAthletes } from "../../hooks/useAthletes";
@@ -16,14 +15,15 @@ function Athletes() {
   const navigate = useNavigate();
   const [refetch, setRefetch] = useState(false);
   const { athletes, loading, error, actions } = useAthletes();
-  const { searchValue, setSearchValue, searchDataFromInput, setShowNav } =
-    useDashboard();
-  const data = athletes
+  const { searchValue, setSearchValue, setShowNav } = useDashboard();
+  const data = athletes;
 
   const onRefetch = () => setRefetch((prev) => !prev);
 
   useEffect(() => {
     actions.getAthletes();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch]);
 
   return (

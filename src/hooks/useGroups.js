@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import { getGroupsApi } from "../api/groups";
 
 const useGroups = () => {
@@ -7,7 +6,6 @@ const useGroups = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const { authTokens, logoutUser } = useAuth();
 
   const getGroups = async () => {
     try {

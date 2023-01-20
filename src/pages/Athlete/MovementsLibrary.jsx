@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useMovements } from "../../hooks/useMovements";
 import { useSkills } from "../../hooks/useSkills";
+import { useDashboard } from "../../contexts/DashboardContext";
 
 // COMPONENTS
 import { BackButton } from "../../components/Public/BackButton";
@@ -22,7 +23,8 @@ import { utils } from "../../utils/utils";
 // TODO - SPLIT CODE INTO SMALLER COMPONENTS AND FUNCTIONS
 const MovementsLibrary = ({ skillsOnly = false }) => {
   const { user } = useAuth();
-  const { movements, actions, loading, error } = useMovements();
+  const { setActiveView } = useDashboard();
+  const { movements, actions, loading } = useMovements();
   const {
     skills,
     actions: actionsSkills,
@@ -33,15 +35,16 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
   const [sortedMovements, setSortedMovements] = useState([]);
   const [filteredMovements, setFilteredMovements] = useState([]);
   const [search, setSearch] = useState("");
+  const [availableCategories, setAvailableCategories] = useState(new Set());
   const [orderByValue, setOrderByValue] = useState(
     info.components.sortby.label
   );
   const [category, setCategory] = useState(
     info.components.buttonSelectFilter.values.all
   );
-  const [availableCategories, setAvailableCategories] = useState(new Set());
 
   useEffect(() => {
+    skillsOnly ? setActiveView(info.views.skills) : setActiveView(info.views.records);
     if (loading) setSearch("");
 
     // FETCH DATA
@@ -190,7 +193,7 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
             filteredMovements.length === 0 && (
               <div className="Records__empty">
                 No hay resultados para "{search}" en la categoría "
-                {category == "all" ? "Todos" : category}"
+                {category === "all" ? "Todos" : category}"
               </div>
             )}
 

@@ -1,16 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import {
-  getFirestore,
-  collection,
-  query,
-  getDocs,
-  where,
-  updateDoc,
-  deleteField,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore/lite";
+import { getFirestore } from "firebase/firestore/lite";
 import { getAnalytics } from "firebase/analytics";
 
 // FIREBASE CONFIG
@@ -28,27 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-// const analytics = getAnalytics(app);
-
-const getMovementsApi = async (callback) => {
-  try {
-    const ref = collection(db, "movements");
-    const query_ = query(ref, where("skill", "==", true));
-    const snapshot = await getDocs(query_);
-    const data = snapshot.docs.forEach(async (doc) => {
-      await updateDoc(doc.ref, {
-        movement_category: arrayUnion("Skills"),
-        // movement_category: arrayRemove("Skills"),
-      });
-    });
-    if (callback) callback(data);
-    console.log(data);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-
-// getMovementsApi();
+getAnalytics(app);
 
 export { db, auth };

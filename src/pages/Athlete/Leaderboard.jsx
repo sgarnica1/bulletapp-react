@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useWodScores } from "../../hooks/useWodScores";
+import { useDashboard } from "../../contexts/DashboardContext";
 import { useWods } from "../../hooks/useWods";
 
 // COMPONENTS
@@ -16,6 +16,7 @@ import { utils } from "../../utils/utils";
 
 function Leaderboard() {
   const { wods, actions, loading } = useWods();
+  const { setActiveView } = useDashboard();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [wodAvailable, setWodAvailable] = useState(false);
@@ -24,27 +25,8 @@ function Leaderboard() {
   const [searchValue, setSearchValue] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  // METHODS
-  const sortAscending = (wods) => {
-    const sorted = wods.sort((a, b) => {
-      return (
-        a.score.minutes * 60 +
-        a.score.seconds -
-        (b.score.minutes * 60 + b.score.seconds)
-      );
-    });
-    sorted.map((score, index) => (score.position = index + 1));
-    setSortedWodScores(sorted);
-  };
-
-  const setWodDate = (weekDay) => {
-    const today = new Date();
-    const day = today.getDay();
-    const diff = today.getDate() - day + (day === 0 ? -6 : weekDay);
-    return new Date(today.setDate(diff));
-  };
-
   useEffect(() => {
+    setActiveView(info.views.leaderboard);
     if (loading) setSearchValue("");
     const date = setWodDate(weekDay);
     setCurrentDate(date);
@@ -192,6 +174,26 @@ function Leaderboard() {
       </ContentContainer>
     </div>
   );
+
+  // METHODS
+  function sortAscending(wods) {
+    const sorted = wods.sort((a, b) => {
+      return (
+        a.score.minutes * 60 +
+        a.score.seconds -
+        (b.score.minutes * 60 + b.score.seconds)
+      );
+    });
+    sorted.map((score, index) => (score.position = index + 1));
+    setSortedWodScores(sorted);
+  }
+
+  function setWodDate(weekDay) {
+    const today = new Date();
+    const day = today.getDay();
+    const diff = today.getDate() - day + (day === 0 ? -6 : weekDay);
+    return new Date(today.setDate(diff));
+  }
 }
 
 export { Leaderboard };

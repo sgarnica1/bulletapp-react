@@ -9,7 +9,6 @@ import { Navitem } from "./Navitem";
 
 // UTILS
 import { navMenu, type } from "../../utils/navMenu";
-import { info } from "../../utils/info";
 
 function Navbar({ user }) {
   const { showNav, setShowNav } = useDashboard();
@@ -53,9 +52,11 @@ function Navbar({ user }) {
                                   path={dropEl.route}
                                 />
                               );
+                            return null;
                           })}
                         </Dropdown>
                       );
+                    return null;
                   });
                 // SUBMENUS
                 if (menu.type === type.subMenu && menu.active)
@@ -106,12 +107,15 @@ function Navbar({ user }) {
                                       path={dropEl.route}
                                     />
                                   );
+                                return null;
                               })}
                             </Dropdown>
                           );
+                        return null;
                       })}
                     </div>
                   );
+                return null;
               })}
           </ul>
         </div>

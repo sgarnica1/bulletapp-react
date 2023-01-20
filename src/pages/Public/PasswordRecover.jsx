@@ -22,9 +22,11 @@ function PasswordRecover() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const regex = new RegExp(/[\w\._]{3,30}@[\w\.-]{2,}\.\w{2,5}(\.\w{2,2})?/i); // EMAIL
-    const validation = email.match(regex);
-    if (!validation || email == "") {
+    const emailRegEx = new RegExp(
+      /[\w._]{3,30}@[\w.-]{2,}\.\w{2,5}(\.\w{2,2})?/i
+    ); // EMAIL
+    const validation = email.match(emailRegEx);
+    if (!validation || email === "") {
       setInvalid(true);
     } else {
       console.log("Enviando...");

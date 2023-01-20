@@ -66,14 +66,14 @@ const WodScoreWidget = () => {
     // REVIEW SCORE TYPE (TIME OR REPS)
     if (wod.score_type === info.firebase.values.scoreTypes.time.name) {
       // REVIEW EMPTY FIELDS
-      if (minutes == 0 && seconds == 0)
+      if (parseInt(minutes) === 0 && parseInt(seconds) === 0)
         return setErrorMessage(info.messages.error.emptyScore);
       // REVIEW SAME SCORE
       if (
         wodScore &&
         wodScore.score &&
-        wodScore.score.minutes == minutes &&
-        wodScore.score.seconds == seconds
+        parseInt(wodScore.score.minutes) === parseInt(minutes) &&
+        parseInt(wodScore.score.seconds) === parseInt(seconds)
       )
         return setErrorMessage(info.messages.error.sameScore);
       // SET SCORE

@@ -11,6 +11,7 @@ function Dropdown({ children, title }) {
     children.forEach((element) =>
       element.props.title === activeView ? setActiveWithin(true) : null
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeView]);
 
   return (

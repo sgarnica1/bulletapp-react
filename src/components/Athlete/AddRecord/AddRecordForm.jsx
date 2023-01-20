@@ -25,31 +25,23 @@ const AddRecordForm = ({
 }) => {
   const { user } = useAuth();
   const { setSuccessMessage, setErrorMessage } = useDashboard();
-  const { records, actions, loading } = useRecords();
-  const { actions: skillsActions, loading: loadingSkills } = useSkills();
+  const { records, actions } = useRecords();
+  const { actions: skillsActions } = useSkills();
 
   // STATES
-  const [weightScore, setWeightScore] = useState(true);
+  const [weightScore, setWeightScore] = useState(false);
   const [validScore, setValidScore] = useState(false);
-  const [validReps, setValidReps] = useState(false);
-  const [validSets, setValidSets] = useState(false);
   const [validTimeScore, setValidTimeScore] = useState(false);
   const [validDate, setValidDate] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [lastRepMax, setLastRepMax] = useState(null);
 
   useEffect(() => {
-    const bodyweight = info.firebase.values.movementCategories.bodyweight;
-    if (movementCategories.includes(bodyweight)) setWeightScore(false);
-
-    // if (loading && !records) actions.getLastRepMax(user.uid || user.user_id);
-    if(records) setLastRepMax(records);
+    const barbell = info.firebase.values.movementCategories.barbell;
+    if (movementCategories.includes(barbell)) setWeightScore(true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [records]);
-
-  // console.log("lastRepMax", lastRepMax);
 
   return (
     <div className="AddRecordForm">
@@ -99,7 +91,7 @@ const AddRecordForm = ({
             placeholder="00"
             setValidData={setValidTimeScore}
             validationHandler={(min, sec) => {
-              if (min == 0 && sec == 0) return false;
+              if (parseInt(min) === 0 && parseInt(sec) === 0) return false;
               if (min > 59 || min < 0 || sec > 59 || sec < 0) return false;
               return true;
             }}
@@ -114,9 +106,9 @@ const AddRecordForm = ({
           <Input
             type={info.components.input.type.weight}
             validationHandler={(values) => {
-              if (values.reps == 0) return false;
-              if (values.sets == 0) return false;
-              if (values.score == 0) return false;
+              if (parseInt(values.reps) === 0) return false;
+              if (parseInt(values.sets) === 0) return false;
+              if (parseInt(values.score) === 0) return false;
               return true;
             }}
             setValidData={setValidScore}
@@ -130,8 +122,8 @@ const AddRecordForm = ({
           <Input
             type={info.components.input.type.sets}
             validationHandler={(values) => {
-              if (values.reps == 0) return false;
-              if (values.sets == 0) return false;
+              if (parseInt(values.reps) === 0) return false;
+              if (parseInt(values.sets) === 0) return false;
               return true;
             }}
             setValidData={setValidScore}
@@ -178,6 +170,7 @@ const AddRecordForm = ({
 
     const movName = info.firebase.docKeys.personalRecords.movement;
     const movCat = info.firebase.docKeys.personalRecords.movementCategory;
+    const movID = info.firebase.docKeys.skills.movementId;
     const weightVal = info.firebase.docKeys.records.scores.weight;
     const repsVal = info.firebase.docKeys.records.scores.reps;
     const setsVal = info.firebase.docKeys.records.scores.sets;
@@ -194,14 +187,14 @@ const AddRecordForm = ({
 
     // VALID DATE
     if (!validDate) return setSubmitError(true);
-    console.log("valid date");
+    // console.log("valid date");
 
     // VALID TIME SCORE
     if (timescore && !validTimeScore) return setSubmitError(true);
 
     // VALID SCORE
     if (!timescore && weightScore && !validScore) return setSubmitError(true);
-    console.log("valid score");
+    // console.log("valid score");
 
     // VALID REPS
     if (!timescore && (repsScore < 0 || typeof repsScore !== "number"))
@@ -240,59 +233,53 @@ const AddRecordForm = ({
     // NEW SKILL DATA
     const newSkill = {
       [movName]: movementName,
-      [movCat]: movementCategories,
+      [movID]: movementID,
       [dateField]: utils.parseDateWithTime(event.target.date.value),
     };
 
-    if (newPR.sets === 1 && newPR.reps === 1 && newPR.weight > 0) {
-      const newOneRM = {
-        [movName]: movementName,
-        [weightVal]: newPR.weight,
-        [dateField]: utils.parseDateWithTime(event.target.date.value),
-        [units]: event.target.units.value,
-      };
+    // UPDATE LAST RECORD
+    actions.updateLatestAcivity(uid, newPR, newSkill, !update && isSkill);
 
-      console.log("new one rm", newOneRM);
-      actions.updateLatestRepMax(uid, newOneRM);
-    }
-
-      console.log("submitting...", newSkill);
-      // UNLOCK SKILL
-      if (!update && isSkill) {
-        skillsActions.postSkill(uid, movementID, newSkill, (error) => {
-          if (error) {
-            setErrorMessage(info.messages.error.errorWriting);
-            return setSubmitError(true);
-          }
-          setSuccessMessage("Nueva habilidad desbloqueada");
-          setRefetch(true);
-        });
-      }
-
-      console.log("submitting...", newPR);
-
-      // UPDATE RECORD
-      if (update) {
-        actions.updateRecord(uid, movementID, newPR, (error) => {
-          if (error) {
-            setErrorMessage(info.messages.error.errorWriting);
-            return setSubmitError(true);
-          }
-          setSuccessMessage("Record actualizado correctamente");
-          setRefetch(true);
-        });
-        return;
-      }
-
-      // SUBMIT RECORD
-      actions.postRecord(uid, movementID, newPR, (error) => {
+    // UNLOCK SKILL
+    console.log("submitting...", newSkill);
+    if (!update && isSkill) {
+      skillsActions.postSkill(uid, newSkill, (error) => {
         if (error) {
           setErrorMessage(info.messages.error.errorWriting);
           return setSubmitError(true);
         }
-        setSuccessMessage("Nuevo record registrado correctamente");
+        setSuccessMessage("Nueva habilidad desbloqueada");
         setRefetch(true);
       });
+    }
+
+    // UPDATE RECORD
+    console.log("submitting...", newPR);
+    if (update) {
+      actions.updateRecord(uid, movementID, newPR, (error) => {
+        if (error) {
+          setErrorMessage(info.messages.error.errorWriting);
+          setSubmitLoading(false);
+          return setSubmitError(true);
+        }
+        setSuccessMessage("Record actualizado correctamente");
+        setRefetch(true);
+        setSubmitLoading(false);
+      });
+      return;
+    }
+
+    // SUBMIT RECORD
+    actions.postRecord(uid, movementID, newPR, (error) => {
+      if (error) {
+        setErrorMessage(info.messages.error.errorWriting);
+        setSubmitLoading(false);
+        return setSubmitError(true);
+      }
+      setSuccessMessage("Nuevo record registrado correctamente");
+      setRefetch(true);
+      setSubmitLoading(false);
+    });
   }
 };
 

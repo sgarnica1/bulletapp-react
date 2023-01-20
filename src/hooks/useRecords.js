@@ -1,11 +1,11 @@
 import { useState } from "react";
 import {
   getRecordsApi,
-  getLastRepMaxApi,
+  getLatestActitvityApi,
   getSingleRecordApi,
   postRecordApi,
   updateRecordApi,
-  updateLatestRepMaxApi,
+  updateLatestAcivityApi,
 } from "../api/records";
 
 const useRecords = () => {
@@ -26,10 +26,10 @@ const useRecords = () => {
     }
   };
 
-  const getLastRepMax = async (idUser, callback) => {
+  const getLatestActitvity = async (idUser, callback) => {
     try {
       setLoading(true);
-      const res = await getLastRepMaxApi(idUser, callback);
+      const res = await getLatestActitvityApi(idUser, callback);
       setRecords(res);
       setLoading(false);
     } catch (err) {
@@ -74,10 +74,22 @@ const useRecords = () => {
     }
   };
 
-  const updateLatestRepMax = async (idUser, data, callback) => {
+  const updateLatestAcivity = async (
+    idUser,
+    data,
+    newSkill,
+    updateSkill,
+    callback
+  ) => {
     try {
       setLoading(true);
-      const res = await updateLatestRepMaxApi(idUser, data, callback);
+      const res = await updateLatestAcivityApi(
+        idUser,
+        data,
+        newSkill,
+        updateSkill,
+        callback
+      );
       setLoading(false);
       return res;
     } catch (err) {
@@ -88,11 +100,11 @@ const useRecords = () => {
 
   const actions = {
     getRecords,
-    getLastRepMax,
+    getLatestActitvity,
     getSingleRecord,
     postRecord,
     updateRecord,
-    updateLatestRepMax,
+    updateLatestAcivity,
   };
 
   return { records, loading, error, actions };

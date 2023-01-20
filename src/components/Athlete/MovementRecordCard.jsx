@@ -19,7 +19,7 @@ const MovementRecordCard = ({
           {utils.secondsToTime(seconds)}
         </p>
       )}
-      {!seconds && seconds == 0 && (
+      {!seconds && parseInt(seconds) === 0 && (
         <p className="MovementRecordCard__value">
           {sets} x {reps} {`${weight > 0 ? "@ " + weight + units : ""}`}
         </p>

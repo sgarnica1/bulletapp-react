@@ -5,8 +5,8 @@ import CalendarIconWhite from "../../assets/icon/calendar-white.svg";
 const DateWidget = ({ color = "gray", date, mb = true }) => {
   let icon = CalendarIconGray;
 
-  if (color == "green") icon = CalendarIconGreen;
-  if (color == "white") icon = CalendarIconWhite;
+  if (color === "green") icon = CalendarIconGreen;
+  if (color === "white") icon = CalendarIconWhite;
 
   return (
     <div className={`DateWidget ${mb ? "mb" : ""}`}>

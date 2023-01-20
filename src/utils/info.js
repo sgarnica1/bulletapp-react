@@ -22,6 +22,7 @@ const info = {
       classes: {
         primary: "primary",
         secondary: "secondary",
+        error: "error",
         sm: "sm",
         lg: "lg",
       },
@@ -235,9 +236,9 @@ const info = {
     },
     subcollections: {
       users: {
-        personalRecords: "personal_records",
         unlockedSkills: "unlocked_skills",
         records: "records",
+        latest: "latest",
       },
       wods: {
         scores: "scores",
@@ -300,8 +301,10 @@ const info = {
         active: "active",
       },
       skills: {
+        key: "skills",
         movement: "movement",
         movementCategory: "movement_category",
+        movementId: "id_movement",
         date: "date",
       },
       scoreTypes: {
@@ -564,10 +567,10 @@ const info = {
       value: "contrasena/recuperar",
     },
   },
-    theme: {
-      light: "light",
-      dark: "dark",
-    },
+  theme: {
+    light: "light",
+    dark: "dark",
+  },
   views: {
     addAthlete: "Añadir Atleta",
     addWod: "Añadir WOD",
@@ -583,10 +586,9 @@ const info = {
     },
     payments: "Pagos",
     plans: "Planes",
-    prs: "Records Personales",
     programming: "Programación",
     profile: "Perfil",
-    records: "Personal Records",
+    records: "Records Personales",
     settings: "Ajustes",
     skills: "Skills",
     videos: "Videos",

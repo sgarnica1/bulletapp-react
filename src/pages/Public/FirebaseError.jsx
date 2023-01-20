@@ -1,15 +1,12 @@
 import ReactDom from "react-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
-import { useTheme } from "../../contexts/ThemeContext";
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { Button } from "../../components/Public/Button";
 import { info } from "../../utils/info";
-import LogoWhite from "../../assets/img/logo_white_resized.png";
-import LogoBlack from "../../assets/img/logo_black_resized.png";
+
 
 function FirebaseError() {
   const { setActiveView } = useDashboard();
-  const { theme } = useTheme();
 
   return ReactDom.createPortal(
     <div className="FirebaseError">
@@ -26,14 +23,10 @@ function FirebaseError() {
           text="Intentar de nuevo"
           onClickHandler={() => setActiveView("Escritorio")}
           fill={true}
-          style={"error"}
+          style={info.components.button.classes.error}
           size={"lg"}
         />
-        {/* <img
-          src={theme === info.theme.dark ? LogoWhite : LogoBlack}
-          alt="Logo Bullet CrossFit"
-          className="FirebaseError__logo"
-        /> */}
+
       </ContentContainer>
     </div>,
     document.getElementById("error")

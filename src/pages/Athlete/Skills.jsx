@@ -23,7 +23,7 @@ import AddIcon from "../../assets/icon/add-green.svg";
 
 const Skills = () => {
   const { user } = useAuth();
-  const { skills, actions, loading, error } = useSkills();
+  const { skills, actions, loading } = useSkills();
 
   const [sortedSkills, setSortedSkills] = useState([]);
   const [filteredSkills, setFilteredSkills] = useState([]);
@@ -95,6 +95,8 @@ const Skills = () => {
           break;
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skills, loading, search, category, orderByValue]);
 
   return (
@@ -157,7 +159,7 @@ const Skills = () => {
             filteredSkills.length === 0 && (
               <div className="Records__empty">
                 No hay resultados para "{search}" en la categoría "
-                {category == "all" ? "Todos" : category}"
+                {category === "all" ? "Todos" : category}"
               </div>
             )}
 

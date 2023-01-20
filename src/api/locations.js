@@ -1,10 +1,7 @@
 import {
   collection,
-  doc,
   getDocs,
-  getDoc,
   query,
-  where,
 } from "firebase/firestore/lite";
 import { db } from "../firebase/index";
 import { info } from "../utils/info";

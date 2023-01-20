@@ -36,7 +36,7 @@ const getRecordsApi = async (idUser, callback) => {
     const snapshot = await getDocs(query_);
     let lastrepmaxIndex = 0;
     const data = snapshot.docs.map((doc, index) => {
-      if (doc.id == "lastrepmax") lastrepmaxIndex = index;
+      if (doc.id === "lastrepmax") lastrepmaxIndex = index;
       return { id: doc.id, ...doc.data() };
     });
 
@@ -49,11 +49,11 @@ const getRecordsApi = async (idUser, callback) => {
   }
 };
 
-const getLastRepMaxApi = async (idUser, callback) => {
+const getLatestActitvityApi = async (idUser, callback) => {
   try {
     const ref = doc(
       db,
-      `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.records}/lastrepmax`
+      `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.records}/lastrecord`
     );
 
     const snapshot = await getDoc(ref);
@@ -73,7 +73,7 @@ const getSingleRecordApi = async (idUser, idRecord, callback) => {
     );
     const snapshot = await getDoc(ref);
     if (callback) callback(snapshot.data());
-    if (snapshot.data() == undefined) return -1;
+    if (snapshot.data() === undefined) return -1;
     return snapshot.data();
   } catch (err) {
     console.log(err);
@@ -89,43 +89,22 @@ const postRecordApi = async (idUser, idMov, data, callback) => {
         `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.records}/${idMov}`
       ),
       {
-        // MOVEMENT
-        [info.firebase.docKeys.records.movement]:
-          data[info.firebase.docKeys.records.movement],
-        // MOVEMENT CATEGORY
-        [info.firebase.docKeys.records.movementCategory]:
-          data[info.firebase.docKeys.records.movementCategory],
-        // TIMESCORE
-        [info.firebase.docKeys.records.timescore]:
-          data[info.firebase.docKeys.records.timescore],
-        // SCORE
+        [movementKey]: data[movementKey],
+        [movementCategoryKey]: data[movementCategoryKey],
+        [timeScoreKey]: data[timeScoreKey],
         scores: [
           {
-            [info.firebase.docKeys.records.scores.date]: Timestamp.fromDate(
-              data[info.firebase.docKeys.records.scores.date]
-            ),
-            [info.firebase.docKeys.records.scores.weight]: parseFloat(
-              data[info.firebase.docKeys.records.scores.weight]
-            ),
-            [info.firebase.docKeys.records.scores.reps]: parseFloat(
-              data[info.firebase.docKeys.records.scores.reps]
-            ),
-            [info.firebase.docKeys.records.scores.sets]: parseFloat(
-              data[info.firebase.docKeys.records.scores.sets]
-            ),
-            [info.firebase.docKeys.records.scores.seconds]: parseFloat(
-              data[info.firebase.docKeys.records.scores.seconds]
-            ),
-            [info.firebase.docKeys.records.scores.units]:
-              data[info.firebase.docKeys.records.scores.units],
+            [dateKey]: Timestamp.fromDate(data[dateKey]),
+            [weightKey]: parseFloat(data[weightKey]),
+            [repsKey]: parseFloat(data[repsKey]),
+            [setsKey]: parseFloat(data[setsKey]),
+            [secondsKey]: parseFloat(data[secondsKey]),
+            [unitsKey]: data[unitsKey],
           },
         ],
-        // TIMESTAMPS
         timestamps: {
-          [info.firebase.docKeys.wodScores.timestamps.createdAt]:
-            Timestamp.fromDate(new Date()),
-          [info.firebase.docKeys.wodScores.timestamps.updatedAt]:
-            Timestamp.fromDate(new Date()),
+          [createdAtKey]: Timestamp.fromDate(new Date()),
+          [updatedAtKey]: Timestamp.fromDate(new Date()),
         },
       }
     );
@@ -146,27 +125,15 @@ const updateRecordApi = async (idUser, idMov, data, callback) => {
     );
     const res = await updateDoc(ref, {
       scores: arrayUnion({
-        [info.firebase.docKeys.records.scores.date]: Timestamp.fromDate(
-          data[info.firebase.docKeys.records.scores.date]
-        ),
-        [info.firebase.docKeys.records.scores.weight]: parseFloat(
-          data[info.firebase.docKeys.records.scores.weight]
-        ),
-        [info.firebase.docKeys.records.scores.reps]: parseFloat(
-          data[info.firebase.docKeys.records.scores.reps]
-        ),
-        [info.firebase.docKeys.records.scores.sets]: parseFloat(
-          data[info.firebase.docKeys.records.scores.sets]
-        ),
-        [info.firebase.docKeys.records.scores.seconds]: parseFloat(
-          data[info.firebase.docKeys.records.scores.seconds]
-        ),
-        [info.firebase.docKeys.records.scores.units]:
-          data[info.firebase.docKeys.records.scores.units],
+        [dateKey]: Timestamp.fromDate(data[dateKey]),
+        [weightKey]: parseFloat(data[weightKey]),
+        [repsKey]: parseFloat(data[repsKey]),
+        [setsKey]: parseFloat(data[setsKey]),
+        [secondsKey]: parseFloat(data[secondsKey]),
+        [unitsKey]: data[unitsKey],
       }),
     });
     if (callback) callback(res);
-    console.log(res);
     return res;
   } catch (err) {
     if (callback) callback(err);
@@ -174,33 +141,75 @@ const updateRecordApi = async (idUser, idMov, data, callback) => {
   }
 };
 
-const updateLatestRepMaxApi = async (idUser, data, callback) => {
-  const lastrepmax = await getLastRepMaxApi(idUser);
-  if (lastrepmax && lastrepmax[weightKey] > data[weightKey]) return;
+const updateLatestAcivityApi = async (
+  idUser,
+  data,
+  newSkill,
+  updateSkill,
+  callback
+) => {
+  const lastactivity = await getLatestActitvityApi(idUser);
+  // console.log("lastactivity", lastactivity.repmax[dateKey].seconds);
+  // console.log("data", data, newSkill, updateSkill);
+  // console.log(data[repsKey] === 1 && data[setsKey] === 1 && data[weightKey] > 0)
+
+  let newrepmax = null;
+  const isRepMax =
+    data[repsKey] === 1 && data[setsKey] === 1 && data[weightKey] > 0;
+
+  if (isRepMax) {
+    newrepmax = {
+      // DATA
+      [movementKey]: data[movementKey],
+      [dateKey]: Timestamp.fromDate(data[dateKey]),
+      [weightKey]: parseFloat(data[weightKey]),
+      [unitsKey]: data[unitsKey],
+    };
+  }
+  // COMPARE DATE IN ORDER TO UPDATE TO LATEST REP MAX
+  const previousDate =
+    lastactivity && lastactivity.repmax
+      ? lastactivity.repmax[dateKey].seconds
+      : 0;
+  const currentDate = data[dateKey].getTime() / 1000;
+
+  if (previousDate > currentDate || !isRepMax) newrepmax = lastactivity.repmax;
 
   try {
     const res = await setDoc(
       doc(
         db,
-        `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.records}/lastrepmax`
+        `/${info.firebase.collections.users}/${idUser}/${info.firebase.subcollections.users.records}/lastrecord`
       ),
-      // DATA
       {
-        // MOVEMENT
-        [movementKey]: data[movementKey],
-        // DATE
-        [dateKey]: Timestamp.fromDate(data[dateKey]),
-        // WEIGHT
-        [weightKey]: parseFloat(data[weightKey]),
-        // UNITS
-        [unitsKey]: data[unitsKey],
+        repmax: newrepmax,
+        skill: updateSkill ? newSkill : lastactivity && lastactivity.skill ? lastactivity.skill : newSkill,
+        register: {
+          [movementKey]: data[movementKey],
+          [movementCategoryKey]: data[movementCategoryKey],
+          [timeScoreKey]: data[timeScoreKey],
+          scores: [
+            {
+              [dateKey]: Timestamp.fromDate(data[dateKey]),
+              [weightKey]: parseFloat(data[weightKey]),
+              [repsKey]: parseFloat(data[repsKey]),
+              [setsKey]: parseFloat(data[setsKey]),
+              [secondsKey]: parseFloat(data[secondsKey]),
+              [unitsKey]: data[unitsKey],
+            },
+          ],
+          timestamps: {
+            [createdAtKey]: Timestamp.fromDate(new Date()),
+            [updatedAtKey]: Timestamp.fromDate(new Date()),
+          },
+        },
       }
     );
 
     if (callback) callback(res);
-    console.log(res);
     return res;
   } catch (err) {
+    console.log(err);
     if (callback) callback(err);
     throw err;
   }
@@ -208,9 +217,9 @@ const updateLatestRepMaxApi = async (idUser, data, callback) => {
 
 export {
   getRecordsApi,
-  getLastRepMaxApi,
+  getLatestActitvityApi,
   getSingleRecordApi,
   postRecordApi,
   updateRecordApi,
-  updateLatestRepMaxApi,
+  updateLatestAcivityApi,
 };

@@ -4,7 +4,6 @@ import {
   collection,
   getDocs,
   getDoc,
-  updateDoc,
   query,
   where,
   Timestamp,
@@ -33,7 +32,7 @@ const getMovementByIdApi = async (idMovement, callback) => {
     );
     const snapshot = await getDoc(ref);
     if (callback) callback(snapshot.data());
-    if (snapshot.data() == undefined) return -1;
+    if (snapshot.data() === undefined) return -1;
     return snapshot.data();
   } catch (err) {
     throw err;

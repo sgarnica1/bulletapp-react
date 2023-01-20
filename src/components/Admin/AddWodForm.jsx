@@ -58,6 +58,8 @@ function AddWodForm() {
     }
 
     return () => abortCont.abort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wodDate, wods]);
 
   function parseDate(date) {

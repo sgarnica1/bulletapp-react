@@ -1,9 +1,7 @@
 import {
   addDoc,
   collection,
-  doc,
   getDocs,
-  getDoc,
   query,
   where,
   Timestamp,

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRecords } from "../../hooks/useRecords";
-import { useSkills } from "../../hooks/useSkills";
+import { useDashboard } from "../../contexts/DashboardContext";
 
 // COMPONENTS
 import { AddButton } from "../../components/Public/AddButton";
@@ -17,7 +17,6 @@ import { WidgetLoadingSkeleton } from "../../components/Layout/LoadingSkeletons/
 
 // UTILS
 import { info } from "../../utils/info";
-import { utils } from "../../utils/utils";
 
 // IMG
 import AthleteImg from "../../assets/img/athlete.jpg";
@@ -25,48 +24,31 @@ import Athlete2Img from "../../assets/img/athlete_2.jpg";
 import UserIcon from "../../assets/icon/user.svg";
 
 function Home() {
+  const navigate = useNavigate();
+  const { setActiveView } = useDashboard();
   const { user, loading, error } = useAuth();
   const {
-    records: repMax,
+    records: latestactivity,
     actions: actionsRecord,
     loading: loadingRecord,
-    error: errorRecord,
   } = useRecords();
-  const {
-    skills,
-    actions: actionsSkills,
-    loading: loadingSkills,
-    error: errorSkills,
-  } = useSkills();
 
-  const [latestSkill, setLatestSkill] = useState(false);
   const [refetchRecords, setRefetchRecords] = useState(true);
-  const [refetchSkills, setRefetchSkills] = useState(true);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
+    setActiveView(info.views.home);
+
     // REDIRECT TO ERROR PAGE IF ERROR
     if (error) navigate(info.routes.serverError.path);
 
     // FETCH RECORDS AND SKILLS
-    if (refetchRecords && loadingRecord && !repMax) {
+    if (refetchRecords && loadingRecord && !latestactivity) {
       setRefetchRecords(false);
-      actionsRecord.getLastRepMax(user.uid || user.user_id);
-    }
-
-    if (refetchSkills && repMax && loadingSkills && !skills) {
-      setRefetchSkills(false);
-      actionsSkills.getSkillsByUserId(user.uid || user.user_id);
-    }
-
-    if (skills && !latestSkill) {
-      const sorted = skills.sort((a, b) => b.date.seconds - a.date.seconds);
-      setLatestSkill(sorted[0]);
+      actionsRecord.getLatestActitvity(user.uid || user.user_id);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, repMax, skills]);
+  }, [error, latestactivity]);
 
   return (
     <div className="Home">
@@ -92,32 +74,58 @@ function Home() {
         {/* LEADERBOARD */}
         <AddButton link={info.routes.leaderboard.path} title="Leaderboard" />
 
-        {/* LATEST Record */}
-        {(loadingRecord || loadingSkills) && <TextLoadingSkeleton />}
-
-        {(repMax || skills) && <h2 className="subtitle">Marcas personales</h2>}
+        {/* LOADING */}
+        {loadingRecord && <TextLoadingSkeleton />}
         {loadingRecord && (
           <div className="StatWidget__container">
+            <WidgetLoadingSkeleton type={"stat"} />
+            <WidgetLoadingSkeleton type={"stat"} />
             <WidgetLoadingSkeleton type={"stat"} />
             <WidgetLoadingSkeleton type={"stat"} />
           </div>
         )}
 
-        {!loadingRecord && !loadingSkills && latestSkill && (
+        {/* LATEST RECORDS */}
+        {latestactivity && <h2 className="subtitle">Marcas personales</h2>}
+        {!loadingRecord && latestactivity && (
           <div className="StatWidget__container">
-            <StatWidget
-              metaDescription={"1RM más reciente"}
-              title={`${repMax.movement}`}
-              value={repMax.weight}
-              units={repMax.units}
-              seconds={repMax.date.seconds}
-              timescore={repMax.timescore}
-            />
-            <StatWidget
-              metaDescription={"Skill más reciente"}
-              title={latestSkill.movement}
-              seconds={latestSkill.date.seconds}
-            />
+            {latestactivity.register && (
+              <StatWidget
+                metaDescription={"Última actividad"}
+                title={
+                  latestactivity.register.movement +
+                  ` (${latestactivity.register.scores[0].sets}x${latestactivity.register.scores[0].reps})`
+                }
+                seconds={latestactivity.register.scores[0].date.seconds}
+                value={
+                  latestactivity.register.scores[0].weight > 0
+                    ? latestactivity.register.scores[0].weight
+                    : ""
+                }
+                units={latestactivity.register.scores[0].weight > 0
+                    ? latestactivity.register.scores[0].units
+                    : ""}
+                timescore={latestactivity.register.timescore}
+              />
+            )}
+            {latestactivity.repmax && (
+              <StatWidget
+                metaDescription={"1RM más reciente"}
+                title={`${latestactivity.repmax.movement}`}
+                value={latestactivity.repmax.weight}
+                units={latestactivity.repmax.units}
+                seconds={latestactivity.repmax.date.seconds}
+                timescore={latestactivity.repmax.timescore}
+              />
+            )}
+
+            {latestactivity.skill && (
+              <StatWidget
+                metaDescription={"Skill más reciente"}
+                title={latestactivity.skill.movement}
+                seconds={latestactivity.skill.date.seconds}
+              />
+            )}
           </div>
         )}
 

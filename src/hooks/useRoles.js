@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import { getRolesApi, getRoleByTypeApi } from "../api/roles";
 
 const useRoles = () => {
@@ -7,7 +6,6 @@ const useRoles = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const { authTokens, logoutUser } = useAuth();
 
   const getRoles = async () => {
     try {

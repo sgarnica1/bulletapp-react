@@ -1,19 +1,11 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  getDoc,
-  query,
-  where,
-} from "firebase/firestore/lite";
+import { collection, getDocs, query, where } from "firebase/firestore/lite";
 import { db } from "../firebase/index";
 import { info } from "../utils/info";
 
 const getRolesApi = async (callback) => {
   try {
     const ref = collection(db, info.firebase.collections.roles);
-    const query_ = query(ref);
-    const snapshot = await getDocs(query_);
+    const snapshot = await getDocs(ref);
     const data = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
     });

@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
-import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { info } from "../../utils/info";
 
 // ICONS
-import DarkModeIcon from "../../assets/icon/darkmode.svg";
-import LightModeIcon from "../../assets/icon/lightmode.svg";
 import UserIcon from "../../assets/icon/user.svg";
 import WhiteLogo from "../../assets/img/logo_white_resized.png";
 import BlackLogo from "../../assets/img/logo_black_resized.png";

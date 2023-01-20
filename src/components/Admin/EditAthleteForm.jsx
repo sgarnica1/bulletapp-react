@@ -15,6 +15,8 @@ function EditAthleteForm(props) {
     getPlans();
     getGroups();
     return () => abortCont.abort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [firstName, setFirstName] = useState(props.first_name);

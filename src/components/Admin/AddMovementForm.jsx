@@ -22,10 +22,9 @@ import TitleIcon from "../../assets/icon/title.svg";
 // TODO - Add a failure state to the form
 
 function AddMovementForm() {
-  const { successMessage, setSuccessMessage, errorMessage, setErrorMessage } =
-    useDashboard();
+  const { setSuccessMessage, errorMessage, setErrorMessage } = useDashboard();
   const { scoreTypes, actions: scoreTypesActions } = useScoreTypes();
-  const { movements, actions: movementActions, error } = useMovements();
+  const { movements, actions: movementActions } = useMovements();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -42,6 +41,8 @@ function AddMovementForm() {
     if (!movements) movementActions.getMovementCategories();
 
     return () => abortCont.abort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleSubmitData(event) {

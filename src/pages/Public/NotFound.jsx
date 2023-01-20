@@ -1,6 +1,7 @@
 import { ContentContainer } from "../../components/Layout/ContentContainer";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { Button } from "../../components/Public/Button";
+import { info } from "../../utils/info";
 
 function NotFound() {
   const { setActiveView } = useDashboard();
@@ -19,7 +20,7 @@ function NotFound() {
           text="Regresar al escritorio"
           onClickHandler={() => setActiveView("Escritorio")}
           fill={true}
-          style={"primary"}
+          style={info.components.button.classes.primary}
           size={"lg"}
         />
       </ContentContainer>

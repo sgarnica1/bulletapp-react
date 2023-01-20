@@ -10,7 +10,6 @@ const type = {
 
 const admin = info.firebase.values.roles.admin;
 const athlete = info.firebase.values.roles.athlete;
-const coach = info.firebase.values.roles.coach;
 
 const navMenu = {
   [admin]: [
@@ -163,7 +162,7 @@ const navMenu = {
           active: true,
           elements: [
             {
-              name: info.views.prs,
+              name: info.views.records,
               route: info.routes.movements.path,
               active: true,
             },
