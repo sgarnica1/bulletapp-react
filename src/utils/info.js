@@ -45,6 +45,7 @@ const info = {
         rounds: "rounds",
         checkbox: "checkbox",
         textarea: "textarea",
+        birthDay: "birthDay",
       },
     },
     sortby: {
@@ -389,7 +390,7 @@ const info = {
       insufficientPermissions: "No tienes permisos para realizar esta acción",
       invalidDate: "El formato de fecha no es válido",
       invalidPassword:
-        "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
+        "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (#@$!%*?&)",
       invalidMatchingPassword: "Las contraseñas no coinciden",
       invalidEmail: "Por favor ingrese un correo electrónico válido",
       invalidTimeCap: "El Timecap debe ser un número igual o mayor a 0",

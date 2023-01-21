@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 import ErrorIcon from "../../assets/icon/error-alert.svg";
+import InvisibleIcon from "../../assets/icon/invisible.svg";
+import VisibleIcon from "../../assets/icon/visible.svg";
 
 const Input = ({
   type,
@@ -28,8 +30,10 @@ const Input = ({
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // CONSTANTS
+  const typeText = info.components.input.type.text;
   const typeDate = info.components.input.type.date;
   const typeWeight = info.components.input.type.weight;
   const typeSets = info.components.input.type.sets;
@@ -38,6 +42,8 @@ const Input = ({
   const typeCheckbox = info.components.input.type.checkbox;
   const typeTextArea = info.components.input.type.textarea;
   const typeRounds = info.components.input.type.rounds;
+  const typeBirthDay = info.components.input.type.birthDay;
+  const typePassword = info.components.input.type.password;
 
   // ERROR MESSAGES
   const invalidFielMessage = "Campo incorrecto";
@@ -330,6 +336,7 @@ const Input = ({
         </div>
       </div>
     );
+
   // SCORE RECORD INPUT
   if (type === typeRounds)
     return (
@@ -378,6 +385,68 @@ const Input = ({
               }
             }}
           />
+        </div>
+        <div className={`Input__error ${errorMessage && "show"}`}>
+          <img className="Input__error-icon" src={ErrorIcon} alt="Error icon" />
+          <p className="Input__error-message">{errorMessage}</p>
+        </div>
+      </div>
+    );
+  if (type === typeBirthDay)
+    return (
+      <div className="Input birthday">
+        {label && (
+          <label className="Input__label" htmlFor="sets">
+            {label}
+          </label>
+        )}
+        <div className={`Input__container ${errorMessage && "error"}`}>
+          {/* SETS */}
+          <div className="Input__container--label">
+            <p className={`Input__label ${errorMessage && "error"}`}>Día</p>
+            <input
+              type="number"
+              className="Input__input"
+              value={sets}
+              name="sets"
+              id={name}
+              min={1}
+              placeholder={0}
+              readOnly={readOnly}
+              disabled={disabled}
+              onChange={(event) => {
+                if (event.target.value < 0) return setSets(1);
+                onChangeHandler(event, sets, setSets);
+              }}
+            />
+          </div>
+
+          {/* REPS */}
+          <div className="Input__container--label">
+            <p className={`Input__label ${errorMessage && "error"}`}>Mes</p>
+            <input
+              type="number"
+              className="Input__input"
+              value={reps}
+              name="reps"
+              min={1}
+              placeholder={0}
+              readOnly={readOnly}
+              disabled={disabled}
+              onChange={(event) => {
+                if (event.target.value < 0) return setReps(1);
+                onChangeHandler(event, reps, setReps);
+
+                if (
+                  parseInt(event.target.value) === 0 ||
+                  parseInt(sets) === 0
+                ) {
+                  setValidData(false);
+                  setErrorMessage(requiredFieldMessage);
+                }
+              }}
+            />
+          </div>
         </div>
         <div className={`Input__error ${errorMessage && "show"}`}>
           <img className="Input__error-icon" src={ErrorIcon} alt="Error icon" />
@@ -436,7 +505,7 @@ const Input = ({
         }
       >
         <input
-          type={type}
+          type={showPassword ? typeText : type}
           className="Input__input"
           placeholder={placeholder}
           value={value}
@@ -454,6 +523,13 @@ const Input = ({
         />
         {type !== typeDate && (
           <p className={`Input__units ${errorMessage && "error"}`}>{units}</p>
+        )}
+        {type === typePassword && props.allowShowPassword&& (
+          <img
+            onClick={() => setShowPassword(!showPassword)}
+            src={showPassword ? VisibleIcon : InvisibleIcon}
+            alt={showPassword ? "Eye icon" : "Close eye icon"}
+          />
         )}
         {type === typeDate && (
           <p

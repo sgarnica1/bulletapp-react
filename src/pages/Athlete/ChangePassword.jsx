@@ -30,7 +30,7 @@ function ChangePassword() {
 
   const passwordVerifier = () => {
     const regex = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!%*?&])[a-zA-Z\d@!%*?&]{8,}$/i
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[/#@$!%*?&])[a-zA-Z\d/#@$!%*?&]{8,}$/i
     );
     const validation = password.match(regex);
     setInvalidPassword(validation == null ? true : false);

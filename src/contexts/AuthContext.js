@@ -2,8 +2,11 @@ import { createContext, useContext, useState, useEffect } from "react";
 import {
   signInWithEmailAndPassword,
   updatePassword,
-  sendPasswordResetEmail,
   updateCurrentUser,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/index";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -83,7 +86,7 @@ const AuthProvider = ({ children }) => {
   );
 
   // LOGIN USER
-  const loginUser = async (event, loginData) => {
+  async function loginUser(event, loginData) {
     if (event) event.preventDefault();
     setLoading(true);
     setLoggingIn(true);
@@ -160,7 +163,32 @@ const AuthProvider = ({ children }) => {
       setLoggingIn(false);
       setLoading(false);
     }
-  };
+  }
+
+  // REGISTER USER
+  async function registerUser(event, data, callback) {
+    if (event) event.preventDefault();
+    let user;
+    console.log("registerUser");
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      user = userCredential.user;
+      await updateProfile(user, {
+        displayName: data.displayName,
+      });
+
+      sendEmailVerification(user);
+      console.log("User created");
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 
   function logoutUser(callback) {
     // Clean states
@@ -320,6 +348,7 @@ const AuthProvider = ({ children }) => {
         loggingIn,
         loginUser,
         logoutUser,
+        registerUser,
         changePassword,
         sendPasswordReset,
         setError,

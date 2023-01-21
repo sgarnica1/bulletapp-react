@@ -107,16 +107,30 @@ body {
     margin-bottom: toRem(10);
     gap: toRem(15);
   }
-  .Login__passrecover-btn {
+
+  &__helper-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: toRem(20);
+  }
+
+  &__passrecover-btn,
+  &__register-btn {
     text-decoration: none;
     text-transform: capitalize;
     font-size: toRem(15);
     color: var(--color-text);
+    opacity: 0.8;
+    // color: $color-brand;
     margin-top: 10px;
     margin-bottom: 20px;
   }
 
-  &__passrecover-btn:hover {
+
+  &__passrecover-btn:hover,
+  &__register-btn:hover {
     color: $color-alternative;
   }
 
