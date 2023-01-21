@@ -13,13 +13,13 @@ import { InfoCard } from "../../components/Public/InfoCard";
 
 // IMG - ICONS
 import LockIcon from "../../assets/icon/lock.svg";
-import DarkModeIcon from "../../assets/icon/darkmode.svg";
+// import DarkModeIcon from "../../assets/icon/darkmode.svg";
 
 // TODO - Replace user name, user img and user email with real one
 
 function Settings() {
   const { user, loading, error, logoutUser } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  // const { theme, toggleTheme } = useTheme();
   const { setActiveView } = useDashboard();
 
   useEffect(() => {
@@ -45,14 +45,14 @@ function Settings() {
           alt="Lock icon"
           title={"Cambiar contraseña"}
         />
-        <InfoCard
+        {/* <InfoCard
           icon={DarkModeIcon}
           alt="Half moon icon"
           title={"Modo Obscuro"}
           onClickHandler={toggleTheme}
         >
           {theme === info.theme.dark ? "Desactivar" : "Activar"}
-        </InfoCard>
+        </InfoCard> */}
 
         <Button
           onClickHandler={logoutUser}

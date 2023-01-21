@@ -158,13 +158,13 @@ function Home() {
 
         <h4 className="subtitle">Más para ti</h4>
         {/* PROFILE */}
-        {!error && !loading && (
+        {/* {!error && !loading && (
           <InfoCard
             link={info.routes.profile.path}
             title={user.data[info.firebase.docKeys.users.firstName]}
             additionalInfo="Ver perfil"
           />
-        )}
+        )} */}
         {/* SETTINGS */}
         <InfoCard
           link={info.routes.settings.path}

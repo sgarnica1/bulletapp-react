@@ -10,7 +10,7 @@ import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 
 function RegisterForm() {
-  const { registerUser } = useAuth();
+  const { registerUser, error, setError } = useAuth();
 
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -25,25 +25,20 @@ function RegisterForm() {
   const [invalidMatchingPassword, setInvalidMatchingPassword] = useState(false);
 
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (success) {
-    }
-    if (error) console.log(error);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, success]);
 
   function handleSubmitData(event) {
     event.preventDefault();
+    setSuccess(false);
 
     // Input values
     let firstName = event.target.first_name.value;
     let lastName = event.target.last_name.value;
     let email = event.target.email.value;
     let password = event.target.password.value;
-    let confirmPassword = event.target.confirm_password.value;
     let birthDay = event.target.birthday.value;
 
     // Firebase dockeys
@@ -81,14 +76,16 @@ function RegisterForm() {
       password: password,
     };
 
-    registerUser(event, newUser, setError, setSuccess, () => {
+    registerUser(event, newUser, setSuccess, (error) => {
       setSubmitLoading(false);
-      event.target.first_name.value = "";
-      event.target.last_name.value = "";
-      event.target.email.value = "";
-      event.target.password.value = "";
-      event.target.confirm_password.value = "";
-      event.target.birthday.value = "";
+      if (!error) {
+        event.target.first_name.value = "";
+        event.target.last_name.value = "";
+        event.target.email.value = "";
+        event.target.password.value = "";
+        event.target.confirm_password.value = "";
+        event.target.birthday.value = "";
+      }
     });
   }
 
@@ -163,7 +160,6 @@ function RegisterForm() {
             id="password"
             placeholder={"Contraseña"}
             validationHandler={(value) => {
-              console.log(value);
               const regex = new RegExp(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[/#@$!%*?&])[a-zA-Z\d/#@$!%*?&]{8,}$/i
               );

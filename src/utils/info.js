@@ -201,7 +201,7 @@ const info = {
           name: "weight",
           units: {
             lbs: "lb",
-            kg: "kg",
+            // kg: "kg",
           },
         },
         distance: {

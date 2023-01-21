@@ -1,4 +1,5 @@
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { info } from "../../utils/info";
 
 import { RegisterForm } from "../../components/Athlete/RegisterForm";
@@ -11,6 +12,7 @@ import BlackLogo from "../../assets/img/logo_black_resized.png";
 
 function Register() {
   const { theme } = useTheme();
+  const { setError } = useAuth();
 
   return (
     <div className="Register">
@@ -24,7 +26,11 @@ function Register() {
           <h1 className="Register__title">Crea una cuenta</h1>
         </header>
         <RegisterForm />
-        <BackButton link={info.routes.login.path} text="Regresar" />
+        <BackButton
+          link={info.routes.login.path}
+          text="Regresar"
+          onClickCallback={() => setError(false)}
+        />
       </ContentContainer>
     </div>
   );

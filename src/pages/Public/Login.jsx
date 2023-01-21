@@ -37,7 +37,7 @@ function Login() {
     if (!email.match(emailRegEx))
       return setErrorMessage(info.messages.error.invalidEmail);
 
-    return loginUser(event);
+    return loginUser(event, {}, setErrorMessage);
   };
 
   return (
@@ -106,6 +106,9 @@ function Login() {
             <Link
               to={info.routes.register.path}
               className="Login__register-btn"
+              onClick={() => {
+                setError(false);
+              }}
             >
               Registrarse
             </Link>
