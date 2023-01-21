@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAthletes } from "../../hooks/useAthletes";
 import { useAuth } from "../../contexts/AuthContext";
 
 // COMPONENTS
@@ -10,13 +9,7 @@ import { Input } from "../../components/Public/Input";
 import { info } from "../../utils/info";
 import { utils } from "../../utils/utils";
 
-// TODO - Add validation to the form
-// TODO - Add a loading state to the form
-// TODO - Add a success state to the form
-// TODO - Add a failure state to the form
-
 function RegisterForm() {
-  const { actions: athletesActions } = useAthletes();
   const { registerUser } = useAuth();
 
   const [submitError, setSubmitError] = useState(false);
@@ -31,19 +24,27 @@ function RegisterForm() {
   const [invalidPasswordFormat, setInvalidPasswordFormat] = useState(false);
   const [invalidMatchingPassword, setInvalidMatchingPassword] = useState(false);
 
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
+    if (success) {
+    }
+    if (error) console.log(error);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error, success]);
 
   function handleSubmitData(event) {
     event.preventDefault();
 
     // Input values
-    const firstName = event.target.first_name.value;
-    const lastName = event.target.last_name.value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const birthDay = event.target.birthday.value;
+    let firstName = event.target.first_name.value;
+    let lastName = event.target.last_name.value;
+    let email = event.target.email.value;
+    let password = event.target.password.value;
+    let confirmPassword = event.target.confirm_password.value;
+    let birthDay = event.target.birthday.value;
 
     // Firebase dockeys
     const firtsNameKey = info.firebase.docKeys.users.firstName;
@@ -76,15 +77,19 @@ function RegisterForm() {
       [emailKey]: email,
       [birthDayKey]: utils.parseDate(birthDay).getDate(),
       [birthMonthKey]: utils.parseDate(birthDay).getMonth() + 1,
+      displayName: firstName + " " + lastName,
+      password: password,
     };
 
-    registerUser(event, {
-      email: email,
-      password: password,
-      displayName: firstName + " " + lastName,
+    registerUser(event, newUser, setError, setSuccess, () => {
+      setSubmitLoading(false);
+      event.target.first_name.value = "";
+      event.target.last_name.value = "";
+      event.target.email.value = "";
+      event.target.password.value = "";
+      event.target.confirm_password.value = "";
+      event.target.birthday.value = "";
     });
-
-    setSubmitLoading(false);
   }
 
   // RENDER
@@ -210,12 +215,14 @@ function RegisterForm() {
         {/* SUBMIT BUTTON */}
         <Button
           type={info.components.button.type.submit}
-          text={"Registrarse"}
+          text={submitLoading ? "Enviando..." : "Registrarse"}
           size={info.components.button.classes.lg}
           style={info.components.button.classes.primary}
           fill={true}
         />
       </div>
+      {success && <p className="PasswordRecover__input-success">{success}</p>}
+      {error && <p className="ChangePassword__input-error">{error}</p>}
     </form>
   );
 }

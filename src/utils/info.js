@@ -404,6 +404,8 @@ const info = {
       wodCreated: "WOD registrado correctamente",
       movementCreated: "Movimiento añadido correctamente",
       passwordUpdated: "Contraseña actualizada correctamente",
+      userCreated:
+        "¡Gracias por tu registro! Revisa tu correo para verificar tu cuenta y espera a que el administrador te active.",
     },
   },
   routes: {

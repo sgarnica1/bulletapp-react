@@ -10,8 +10,9 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/index";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { getUserInfoApi } from "../api/user";
 import { REFRESH_TOKEN_API } from "../utils/requests";
+import { getUserInfoApi } from "../api/user";
+import { postUserApi } from "../api/user";
 import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
 
@@ -166,7 +167,7 @@ const AuthProvider = ({ children }) => {
   }
 
   // REGISTER USER
-  async function registerUser(event, data, callback) {
+  async function registerUser(event, data, setError, setSuccess, callback) {
     if (event) event.preventDefault();
     let user;
     console.log("registerUser");
@@ -178,14 +179,19 @@ const AuthProvider = ({ children }) => {
         data.password
       );
       user = userCredential.user;
+      console.log(user.uid);
       await updateProfile(user, {
         displayName: data.displayName,
       });
+      await sendEmailVerification(user);
 
-      sendEmailVerification(user);
-      console.log("User created");
+      await postUserApi(user.uid, data);
+      setSuccess(info.messages.success.userCreated);
+      callback();
     } catch (err) {
       console.log(err);
+      setError(info.messages.error.errorWriting);
+      callback();
       throw err;
     }
   }
