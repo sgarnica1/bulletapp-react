@@ -13,6 +13,7 @@ import { SuccessAlert } from "./components/Public/SuccessAlert";
 // PUBLIC PAGES
 import { FirebaseError } from "./pages/Public/FirebaseError";
 import { Login } from "./pages/Public/Login";
+import { Register } from "./pages/Public/Register";
 import { NotFound } from "./pages/Public/NotFound";
 import { PasswordRecover } from "./pages/Public/PasswordRecover";
 
@@ -72,6 +73,7 @@ function App() {
             {/* ---------- PUBLIC ---------- */}
             <Route element={<LoggedOutRoute />}>
               <Route path={info.routes.login.path} element={<Login />} />
+              <Route path={info.routes.register.path} element={<Register />} />
               <Route
                 path={info.routes.passwordRecover.path}
                 element={<PasswordRecover />}

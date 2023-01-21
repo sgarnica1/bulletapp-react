@@ -412,28 +412,6 @@ const info = {
       path: "/leaderboard",
       value: "leaderboard",
     },
-    prs: {
-      path: "/prs",
-      value: "prs",
-      nested: {
-        history: {
-          absolutePath: "/prs/:id",
-          absolutePathNoParms: "/prs",
-          path: "/:id",
-          value: ":id",
-        },
-        add: {
-          absolutePath: "/prs/nuevo",
-          path: "/nuevo",
-          value: "nuevo",
-        },
-        update: {
-          absolutePath: "/prs/:id/actualizar",
-          path: "/actualizar",
-          value: "/actualizar",
-        },
-      },
-    },
     athlete: {
       path: "/atletas",
       value: "atletas",
@@ -478,17 +456,6 @@ const info = {
       nested: {
         add: {
           absolutePath: "/skills/nuevo",
-          path: "/nuevo",
-          value: "nuevo",
-        },
-      },
-    },
-    personalGoals: {
-      path: "/metas",
-      value: "metas",
-      nested: {
-        add: {
-          absolutePath: "/metas/nuevo",
           path: "/nuevo",
           value: "nuevo",
         },
@@ -552,6 +519,10 @@ const info = {
     login: {
       path: "/login",
       value: "login",
+    },
+    register: {
+      path: "/registro",
+      value: "registro",
     },
     serverError: {
       path: "/server-error",
