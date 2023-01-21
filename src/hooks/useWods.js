@@ -10,7 +10,7 @@ import { info } from "../utils/info";
 
 const useWods = () => {
   const [wods, setWods] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const getAllWods = async () => {

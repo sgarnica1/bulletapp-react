@@ -42,6 +42,28 @@ const navMenu = {
         },
         {
           type: type.dropdown,
+          name: "Programación",
+          active: true,
+          elements: [
+            {
+              name: info.views.programming,
+              route: info.routes.programming.path,
+              active: true,
+            },
+            {
+              name: info.views.wods,
+              route: info.routes.wods.path,
+              active: true,
+            },
+            {
+              name: info.views.addWod,
+              route: info.routes.wods.nested.add.absolutePath,
+              active: true,
+            },
+          ],
+        },
+        {
+          type: type.dropdown,
           name: "Atletas",
           active: true,
           elements: [
@@ -62,26 +84,26 @@ const navMenu = {
           type: type.item,
           name: info.views.payments,
           route: info.routes.payments.path,
-          active: true,
+          active: false,
         },
         {
           type: type.item,
           name: info.views.groups,
           route: info.routes.groups.path,
-          active: true,
+          active: false,
         },
         {
           type: type.item,
           name: info.views.plans,
           route: info.routes.plans.path,
-          active: true,
+          active: false,
         },
       ],
     },
     {
       type: type.subMenu,
       subtitle: "Recursos",
-      active: true,
+      active: false,
       elements: [
         {
           type: type.dropdown,
@@ -128,7 +150,7 @@ const navMenu = {
           type: type.item,
           name: info.views.profile,
           route: info.routes.profile.path,
-          active: true,
+          active: false,
         },
         {
           type: type.logout,
@@ -203,7 +225,7 @@ const navMenu = {
           type: type.item,
           name: info.views.profile,
           route: info.routes.profile.path,
-          active: true,
+          active: false,
         },
         {
           type: type.logout,

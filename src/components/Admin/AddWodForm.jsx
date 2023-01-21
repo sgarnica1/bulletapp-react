@@ -8,14 +8,11 @@ import { useDashboard } from "../../contexts/DashboardContext";
 
 // COMPONENTS
 import { Button } from "../Public/Button";
+import { ButtonSelectFilter } from "../Public/ButtonSelectFilter";
 import { Input } from "../Public/Input";
-import { Select } from "../Public/Select";
+import { WidgetLoadingSkeleton } from "../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
 import { info } from "../../utils/info";
-import ClockIcon from "../../assets/icon/time.svg";
-import DescriptionIcon from "../../assets/icon/description.svg";
-import CalendarIcon from "../../assets/icon/calendar-date.svg";
-import TitleIcon from "../../assets/icon/title.svg";
 
 // TODO - Add validation to the form
 // TODO - Add a loading state to the form
@@ -24,16 +21,18 @@ import TitleIcon from "../../assets/icon/title.svg";
 
 function AddWodForm() {
   const { wods, loading, actions: wodActions, error } = useWods();
-  const { wodCategories, actions: wodCategoriesActions } = useWodCategories();
+  const {
+    wodCategories,
+    actions: wodCategoriesActions,
+    loading: loadingCategories,
+  } = useWodCategories();
 
-  const { successMessage, setSuccessMessage, errorMessage, setErrorMessage } =
-    useDashboard();
+  const { setSuccessMessage, setErrorMessage } = useDashboard();
   const navigate = useNavigate();
 
-  const [wodDate, setWodDate] = useState("");
-  const [refetch, setRefetch] = useState(true);
-
   const [submitError, setSubmitError] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [validDate, setValidDate] = useState(false);
   const [validWodTitle, setValidWodTitle] = useState(false);
   const [validDescription, setValidDescription] = useState(false);
@@ -65,8 +64,10 @@ function AddWodForm() {
 
   function handleSubmitData(event) {
     event.preventDefault();
+    setSubmitLoading(true);
+
     const date = event.target.date.value;
-    const wodCat = event.target.category.value;
+    const wodCat = selectedCategory;
     const timecap = event.target.timecap.value;
     const rounds = event.target.rounds.value;
     const reps = event.target.reps.value;
@@ -100,10 +101,16 @@ function AddWodForm() {
       [timeScoreKey]: timescore,
     };
 
+    console.log(newWod);
+
     wodActions.postWod(newWod, (error) => {
-      if (error) return setErrorMessage(info.messages.error.errorWriting);
+      if (error) {
+        setSubmitLoading(false);
+        return setErrorMessage(info.messages.error.errorWriting);
+      }
       setSuccessMessage(info.messages.success.wodCreated);
-      // navigate(info.routes.programming);
+      navigate(info.routes.wods.path);
+      setSubmitLoading(false);
     });
   }
 
@@ -115,21 +122,36 @@ function AddWodForm() {
       formNoValidate
       onSubmit={(event) => handleSubmitData(event)}
     >
-      <Input
-        label={"Fecha"}
-        units={"Fecha"}
-        type={info.components.input.type.date}
-        name={info.components.input.type.date}
-        validationHandler={(value) => (!value ? false : true)}
-        setValidData={setValidDate}
-        submitError={submitError}
-        setSubmitError={setSubmitError}
-      />
+      <div className="Records__history__list">
+        {loadingCategories &&
+          new Array(10)
+            .fill(0)
+            .map((_, index) => (
+              <WidgetLoadingSkeleton type="movement-card" key={index} />
+            ))}
+      </div>
+
+      <p className="AddWodForm__label">Selecciona una categoría</p>
+      {!loadingCategories && wodCategories && (
+        <ButtonSelectFilter
+          options={wodCategories.map((cat) => cat.name).sort()}
+          value={selectedCategory}
+          setValue={setSelectedCategory}
+          loading={loadingCategories}
+        />
+      )}
 
       <div className="AddWodForm__input-grid">
-        {wodCategories && (
-          <Select options={wodCategories} label="Categoría" name="category" />
-        )}
+        <Input
+          label={"Fecha"}
+          units={"Fecha"}
+          type={info.components.input.type.date}
+          name={info.components.input.type.date}
+          validationHandler={(value) => (!value ? false : true)}
+          setValidData={setValidDate}
+          submitError={submitError}
+          setSubmitError={setSubmitError}
+        />
 
         <Input
           type={info.components.input.type.number}
@@ -188,11 +210,11 @@ function AddWodForm() {
       {/* SUBMIT BUTTON */}
       <Button
         type={info.components.button.type.submit}
-        text={loading ? "Cargando..." : "Crear WOD"}
+        text={submitLoading ? "Cargando..." : "Crear WOD"}
         size={info.components.button.classes.large}
         style={info.components.button.classes.primary}
         fill={true}
-        disabled={loading}
+        disabled={submitLoading}
       />
     </form>
   );

@@ -17,103 +17,11 @@
     }
   }
 
-  // &__input-container {
-  //   display: flex;
-  //   flex-direction: row;
-  //   justify-content: center;
-  //   align-items: center;
-  //   color: var(--color-brand);
-  //   background: var(--bg-component);
-  //   border-radius: 6px;
-  //   padding: 0 20px;
-  //   border: 1px solid var(--border-color);
-  //   transition: ease 0.3s;
+  &__label {
+    color: $color-brand;
+    font-size: toRem(16);
+    margin-bottom: 20px;
+  }
 
-  //   &.textarea {
-  //     min-height: 232px;
-  //     height: 100%;
-  //     align-items: flex-start;
-
-  //     img {
-  //       margin-top: toRem(12);
-  //     }
-  //   }
-  // }
-
-  // &__form-column {
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 15px;
-  //   margin-bottom: 20px;
-  // }
-
-  // &__form-subtitle {
-  //   color: $color-brand;
-  //   font-size: toRem(18);
-  // }
-
-  // &__form-label {
-  //   margin-bottom: -8px;
-  //   color: var(--color-text);
-  //   font-size: toRem(14);
-  // }
-
-  // &__timecap-units {
-  //   font-weight: 600;
-  // }
-
-  // input,
-  // textarea,
-  // select {
-  //   height: toRem(45);
-  //   width: 100%;
-  //   outline: none;
-  //   border-radius: toRem(6);
-  //   padding: toRem(10);
-  //   font-size: toRem(14);
-  //   font-family: $font-primary;
-  //   font-weight: 500;
-  //   border: none;
-  //   background: var(--bg-component);
-  //   color: var(--color-text);
-  // }
-
-  // textarea {
-  //   outline: none;
-  //   height: 100%;
-  //   resize: none;
-  // }
-  // textarea:focus-visible {
-  //   border: none;
-  //   outline: none;
-  //   box-shadow: none;
-  //   height: 100%;
-  // }
-
-  // input::placeholder {
-  //   font-weight: 400;
-  //   color: var(--color-text);
-  // }
-
-  // &__input-container:focus-within {
-  //   border: $color-brand 1px solid;
-  //   transition: ease 0.3s;
-  // }
-  // &__input-container.error {
-  //   border-color: $color-error;
-  //   transition: ease 0.3s;
-  // }
-
-  // input:-webkit-autofill,
-  // input:-webkit-autofill:hover,
-  // input:-webkit-autofill:focus,
-  // input:-webkit-autofill:active {
-  //   transition: background-color 5000s ease-in-out 0s;
-  //   -webkit-text-fill-color: var(--color-text) !important;
-  // }
-
-  // input.error,
-  // select.error {
-  //   border-color: $color-error;
-  // }
+  
 }

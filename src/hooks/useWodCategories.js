@@ -5,7 +5,7 @@ import { info } from "../utils/info";
 
 const useWodCategories = () => {
   const [wodCategories, setWodCategories] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [storedWodCategories, setStoredWodCategories] = useLocalStorage(
     info.localStorageKeys.wodCategories,
@@ -17,7 +17,7 @@ const useWodCategories = () => {
       setLoading(true);
       if (storedWodCategories.length > 0) {
         await setWodCategories(storedWodCategories);
-        await setLoading(false);
+        setLoading(false);
         return;
       }
       const res = await getWodCategoriesApi();
