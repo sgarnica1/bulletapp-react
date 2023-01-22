@@ -132,7 +132,7 @@ function RegisterForm() {
           label={"Nombre (s)"}
           name="first_name"
           placeholder={"Nombre (s)"}
-          validationHandler={(value) => (!value || value == "" ? false : true)}
+          validationHandler={(value) => (!value || value === "" ? false : true)}
           setValidData={setValidFirstName}
           submitError={submitError}
           setSubmitError={setSubmitError}
@@ -144,7 +144,7 @@ function RegisterForm() {
           label={"Apellidos"}
           name="last_name"
           placeholder={"Apellidos"}
-          validationHandler={(value) => (!value || value == "" ? false : true)}
+          validationHandler={(value) => (!value || value === "" ? false : true)}
           setValidData={setValidLastName}
           submitError={submitError}
           setSubmitError={setSubmitError}
@@ -173,7 +173,7 @@ function RegisterForm() {
           label={"Cumpleaños"}
           name="birthday"
           placeholder={"Cumpleaños"}
-          validationHandler={(value) => (!value || value == "" ? false : true)}
+          validationHandler={(value) => (!value || value === "" ? false : true)}
           setValidData={setValidBirthDay}
           submitError={submitError}
           setSubmitError={setSubmitError}

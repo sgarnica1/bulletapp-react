@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -14,7 +13,6 @@ import { info } from "../../utils/info";
 // IMG
 import WhiteLogo from "../../assets/img/logo_white_resized.png";
 import BlackLogo from "../../assets/img/logo_black_resized.png";
-import BackArrow from "../../assets/icon/back-arrow.svg";
 
 function PasswordRecover() {
   const { sendPasswordReset } = useAuth();
@@ -85,8 +83,10 @@ function PasswordRecover() {
 
             {success && (
               <div className="PasswordRecover__input-success">
-                <p>Se envió un correo a <span>{email}.</span> Si no lo encuentras,
-                revisa tu bandeja de spam.</p>                
+                <p>
+                  Se envió un correo a <span>{email}.</span> Si no lo
+                  encuentras, revisa tu bandeja de spam.
+                </p>
               </div>
             )}
           </div>
@@ -98,7 +98,7 @@ function PasswordRecover() {
             fill={false}
           />
         </form>
-        <BackButton link={info.routes.login.path} text="Regresar" mt={true}/>
+        <BackButton link={info.routes.login.path} text="Regresar" mt={true} />
       </ContentContainer>
     </div>
   );

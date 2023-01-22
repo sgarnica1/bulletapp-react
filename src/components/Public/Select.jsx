@@ -7,6 +7,8 @@ const Select = ({ label, options, name, submitError }) => {
 
   useEffect(() => {
     if (submitError && !value) setErrorMessage("Campo requerido");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitError]);
 
   return (

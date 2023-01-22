@@ -10,6 +10,8 @@ const AddWod = () => {
   const { setActiveView } = useDashboard();
   useEffect(() => {
     setActiveView(info.views.addWod);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

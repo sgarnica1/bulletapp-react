@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { useTheme } from "../../contexts/ThemeContext";
+// import { useTheme } from "../../contexts/ThemeContext";
 import { useDashboard } from "../../contexts/DashboardContext";
 
 import { info } from "../../utils/info";
@@ -24,6 +24,7 @@ function Settings() {
 
   useEffect(() => {
     setActiveView(info.views.settings);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

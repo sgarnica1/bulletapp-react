@@ -175,24 +175,6 @@ const fetchConfigGET = (token, abortCont) => {
   };
 };
 
-const fetchConfigPOST = (token, data) => ({
-  method: "POST",
-  body: JSON.stringify(data),
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + String(token),
-  },
-});
-
-const fetchConfigPUT = (token, data) => ({
-  method: "PUT",
-  body: JSON.stringify(data),
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + String(token),
-  },
-});
-
 const getAthleteDetails = (token, data) => {
   const updatedAthletes = data.map((athlete) => {
     athlete.created = utils.formatDate(athlete.created);

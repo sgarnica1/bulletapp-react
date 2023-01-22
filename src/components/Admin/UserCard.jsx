@@ -21,6 +21,8 @@ const UserCard = ({ user, onClickHandler }) => {
     if (users) {
       setActiveState(!activeState);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateUser, users]);
 
   return (

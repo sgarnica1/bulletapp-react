@@ -6,7 +6,6 @@ import {
   setDoc,
   updateDoc,
   query,
-  orderBy,
   Timestamp,
   where,
 } from "firebase/firestore/lite";

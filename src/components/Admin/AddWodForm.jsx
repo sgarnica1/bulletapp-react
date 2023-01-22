@@ -20,7 +20,7 @@ import { info } from "../../utils/info";
 // TODO - Add a failure state to the form
 
 function AddWodForm() {
-  const { wods, loading, actions: wodActions, error } = useWods();
+  const { wods, actions: wodActions, error } = useWods();
   const {
     wodCategories,
     actions: wodCategoriesActions,
@@ -33,11 +33,11 @@ function AddWodForm() {
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [validDate, setValidDate] = useState(false);
-  const [validWodTitle, setValidWodTitle] = useState(false);
-  const [validDescription, setValidDescription] = useState(false);
-  const [validTimeCap, setValidTimeCap] = useState(false);
-  const [validRounds, setValidRounds] = useState(false);
+  const [validDate, setValidDate] = useState(true);
+  const [validWodTitle, setValidWodTitle] = useState(true);
+  const [validDescription, setValidDescription] = useState(true);
+  const [validTimeCap, setValidTimeCap] = useState(true);
+  const [validRounds, setValidRounds] = useState(true);
 
   useEffect(() => {
     const abortCont = new AbortController();
@@ -85,6 +85,11 @@ function AddWodForm() {
     const timeScoreKey = info.firebase.docKeys.wods.timescore;
 
     // TODO - Add validation to the form
+    if(!validDate) return setErrorMessage(true);
+    if(!validWodTitle) return setErrorMessage(true);
+    if(!validDescription) return setErrorMessage(true);
+    if(!validTimeCap) return setErrorMessage(true);
+    if(!validRounds) return setErrorMessage(true);
 
     const timescore = wodCategories.find(
       (cat) => cat.name === wodCat
@@ -188,7 +193,7 @@ function AddWodForm() {
         label={"Nombre del WOD"}
         name="title"
         placeholder={"For time, 21-15-9..."}
-        validationHandler={(value) => (!value || value == "" ? false : true)}
+        validationHandler={(value) => (!value || value === "" ? false : true)}
         setValidData={setValidWodTitle}
         submitError={submitError}
         setSubmitError={setSubmitError}
@@ -201,7 +206,7 @@ function AddWodForm() {
         placeholder={
           "10 Pull Ups\n20 Push Ups\n30 Air Squats\n(Separar ejercicios con un salto de línea)\n..."
         }
-        validationHandler={(value) => (!value || value == "" ? false : true)}
+        validationHandler={(value) => (!value || value === "" ? false : true)}
         setValidData={setValidDescription}
         submitError={submitError}
         setSubmitError={setSubmitError}

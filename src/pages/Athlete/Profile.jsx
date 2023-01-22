@@ -17,6 +17,7 @@ function Profile() {
 
   useEffect(() => {
     setActiveView(info.views.profile);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
