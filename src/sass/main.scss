@@ -19,8 +19,9 @@
 
 // COMPONENTS - ATHLETE
 @import "components/Athlete/_addRecordForm";
-@import "components/Athlete/newfile.scss";
-@import "components/athlete/_bulletGoalWidget";
+@import "components/Athlete/formWidgetContainer";
+@import "components/Athlete/newfiles.scss";
+// @import "components/athlete/_bulletGoalWidget";
 @import "components/athlete/_personalGoal";
 @import "components/athlete/_movementCard";
 @import "components/athlete/_movementRecordCard";
