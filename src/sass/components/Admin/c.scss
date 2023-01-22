@@ -135,10 +135,12 @@
 }
 
 .Home {
+
   .AthletesList__headers,
   .AthletesList__athlete {
     grid-template-columns: repeat(4, minmax(150px, 1fr));
   }
+
   .AthletesList__athlete-field--delete {
     display: none;
   }
