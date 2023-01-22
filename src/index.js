@@ -4,9 +4,11 @@ import App from "./App";
 import { DashboardProvider } from "./contexts/DashboardContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
-// import { LocalizationProvider } from '@mui/x-date-pickers';
 import "bootstrap/dist/css/bootstrap.min.css";
+
+// CSS FOR DEPLOYMENT, SCSS FOR DEVELOPMENT
 import "./sass/main.css";
+// import "./sass/main.scss";
 
 ReactDOM.render(
   <React.StrictMode>
