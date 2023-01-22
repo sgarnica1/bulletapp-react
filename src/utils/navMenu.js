@@ -41,6 +41,30 @@ const navMenu = {
           ],
         },
         {
+          type: type.item,
+          name: info.views.leaderboard,
+          route: info.routes.leaderboard.path,
+          active: true,
+        },
+        {
+          type: type.dropdown,
+          name: "Skill & Strength",
+          active: true,
+          elements: [
+            {
+              name: info.views.records,
+              route: info.routes.movements.path,
+              active: true,
+            },
+            {
+              name: info.views.skills,
+              route: info.routes.skills.path,
+              active: true,
+            },
+          ],
+        },
+
+        {
           type: type.dropdown,
           name: "Atletas",
           active: true,
@@ -84,15 +108,16 @@ const navMenu = {
       active: true,
       elements: [
         {
+          type: type.item,
+          name: info.views.users,
+          route: info.routes.users.path,
+          active: true,
+        },
+        {
           type: type.dropdown,
           name: "Programación",
           active: true,
           elements: [
-            {
-              name: info.views.programming,
-              route: info.routes.programming.path,
-              active: true,
-            },
             {
               name: info.views.wods,
               route: info.routes.wods.path,
@@ -104,12 +129,6 @@ const navMenu = {
               active: true,
             },
           ],
-        },
-        {
-          type: type.item,
-          name: info.views.videos,
-          route: info.routes.videos.path,
-          active: true,
         },
       ],
     },
