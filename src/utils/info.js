@@ -51,9 +51,8 @@ const info = {
     sortby: {
       label: "Ordenar",
       options: {
-        // mostRecent: "Más reciente",
-        // oldest: "Más antiguo",
-        // alphabetic: "Alfabético",
+        mostRecent: "Más reciente",
+        oldest: "Más antiguo",
         az: "A-Z",
         za: "Z-A",
       },
@@ -329,6 +328,8 @@ const info = {
         birthMonth: "birth_month",
         active: "active",
         role: "role",
+        group: "group",
+        plan: "plan",
         location: "location",
         timestamps: {
           createdAt: "created_at",
@@ -551,6 +552,10 @@ const info = {
       path: "/contrasena/recuperar",
       value: "contrasena/recuperar",
     },
+    users: {
+      path: "/usuarios",
+      value: "usuarios",
+    },
   },
   theme: {
     light: "light",
@@ -576,6 +581,7 @@ const info = {
     records: "Records Personales",
     settings: "Ajustes",
     skills: "Skills",
+    users: "Usuarios",
     videos: "Videos",
     wods: "WODs",
   },

@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 // COMPONENTS
 import { Button } from "../../components/Public/Button";
 import { Input } from "../../components/Public/Input";
+import { Select } from "../../components/Public/Select";
 
 // INFO
 import { info } from "../../utils/info";
@@ -38,6 +39,8 @@ function RegisterForm() {
     let firstName = event.target.first_name.value;
     let lastName = event.target.last_name.value;
     let email = event.target.email.value;
+    let group = event.target.group.value;
+    let plan = event.target.plan.value;
     let password = event.target.password.value;
     let birthDay = event.target.birthday.value;
 
@@ -45,6 +48,8 @@ function RegisterForm() {
     const firtsNameKey = info.firebase.docKeys.users.firstName;
     const lastNameKey = info.firebase.docKeys.users.lastName;
     const emailKey = info.firebase.docKeys.users.email;
+    const planKey = info.firebase.docKeys.users.plan;
+    const groupKey = info.firebase.docKeys.users.group;
     const birthDayKey = info.firebase.docKeys.users.birthDay;
     const birthMonthKey = info.firebase.docKeys.users.birthMonth;
 
@@ -63,6 +68,8 @@ function RegisterForm() {
       return;
     }
     if (!validBirthDay) return setSubmitError(true);
+    if (plan === "") return setSubmitError(true);
+    if (group === "") return setSubmitError(true);
 
     setSubmitLoading(true);
 
@@ -70,6 +77,8 @@ function RegisterForm() {
       [firtsNameKey]: firstName,
       [lastNameKey]: lastName,
       [emailKey]: email,
+      [groupKey]: group,
+      [planKey]: plan,
       [birthDayKey]: utils.parseDate(birthDay).getDate(),
       [birthMonthKey]: utils.parseDate(birthDay).getMonth() + 1,
       displayName: firstName + " " + lastName,
@@ -82,6 +91,8 @@ function RegisterForm() {
         event.target.first_name.value = "";
         event.target.last_name.value = "";
         event.target.email.value = "";
+        event.target.group.value = "";
+        event.target.plan.value = "";
         event.target.password.value = "";
         event.target.confirm_password.value = "";
         event.target.birthday.value = "";
@@ -167,7 +178,10 @@ function RegisterForm() {
               if (!validation) setInvalidPasswordFormat(true);
               return validation ? true : false;
             }}
-            onChangeCallback={() => setInvalidPasswordFormat(false)}
+            onChangeCallback={(value) => {
+              setInvalidPasswordFormat(false);
+              return value;
+            }}
             setValidData={setValidPassword}
             submitError={submitError}
             setSubmitError={setSubmitError}
@@ -193,7 +207,10 @@ function RegisterForm() {
               value !== password && setInvalidMatchingPassword(true);
               return value === password ? true : false;
             }}
-            onChangeCallback={() => setInvalidMatchingPassword(false)}
+            onChangeCallback={(value) => {
+              setInvalidMatchingPassword(false);
+              return value;
+            }}
             setValidData={setValidConfirmPassword}
             submitError={submitError}
             setSubmitError={setSubmitError}
@@ -205,6 +222,28 @@ function RegisterForm() {
             </p>
           )}
         </div>
+
+        <Select
+          label="Horario de clase"
+          options={[
+            "6:00am",
+            "7:30am",
+            "8:30am",
+            "5:30pm",
+            "6:30pm",
+            "7:30pm",
+            "8:30pm",
+          ]}
+          name="group"
+          submitError={submitError}
+        />
+
+        <Select
+          label="Plan inscrito"
+          options={["5D", "3D", "Kids", "Pareja"]}
+          name="plan"
+          submitError={submitError}
+        />
       </div>
 
       <div className="RegisterForm__submit-btn">

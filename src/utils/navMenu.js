@@ -45,7 +45,6 @@ const navMenu = {
           name: "Programación",
           active: true,
           elements: [
-
             {
               name: info.views.wods,
               route: info.routes.wods.path,
@@ -74,6 +73,12 @@ const navMenu = {
               active: true,
             },
           ],
+        },
+        {
+          type: type.item,
+          name: info.views.users,
+          route: info.routes.users.path,
+          active: true,
         },
 
         {

@@ -1,7 +1,7 @@
 import React from "react";
 import { info } from "../../utils/info";
 
-const SortByFilter = ({ setValue, loading }) => {
+const SortByFilter = ({ options, setValue, loading }) => {
   return (
     <div className={`SortByFilter ${loading && "loading"}`}>
       <select
@@ -14,7 +14,7 @@ const SortByFilter = ({ setValue, loading }) => {
         >
           {!loading ? info.components.sortby.label : ""}
         </option>
-        {Object.values(info.components.sortby.options).map((option, index) => (
+        {options.map((option, index) => (
           <option value={option} className="SortByFilter__option" key={index}>
             {option}
           </option>

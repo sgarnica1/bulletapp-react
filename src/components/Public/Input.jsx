@@ -60,6 +60,7 @@ const Input = ({
       if (type === typeTime) {
         validateData(minutes, seconds);
       } else {
+
         validateData(value);
       }
     }
@@ -556,12 +557,12 @@ const Input = ({
     setErrorMessage(false);
     let newValue = event.target.value;
     if (onChangeCallback) newValue = onChangeCallback(newValue, value);
-
     setFunction(newValue);
   }
 
   // FUNCTION TO VALIDATE DATA BASED ON VALIDATION HANDLER
   function validateData(value, extraVal) {
+    // if(type === typePassword) console.log(value);
     if (!value) return setErrorMessage(requiredFieldMessage);
     const res = validationHandler(value, extraVal);
 

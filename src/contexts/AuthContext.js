@@ -189,7 +189,6 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     setError(false);
     let user;
-    console.log("registerUser");
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -198,7 +197,6 @@ const AuthProvider = ({ children }) => {
         data.password
       );
       user = userCredential.user;
-      console.log(user.uid);
       await updateProfile(user, {
         displayName: data.displayName,
       });
@@ -265,11 +263,9 @@ const AuthProvider = ({ children }) => {
 
   // SEND PASSWORD RESET EMAIL
   function sendPasswordReset(email, setSuccess, setError, callback) {
-    console.log(auth);
 
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        console.log("Email sent");
         setSuccess(true);
         callback();
       })
@@ -307,7 +303,6 @@ const AuthProvider = ({ children }) => {
       if (!authData.error) {
         // GET USER INFO
         const userCredentials = await getUserInfoApi(user, authData.user_id);
-        console.log(userCredentials)
         if (
           userCredentials.emailVerified
             ? !userCredentials.emailVerified

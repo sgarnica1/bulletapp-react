@@ -66,7 +66,7 @@ const AddRecordForm = ({
         onSubmit={(event) => submitHandler(event)}
       >
         {/* DATE INPUT */}
-        <p className="meta-tag">Fecha</p>
+        <p className="app-meta-tag">Fecha</p>
         <Input
           type={info.components.input.type.date}
           name={info.components.input.type.date}
@@ -84,7 +84,7 @@ const AddRecordForm = ({
         />
 
         {/* TIME SCORE INPUT */}
-        <p className="meta-tag">Registro</p>
+        <p className="app-meta-tag">Registro</p>
         {timescore && (
           <Input
             type={info.components.input.type.time}

@@ -87,7 +87,7 @@ function Home() {
         )}
 
         {/* LATEST RECORDS */}
-        {latestactivity && <h2 className="subtitle">Marcas personales</h2>}
+        {latestactivity && <h2 className="app-subtitle">Marcas personales</h2>}
         {!loadingRecord && latestactivity && (
           <div className="StatWidget__container grid">
             {/* Last register */}
@@ -139,7 +139,7 @@ function Home() {
           </div>
         )}
 
-        <h3 className="subtitle">Añade un nuevo logro</h3>
+        <h3 className="app-subtitle">Añade un nuevo logro</h3>
         {/* ADD NEW Record */}
         <AddButton
           link={info.routes.movements.path}
@@ -156,7 +156,7 @@ function Home() {
           title="Desbloquear Habilidad"
         />
 
-        <h4 className="subtitle">Más para ti</h4>
+        <h4 className="app-subtitle">Más para ti</h4>
         {/* PROFILE */}
         {/* {!error && !loading && (
           <InfoCard

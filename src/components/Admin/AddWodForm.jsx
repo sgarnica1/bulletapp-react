@@ -117,7 +117,7 @@ function AddWodForm() {
   // RENDER
   return (
     <form
-      // className="AddWodForm"
+      className="AddWodForm"
       autoComplete="off"
       formNoValidate
       onSubmit={(event) => handleSubmitData(event)}
@@ -211,7 +211,7 @@ function AddWodForm() {
       <Button
         type={info.components.button.type.submit}
         text={submitLoading ? "Cargando..." : "Crear WOD"}
-        size={info.components.button.classes.large}
+        size={info.components.button.classes.lg}
         style={info.components.button.classes.primary}
         fill={true}
         disabled={submitLoading}

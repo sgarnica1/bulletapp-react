@@ -1,18 +1,23 @@
 .Select {
+  margin-bottom: 20px;
+
   &__container {
     display: flex;
     align-items: center;
     padding: 10px 20px;
     height: $height-input;
-    margin-bottom: 20px;
     border-radius: $border-radius;
     background: var(--bg-input);
     border: 1px solid var(--bg-input);
     color: var(--color-text);
 
-    @include mq(md) {
-      max-width: 280px;
+    &.error {
+      border: 2px solid $color-error;
     }
+
+    // @include mq(md) {
+    //   max-width: 280px;
+    // }
   }
 
   &__select {

@@ -210,7 +210,7 @@ function MovementTracking() {
               )}
             </div>
 
-            <p className="meta-tag">Resultado más reciente</p>
+            <p className="app-meta-tag">Resultado más reciente</p>
 
             {record && (
               <MovementRecordCard
@@ -224,8 +224,8 @@ function MovementTracking() {
             )}
 
             {weightPercents.length > 0 && (
-              <h3 className="subtitle">
-                Porcentajes <span className="meta-tag">(Basado en tu 1RM)</span>
+              <h3 className="app-subtitle">
+                Porcentajes <span className="app-meta-tag">(Basado en tu 1RM)</span>
               </h3>
             )}
 
@@ -248,7 +248,7 @@ function MovementTracking() {
               </section>
             )}
 
-            {record?.scores.length > 1 && <p className="subtitle">Historial</p>}
+            {record?.scores.length > 1 && <p className="app-subtitle">Historial</p>}
 
             {record && (
               <div className="MovementTracking__records-container">

@@ -81,29 +81,29 @@ input[type="number"] {
 
 // PERSONAL APP CLASSES
 .App {
-  .title {
+  .app-title {
     color: var(--color-text);
     font-size: toRem(24);
     font-weight: 600;
     margin-bottom: toRem(10);
   }
-  .title.margin {
+  .app-title.margin {
     margin-bottom: toRem(30);
   }
-  .subtitle {
+  .app-subtitle {
     margin: 40px 0 20px 0;
     color: var(--color-text);
     font-weight: 600;
     font-size: toRem(20);
   }
-  .date {
+  .app-date {
     margin-bottom: 30px;
     font-size: toRem(15);
     font-weight: 300;
     color: var(--color-text);
     letter-spacing: 2px;
   }
-  .meta-tag {
+  .app-meta-tag {
     font-size: toRem(12);
     font-weight: 400;
     color: var(--color-text);

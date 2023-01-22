@@ -33,6 +33,7 @@ import { AddMovement } from "./pages/Admin/AddMovement";
 import { AddWod } from "./pages/Admin/AddWod";
 import { Programming } from "./pages/Admin/Programming";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
+import { Users } from "./pages/Admin/Users";
 
 // PROTECTED ROUTES
 import ScrollToTop from "./utils/components/ScrollToTop";
@@ -125,6 +126,12 @@ function App() {
                 path={info.routes.movements.nested.add.path}
                 element={<AddMovement />}
               />
+
+              <Route
+                path={info.routes.users.path}
+                element={<Users />}
+              />
+
               <Route path={info.routes.wods.path}>
                 <Route
                   path={info.routes.wods.nested.add.value}

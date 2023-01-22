@@ -1,12 +1,4 @@
 .AddWodForm {
-  display: grid;
-  gap: toRem(20);
-  margin-bottom: toRem(50);
-
-  @include mq(sm) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
 
   &__input-grid {
     grid-template-columns: 100%;
@@ -21,6 +13,11 @@
     color: $color-brand;
     font-size: toRem(16);
     margin-bottom: 20px;
+  }
+
+  .Input {
+    width: 100%;
+    max-width: 1280px;
   }
 
   

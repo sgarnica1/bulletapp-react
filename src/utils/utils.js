@@ -246,40 +246,20 @@ const utils = {
     return `${monthDay} ${month} ${year}`;
   },
 
-  sortSkillsByMostRecent: (data) => {
-    return data.sort((a, b) => b.date.seconds - a.date.seconds);
+  sortByMostRecent: (data, key) => {
+    return data.sort((a, b) => b[key].seconds - a[key].seconds);
   },
 
-  sortSkillsByOldest: (data) => {
-    return data.sort((a, b) => a.date.seconds - b.date.seconds);
+  sortByOldest: (data, key) => {
+    return data.sort((a, b) => a[key].seconds - b[key].seconds);
   },
 
-  sortSkillsByAlphabeticalOrder: (data) => {
-    return data.sort((a, b) => a.movement.localeCompare(b.movement));
+  sortAZOrder: (data, key) => {
+    return data.sort((a, b) => a[key].localeCompare(b[key]));
   },
 
-  sortPrsByMostRecent: (data) => {
-    return data.sort(
-      (a, b) => b.scores[0].date.seconds - a.scores[0].date.seconds
-    );
-  },
-
-  sortPrsByOldest: (data) => {
-    return data.sort(
-      (a, b) => a.scores[0].date.seconds - b.scores[0].date.seconds
-    );
-  },
-
-  sortPrsByAlphabeticalOrder: (data) => {
-    return data.sort((a, b) => a.movement.localeCompare(b.movement));
-  },
-
-  sortMovementsAZOrder: (data) => {
-    return data.sort((a, b) => a.name.localeCompare(b.name));
-  },
-
-  sortMovementsZAOrder: (data) => {
-    return data.sort((a, b) => b.name.localeCompare(a.name));
+  sortZAOrder: (data, key) => {
+    return data.sort((a, b) => b[key].localeCompare(a[key]));
   },
 
   timeToSeconds: (time) => {

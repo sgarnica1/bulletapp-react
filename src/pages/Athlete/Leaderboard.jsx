@@ -113,7 +113,7 @@ function Leaderboard() {
 
           {/* LEADERBOARD LIST */}
           <div className="Leaderboard__body">
-            <h2 className="subtitle">Leaderboard</h2>
+            <h2 className="app-subtitle">Leaderboard</h2>
             {loading && (
               <>
                 <InputLoadingSkeleton type="searchBar" />

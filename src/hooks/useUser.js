@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getUsersApi, getUserByIdApi } from "../api/user";
+import { getUsersApi, getUserByIdApi, activateUserApi, deactivateUserApi } from "../api/user";
 
 const useUsers = () => {
   const [users, setUsers] = useState(null);
@@ -31,7 +31,31 @@ const useUsers = () => {
     }
   };
 
-  const actions = { getUsers, getUserById };
+  const activateUser = async (uid, callback) => {
+    try {
+      setLoading(true);
+      await activateUserApi(uid, callback);
+      setUsers(true);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
+  const deactivateUser = async (uid, callback) => {
+    try {
+      setLoading(true);
+      await deactivateUserApi(uid, callback);
+      setUsers(true);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
+  const actions = { getUsers, getUserById, activateUser, deactivateUser };
 
   return { users, loading, error, actions };
 };
