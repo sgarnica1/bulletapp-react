@@ -323,7 +323,6 @@ const info = {
         displayName: "displayName",
         email: "email",
         phoneNumber: "phone_number",
-        plan: "plan",
         schedule: "group",
         birthDay: "birth_day",
         birthMonth: "birth_month",
