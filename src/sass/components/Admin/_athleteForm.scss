@@ -45,10 +45,9 @@
     width: toRem(60);
   }
 
-  input.AddAthleteForm__input-short+select {
+  input.AddAthleteForm__input-short + select {
     margin-left: 10px;
   }
-
   // BIRTHDAY INPUT
 
   input::placeholder {

@@ -43,7 +43,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     display: inline-block;
-    background: url("../../assets/icon/hmbrgrbtn.svg");
+    background: url("../assets/icon/hmbrgrbtn.svg");
   }
   
   // LOGO
@@ -98,7 +98,7 @@
     &__icon {
       width: 20px;
       height: 20px;
-      background: url("../../assets/icon/location.svg");
+      background: url("../assets/icon/location.svg");
       color: var(--color-text);
       @extend %icon;
     }
@@ -141,7 +141,7 @@
       &-icon {
         height: 18px;
         width: 18px;
-        background: url("../../assets/icon/dropdown-inactive.svg");
+        background: url("../assets/icon/dropdown-inactive.svg");
         @extend %icon;
       }
     }

@@ -36,7 +36,7 @@
     span {
       width: toRem(15);
       height: toRem(15);
-      background: url("../../assets/icon/close.svg");
+      background: url("../assets/icon/close.svg");
       @extend %icon;
     }
   }
@@ -157,7 +157,7 @@
       }
 
       span {
-        background: url("../../assets/icon/dropdown-inactive.svg");
+        background: url("../assets/icon/dropdown-inactive.svg");
         height: toRem(15);
         width: toRem(15);
         transform: rotate(0deg);

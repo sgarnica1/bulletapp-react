@@ -20,7 +20,7 @@ body {
   }
 
   &__background-img {
-    background: url("../../assets/img/bullet-crossfit-gym.jpg");
+    background: url("../assets/img/bullet-crossfit-gym.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -88,7 +88,7 @@ body {
     height: toRem(20);
     width: toRem(20);
     cursor: pointer;
-    background: url("../../assets/icon/invisible.svg");
+    background: url("../assets/icon/invisible.svg");
     @extend %icon;
     position: absolute;
     bottom: 18px;
@@ -96,7 +96,7 @@ body {
   }
 
   .password-toggle.visible {
-    background: url("../../assets/icon/visible.svg");
+    background: url("../assets/icon/visible.svg");
   }
 
   &__button-container {

@@ -10,12 +10,12 @@
 @import "base/typography";
 
 // COMPONENTS - ADMIN
-@import "components/admin/newfile";
-@import "components/admin/b.scss";
-@import "components/admin/c.scss";
-@import "components/admin/d.scss";
-@import "components/admin/e.scss";
-@import "components/admin/n.scss";
+@import "components/admin/_addWodForm";
+@import "components/admin/_athleteForm";
+@import "components/admin/_athleteList";
+@import "components/admin/_toolsCard";
+@import "components/admin/_plansCard";
+@import "components/admin/_userCard";
 
 // COMPONENTS - ATHLETE
 @import "components/Athlete/_addRecordForm";
