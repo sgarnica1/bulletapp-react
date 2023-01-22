@@ -3,11 +3,6 @@
   "name": "BulletApp",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
       "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
@@ -19,7 +14,7 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
+  "display": "fullscreen",
+  "theme_color": "#93bb1c",
   "background_color": "#2b3131"
 }
