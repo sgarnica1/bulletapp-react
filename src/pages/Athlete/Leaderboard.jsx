@@ -18,7 +18,11 @@ function Leaderboard() {
   const { wods, actions, loading } = useWods();
   const { setActiveView } = useDashboard();
 
-  const [weekDay, setWeekDay] = useState(new Date().getDay());
+  const [weekDay, setWeekDay] = useState(
+    new Date().getDay() === 0 || new Date().getDay() === 6
+      ? 5
+      : new Date().getDay()
+  );
   const [wodAvailable, setWodAvailable] = useState(false);
   const [sortedWodScores, setSortedWodScores] = useState();
   const [refetch, setRefetch] = useState(true);
@@ -26,8 +30,9 @@ function Leaderboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
-    if (loading) setSearchValue("");
     setActiveView(info.views.leaderboard);
+    if (loading) setSearchValue("");
+
     const date = setWodDate(weekDay);
     setCurrentDate(date);
 
@@ -35,7 +40,11 @@ function Leaderboard() {
     if (refetch) actions.getWodByDateWithScores(date);
 
     // CHECK IF WOD IS AVAILABLE
-    if (weekDay >= new Date().getDay()) setWodAvailable(false);
+    if (
+      weekDay >= new Date().getDate() ||
+      (new Date().getDay() !== 6 && new Date().getDay() !== 0)
+    )
+      setWodAvailable(false);
     else setWodAvailable(true);
     setRefetch(false);
 
