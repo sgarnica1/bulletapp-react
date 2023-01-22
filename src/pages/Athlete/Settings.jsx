@@ -31,7 +31,7 @@ function Settings() {
     <div className="Settings">
       <ContentContainer>
         <BackButton link={info.routes.home} mb={true} />
-        <h1 className="title margin">Ajustes</h1>
+        <h1 className="app-title margin">Ajustes</h1>
         {!error && !loading && (
           <InfoCard
             title={`${user.data[info.firebase.docKeys.users.firstName]} ${

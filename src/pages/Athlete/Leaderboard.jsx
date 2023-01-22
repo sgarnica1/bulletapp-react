@@ -96,9 +96,7 @@ function Leaderboard() {
 
             {!loading && wodAvailable && wods && (
               <div className="Leaderboard__wod__body">
-                <p className="Leaderboard__wod__title">
-                  {wods.title}
-                </p>
+                <p className="Leaderboard__wod__title">{wods.title}</p>
                 {wods?.description.split("\n").map((line, index) => (
                   <p className="Leaderboard__wod__description" key={index}>
                     {line}
@@ -187,8 +185,8 @@ function Leaderboard() {
 
   function setWodDate(weekDay) {
     const today = new Date();
-    const day = today.getDay();
-    const diff = today.getDate() - day + (day === 0 ? -6 : weekDay);
+    const day = today.getDay(); // Weekday as a number (0-6)
+    const diff = today.getDate() - day + weekDay - 7;
     return new Date(today.setDate(diff));
   }
 }
