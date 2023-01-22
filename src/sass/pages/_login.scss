@@ -120,14 +120,13 @@ body {
   &__register-btn {
     text-decoration: none;
     text-transform: capitalize;
-    font-size: toRem(15);
-    color: var(--color-text);
+    font-size: toRem(13);
     opacity: 0.8;
-    // color: $color-brand;
+    color: $color-brand;
     margin-top: 10px;
     margin-bottom: 20px;
+    text-decoration: underline !important;
   }
-
 
   &__passrecover-btn:hover,
   &__register-btn:hover {
@@ -136,17 +135,6 @@ body {
 
   &__login-btn {
     @extend %button;
-  }
-
-  &__login-btn--guest {
-    margin-bottom: toRem(30);
-    background: none;
-    border: 1px solid $color-secondary;
-    color: $color-secondary;
-  }
-
-  &__login-btn--guest:hover {
-    color: $color-dark;
   }
 
   &__privacy {

@@ -19,8 +19,8 @@ const navMenu = {
       elements: [
         {
           type: type.item,
-          name: info.views.dashboard,
-          route: info.routes.dashboard.path,
+          name: info.views.home,
+          route: info.routes.home,
           active: true,
         },
         {
@@ -39,6 +39,12 @@ const navMenu = {
               active: true,
             },
           ],
+        },
+        {
+          type: type.item,
+          name: info.views.users,
+          route: info.routes.users.path,
+          active: true,
         },
         {
           type: type.dropdown,
@@ -60,7 +66,7 @@ const navMenu = {
         {
           type: type.dropdown,
           name: "Atletas",
-          active: true,
+          active: false,
           elements: [
             {
               name: info.views.athletes,
@@ -73,12 +79,6 @@ const navMenu = {
               active: true,
             },
           ],
-        },
-        {
-          type: type.item,
-          name: info.views.users,
-          route: info.routes.users.path,
-          active: true,
         },
 
         {

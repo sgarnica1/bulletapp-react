@@ -106,7 +106,8 @@ input[type="number"] {
   .app-meta-tag {
     font-size: toRem(12);
     font-weight: 400;
-    color: var(--color-text);
+    color: $color-brand;
+    // color: var(--color-text);
     margin-bottom: toRem(5);
   }
 }

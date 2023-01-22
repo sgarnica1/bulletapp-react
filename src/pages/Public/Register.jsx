@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { info } from "../../utils/info";
@@ -23,14 +24,9 @@ function Register() {
             alt="Bullet CrossFit Logo"
             className="Login__header-logo"
           />
-          <h1 className="Register__title">Crea una cuenta</h1>
+          <h1 className="Register__title">Registrarse</h1>
         </header>
         <RegisterForm />
-        <BackButton
-          link={info.routes.login.path}
-          text="Regresar"
-          onClickCallback={() => setError(false)}
-        />
       </ContentContainer>
     </div>
   );

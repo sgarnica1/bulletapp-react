@@ -320,6 +320,7 @@ const info = {
       users: {
         firstName: "first_name",
         lastName: "last_name",
+        displayName: "displayName",
         email: "email",
         phoneNumber: "phone_number",
         plan: "plan",
@@ -406,7 +407,7 @@ const info = {
       movementCreated: "Movimiento añadido correctamente",
       passwordUpdated: "Contraseña actualizada correctamente",
       userCreated:
-        "¡Gracias por tu registro! Revisa tu correo para verificar tu cuenta y espera a que el administrador te active.",
+        "¡Gracias por tu registro! \n\nRevisa tu correo para verificar tu cuenta (incluida la carpeta de Spam) y espera a que el administrador te active.",
     },
   },
   routes: {

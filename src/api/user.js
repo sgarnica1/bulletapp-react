@@ -16,6 +16,7 @@ import { info } from "../utils/info";
 // Firebase keys
 const firtsNameKey = info.firebase.docKeys.users.firstName;
 const lastNameKey = info.firebase.docKeys.users.lastName;
+const displayNameKey = info.firebase.docKeys.users.displayName;
 const emailKey = info.firebase.docKeys.users.email;
 const planKey = info.firebase.docKeys.users.plan;
 const groupKey = info.firebase.docKeys.users.group;
@@ -71,6 +72,7 @@ const postUserApi = async (uid, user, callback) => {
     const res = await setDoc(doc(db, "users", uid), {
       [firtsNameKey]: user[firtsNameKey],
       [lastNameKey]: user[lastNameKey],
+      [displayNameKey]: user[firtsNameKey] + " " + user[lastNameKey],
       [emailKey]: user[emailKey],
       [planKey]: user[planKey],
       [groupKey]: user[groupKey],

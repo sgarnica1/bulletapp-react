@@ -131,7 +131,7 @@ function AddWodForm() {
             ))}
       </div>
 
-      <p className="AddWodForm__label">Selecciona una categoría</p>
+      <p className="app-meta-tag">Selecciona una categoría</p>
       {!loadingCategories && wodCategories && (
         <ButtonSelectFilter
           options={wodCategories.map((cat) => cat.name).sort()}

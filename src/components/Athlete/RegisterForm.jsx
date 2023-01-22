@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 // COMPONENTS
@@ -101,6 +102,23 @@ function RegisterForm() {
   }
 
   // RENDER
+  if (success)
+    return (
+      <div className="RegisterForm__success">
+        <p className="RegisterForm__input-success">
+          {info.messages.success.userCreated}
+        </p>
+        ;
+        <Link
+          to={info.routes.login.path}
+          onClick={() => setError(false)}
+          className="Register__back-btn"
+        >
+          Iniciar sesión
+        </Link>
+      </div>
+    );
+
   return (
     <form
       className="RegisterForm__form"
@@ -246,8 +264,10 @@ function RegisterForm() {
         />
       </div>
 
-      <div className="RegisterForm__submit-btn">
+      <div className="RegisterForm__btn-container">
         {/* SUBMIT BUTTON */}
+
+        {error && <p className="RegisterForm__input-error">{error}</p>}
         <Button
           type={info.components.button.type.submit}
           text={submitLoading ? "Enviando..." : "Registrarse"}
@@ -255,9 +275,14 @@ function RegisterForm() {
           style={info.components.button.classes.primary}
           fill={true}
         />
+        <Link
+          to={info.routes.login.path}
+          onClick={() => setError(false)}
+          className="Register__back-btn"
+        >
+          ¿Ya tienes una cuenta? Inicia sesión
+        </Link>
       </div>
-      {success && <p className="PasswordRecover__input-success">{success}</p>}
-      {error && <p className="ChangePassword__input-error">{error}</p>}
     </form>
   );
 }

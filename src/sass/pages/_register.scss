@@ -17,16 +17,65 @@
   &__title {
     font-size: toRem(24);
     color: var(--color-text);
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 
-  .BackButton {
-    margin: 20px auto;
-    margin-bottom: 0;
+  &__back-btn {
+    text-decoration: underline !important;
+    color: $color-brand;
+    margin: 0 auto;
+    min-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    font-size: toRem(14);
+  }
+
+  &__back-btn:hover {
+    color: var(--color-text);
+    opacity: 0.6;
   }
 }
 
 .RegisterForm {
+  &__input-success,
+  &__input-error {
+    width: 100%;
+    min-height: $height-input;
+    padding: 10px 20px;
+    margin-top: toRem(10);
+    margin-bottom: 30px;
+    border-radius: toRem(6);
+    display: flex;
+    align-items: center;
+    max-width: $max-width-card;
+
+    @include mq(md) {
+      max-width: $max-width-card-md;
+    }
+  }
+
+  &__success {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__input-error {
+    background: #de231620;
+    color: $color-error;
+  }
+
+  &__input-success {
+    background: #1e7e3420;
+    color: white;
+    max-width: 600px;
+    white-space: break-spaces;
+  }
+
   &__input-grid {
     @include mq(md) {
       max-width: 600px;
@@ -34,19 +83,29 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
+
+      .Input {
+        margin-bottom: 0;
+      }
+    }
+
+    .Input {
+      min-width: 195px;
+    }
+
+    .Input__container,
+    .Select__container {
+      background: transparent;
     }
   }
 
-  &__submit-btn {
+  &__btn-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
     margin-top: 30px;
-
-    .Button {
-      @include mq(md) {
-        max-width: 590px;
-      }
-    }
   }
 }
