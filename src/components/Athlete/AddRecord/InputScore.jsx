@@ -22,6 +22,7 @@ const InputScore = ({
         max={max}
         min={0}
         onChange={(event) => {
+          console.log(event.target.value < 0);
           if (event.target.value < 0) event.target.value = 0;
           if (event.target.value > max) event.target.value = max;
           setValue(event.target.value);

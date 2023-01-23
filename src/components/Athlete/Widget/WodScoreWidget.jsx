@@ -6,7 +6,11 @@ import { useWodScores } from "../../../hooks/useWodScores";
 
 // COMPONENTS
 import { Button } from "../../Public/Button";
+import { InputScore } from "../AddRecord/InputScore";
+import { InputScoreContainer } from "../AddRecord/InputScoreContainer";
 import { FormWidgetContainer } from "./FormWidgetContainer";
+import { SelectButtonCategory } from "../AddRecord/SelectButtonCategory";
+import { ButtonSelectFilter } from "../../../components/Public/ButtonSelectFilter";
 
 // LOADING SKELETONS
 import { WidgetLoadingSkeleton } from "../../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
@@ -26,10 +30,16 @@ const WodScoreWidget = () => {
   } = useWodScores();
 
   // INITIAL STATES
-  const [reps, setReps] = useState();
-  const [rounds, setRounds] = useState();
-  const [minutes, setMinutes] = useState("00");
-  const [seconds, setSeconds] = useState("00");
+  const [selectedScoreOption, setSelectedScoreOption] = useState("");
+  const [scoreOptions] = useState([
+    info.components.wodScoreForm.scoreType.onTime,
+    info.components.wodScoreForm.scoreType.timeCaped,
+  ]);
+  const [reps, setReps] = useState("");
+  const [rounds, setRounds] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("");
+  const [timeCaped, setTimeCaped] = useState("");
   const [wodScore, setWodScore] = useState("");
 
   const [wodScoreUpdated, setWodScoreUpdated] = useState(false);
@@ -42,13 +52,20 @@ const WodScoreWidget = () => {
     } // GET TODAYS WOD
 
     // SET WODSCORE IF EXISTS
-    if (wod && wod !== -1 && wod.scores) {
+    if (wod && wod !== -1 && wod.scores && selectedScoreOption === "") {
       wod.scores.forEach((doc) => {
         if (doc.uid === user.uid || doc.uid === user.user_id) {
           setWodScore(doc);
           setReps(doc.score.reps);
+          setRounds(doc.score.rounds);
           setMinutes(doc.score.minutes);
           setSeconds(doc.score.seconds);
+          setTimeCaped(doc.score.timeCaped);
+          setSelectedScoreOption(
+            !doc.score.timeCaped
+              ? info.components.wodScoreForm.scoreType.onTime
+              : info.components.wodScoreForm.scoreType.timeCaped
+          );
         }
       });
     }
@@ -56,16 +73,91 @@ const WodScoreWidget = () => {
     if (!wodScoresError && wodScoreUpdated)
       setSuccessMessage(info.messages.success.wodScoreUpdated);
 
+    if (selectedScoreOption === info.components.wodScoreForm.scoreType.onTime)
+      setTimeCaped(false);
+    if (
+      selectedScoreOption === info.components.wodScoreForm.scoreType.timeCaped
+    )
+      setTimeCaped(true);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wod, wodScore, wodScoreUpdated]);
+  }, [wod, wodScore, wodScoreUpdated, selectedScoreOption]);
+
+  if (loading || wodScoresLoading) return <WidgetLoadingSkeleton />;
+
+  // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
+  if (!loading && !wodScoresLoading && wod && wod !== -1) {
+    return (
+      <div className="WodScoreForm">
+        <h1 className="WodScoreForm__title">¿Cómo te fue hoy?</h1>
+        <p className="WodScoreForm__description">Registra tu score del día </p>
+        <form
+          className="FormWidgetContainer__form"
+          onSubmit={(event) => handleSubmit(event)}
+        >
+          {wod.timescore && (
+            <>
+              <InputScoreContainer gridColumns={2}>
+                {scoreOptions.map((option) => (
+                  <SelectButtonCategory
+                    key={option}
+                    selected={selectedScoreOption === option}
+                    value={option}
+                    setValue={setSelectedScoreOption}
+                  />
+                ))}
+              </InputScoreContainer>
+              {selectedScoreOption ===
+                info.components.wodScoreForm.scoreType.onTime && (
+                <InputScoreContainer gridColumns={2}>
+                  <InputScore
+                    value={minutes}
+                    setValue={setMinutes}
+                    label="min"
+                    max={59}
+                  />
+                  <InputScore
+                    value={seconds}
+                    setValue={setSeconds}
+                    label="seg"
+                    max={59}
+                  />
+                </InputScoreContainer>
+              )}
+            </>
+          )}
+
+          {(!wod.timescore ||
+            selectedScoreOption ===
+              info.components.wodScoreForm.scoreType.timeCaped) && (
+            <InputScoreContainer gridColumns={2}>
+              <InputScore value={rounds} setValue={setRounds} label="rounds" />
+              <InputScore value={reps} setValue={setReps} label="reps" />
+            </InputScoreContainer>
+          )}
+
+          <Button
+            type={info.components.button.type.submit}
+            style={info.components.button.classes.primary}
+            size={info.components.button.classes.lg}
+            fill={false}
+            text={wodScore?.score ? "Actualizar" : "Registrar"}
+            disabled={loading || error}
+          />
+        </form>
+      </div>
+    );
+  }
+
+  return null;
 
   // SUBMIT FUNCTION
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     let score;
 
     // REVIEW SCORE TYPE (TIME OR REPS)
-    if (wod.timescore === true) {
+    if (wod.timescore === true && !timeCaped) {
       // REVIEW EMPTY FIELDS
       if (parseInt(minutes) === 0 && parseInt(seconds) === 0)
         return setErrorMessage(info.messages.error.emptyScore);
@@ -77,10 +169,14 @@ const WodScoreWidget = () => {
         parseInt(wodScore.score.seconds) === parseInt(seconds)
       )
         return setErrorMessage(info.messages.error.sameScore);
+
+      if (wod.timecap < parseInt(minutes) + parseInt(seconds) / 60)
+        return setErrorMessage(info.messages.error.scoreGreaterThanTimeCap);
       // SET SCORE
       score = {
         minutes: parseInt(minutes),
         seconds: parseInt(seconds),
+        timeCaped: false,
       };
     } else {
       if (parseInt(rounds) === 0 && parseInt(reps) === 0)
@@ -93,12 +189,26 @@ const WodScoreWidget = () => {
         parseInt(wodScore.score.reps) === parseInt(reps)
       )
         return setErrorMessage(info.messages.error.sameScore);
+
+      if (wod.reps < parseInt(reps) || wod.rounds - 1 < parseInt(rounds))
+        return setErrorMessage(info.messages.error.scoreGreaterThanWod);
+
+      let missingReps;
+      if (timeCaped) {
+        missingReps =
+          wod.rounds * wod.reps -
+          (parseInt(reps) + parseInt(rounds) * wod.reps);
+      }
+
       // SET SCORE
       score = {
         rounds: parseInt(rounds),
         reps: parseInt(reps),
+        timeCaped: wod.timescore ? timeCaped : false,
+        missingReps: wod.timescore ? missingReps : null,
       };
     }
+
     // IF THERE IS NO WOD SCORE, POST ONE
     if (!wodScore) {
       const res = wodScoresActions.postWodScore(wod.id, {
@@ -118,81 +228,7 @@ const WodScoreWidget = () => {
     const res = wodScoresActions.updateWodScore(wod.id, wodScore.id, score);
     res.then(() => setWodScoreUpdated(true));
     return;
-  };
-
-  if (loading || wodScoresLoading) return <WidgetLoadingSkeleton />;
-
-  // WOD WILL BE -1 IF THERE IS NO WOD FOR TODAY (IT IS A REST DAY)
-  if (!loading && !wodScoresLoading && wod && wod !== -1) {
-    return (
-      <FormWidgetContainer
-        title="¿Cómo te fue hoy?"
-        description="Registra tu score del día"
-        error={error}
-      >
-        <form
-          className="FormWidgetContainer__form"
-          onSubmit={(event) => handleSubmit(event)}
-        >
-          {!wodScoresLoading && (
-            <div className="FormWidgetContainer__form__input-score">
-              <div className="FormWidgetContainer__form__input-container">
-                <input
-                  type="number"
-                  className="FormWidgetContainer__form__input"
-                  placeholder={wod.timescore ? "00" : "0"}
-                  value={wod.timescore ? minutes : rounds}
-                  max={wod.timescore ? 59 : null}
-                  min={0}
-                  onChange={(event) => {
-                    if (!wod.timescore) return setRounds(event.target.value);
-
-                    const formattedValue = utils.formatTimerInput(
-                      event.target.value,
-                      minutes
-                    );
-                    setMinutes(formattedValue);
-                  }}
-                />
-                <p className="FormWidgetContainer__form__input-units">
-                  {wod.timescore ? "MIN" : "RDS"}
-                </p>
-                <input
-                  type="number"
-                  className="FormWidgetContainer__form__input"
-                  placeholder={wod.timescore ? "00" : "0"}
-                  value={wod.timescore ? seconds : reps}
-                  max={wod.timescore ? 59 : null}
-                  min={0}
-                  onChange={(event) => {
-                    if (!wod.timescore) return setReps(event.target.value);
-                    const formattedValue = utils.formatTimerInput(
-                      event.target.value,
-                      seconds
-                    );
-                    setSeconds(formattedValue);
-                  }}
-                />
-                <p className="FormWidgetContainer__form__input-units">
-                  {wod.timescore ? "SEG" : "REPS"}
-                </p>
-              </div>
-            </div>
-          )}
-
-          <Button
-            type={info.components.button.type.submit}
-            style={info.components.button.classes.secondary}
-            size={info.components.button.classes.lg}
-            fill={true}
-            text={wodScore?.score ? "Actualizar" : "Registrar"}
-            disabled={loading || error}
-          />
-        </form>
-      </FormWidgetContainer>
-    );
   }
-  return null;
 };
 
 export { WodScoreWidget };

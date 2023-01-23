@@ -91,3 +91,23 @@
     font-weight: 600;
   }
 }
+
+.WodScoreForm {
+  margin-bottom: 20px;
+
+  &__title {
+    color: var(--color-text);
+    font-size: toRem(18);
+    margin-bottom: 10px;
+  }
+  
+  &__description {
+    color: $color-brand;
+    font-size: toRem(14);
+    margin-bottom: 10px;
+  }
+
+  .InputScore, .SelectButtonCategory {
+    margin-bottom: 0px;
+  }
+}

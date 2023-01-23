@@ -18,6 +18,7 @@ function Leaderboard() {
   const { wods, actions, loading } = useWods();
   const { setActiveView } = useDashboard();
 
+  const [totalReps, setTotalReps] = useState(0);
   const [weekDay, setWeekDay] = useState(
     new Date().getDay() === 0 || new Date().getDay() === 6
       ? 5
@@ -48,11 +49,15 @@ function Leaderboard() {
     else setWodAvailable(true);
     setRefetch(false);
 
-    if (wods && wods.scores) sortAscending(wods.scores);
+    let sorted = [];
+    if (wods && wods.scores) {
+      sorted = sortAscending(wods.scores);
+    }
+    setSortedWodScores(sorted);
 
     if (!loading && wods) {
       const filteredUsers = utils.searchDataFromInput(
-        wods.scores,
+        sorted,
         searchValue,
         "username"
       );
@@ -162,15 +167,22 @@ function Leaderboard() {
                   <p className="Leaderboard__body__score-name">
                     {score.username}
                   </p>
-                  <span className="Leaderboard__body__score-value">
-                    {score.score.minutes < 10
-                      ? `0${score.score.minutes}`
-                      : `${score.score.minutes}`}
-                    :
-                    {score.score.seconds < 10
-                      ? `0${score.score.seconds}`
-                      : `${score.score.seconds}`}
-                  </span>
+                  {!score.score.timeCaped && (
+                    <span className="Leaderboard__body__score-value">
+                      {score.score.minutes < 10
+                        ? `0${score.score.minutes}`
+                        : `${score.score.minutes}`}
+                      :
+                      {score.score.seconds < 10
+                        ? `0${score.score.seconds}`
+                        : `${score.score.seconds}`}
+                    </span>
+                  )}
+                  {score.score.timeCaped && (
+                    <span className="Leaderboard__body__score-value">
+                      +{score.score.missingReps} reps
+                    </span>
+                  )}
                 </div>
               ))}
           </div>
@@ -181,15 +193,25 @@ function Leaderboard() {
 
   // METHODS
   function sortAscending(wods) {
-    const sorted = wods.sort((a, b) => {
+    const onTimeScores = wods.filter((score) => !score.score.timeCaped);
+    const timeCapedScores = wods.filter((score) => score.score.timeCaped);
+
+    const onTimeSorted = onTimeScores.sort((a, b) => {
       return (
         a.score.minutes * 60 +
         a.score.seconds -
         (b.score.minutes * 60 + b.score.seconds)
       );
     });
+
+    const timeCapedSorted = timeCapedScores.sort((a, b) => {
+      return a.score.missingReps - b.score.missingReps;
+    });
+
+    const sorted = [...onTimeSorted, ...timeCapedSorted];
+
     sorted.map((score, index) => (score.position = index + 1));
-    setSortedWodScores(sorted);
+    return sorted;
   }
 
   function setWodDate(weekDay) {

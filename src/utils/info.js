@@ -58,6 +58,12 @@ const info = {
         za: "Z-A",
       },
     },
+    wodScoreForm: {
+      scoreType: {
+        onTime: "En tiempo",
+        timeCaped: "Fuera de tiempo",
+      }
+    }
   },
   data: {
     days: [
@@ -359,6 +365,7 @@ const info = {
         uid: "uid",
         username: "username",
         score: "score",
+        timecaped: "timecaped",
         timestamps: {
           createdAt: "created_at",
           updatedAt: "updated_at",
@@ -400,6 +407,8 @@ const info = {
       invalidTimeCap: "El Timecap debe ser un número igual o mayor a 0",
       missingData: "Este campo es requerido",
       sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
+      scoreGreaterThanTimeCap: "El score no puede ser mayor al Timecap",
+      scoreGreaterThanWod: "Tu score no puede ser mayor a las rondas y reps del WOD",
       wodAlreadyExists: "Ya existe un WOD registrado para esta fecha",
     },
     success: {

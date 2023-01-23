@@ -57,7 +57,11 @@
 .InputScoreContainer {
   display: grid;
   gap: 10px;
-  max-width: 500px;
+  max-width: $max-width-card;
+
+  @include mq(md) {
+    max-width: $max-width-card-md;
+  }
 
   &.grid-col-3 {
     grid-template-columns: repeat(3, 1fr);

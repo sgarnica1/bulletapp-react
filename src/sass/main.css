@@ -1046,7 +1046,12 @@ input[type=number] {
 .InputScoreContainer {
   display: grid;
   gap: 10px;
-  max-width: 500px;
+  max-width: 575px;
+}
+@media (min-width: 768px) {
+  .InputScoreContainer {
+    max-width: 450px;
+  }
 }
 .InputScoreContainer.grid-col-3 {
   grid-template-columns: repeat(3, 1fr);
@@ -1207,6 +1212,23 @@ input[type=number] {
   border-radius: 0.375rem;
   color: #fff;
   font-weight: 600;
+}
+
+.WodScoreForm {
+  margin-bottom: 20px;
+}
+.WodScoreForm__title {
+  color: var(--color-text);
+  font-size: 1.125rem;
+  margin-bottom: 10px;
+}
+.WodScoreForm__description {
+  color: #93bb1c;
+  font-size: 0.875rem;
+  margin-bottom: 10px;
+}
+.WodScoreForm .InputScore, .WodScoreForm .SelectButtonCategory {
+  margin-bottom: 0px;
 }
 
 .AddButton {
@@ -2993,7 +3015,7 @@ input[type=number] {
 }
 .Leaderboard__body__tags, .Leaderboard__body__score {
   display: grid;
-  grid-template-columns: 15% 65% 20%;
+  grid-template-columns: 15% 60% 25%;
   align-content: center;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -3127,7 +3149,7 @@ body {
   cursor: pointer;
   background: url("~/src/assets/icon/invisible.svg");
   position: absolute;
-  bottom: 18px;
+  bottom: 14px;
   right: 15px;
 }
 .Login .password-toggle.visible {
