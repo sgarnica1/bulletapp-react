@@ -410,6 +410,7 @@ const info = {
       scoreGreaterThanTimeCap: "El score no puede ser mayor al Timecap",
       scoreGreaterThanWod: "Tu score no puede ser mayor a las rondas y reps del WOD",
       wodAlreadyExists: "Ya existe un WOD registrado para esta fecha",
+      scoreMustBeGreaterThanZero: "El score debe ser mayor a 0",
     },
     success: {
       wodScoreUpdated: "Tu score se ha actualizado correctamente",

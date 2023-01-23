@@ -53,10 +53,10 @@ const WodScoreWidget = () => {
       wod.scores.forEach((doc) => {
         if (doc.uid === user.uid || doc.uid === user.user_id) {
           setWodScore(doc);
-          setReps(doc.score.reps);
-          setRounds(doc.score.rounds);
-          setMinutes(doc.score.minutes);
-          setSeconds(doc.score.seconds);
+          setReps(doc.score.reps ? doc.score.reps : "");
+          setRounds(doc.score.rounds ? doc.score.rounds : "");
+          setMinutes(doc.score.minutes ? doc.score.minutes : "");
+          setSeconds(doc.score.seconds ? doc.score.seconds : "");
           setTimeCaped(doc.score.timeCaped);
           setSelectedScoreOption(
             !doc.score.timeCaped
@@ -87,7 +87,7 @@ const WodScoreWidget = () => {
     return (
       <div className="WodScoreForm">
         <h1 className="WodScoreForm__title">¿Cómo te fue hoy?</h1>
-        <p className="WodScoreForm__description">Registra tu score del día </p>
+        <p className="WodScoreForm__description">Acabe en... </p>
         <form
           className="FormWidgetContainer__form"
           onSubmit={(event) => handleSubmit(event)}
@@ -169,10 +169,11 @@ const WodScoreWidget = () => {
 
       if (wod.timecap < parseInt(minutes) + parseInt(seconds) / 60)
         return setErrorMessage(info.messages.error.scoreGreaterThanTimeCap);
+
       // SET SCORE
       score = {
-        minutes: parseInt(minutes),
-        seconds: parseInt(seconds),
+        minutes: minutes === "" ? 0 : parseInt(minutes),
+        seconds: seconds === "" ? 0 : parseInt(seconds),
         timeCaped: false,
       };
     } else {
@@ -190,21 +191,26 @@ const WodScoreWidget = () => {
       if (wod.reps < parseInt(reps) || wod.rounds - 1 < parseInt(rounds))
         return setErrorMessage(info.messages.error.scoreGreaterThanWod);
 
+      const roundsVal = rounds === "" ? 0 : parseInt(rounds);
+      const repsVal = reps === "" ? 0 : parseInt(reps);
+
       let missingReps;
       if (timeCaped) {
         missingReps =
           wod.rounds * wod.reps -
-          (parseInt(reps) + parseInt(rounds) * wod.reps);
+          (parseInt(repsVal) + parseInt(roundsVal) * wod.reps);
       }
 
       // SET SCORE
       score = {
-        rounds: parseInt(rounds),
-        reps: parseInt(reps),
+        rounds: roundsVal,
+        reps: repsVal,
         timeCaped: wod.timescore ? timeCaped : false,
         missingReps: wod.timescore ? missingReps : null,
       };
     }
+
+    console.log(score);
 
     // IF THERE IS NO WOD SCORE, POST ONE
     if (!wodScore) {
