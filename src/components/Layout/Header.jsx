@@ -5,14 +5,13 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { info } from "../../utils/info";
 
 // ICONS
-import UserIcon from "../../assets/icon/user.svg";
 import WhiteLogo from "../../assets/img/logo_white_resized.png";
 import BlackLogo from "../../assets/img/logo_black_resized.png";
 import HamburguerBtnIcon from "../../assets/icon/hmbrgrbtn.svg";
 import CloseIcon from "../../assets/icon/close.svg";
 
 function Header({ user }) {
-  const { showNav, setShowNav, currentLocation: location } = useDashboard();
+  const { showNav, setShowNav } = useDashboard();
   const { theme } = useTheme();
   const navigation = useNavigate();
 

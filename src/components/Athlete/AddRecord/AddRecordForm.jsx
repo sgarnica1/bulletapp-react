@@ -45,7 +45,7 @@ const AddRecordForm = ({
   const [distanceUnits, setDistanceUnits] = useState(
     info.firebase.values.scoreTypes.distance.units.m
   );
-  const [registerTypes, _] = useState(
+  const [registerTypes] = useState(
     timescore || distancescore
       ? [
           info.components.addRecordForm.recordType.bestTime,
@@ -129,22 +129,21 @@ const AddRecordForm = ({
         onSubmit={(event) => submitHandler(event)}
       >
         {/* TYPE SELECTOR */}
-        {registerTypes &&
-          (weightInputVisible || distancescore) && (
-            <>
-              <p className="app-meta-tag white">Selecciona una categoría</p>
-              <InputScoreContainer gridColumns={2}>
-                {registerTypes.map((type) => (
-                  <SelectButtonCategory
-                    key={type}
-                    selected={selectedRegisterType === type}
-                    value={type}
-                    setValue={selectedRetRegisterType}
-                  />
-                ))}
-              </InputScoreContainer>
-            </>
-          )}
+        {registerTypes && (weightInputVisible || distancescore) && (
+          <>
+            <p className="app-meta-tag white">Selecciona una categoría</p>
+            <InputScoreContainer gridColumns={2}>
+              {registerTypes.map((type) => (
+                <SelectButtonCategory
+                  key={type}
+                  selected={selectedRegisterType === type}
+                  value={type}
+                  setValue={selectedRetRegisterType}
+                />
+              ))}
+            </InputScoreContainer>
+          </>
+        )}
 
         {/* WEIGHT */}
         {!timescore &&
