@@ -18,7 +18,6 @@ function Leaderboard() {
   const { wods, actions, loading } = useWods();
   const { setActiveView } = useDashboard();
 
-  const [totalReps, setTotalReps] = useState(0);
   const [weekDay, setWeekDay] = useState(
     new Date().getDay() === 0 || new Date().getDay() === 6
       ? 5

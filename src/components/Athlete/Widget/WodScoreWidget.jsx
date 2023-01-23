@@ -8,16 +8,13 @@ import { useWodScores } from "../../../hooks/useWodScores";
 import { Button } from "../../Public/Button";
 import { InputScore } from "../AddRecord/InputScore";
 import { InputScoreContainer } from "../AddRecord/InputScoreContainer";
-import { FormWidgetContainer } from "./FormWidgetContainer";
 import { SelectButtonCategory } from "../AddRecord/SelectButtonCategory";
-import { ButtonSelectFilter } from "../../../components/Public/ButtonSelectFilter";
 
 // LOADING SKELETONS
 import { WidgetLoadingSkeleton } from "../../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
 // UTILS
 import { info } from "../../../utils/info";
-import { utils } from "../../../utils/utils";
 
 const WodScoreWidget = () => {
   const { user } = useAuth();
