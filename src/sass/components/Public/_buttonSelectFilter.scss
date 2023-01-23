@@ -25,6 +25,7 @@
 
   &__input,
   &__input-close {
+    width: fit-content;
     margin: 0 5px;
     padding: 5px 15px;
     border-radius: 20px;
@@ -33,6 +34,7 @@
     background: transparent;
     color: var(--color-text);
     outline: none;
+    white-space: nowrap;
 
     &.active {
       background: $color-brand;
@@ -40,7 +42,7 @@
       color: var(--bg-body);
     }
   }
-  
+
   &__input-close {
     height: toRem(36);
     width: toRem(36);

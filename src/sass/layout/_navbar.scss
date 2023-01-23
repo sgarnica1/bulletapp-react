@@ -7,7 +7,7 @@
   width: 100%;
   max-width: toRem(500);
   background-color: $color-dark;
-  z-index: 999;
+  z-index: 99999;
   transform: translateX(-100%);
   transition: ease 0.5s;
   display: flex;
@@ -23,20 +23,19 @@
     outline: none;
     border: none;
     background: none;
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    z-index: 9999;
-    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 20px 0 0;
 
     @include mq(lg) {
       display: none;
     }
 
     span {
-      width: toRem(15);
-      height: toRem(15);
-      background: url("../../assets/icon/close.svg");
+      width: toRem(20);
+      height: toRem(20);
+      background: url("~/src/assets/icon/close.svg");
       @extend %icon;
     }
   }
@@ -57,20 +56,17 @@
   &__content {
     height: 92%;
     width: 100%;
-    margin-top: 50px;
     padding-right: toRem(10);
     overflow-y: scroll;
     overflow-x: hidden;
   }
 
   &__content::-webkit-scrollbar {
-    cursor: pointer;
-    width: 3px;
-    height: 8px;
+    width: 4px;
   }
 
   &__content::-webkit-scrollbar-thumb {
-    background: $color-secondary;
+    background: $bg-component-dark;
     border-radius: 6px;
   }
 
@@ -157,7 +153,7 @@
       }
 
       span {
-        background: url("../../assets/icon/dropdown-inactive.svg");
+        background: url("~/src/assets/icon/dropdown-inactive.svg");
         height: toRem(15);
         width: toRem(15);
         transform: rotate(0deg);

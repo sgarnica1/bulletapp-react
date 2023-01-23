@@ -7,7 +7,7 @@
   &__title {
     color: $color-brand;
     font-weight: 600;
-    font-size: toRem(22);
+    font-size: toRem(20);
     margin-bottom: 6px;
   }
   &__description {
@@ -124,5 +124,9 @@
   &__input-units {
     text-transform: uppercase;
     color: $color-brand;
+  }
+
+  .Login__error {
+    margin-bottom: 20px;
   }
 }

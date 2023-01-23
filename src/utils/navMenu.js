@@ -19,8 +19,8 @@ const navMenu = {
       elements: [
         {
           type: type.item,
-          name: info.views.dashboard,
-          route: info.routes.dashboard.path,
+          name: info.views.home,
+          route: info.routes.home,
           active: true,
         },
         {
@@ -63,11 +63,10 @@ const navMenu = {
             },
           ],
         },
-
         {
           type: type.dropdown,
           name: "Atletas",
-          active: true,
+          active: false,
           elements: [
             {
               name: info.views.athletes,
@@ -86,19 +85,19 @@ const navMenu = {
           type: type.item,
           name: info.views.payments,
           route: info.routes.payments.path,
-          active: true,
+          active: false,
         },
         {
           type: type.item,
           name: info.views.groups,
           route: info.routes.groups.path,
-          active: true,
+          active: false,
         },
         {
           type: type.item,
           name: info.views.plans,
           route: info.routes.plans.path,
-          active: true,
+          active: false,
         },
       ],
     },
@@ -147,7 +146,7 @@ const navMenu = {
           type: type.item,
           name: info.views.profile,
           route: info.routes.profile.path,
-          active: true,
+          active: false,
         },
         {
           type: type.logout,
@@ -222,7 +221,7 @@ const navMenu = {
           type: type.item,
           name: info.views.profile,
           route: info.routes.profile.path,
-          active: true,
+          active: false,
         },
         {
           type: type.logout,

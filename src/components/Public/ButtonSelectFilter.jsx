@@ -8,7 +8,7 @@ const ButtonSelectFilter = ({
   setSearch,
   loading,
 }) => {
-  const all = info.components.buttonSelectFilter.values.all
+  const all = info.components.buttonSelectFilter.values.all;
 
   if (loading)
     return (
@@ -30,12 +30,13 @@ const ButtonSelectFilter = ({
   return (
     <div className={`ButtonSelectFilter ${value !== all ? "move" : ""}`}>
       <button
+        type="button"
         className={`ButtonSelectFilter__input-close ${
           value !== all ? "show" : ""
         }`}
         onClick={() => {
           setValue(all);
-          setSearch("");
+          if (setSearch) setSearch("");
         }}
       >
         <img src={CancelIcon} alt="Cancel icon" />
@@ -49,6 +50,7 @@ const ButtonSelectFilter = ({
           if (value !== all && item === value) {
             return (
               <button
+                type="button"
                 className={`ButtonSelectFilter__input ${
                   item === value ? "active" : ""
                 }`}
@@ -63,6 +65,7 @@ const ButtonSelectFilter = ({
           if (value === all) {
             return (
               <button
+                type="button"
                 className={`ButtonSelectFilter__input ${
                   item === value ? "active" : ""
                 }`}

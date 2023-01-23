@@ -7,7 +7,10 @@ import { useSkills } from "../../../hooks/useSkills";
 // COMPONENTS
 import { Button } from "../../Public/Button";
 import { Input } from "../../Public/Input";
+import { InputScore } from "./InputScore";
+import { InputScoreContainer } from "./InputScoreContainer";
 import { SubHeader } from "./SubHeader";
+import { SelectButtonCategory } from "./SelectButtonCategory";
 
 // UTILS
 import { info } from "../../../utils/info";
@@ -20,6 +23,7 @@ const AddRecordForm = ({
   movementCategories,
   update = false,
   timescore = false,
+  distancescore = false,
   isSkill = false,
   setRefetch,
 }) => {
@@ -29,33 +33,92 @@ const AddRecordForm = ({
   const { actions: skillsActions } = useSkills();
 
   // STATES
-  const [weightScore, setWeightScore] = useState(false);
-  const [validScore, setValidScore] = useState(false);
-  const [validTimeScore, setValidTimeScore] = useState(false);
+  const [validationError, setValidationError] = useState(false);
+  const [selectedRegisterType, selectedRetRegisterType] = useState("");
+  const [weight, setWeight] = useState("");
+  const [sets, setSets] = useState("");
+  const [reps, setReps] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("");
+  const [distance, setDistance] = useState("");
+  const [scoreReadOnly, setScoreReadOnly] = useState(false);
+  const [distanceUnits, setDistanceUnits] = useState(
+    info.firebase.values.scoreTypes.distance.units.m
+  );
+  const [registerTypes, _] = useState(
+    timescore || distancescore
+      ? [
+          info.components.addRecordForm.recordType.bestTime,
+          info.components.addRecordForm.recordType.setsXDistance,
+        ]
+      : [
+          info.components.addRecordForm.recordType.oneRepMax,
+          info.components.addRecordForm.recordType.setsXReps,
+        ]
+  );
+
+  const [weightInputVisible, setWeightInputVisible] = useState(false);
+
   const [validDate, setValidDate] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
 
   useEffect(() => {
-    const barbell = info.firebase.values.movementCategories.barbell;
-    if (movementCategories.includes(barbell)) setWeightScore(true);
+    if (!weightInputVisible) {
+      const barbell = info.firebase.values.movementCategories.barbell;
+      if (movementCategories.includes(barbell)) setWeightInputVisible(true);
+    }
+
+    if (movementName === "Apple Run") {
+      setScoreReadOnly(true);
+      setDistance(1200);
+    }
+
+    setValidationError(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [records]);
+  }, [
+    records,
+    minutes,
+    seconds,
+    distance,
+    weight,
+    sets,
+    reps,
+    selectedRegisterType,
+  ]);
+
+  if (isSkill && !update)
+    return (
+      <div className="AddRecordForm">
+        <SubHeader
+          title={"¡Felicidades! Festejamos contigo este nuevo logro"}
+          description={"Da clic para desbloquear esta habilidad"}
+          icon={isSkill ? LockIcon : null}
+        />
+
+        {/* FORM */}
+        <form
+          action=""
+          className="AddRecordForm__form"
+          onSubmit={(event) => submitHandler(event)}
+        >
+          <Button
+            text={submitLoading ? "Cargando..." : "Desbloquear"}
+            type={info.components.button.type.submit}
+            size={info.components.button.classes.lg}
+            style={info.components.button.classes.primary}
+            fill={true}
+          />
+        </form>
+      </div>
+    );
 
   return (
     <div className="AddRecordForm">
       <SubHeader
-        title={
-          isSkill && !update
-            ? "Desbloquear habilidad"
-            : "Añade una nueva marca personal"
-        }
-        description={
-          isSkill && !update
-            ? "Añade tu primer registro y desbloquea esta habilidad"
-            : "Cuéntanos, ¿qué lograste hoy?"
-        }
+        title={"Añade una nueva marca personal"}
+        description={"Cuéntanos, ¿Qué lograste hoy?"}
         icon={isSkill ? LockIcon : null}
       />
 
@@ -65,11 +128,132 @@ const AddRecordForm = ({
         className="AddRecordForm__form"
         onSubmit={(event) => submitHandler(event)}
       >
+        {/* TYPE SELECTOR */}
+        {registerTypes &&
+          (weightInputVisible || distancescore) && (
+            <>
+              <p className="app-meta-tag white">Selecciona una categoría</p>
+              <InputScoreContainer gridColumns={2}>
+                {registerTypes.map((type) => (
+                  <SelectButtonCategory
+                    key={type}
+                    selected={selectedRegisterType === type}
+                    value={type}
+                    setValue={selectedRetRegisterType}
+                  />
+                ))}
+              </InputScoreContainer>
+            </>
+          )}
+
+        {/* WEIGHT */}
+        {!timescore &&
+          selectedRegisterType ===
+            info.components.addRecordForm.recordType.setsXReps && (
+            <>
+              <p className="app-meta-tag white">Puntaje</p>
+              <InputScoreContainer gridColumns={3}>
+                <InputScore value={sets} setValue={setSets} label="sets" />
+                <InputScore value={reps} setValue={setReps} label="reps" />
+                <InputScore
+                  value={weight}
+                  setValue={setWeight}
+                  label={info.firebase.values.scoreTypes.weight.units.lbs}
+                />
+              </InputScoreContainer>
+            </>
+          )}
+
+        {/* SETS X REPS */}
+        {!timescore && !weightInputVisible && !distancescore && (
+          <>
+            <p className="app-meta-tag white">Progreso</p>
+            <InputScoreContainer gridColumns={2}>
+              <InputScore value={sets} setValue={setSets} label="sets" />
+              <InputScore value={reps} setValue={setReps} label="reps" />
+            </InputScoreContainer>
+          </>
+        )}
+
+        {!timescore &&
+          weightInputVisible &&
+          selectedRegisterType ===
+            info.components.addRecordForm.recordType.oneRepMax && (
+            <>
+              <p className="app-meta-tag white">Puntaje</p>
+              <InputScoreContainer gridColumns={1}>
+                <InputScore
+                  value={weight}
+                  setValue={setWeight}
+                  label={info.firebase.values.scoreTypes.weight.units.lbs}
+                />
+              </InputScoreContainer>
+            </>
+          )}
+
+        {/* Time and distance inputs */}
+        {distancescore &&
+          selectedRegisterType ===
+            info.components.addRecordForm.recordType.bestTime && (
+            <>
+              <p className="app-meta-tag white">Distancia</p>
+              <InputScoreContainer gridColumns={1}>
+                <InputScore
+                  value={distance}
+                  setValue={setDistance}
+                  options={["m", "km"]}
+                  option={distanceUnits}
+                  setOption={setDistanceUnits}
+                  readOnly={scoreReadOnly}
+                />
+              </InputScoreContainer>
+            </>
+          )}
+
+        {distancescore &&
+          selectedRegisterType ===
+            info.components.addRecordForm.recordType.setsXDistance && (
+            <>
+              <p className="app-meta-tag white">Sets x Distancia</p>
+              <InputScoreContainer gridColumns={2}>
+                <InputScore value={sets} setValue={setSets} label="sets" />
+                <InputScore
+                  value={distance}
+                  setValue={setDistance}
+                  options={["m", "km"]}
+                  option={distanceUnits}
+                  setOption={setDistanceUnits}
+                  readOnly={scoreReadOnly}
+                />
+              </InputScoreContainer>
+            </>
+          )}
+
+        {(timescore || distancescore) && (
+          <>
+            <p className="app-meta-tag white">Tiempo</p>
+            <InputScoreContainer gridColumns={2}>
+              <InputScore
+                value={minutes}
+                setValue={setMinutes}
+                label="min"
+                max={59}
+              />
+              <InputScore
+                value={seconds}
+                setValue={setSeconds}
+                label="seg"
+                max={59}
+              />
+            </InputScoreContainer>
+          </>
+        )}
+
         {/* DATE INPUT */}
-        <p className="meta-tag">Fecha</p>
         <Input
           type={info.components.input.type.date}
           name={info.components.input.type.date}
+          label="Fecha de registro"
           units={"Fecha"}
           validationHandler={(value) => {
             if (!value) return false;
@@ -83,78 +267,22 @@ const AddRecordForm = ({
           setSubmitError={setSubmitError}
         />
 
-        {/* TIME SCORE INPUT */}
-        <p className="meta-tag">Registro</p>
-        {timescore && (
-          <Input
-            type={info.components.input.type.time}
-            placeholder="00"
-            setValidData={setValidTimeScore}
-            validationHandler={(min, sec) => {
-              if (parseInt(min) === 0 && parseInt(sec) === 0) return false;
-              if (min > 59 || min < 0 || sec > 59 || sec < 0) return false;
-              return true;
-            }}
-            onChangeCallback={utils.formatTimerInput}
-            submitError={submitError}
-            setSubmitError={setSubmitError}
-          />
-        )}
-
-        {/* REPS / WEIGHT SCORE INPUT*/}
-        {!timescore && weightScore && (
-          <Input
-            type={info.components.input.type.weight}
-            validationHandler={(values) => {
-              if (parseInt(values.reps) === 0) return false;
-              if (parseInt(values.sets) === 0) return false;
-              if (parseInt(values.score) === 0) return false;
-              return true;
-            }}
-            setValidData={setValidScore}
-            submitError={submitError}
-            setSubmitError={setSubmitError}
-          />
-        )}
-
-        {/* REPS SCORE INPUT*/}
-        {!timescore && !weightScore && (
-          <Input
-            type={info.components.input.type.sets}
-            validationHandler={(values) => {
-              if (parseInt(values.reps) === 0) return false;
-              if (parseInt(values.sets) === 0) return false;
-              return true;
-            }}
-            setValidData={setValidScore}
-            submitError={submitError}
-            setSubmitError={setSubmitError}
-          />
-        )}
-
-        {movementCategories.includes(
-          info.firebase.values.movementCategories.bodyweight
-        ) && (
-          <Input
-            type={info.components.input.type.checkbox}
-            checkboxLabel={"Agregar peso"}
-            setChecked={setWeightScore}
-          />
+        {validationError && (
+          <div className="Login__error">{validationError}</div>
         )}
 
         {/* SUBMIT BUTTON */}
         <Button
-          text={
-            submitLoading
-              ? "Cargando..."
-              : isSkill && !update
-              ? "Desbloquear"
-              : "Añadir"
-          }
+          text={submitLoading ? "Cargando..." : "Añadir registro"}
           type={info.components.button.type.submit}
           size={info.components.button.classes.lg}
           style={info.components.button.classes.primary}
           fill={true}
+          disabled={
+            ((weightInputVisible || timescore || distancescore) &&
+              selectedRegisterType === "") ||
+            !validDate
+          }
         />
       </form>
     </div>
@@ -166,80 +294,142 @@ const AddRecordForm = ({
     // CONSTANTS
     const uid = user.user_id || user.uid;
 
+    // Firebase keys
     const movName = info.firebase.docKeys.personalRecords.movement;
     const movCat = info.firebase.docKeys.personalRecords.movementCategory;
     const movID = info.firebase.docKeys.skills.movementId;
     const weightVal = info.firebase.docKeys.records.scores.weight;
+    const distanceVal = info.firebase.docKeys.records.scores.distance;
     const repsVal = info.firebase.docKeys.records.scores.reps;
     const setsVal = info.firebase.docKeys.records.scores.sets;
     const dateField = info.firebase.docKeys.records.scores.date;
     const units = info.firebase.docKeys.records.scores.units;
     const secondsRef = info.firebase.docKeys.records.scores.seconds;
     const timescoreRef = info.firebase.docKeys.records.timescore;
-
+    const distancescoreRef = info.firebase.docKeys.records.distancescore;
     const secondsUnits = info.firebase.values.scoreTypes.time.units.sec;
+    const poundsUnits = info.firebase.values.scoreTypes.weight.units.lbs;
     const repsUnits = info.firebase.values.scoreTypes.reps.units;
 
-    const repsScore = !timescore && parseFloat(event.target.reps.value);
-    const setsScore = !timescore && parseFloat(event.target.sets.value);
+    const setsXDistance =
+      info.components.addRecordForm.recordType.setsXDistance;
+    const setsXReps = info.components.addRecordForm.recordType.setsXReps;
+    const oneRepMax = info.components.addRecordForm.recordType.oneRepMax;
+    const bestTime = info.components.addRecordForm.recordType.bestTime;
 
     // VALID DATE
-    if (!validDate) return setSubmitError(true);
-    // console.log("valid date");
+    if ((!isSkill && update) || (isSkill && update)) {
+      // if (!validDate) return setSubmitError(true);
 
-    // VALID TIME SCORE
-    if (timescore && !validTimeScore) return setSubmitError(true);
+      if (
+        isNaN(reps) ||
+        (selectedRegisterType === setsXReps &&
+          (parseInt(reps) === 0 || reps === "" || reps === "0"))
+      ) {
+        setValidationError("Por favor ingresa un valor válido para 'reps' ");
+      }
+      if (
+        isNaN(sets) ||
+        ((selectedRegisterType === setsXDistance ||
+          selectedRegisterType === setsXReps) &&
+          (parseInt(sets) === 0 || sets === "" || sets === "0"))
+      ) {
+        return setValidationError(
+          "Por favor ingresa un valor válido para 'sets' "
+        );
+      }
+      if (
+        isNaN(minutes) ||
+        ((selectedRegisterType === setsXDistance ||
+          selectedRegisterType === bestTime) &&
+          (parseInt(minutes) === 0 || minutes === "" || minutes === "0"))
+      ) {
+        return setValidationError(
+          "Por favor ingresa un valor válido para 'min' "
+        );
+      }
+      if (
+        isNaN(seconds) ||
+        ((selectedRegisterType === setsXDistance ||
+          selectedRegisterType === bestTime) &&
+          (parseInt(seconds) === 0 || seconds === "" || seconds === "0"))
+      ) {
+        return setValidationError(
+          "Por favor ingresa un valor válido para 'sec' "
+        );
+      }
+      if (
+        isNaN(weight) ||
+        (selectedRegisterType === oneRepMax &&
+          (parseInt(weight) === 0 || weight === "" || weight === "0"))
+      ) {
+        return setValidationError(
+          "Por favor ingresa un valor válido para 'peso' "
+        );
+      }
+      if (
+        isNaN(distance) ||
+        ((selectedRegisterType === setsXDistance ||
+          selectedRegisterType === bestTime) &&
+          (parseInt(distance) === 0 || distance === "" || distance === "0"))
+      ) {
+        return setValidationError(
+          "Por favor ingresa un valor válido para 'distancia' "
+        );
+      }
 
-    // VALID SCORE
-    if (!timescore && weightScore && !validScore) return setSubmitError(true);
-    // console.log("valid score");
+      setValidationError(null);
+    }
 
-    // VALID REPS
-    if (!timescore && (repsScore < 0 || typeof repsScore !== "number"))
-      return setSubmitError(true);
+    let unitsVal;
+    if (timescore) unitsVal = secondsUnits;
+    if (distancescore) unitsVal = distanceUnits;
+    if (weightInputVisible) unitsVal = poundsUnits;
+    if (!timescore && !distancescore && !weightInputVisible)
+      unitsVal = repsUnits;
 
-    // VALID SETS
-    if (!timescore && (setsScore < 0 || typeof setsScore !== "number"))
-      return setSubmitError(true);
+    let secondsVal;
+    if (seconds === "" || seconds === "0") secondsVal = 0;
+    else secondsVal = parseInt(seconds);
 
-    // GET SCORE
-    const score = timescore
-      ? utils.timeToSeconds(
-          `${event.target.minutes.value}:${event.target.seconds.value}`
-        )
-      : weightScore
-      ? event.target.weight.value
-      : 0;
+    let minutesVal;
+    if (minutes === "" || minutes === "0") minutesVal = 0;
+    else minutesVal = parseInt(minutes);
 
-    // NEW RECORD DATA
     const newPR = {
       [movName]: movementName,
       [movCat]: movementCategories,
-      [repsVal]: !timescore ? parseFloat(event.target.reps.value) : 0,
-      [setsVal]: !timescore ? parseFloat(event.target.sets.value) : 0,
-      [dateField]: utils.parseDateWithTime(event.target.date.value),
-      [units]: timescore
-        ? secondsUnits
-        : weightScore
-        ? event.target.units.value
-        : repsUnits,
-      [secondsRef]: timescore ? score : 0,
-      [weightVal]: !timescore ? score : 0,
+      [repsVal]: parseInt(reps) === 0 || reps === "" ? 1 : parseInt(reps),
+      [setsVal]: parseInt(sets) === 0 || sets === "" ? 1 : parseInt(sets),
+      [dateField]:
+        !update && isSkill
+          ? new Date()
+          : utils.parseDateWithTime(event.target.date.value),
+      [units]: unitsVal,
+      [secondsRef]:
+        secondsVal + minutesVal * 60 === 0 ? 0 : secondsVal + minutesVal * 60,
+      [weightVal]:
+        parseInt(weight) === 0 || weight === "" ? 0 : parseInt(weight),
+      [distanceVal]:
+        parseInt(distance) === 0 || distance === "" ? 0 : parseInt(distance),
       [timescoreRef]: timescore,
+      [distancescoreRef]: distancescore,
     };
+
+    // console.log("submitting...", newPR);
 
     // NEW SKILL DATA
     const newSkill = {
       [movName]: movementName,
       [movID]: movementID,
-      [dateField]: utils.parseDateWithTime(event.target.date.value),
+      [dateField]: new Date(),
     };
+    // console.log("submitting...", newSkill);
 
     // UPDATE LAST RECORD
     actions.updateLatestAcivity(uid, newPR, newSkill, !update && isSkill);
 
-    // UNLOCK SKILL
-    console.log("submitting...", newSkill);
+    //   // UNLOCK SKILL
     if (!update && isSkill) {
       skillsActions.postSkill(uid, newSkill, (error) => {
         if (error) {

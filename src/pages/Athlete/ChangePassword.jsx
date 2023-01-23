@@ -30,7 +30,7 @@ function ChangePassword() {
 
   const passwordVerifier = () => {
     const regex = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!%*?&])[a-zA-Z\d@!%*?&]{8,}$/i
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[/#@$!%*?&])[a-zA-Z\d/#@$!%*?&]{8,}$/i
     );
     const validation = password.match(regex);
     setInvalidPassword(validation == null ? true : false);
@@ -59,7 +59,7 @@ function ChangePassword() {
     <div className="ChangePassword">
       <ContentContainer>
         <BackButton link={info.routes.settings.path} mb={true} />
-        <h2 className="title">Cambiar contraseña</h2>
+        <h2 className="app-title">Cambiar contraseña</h2>
         <form
           className="ChangePassword__form"
           onSubmit={(event) => submitHandler(event)}

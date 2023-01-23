@@ -51,7 +51,6 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
 
     // Fetch movements and skills
     if (loading && !movements && !skills) {
-      console.log("FETCHING MOVEMENTS");
       actions.getMovements();
     }
     if (loadingSkills && movements && !skills)
@@ -126,11 +125,11 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
       let orderedMovements = [];
       switch (orderByValue) {
         case info.components.sortby.options.az:
-          orderedMovements = utils.sortMovementsAZOrder(prsCopy);
+          orderedMovements = utils.sortAZOrder(prsCopy, "name");
           setFilteredMovements(orderedMovements);
           break;
         case info.components.sortby.options.za:
-          orderedMovements = utils.sortMovementsZAOrder(prsCopy);
+          orderedMovements = utils.sortZAOrder(prsCopy, "name");
           setFilteredMovements(orderedMovements);
           break;
 
@@ -149,7 +148,7 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
       <ContentContainer>
         <BackButton link={info.routes.home} mb={true} />
 
-        <h1 className="title">
+        <h1 className="app-title">
           Biblioteca de {skillsOnly ? "habilidades" : "movimientos"}
         </h1>
 
@@ -161,7 +160,14 @@ const MovementsLibrary = ({ skillsOnly = false }) => {
             loading={loading}
             disabled={sortedMovements.length === 0}
           />
-          <SortByFilter setValue={setOrderByValue} loading={loading} />
+          <SortByFilter
+            setValue={setOrderByValue}
+            loading={loading}
+            options={[
+              info.components.sortby.options.az,
+              info.components.sortby.options.za,
+            ]}
+          />
         </div>
 
         {availableCategories && (

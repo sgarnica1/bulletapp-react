@@ -17,10 +17,12 @@ import { info } from "../utils/info";
 const movementKey = [info.firebase.docKeys.records.movement];
 const movementCategoryKey = [info.firebase.docKeys.records.movementCategory];
 const timeScoreKey = [info.firebase.docKeys.records.timescore];
+const [distanceScoreKey] = [info.firebase.docKeys.records.distancescore];
 const dateKey = [info.firebase.docKeys.records.scores.date];
 const weightKey = [info.firebase.docKeys.records.scores.weight];
 const repsKey = [info.firebase.docKeys.records.scores.reps];
 const setsKey = [info.firebase.docKeys.records.scores.sets];
+const distanceKey = [info.firebase.docKeys.records.scores.distance];
 const secondsKey = [info.firebase.docKeys.records.scores.seconds];
 const unitsKey = [info.firebase.docKeys.records.scores.units];
 const createdAtKey = [info.firebase.docKeys.wodScores.timestamps.createdAt];
@@ -92,6 +94,7 @@ const postRecordApi = async (idUser, idMov, data, callback) => {
         [movementKey]: data[movementKey],
         [movementCategoryKey]: data[movementCategoryKey],
         [timeScoreKey]: data[timeScoreKey],
+        [distanceScoreKey]: data[distanceScoreKey],
         scores: [
           {
             [dateKey]: Timestamp.fromDate(data[dateKey]),
@@ -99,6 +102,7 @@ const postRecordApi = async (idUser, idMov, data, callback) => {
             [repsKey]: parseFloat(data[repsKey]),
             [setsKey]: parseFloat(data[setsKey]),
             [secondsKey]: parseFloat(data[secondsKey]),
+            [distanceKey]: parseFloat(data[distanceKey]),
             [unitsKey]: data[unitsKey],
           },
         ],
@@ -130,6 +134,7 @@ const updateRecordApi = async (idUser, idMov, data, callback) => {
         [repsKey]: parseFloat(data[repsKey]),
         [setsKey]: parseFloat(data[setsKey]),
         [secondsKey]: parseFloat(data[secondsKey]),
+        [distanceKey]: parseFloat(data[distanceKey]),
         [unitsKey]: data[unitsKey],
       }),
     });
@@ -162,6 +167,8 @@ const updateLatestAcivityApi = async (
       [dateKey]: Timestamp.fromDate(data[dateKey]),
       [weightKey]: parseFloat(data[weightKey]),
       [unitsKey]: data[unitsKey],
+      [repsKey]: parseFloat(data[repsKey]),
+      [setsKey]: parseFloat(data[setsKey]),
     };
   }
   // COMPARE DATE IN ORDER TO UPDATE TO LATEST REP MAX
@@ -197,6 +204,7 @@ const updateLatestAcivityApi = async (
           [movementKey]: data[movementKey],
           [movementCategoryKey]: data[movementCategoryKey],
           [timeScoreKey]: data[timeScoreKey],
+          [distanceScoreKey]: data[distanceScoreKey],
           scores: [
             {
               [dateKey]: Timestamp.fromDate(data[dateKey]),
@@ -204,6 +212,7 @@ const updateLatestAcivityApi = async (
               [repsKey]: parseFloat(data[repsKey]),
               [setsKey]: parseFloat(data[setsKey]),
               [secondsKey]: parseFloat(data[secondsKey]),
+              [distanceKey]: parseFloat(data[distanceKey]),
               [unitsKey]: data[unitsKey],
             },
           ],

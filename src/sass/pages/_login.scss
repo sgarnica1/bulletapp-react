@@ -17,10 +17,15 @@ body {
     margin-top: toRem(20);
     border-radius: toRem(6);
     color: $color-error;
+    max-width: $max-width-card;
+
+    @include mq(md) {
+      max-width: $max-width-card-md;
+    }
   }
 
   &__background-img {
-    background: url("../../assets/img/bullet-crossfit-gym.jpg");
+    background: url("~/src/assets/img/bullet-crossfit-gym.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -88,7 +93,7 @@ body {
     height: toRem(20);
     width: toRem(20);
     cursor: pointer;
-    background: url("../../assets/icon/invisible.svg");
+    background: url("~/src/assets/icon/invisible.svg");
     @extend %icon;
     position: absolute;
     bottom: 18px;
@@ -96,7 +101,7 @@ body {
   }
 
   .password-toggle.visible {
-    background: url("../../assets/icon/visible.svg");
+    background: url("~/src/assets/icon/visible.svg");
   }
 
   &__button-container {
@@ -107,32 +112,34 @@ body {
     margin-bottom: toRem(10);
     gap: toRem(15);
   }
-  .Login__passrecover-btn {
-    text-decoration: none;
-    text-transform: capitalize;
-    font-size: toRem(15);
-    color: var(--color-text);
-    margin-top: 10px;
-    margin-bottom: 20px;
+
+  &__helper-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: toRem(20);
   }
 
-  &__passrecover-btn:hover {
+  &__passrecover-btn,
+  &__register-btn {
+    text-decoration: none;
+    text-transform: capitalize;
+    font-size: toRem(13);
+    opacity: 0.8;
+    color: $color-brand;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-decoration: underline !important;
+  }
+
+  &__passrecover-btn:hover,
+  &__register-btn:hover {
     color: $color-alternative;
   }
 
   &__login-btn {
     @extend %button;
-  }
-
-  &__login-btn--guest {
-    margin-bottom: toRem(30);
-    background: none;
-    border: 1px solid $color-secondary;
-    color: $color-secondary;
-  }
-
-  &__login-btn--guest:hover {
-    color: $color-dark;
   }
 
   &__privacy {

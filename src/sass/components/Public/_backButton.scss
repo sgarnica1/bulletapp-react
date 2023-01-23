@@ -17,4 +17,8 @@
   &.mt {
     margin-bottom: toRem(20);
   }
+
+  &:hover {
+    color: $color-brand;
+  }
 }

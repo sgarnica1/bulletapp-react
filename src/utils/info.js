@@ -7,9 +7,10 @@ const info = {
   components: {
     addRecordForm: {
       recordType: {
-        personalRecord: "personal_record",
-        newSkill: "new_skill",
-        personalGoal: "personal_goal",
+        bestTime: "Distancia x Tiempo",
+        setsXReps: "Sets x Reps",
+        oneRepMax: "1RM",
+        setsXDistance: "Sets x Distancia",
       },
     },
     button: {
@@ -45,14 +46,14 @@ const info = {
         rounds: "rounds",
         checkbox: "checkbox",
         textarea: "textarea",
+        birthDay: "birthDay",
       },
     },
     sortby: {
       label: "Ordenar",
       options: {
-        // mostRecent: "Más reciente",
-        // oldest: "Más antiguo",
-        // alphabetic: "Alfabético",
+        mostRecent: "Más reciente",
+        oldest: "Más antiguo",
         az: "A-Z",
         za: "Z-A",
       },
@@ -200,7 +201,7 @@ const info = {
           name: "weight",
           units: {
             lbs: "lb",
-            kg: "kg",
+            // kg: "kg",
           },
         },
         distance: {
@@ -281,6 +282,7 @@ const info = {
         idMovement: "id_movement",
         movementCategory: "movement_category",
         timescore: "timescore",
+        distancescore: "distancescore",
         scores: {
           date: "date",
           reps: "reps",
@@ -288,6 +290,7 @@ const info = {
           units: "units",
           weight: "weight",
           seconds: "seconds",
+          distance: "distance",
         },
         timestamps: {
           createdAt: "created_at",
@@ -320,14 +323,16 @@ const info = {
       users: {
         firstName: "first_name",
         lastName: "last_name",
+        displayName: "displayName",
         email: "email",
         phoneNumber: "phone_number",
-        plan: "plan",
         schedule: "group",
         birthDay: "birth_day",
         birthMonth: "birth_month",
         active: "active",
         role: "role",
+        group: "group",
+        plan: "plan",
         location: "location",
         timestamps: {
           createdAt: "created_at",
@@ -389,7 +394,7 @@ const info = {
       insufficientPermissions: "No tienes permisos para realizar esta acción",
       invalidDate: "El formato de fecha no es válido",
       invalidPassword:
-        "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (@!%*?&)",
+        "La contraseña debe tener al menos 8 caracteres, un número y un caracter especial (#@$!%*?&)",
       invalidMatchingPassword: "Las contraseñas no coinciden",
       invalidEmail: "Por favor ingrese un correo electrónico válido",
       invalidTimeCap: "El Timecap debe ser un número igual o mayor a 0",
@@ -403,6 +408,8 @@ const info = {
       wodCreated: "WOD registrado correctamente",
       movementCreated: "Movimiento añadido correctamente",
       passwordUpdated: "Contraseña actualizada correctamente",
+      userCreated:
+        "¡Gracias por tu registro! \n\nRevisa tu correo para verificar tu cuenta (incluida la carpeta de Spam) y espera a que el administrador te active.",
     },
   },
   routes: {
@@ -411,28 +418,6 @@ const info = {
     leaderboard: {
       path: "/leaderboard",
       value: "leaderboard",
-    },
-    prs: {
-      path: "/prs",
-      value: "prs",
-      nested: {
-        history: {
-          absolutePath: "/prs/:id",
-          absolutePathNoParms: "/prs",
-          path: "/:id",
-          value: ":id",
-        },
-        add: {
-          absolutePath: "/prs/nuevo",
-          path: "/nuevo",
-          value: "nuevo",
-        },
-        update: {
-          absolutePath: "/prs/:id/actualizar",
-          path: "/actualizar",
-          value: "/actualizar",
-        },
-      },
     },
     athlete: {
       path: "/atletas",
@@ -478,17 +463,6 @@ const info = {
       nested: {
         add: {
           absolutePath: "/skills/nuevo",
-          path: "/nuevo",
-          value: "nuevo",
-        },
-      },
-    },
-    personalGoals: {
-      path: "/metas",
-      value: "metas",
-      nested: {
-        add: {
-          absolutePath: "/metas/nuevo",
           path: "/nuevo",
           value: "nuevo",
         },
@@ -553,6 +527,10 @@ const info = {
       path: "/login",
       value: "login",
     },
+    register: {
+      path: "/registro",
+      value: "registro",
+    },
     serverError: {
       path: "/server-error",
       value: "server-error",
@@ -576,6 +554,10 @@ const info = {
     passwordRecover: {
       path: "/contrasena/recuperar",
       value: "contrasena/recuperar",
+    },
+    users: {
+      path: "/usuarios",
+      value: "usuarios",
     },
   },
   theme: {
@@ -602,6 +584,7 @@ const info = {
     records: "Records Personales",
     settings: "Ajustes",
     skills: "Skills",
+    users: "Usuarios",
     videos: "Videos",
     wods: "WODs",
   },

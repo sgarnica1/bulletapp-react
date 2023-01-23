@@ -50,7 +50,6 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, latestactivity]);
 
-
   return (
     <div className="Home">
       <ContentContainer>
@@ -69,110 +68,122 @@ function Home() {
             }
           ></HomeBanner>
         )}
-        {/* SCORE REGISTRATION */}
-        <WodScoreWidget />
 
-        {/* LEADERBOARD */}
-        <AddButton link={info.routes.leaderboard.path} title="Leaderboard" />
+        <section className="Home__container">
+          <div className="Home__column">
+            {/* SCORE REGISTRATION */}
+            <WodScoreWidget />
 
-        {/* LOADING */}
-        {loadingRecord && <TextLoadingSkeleton />}
-        {loadingRecord && (
-          <div className="StatWidget__container">
-            <WidgetLoadingSkeleton type={"stat"} />
-            <WidgetLoadingSkeleton type={"stat"} />
-            <WidgetLoadingSkeleton type={"stat"} />
-            <WidgetLoadingSkeleton type={"stat"} />
+            {/* LEADERBOARD */}
+            <AddButton
+              link={info.routes.leaderboard.path}
+              title="Leaderboard"
+            />
+
+            {/* LOADING */}
+            {loadingRecord && <TextLoadingSkeleton />}
+            {loadingRecord && (
+              <div className="StatWidget__container">
+                <WidgetLoadingSkeleton type={"stat"} />
+                <WidgetLoadingSkeleton type={"stat"} />
+                <WidgetLoadingSkeleton type={"stat"} />
+                <WidgetLoadingSkeleton type={"stat"} />
+              </div>
+            )}
+
+            {/* LATEST RECORDS */}
+            {latestactivity && (
+              <h2 className="app-subtitle">Marcas personales</h2>
+            )}
+            {!loadingRecord && latestactivity && (
+              <div className="StatWidget__container grid">
+                {/* Last register */}
+                {latestactivity.register && (
+                  <StatWidget
+                    metaDescription={"Última actividad"}
+                    title={`${latestactivity.register.movement} ${
+                      !latestactivity.register.timescore
+                        ? "(" +
+                          latestactivity.register.scores[0].sets +
+                          "x" +
+                          latestactivity.register.scores[0].reps +
+                          ")"
+                        : ""
+                    }`}
+                    link={info.routes.movements.path}
+                    score={latestactivity.register.scores[0]}
+                    timescore={latestactivity.register.timescore}
+                    distancescore={latestactivity.register.distancescore}
+                  />
+                )}
+                {/* Rep max */}
+                {latestactivity.repmax && (
+                  <StatWidget
+                    link={info.routes.movements.path}
+                    metaDescription={"1RM más reciente"}
+                    title={`${latestactivity.repmax.movement}`}
+                    score={{
+                      weight: latestactivity.repmax.weight,
+                      units: latestactivity.repmax.units,
+                      date: latestactivity.repmax.date,
+                      reps: latestactivity.repmax.reps,
+                      sets:  latestactivity.repmax.sets,
+                    }}
+                    timescore={latestactivity.repmax.timescore}
+                  />
+                )}
+
+                {latestactivity.skill && (
+                  <StatWidget
+                    link={info.routes.movements.path}
+                    metaDescription={"Skill más reciente"}
+                    title={latestactivity.skill.movement}
+                    score={{
+                      date: latestactivity.skill.date,
+                    }}
+                  />
+                )}
+              </div>
+            )}
           </div>
-        )}
 
-        {/* LATEST RECORDS */}
-        {latestactivity && <h2 className="subtitle">Marcas personales</h2>}
-        {!loadingRecord && latestactivity && (
-          <div className="StatWidget__container grid">
-            {/* Last register */}
-            {latestactivity.register && (
-              <StatWidget
-                metaDescription={"Última actividad"}
-                title={`${latestactivity.register.movement} ${
-                  !latestactivity.register.timescore
-                    ? "(" +
-                      latestactivity.register.scores[0].sets +
-                      "x" +
-                      latestactivity.register.scores[0].reps +
-                      ")"
-                    : ""
-                }`}
-                seconds={latestactivity.register.scores[0].date.seconds}
-                value={
-                  latestactivity.register.scores[0].weight > 0
-                    ? latestactivity.register.scores[0].weight
-                    : latestactivity.register.scores[0].seconds
-                }
-                units={
-                  latestactivity.register.scores[0].weight > 0
-                    ? latestactivity.register.scores[0].units
-                    : ""
-                }
-                timescore={latestactivity.register.timescore}
-              />
-            )}
-            {/* Rep max */}
-            {latestactivity.repmax && (
-              <StatWidget
-                metaDescription={"1RM más reciente"}
-                title={`${latestactivity.repmax.movement}`}
-                value={latestactivity.repmax.weight}
-                units={latestactivity.repmax.units}
-                seconds={latestactivity.repmax.date.seconds}
-                timescore={latestactivity.repmax.timescore}
-              />
-            )}
+          <div className="Home__column">
+            <h3 className="app-subtitle">Añade un nuevo logro</h3>
+            {/* ADD NEW Record */}
+            <AddButton
+              link={info.routes.movements.path}
+              img={AthleteImg}
+              alt="CrossFit Athlete Front Rack Position"
+              title="Añadir Nuevo Record"
+            />
 
-            {latestactivity.skill && (
-              <StatWidget
-                metaDescription={"Skill más reciente"}
-                title={latestactivity.skill.movement}
-                seconds={latestactivity.skill.date.seconds}
-              />
-            )}
-          </div>
-        )}
+            {/* ADD NEW GOAL */}
+            <AddButton
+              link={info.routes.skills.path}
+              img={Athlete2Img}
+              alt="Bullet CrossFit shirt"
+              title="Desbloquear Habilidad"
+            />
 
-        <h3 className="subtitle">Añade un nuevo logro</h3>
-        {/* ADD NEW Record */}
-        <AddButton
-          link={info.routes.movements.path}
-          img={AthleteImg}
-          alt="CrossFit Athlete Front Rack Position"
-          title="Añadir Nuevo Record"
-        />
-
-        {/* ADD NEW GOAL */}
-        <AddButton
-          link={info.routes.skills.path}
-          img={Athlete2Img}
-          alt="Bullet CrossFit shirt"
-          title="Desbloquear Habilidad"
-        />
-
-        <h4 className="subtitle">Más para ti</h4>
-        {/* PROFILE */}
-        {!error && !loading && (
+            <h4 className="app-subtitle">Más para ti</h4>
+            {/* PROFILE */}
+            {/* {!error && !loading && (
           <InfoCard
             link={info.routes.profile.path}
             title={user.data[info.firebase.docKeys.users.firstName]}
             additionalInfo="Ver perfil"
           />
-        )}
-        {/* SETTINGS */}
-        <InfoCard
-          link={info.routes.settings.path}
-          icon={UserIcon}
-          alt="Setting icon"
-          title={"Configuración"}
-          additionalInfo="Cambiar ajustes"
-        />
+        )} */}
+            {/* SETTINGS */}
+            <InfoCard
+              link={info.routes.settings.path}
+              icon={UserIcon}
+              alt="Setting icon"
+              title={"Configuración"}
+              additionalInfo="Cambiar ajustes"
+            />
+          </div>
+        </section>
       </ContentContainer>
     </div>
   );

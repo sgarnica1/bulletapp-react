@@ -1,0 +1,40 @@
+.SelectButtonCategory {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding: 0 5px;
+  padding-left: 10px;
+  border: var(--bg-component);
+  border-radius: $border-radius;
+  background-color: var(--bg-component);
+  color: var(--color-brand);
+  font-size: toRem(13);
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.selected {
+    background: $color-brand;
+    color: var(--bg-component);
+  }
+
+  @include mq(xs) {
+    font-size: toRem(16);
+  }
+  
+  @include mq(md) {
+    height: $height-input;
+    font-size: toRem(18);
+    padding: 10px 20px;
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    fill: #000;
+  }
+}

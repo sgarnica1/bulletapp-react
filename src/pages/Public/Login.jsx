@@ -37,7 +37,7 @@ function Login() {
     if (!email.match(emailRegEx))
       return setErrorMessage(info.messages.error.invalidEmail);
 
-    return loginUser(event);
+    return loginUser(event, {}, setErrorMessage);
   };
 
   return (
@@ -95,17 +95,25 @@ function Login() {
               text={!loggingIn ? "Ingresar" : "Iniciando sesión..."}
               fill={true}
             />
+          </div>
+          <div className="Login__helper-btns">
             <Link
               to={info.routes.passwordRecover.path}
               className="Login__passrecover-btn"
             >
               Recuperar contraseña
             </Link>
+            <Link
+              to={info.routes.register.path}
+              className="Login__register-btn"
+              onClick={() => {
+                setError(false);
+              }}
+            >
+              Registrarse
+            </Link>
           </div>
         </form>
-        <a href="/" className="Login__privacy">
-          Aviso de privacidad
-        </a>
       </main>
       <section className="Login__background-img"></section>
     </div>

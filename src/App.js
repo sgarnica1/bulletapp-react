@@ -13,6 +13,7 @@ import { SuccessAlert } from "./components/Public/SuccessAlert";
 // PUBLIC PAGES
 import { FirebaseError } from "./pages/Public/FirebaseError";
 import { Login } from "./pages/Public/Login";
+import { Register } from "./pages/Public/Register";
 import { NotFound } from "./pages/Public/NotFound";
 import { PasswordRecover } from "./pages/Public/PasswordRecover";
 
@@ -32,6 +33,7 @@ import { AddMovement } from "./pages/Admin/AddMovement";
 import { AddWod } from "./pages/Admin/AddWod";
 import { Programming } from "./pages/Admin/Programming";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
+import { Users } from "./pages/Admin/Users";
 
 // PROTECTED ROUTES
 import ScrollToTop from "./utils/components/ScrollToTop";
@@ -65,13 +67,14 @@ function App() {
           {user ? (
             <>
               <Navbar user={user} />
-              <Header />
+              <Header user={user} />
             </>
           ) : null}
           <Routes>
             {/* ---------- PUBLIC ---------- */}
             <Route element={<LoggedOutRoute />}>
               <Route path={info.routes.login.path} element={<Login />} />
+              <Route path={info.routes.register.path} element={<Register />} />
               <Route
                 path={info.routes.passwordRecover.path}
                 element={<PasswordRecover />}
@@ -123,6 +126,9 @@ function App() {
                 path={info.routes.movements.nested.add.path}
                 element={<AddMovement />}
               />
+
+              <Route path={info.routes.users.path} element={<Users />} />
+
               <Route path={info.routes.wods.path}>
                 <Route
                   path={info.routes.wods.nested.add.value}

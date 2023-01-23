@@ -42,7 +42,6 @@ function MovementTracking() {
   const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
-    // console.log("useEffect");
     if ((loading && !record && !movements) || refetch) {
       if (addRecord) setAddRecord(false);
       actions.getSingleRecord(
@@ -69,6 +68,7 @@ function MovementTracking() {
 
       // SORT BY HEAVIST WEIGHT
       record.scores.sort((a, b) => b.weight - a.weight);
+      console.log(record);
       // GET 1RM
       const oneRepMax = record.scores.filter(
         (score) => score.sets === 1 && score.reps === 1
@@ -87,7 +87,8 @@ function MovementTracking() {
       if (
         record.movement_category.includes(
           info.firebase.values.movementCategories.barbell
-        )
+        ) &&
+        oneRepMax
       ) {
         const weightPercents = utils.getWeightPercents(oneRepMax.weight);
         setWeightPercents(weightPercents);
@@ -111,8 +112,6 @@ function MovementTracking() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addRecord, record, movements, refetch]);
-
-  // console.log("record", record);
 
   return (
     <div className="MovementTracking">
@@ -168,6 +167,9 @@ function MovementTracking() {
                 : movements?.movement_category
             }
             timescore={record !== -1 ? record?.timescore : movements?.timescore}
+            distancescore={
+              record !== -1 ? record?.distancescore : movements?.distancescore
+            }
             setRefetch={setRefetch}
           />
         )}
@@ -176,21 +178,18 @@ function MovementTracking() {
         {!loading && record && record !== -1 && (
           <section className="MovementTacking__content">
             <div className="StatWidget__container">
-              {oneRepMax && oneRepMax.weight > 0 && !isSkill && (
-                <StatWidget
-                  title={"1 Rep Max"}
-                  value={oneRepMax.weight}
-                  units={oneRepMax.units}
-                  seconds={oneRepMax.date.seconds}
-                />
-              )}
               {isSkill && (
                 <StatWidget
                   metaDescription={""}
                   title={"Habilidad obtenida"}
-                  seconds={record.scores[record.scores.length - 1].date.seconds}
+                  dateInSeconds={
+                    record.scores[record.scores.length - 1].date.seconds
+                  }
                   checkIcon={true}
                 />
+              )}
+              {oneRepMax && oneRepMax.weight > 0 && (
+                <StatWidget title={"1 Rep Max"} score={oneRepMax} />
               )}
               {setsRepMax && (
                 <StatWidget
@@ -199,18 +198,12 @@ function MovementTracking() {
                       ? `Set más pesado (${setsRepMax.sets}x${setsRepMax.reps})`
                       : "Set más largo (Sets X Reps)"
                   }
-                  value={
-                    setsRepMax.weight > 0
-                      ? setsRepMax.weight
-                      : `${setsRepMax.sets}x${setsRepMax.reps}`
-                  }
-                  units={setsRepMax.weight > 0 && setsRepMax.units}
-                  seconds={setsRepMax.date.seconds}
+                  score={setsRepMax}
                 />
               )}
             </div>
 
-            <p className="meta-tag">Resultado más reciente</p>
+            <p className="app-meta-tag">Resultado más reciente</p>
 
             {record && (
               <MovementRecordCard
@@ -220,12 +213,17 @@ function MovementTracking() {
                 units={record.scores[0].units}
                 reps={record.scores[0].reps}
                 sets={record.scores[0].sets}
+                distance={record.scores[0].distance}
+                timescore={record.timescore}
+                distancescore={record.distancescore}
+                unlockedTag={isSkill && record.scores.length === 1}
               />
             )}
 
             {weightPercents.length > 0 && (
-              <h3 className="subtitle">
-                Porcentajes <span className="meta-tag">(Basado en tu 1RM)</span>
+              <h3 className="app-subtitle">
+                Porcentajes{" "}
+                <span className="app-meta-tag">(Basado en tu 1RM)</span>
               </h3>
             )}
 
@@ -248,7 +246,9 @@ function MovementTracking() {
               </section>
             )}
 
-            {record?.scores.length > 1 && <p className="subtitle">Historial</p>}
+            {record?.scores.length > 1 && (
+              <p className="app-subtitle">Historial</p>
+            )}
 
             {record && (
               <div className="MovementTracking__records-container">
@@ -262,6 +262,12 @@ function MovementTracking() {
                       units={score.units}
                       reps={score.reps}
                       sets={score.sets}
+                      distance={score.distance}
+                      timescore={record.timescore}
+                      distancescore={record.distancescore}
+                      unlockedTag={
+                        isSkill && index === record.scores.length - 2
+                      }
                     />
                   );
                 })}

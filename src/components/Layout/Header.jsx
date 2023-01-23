@@ -11,7 +11,7 @@ import BlackLogo from "../../assets/img/logo_black_resized.png";
 import HamburguerBtnIcon from "../../assets/icon/hmbrgrbtn.svg";
 import CloseIcon from "../../assets/icon/close.svg";
 
-function Header() {
+function Header({ user }) {
   const { showNav, setShowNav, currentLocation: location } = useDashboard();
   const { theme } = useTheme();
   const navigation = useNavigate();
@@ -43,20 +43,16 @@ function Header() {
         />
         {/* NAVIGATION */}
         <ul className="Header__nav-container">
-          <li className="Header__nav-element current-location">
-            <span className="current-location__icon"></span>
-            <p className="current-location__text">{location}</p>
-          </li>
           <li className="Header__nav-element">
             <div className="Header__user">
-              <div
+              <span
                 className="Header__user-profile"
                 onClick={() => {
                   navigation(info.routes.settings.path);
                 }}
               >
-                <img src={UserIcon} alt="User icon" />
-              </div>
+                {user?.data?.first_name[0]}
+              </span>
             </div>
           </li>
         </ul>

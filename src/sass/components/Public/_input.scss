@@ -1,5 +1,6 @@
 .Input {
   margin-bottom: 20px;
+  max-width: 575px;
 
   &__container {
     height: $height-input;
@@ -10,7 +11,6 @@
     background: var(--bg-input);
     border: 1px solid var(--bg-input);
     color: var(--color-text);
-    opacity: 0.9;
 
     &.error {
       border: 2px solid $color-error;
@@ -31,7 +31,7 @@
     width: 90%;
     color: var(--color-text);
     font-size: toRem(16);
-    padding-right: 10px;
+    padding-right: 20px;
 
     &.readonly {
       cursor: not-allowed;
@@ -53,6 +53,18 @@
 
   &__label {
     color: $color-brand;
+    font-size: toRem(14);
+    text-align: center;
+    margin-bottom: 10px;
+
+    &.error {
+      color: $color-error;
+    }
+  }
+
+  &__meta {
+    color: var(--color-text);
+    opacity: 0.7;
     font-size: toRem(12);
     text-align: center;
 
@@ -196,5 +208,13 @@
   input[type="number"] {
     appearance: textfield;
     -moz-appearance: textfield;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--color-text) !important;
   }
 }

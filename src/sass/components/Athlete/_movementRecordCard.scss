@@ -10,13 +10,24 @@
   color: var(--color-text);
 
   &__value {
-    font-size: toRem(18);
+    font-size: toRem(14);
     font-weight: 600;
     color: $color-brand;
+
+    span {
+      font-size: toRem(12);
+      font-weight: 400;
+      color: var(--color-text);
+      opacity: 0.8;
+    }
+
+    @include mq(xxs) {
+      font-size: toRem(16);
+    }
   }
 
   &__date {
     opacity: 0.8;
-    font-size: toRem(14);
+    font-size: toRem(12);
   }
 }

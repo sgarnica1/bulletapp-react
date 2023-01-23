@@ -2,13 +2,17 @@ import { createContext, useContext, useState, useEffect } from "react";
 import {
   signInWithEmailAndPassword,
   updatePassword,
-  sendPasswordResetEmail,
   updateCurrentUser,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/index";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { getUserInfoApi } from "../api/user";
 import { REFRESH_TOKEN_API } from "../utils/requests";
+import { getUserInfoApi } from "../api/user";
+import { postUserApi } from "../api/user";
 import { info } from "../utils/info";
 import jwt_decode from "jwt-decode";
 
@@ -83,11 +87,11 @@ const AuthProvider = ({ children }) => {
   );
 
   // LOGIN USER
-  const loginUser = async (event, loginData) => {
+  async function loginUser(event, loginData, setErrorMessage) {
     if (event) event.preventDefault();
     setLoading(true);
     setLoggingIn(true);
-    setError(false);
+    setErrorMessage(false);
 
     const email =
       loginData && loginData.email
@@ -112,6 +116,23 @@ const AuthProvider = ({ children }) => {
         userCredentials,
         userCredentials.uid
       );
+
+      if (!userCredentials.emailVerified) {
+        setErrorMessage("Tu cuenta no ha sido verificada");
+        setLoading(false);
+        setLoggingIn(false);
+        return logoutUser();
+      }
+
+      if (!userCredentials.data.active) {
+        console.log("here");
+        setErrorMessage(
+          "Tu cuenta no ha sido activada. Por favor contacta a tu coach"
+        );
+        setLoading(false);
+        setLoggingIn(false);
+        return logoutUser();
+      }
 
       // SET USER
       setUser(userCredentials);
@@ -160,8 +181,41 @@ const AuthProvider = ({ children }) => {
       setLoggingIn(false);
       setLoading(false);
     }
-  };
+  }
 
+  // REGISTER USER
+  async function registerUser(event, data, setSuccess, callback) {
+    if (event) event.preventDefault();
+    setLoading(true);
+    setError(false);
+    let user;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      user = userCredential.user;
+      await updateProfile(user, {
+        displayName: data.displayName,
+      });
+      await sendEmailVerification(user);
+
+      await postUserApi(user.uid, data);
+      setSuccess(info.messages.success.userCreated);
+      setLoading(false);
+      callback();
+    } catch (err) {
+      console.log(err);
+      setError(info.messages.error.errorWriting);
+      setLoading(false);
+      callback(err);
+      throw err;
+    }
+  }
+
+  // LOGOUT USER
   function logoutUser(callback) {
     // Clean states
     setAuthTokens(null);
@@ -183,6 +237,48 @@ const AuthProvider = ({ children }) => {
     if (callback) callback();
   }
 
+  // UPDATE PASSWORD
+  function changePassword(
+    newPassword,
+    setSuccessMessage,
+    setErrorMessage,
+    setLoading,
+    callback
+  ) {
+    const user = auth.currentUser;
+
+    updatePassword(user, newPassword)
+      .then(() => {
+        setSuccessMessage(info.messages.success.passwordUpdated);
+        setLoading(false);
+        callback();
+        return loginUser(null, { email: user.email, password: newPassword });
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        return setErrorMessage(info.messages.error.errorUpdating);
+      });
+  }
+
+  // SEND PASSWORD RESET EMAIL
+  function sendPasswordReset(email, setSuccess, setError, callback) {
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setSuccess(true);
+        callback();
+      })
+      .catch((error) => {
+        callback();
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        setError(errorMessage);
+      });
+  }
+
+  // UPDATE TOKEN
   async function updateToken() {
     setLoading(true);
     setLoggingIn(false);
@@ -207,6 +303,20 @@ const AuthProvider = ({ children }) => {
       if (!authData.error) {
         // GET USER INFO
         const userCredentials = await getUserInfoApi(user, authData.user_id);
+        if (
+          userCredentials.emailVerified
+            ? !userCredentials.emailVerified
+            : !userCredentials.email_verified
+        ) {
+          setLoading(false);
+          return logoutUser();
+        }
+
+        if (!userCredentials.data.active) {
+          setLoading(false);
+          return logoutUser();
+        }
+
         // SET USER
         setUser(userCredentials);
 
@@ -253,49 +363,6 @@ const AuthProvider = ({ children }) => {
     if (loading) setLoading(false);
   }
 
-  // UPDATE PASSWORD
-  function changePassword(
-    newPassword,
-    setSuccessMessage,
-    setErrorMessage,
-    setLoading,
-    callback
-  ) {
-    const user = auth.currentUser;
-
-    updatePassword(user, newPassword)
-      .then(() => {
-        setSuccessMessage(info.messages.success.passwordUpdated);
-        setLoading(false);
-        callback();
-        return loginUser(null, { email: user.email, password: newPassword });
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        return setErrorMessage(info.messages.error.errorUpdating);
-      });
-  }
-
-  // SEND PASSWORD RESET EMAIL
-  function sendPasswordReset(email, setSuccess, setError, callback) {
-    console.log(auth);
-
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        console.log("Email sent");
-        setSuccess(true);
-        callback();
-      })
-      .catch((error) => {
-        callback();
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        setError(errorMessage);
-      });
-  }
-
   useEffect(() => {
     if (loading) updateToken();
 
@@ -320,6 +387,7 @@ const AuthProvider = ({ children }) => {
         loggingIn,
         loginUser,
         logoutUser,
+        registerUser,
         changePassword,
         sendPasswordReset,
         setError,

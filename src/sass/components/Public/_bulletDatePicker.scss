@@ -1,0 +1,19 @@
+.BulletDatePicker {
+  // display: flex;
+  // flex-direction: column;
+
+  input::placeholder {
+    color: var(--color-text);
+  }
+
+  div div {
+    background: var(--bg-input);
+    border-radius: $border-radius;
+    height: $height-input;
+    color: $color-white;
+
+    svg {
+      fill: $color-brand;
+    }
+  }
+}

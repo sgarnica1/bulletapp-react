@@ -17,7 +17,9 @@ const getMovementsApi = async (callback) => {
     const ref = collection(db, info.firebase.collections.movements);
     const query_ = query(ref, where("active", "==", true));
     const snapshot = await getDocs(query_);
+
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
     if (callback) callback(data);
     return data;
   } catch (err) {

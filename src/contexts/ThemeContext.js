@@ -14,7 +14,8 @@ function ThemeProvider({ children }) {
   // VERIFY IF USER HAS A THEME PREFERENCE IN LOCAL STORAGE
   const localStorageTheme = localStorage.getItem(info.localStorageKeys.theme);
 
-  let initialTheme = darkDefault ? info.theme.dark : info.theme.light;
+  // SET INITIAL THEME TO DARK 
+  let initialTheme = darkDefault ? info.theme.dark : info.theme.dark;
 
   if (localStorageTheme) {
     initialTheme = localStorageTheme;

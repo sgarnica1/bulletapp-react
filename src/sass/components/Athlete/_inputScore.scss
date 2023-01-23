@@ -1,0 +1,73 @@
+.InputScore {
+  height: 50px;
+  padding: 0 5px;
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-component);
+  border-radius: $border-radius;
+  margin-bottom: 20px;
+
+  &.readonly {
+    opacity: 0.5;
+  }
+
+  @include mq(md) {
+    height: $height-input;
+    padding: 10px 20px;
+  }
+
+  &__input {
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 90%;
+    color: var(--color-text);
+    font-size: toRem(20);
+    padding-right: 20px;
+  }
+
+  &__input::placeholder {
+    color: #a7a7a7;
+    font-size: toREm(20);
+  }
+
+  &__label {
+    color: $color-brand;
+    font-weight: 600;
+    font-size: toRem(12);
+  }
+
+  &__units {
+    font-weight: 600;
+    color: $color-brand;
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: toRem(14);
+
+    option {
+      color: $color-dark;
+    }
+  }
+}
+
+.InputScoreContainer {
+  display: grid;
+  gap: 10px;
+  max-width: 500px;
+
+  &.grid-col-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.grid-col-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.grid-col-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -1,21 +1,34 @@
 .Header {
   background-color: var(--bg-layout);
   position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
+  // left: 0;
+  // right: 0;
+  // top: 0;
   z-index: 999;
   transition: $theme-transition;
   box-shadow: $box-shadow;
+
+  top: 10px;
+  width: 90%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 20px;
+
+  @include mq(xl) {
+    left: 12%;
+    width: 68%;
+  }
 
   &__nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 80px;
+    // min-height: 80px;
     background-color: var(--bg-layout);
     padding: 8px 20px;
     transition: $theme-transition;
+    border-radius: 20px;
 
     @include mq(xl) {
       padding: 8px 40px;
@@ -43,9 +56,9 @@
     background-size: contain;
     background-repeat: no-repeat;
     display: inline-block;
-    background: url("../../assets/icon/hmbrgrbtn.svg");
+    background: url("~/src/assets/icon/hmbrgrbtn.svg");
   }
-  
+
   // LOGO
   &__logo {
     height: 100%;
@@ -98,7 +111,7 @@
     &__icon {
       width: 20px;
       height: 20px;
-      background: url("../../assets/icon/location.svg");
+      background: url("~/src/assets/icon/location.svg");
       color: var(--color-text);
       @extend %icon;
     }
@@ -115,13 +128,18 @@
     gap: 10px;
 
     &-profile {
+      height: 40px;
+      width: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: toRem(40);
-      height: toRem(40);
+      background: var(--bg-linear-gradient);
+      color: #93bb1c;
       border-radius: 50%;
       font-weight: 600;
+      font-size: 1.125rem;
+      text-transform: uppercase;
+      line-height: 0;
     }
   }
 
@@ -141,7 +159,7 @@
       &-icon {
         height: 18px;
         width: 18px;
-        background: url("../../assets/icon/dropdown-inactive.svg");
+        background: url("~/src/assets/icon/dropdown-inactive.svg");
         @extend %icon;
       }
     }

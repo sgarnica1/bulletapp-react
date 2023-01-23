@@ -1,0 +1,60 @@
+.UserCard {
+  width: 100%;
+  background: var(--bg-component);
+  border-radius: $border-radius;
+  margin-bottom: 20px;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-height: 60px;
+    padding: 0 15px;
+
+    @include mq(lg) {
+      width: 100%;
+      overflow-x: hidden;
+    }
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(150px, 200px));
+    gap: 10px;
+
+    @include mq(lg) {
+      width: 85%;
+      grid-template-columns: 15% repeat(2, 1fr) 10% 10%;
+    }
+  }
+
+  &__meta-value {
+    font-size: toRem(14);
+    color: var(--color-text);
+    opacity: 0.8;
+    line-height: 1;
+    word-break: break-all;
+  }
+
+  &__category {
+    min-width: 100px;
+    height: 36px;
+    // padding: 1px 20px;
+    border-radius: 20px;
+    width: 15%;
+    font-weight: 500;
+    font-size: toRem(16);
+    color: var(--color-text);
+    outline: none;
+    border: none;
+
+    &.active {
+      background-color: #2eca45;
+    }
+    &.inactive {
+      background: $bg-input-dark-2;
+    }
+  }
+}
