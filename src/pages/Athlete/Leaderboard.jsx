@@ -195,7 +195,7 @@ function Leaderboard() {
   function setWodDate(weekDay) {
     const today = new Date();
     const day = today.getDay(); // Weekday as a number (0-6)
-    const diff = today.getDate() - day + weekDay - 7;
+    const diff = today.getDate() + weekDay - (day === 0 ? -6 : 1); // adjust when day is sunday
     return new Date(today.setDate(diff));
   }
 }
