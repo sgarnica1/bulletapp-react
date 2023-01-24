@@ -64,6 +64,7 @@ const WodScoreWidget = () => {
               ? info.components.wodScoreForm.scoreType.onTime
               : info.components.wodScoreForm.scoreType.timeCaped
           );
+          setTeamMembers(doc.score.teamMembers ? doc.score.teamMembers : "");
         }
       });
     }
