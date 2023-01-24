@@ -27,6 +27,7 @@ const Users = () => {
   // TODO - Allow sorting
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState("");
+  const [reloadUserCard, setReloadUserCard] = useState(false);
   const [availableCategories, setAvailableCategories] = useState(new Set());
   const [orderByValue, setOrderByValue] = useState(
     info.components.sortby.label
@@ -67,51 +68,38 @@ const Users = () => {
         search,
         "displayName"
       );
+      setReloadUserCard(!reloadUserCard);
       setFilteredUsers(searchedUsers);
 
       const usersCopy = [...searchedUsers];
 
       let orderedUsers = [];
-      if (info.components.sortby.options.mostRecent)
-        orderedUsers = utils.sortByMostRecent(usersCopy, "created_at");
 
-      if (info.components.sortby.options.oldest)
-        orderedUsers = utils.sortByOldest(usersCopy, "created_at");
+      switch (orderByValue) {
+        case info.components.sortby.options.mostRecent:
+          orderedUsers = utils.sortByMostRecent(usersCopy, "created_at");
+          setFilteredUsers(orderedUsers);
+          break;
+        case info.components.sortby.options.oldest:
+          orderedUsers = utils.sortByOldest(usersCopy, "created_at");
+          setFilteredUsers(orderedUsers);
+          break;
+        case info.components.sortby.options.az:
+          orderedUsers = utils.sortAZOrder(usersCopy, "displayName");
+          setFilteredUsers(orderedUsers);
+          break;
+        case info.components.sortby.options.za:
+          orderedUsers = utils.sortZAOrder(usersCopy, "displayName");
+          setFilteredUsers(orderedUsers);
+          break;
 
-      if (info.components.sortby.options.az)
-        orderedUsers = utils.sortAZOrder(usersCopy, "displayName");
+        case info.components.sortby.label:
+          setFilteredUsers(usersCopy);
+          break;
+        default:
+          break;
+      }
 
-      if (info.components.sortby.options.za)
-        orderedUsers = utils.sortZAOrder(usersCopy, "displayName");
-
-      if (info.components.sortby.label) orderedUsers = usersCopy;
-      console.log(orderedUsers);
-      setFilteredUsers(orderedUsers);
-
-      // switch (orderByValue) {
-      //   case info.components.sortby.options.mostRecent:
-      //     orderedUsers = utils.sortByMostRecent(usersCopy, "created_at");
-      //     setFilteredUsers(orderedUsers);
-      //     break;
-      //   case info.components.sortby.options.oldest:
-      //     orderedUsers = utils.sortByOldest(usersCopy, "created_at");
-      //     setFilteredUsers(orderedUsers);
-      //     break;
-      //   case info.components.sortby.options.az:
-      //     orderedUsers = utils.sortAZOrder(usersCopy, "displayName");
-      //     setFilteredUsers(orderedUsers);
-      //     break;
-      //   case info.components.sortby.options.za:
-      //     orderedUsers = utils.sortZAOrder(usersCopy, "displayName");
-      //     setFilteredUsers(orderedUsers);
-      //     break;
-
-      //   case info.components.sortby.label:
-      //     setFilteredUsers(filteredUsers);
-      //     break;
-      //   default:
-      //     break;
-      // }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,7 +173,7 @@ const Users = () => {
               users &&
               filteredUsers &&
               filteredUsers.map((user, index) => (
-                <UserCard key={index} user={user} />
+                <UserCard key={index} user={user} reload={reloadUserCard} />
               ))}
           </div>
         </section>

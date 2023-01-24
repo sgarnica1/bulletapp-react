@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useUsers } from "../../hooks/useUser";
 import { utils } from "../../utils/utils";
 
-const UserCard = ({ user, onClickHandler }) => {
+const UserCard = ({ user, reload }) => {
   const [updateUser, setUpdateUser] = useState(false);
   const [activeState, setActiveState] = useState(user.active);
   const { actions, users } = useUsers();
 
   useEffect(() => {
+    console.log(user.displayName);
+    setActiveState(user.active)
+
     if (updateUser) {
       if (user.active) {
         setUpdateUser(false);
@@ -23,7 +26,7 @@ const UserCard = ({ user, onClickHandler }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateUser, users]);
+  }, [updateUser, users, reload]);
 
   return (
     <div className={`UserCard`}>

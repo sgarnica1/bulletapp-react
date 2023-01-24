@@ -171,7 +171,7 @@ const AuthProvider = ({ children }) => {
         err.message === info.firebase.errors.auth.userNotFound ||
         err.message === info.firebase.errors.auth.invalidEmail
       ) {
-        setError("Credenciales inválidas");
+        setError("Correo electrónico o contraseña incorrectos");
       }
 
       if (err.message === info.firebase.errors.auth.insufficientPermissions) {
