@@ -9,8 +9,33 @@ const InputScore = ({
   option,
   setOption,
   max,
+  type = "number",
   readOnly = false,
 }) => {
+  if (type === "text") {
+    return (
+      <div
+        className={`InputScore ${error && "error"} ${readOnly && "readonly"}`}
+      >
+        <input
+          type="text"
+          placeholder="Atleta 1, Atleta 2, Atleta 3, ..."
+          className="InputScore__input"
+          name="score"
+          value={value}
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
+        />
+        {label && (
+          <label htmlFor="score" className="InputScore__label">
+            {label}
+          </label>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className={`InputScore ${error && "error"} ${readOnly && "readonly"}`}>
       <input

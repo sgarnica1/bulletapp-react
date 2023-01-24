@@ -407,10 +407,11 @@ const info = {
       invalidTimeCap: "El Timecap debe ser un número igual o mayor a 0",
       missingData: "Este campo es requerido",
       sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
-      scoreGreaterThanTimeCap: "El score no puede ser mayor al Timecap",
-      scoreGreaterThanWod: "Tu score no puede ser mayor a las rondas y reps del WOD",
+      scoreGreaterThanTimeCap: "El score no puede ser mayor al timecap",
+      scoreGreaterThanWod: "Tu score no puede ser mayor a las rondas totales y reps del WOD",
       wodAlreadyExists: "Ya existe un WOD registrado para esta fecha",
       scoreMustBeGreaterThanZero: "El score debe ser mayor a 0",
+      emptyTeamMembers: "Por favor ingresa al menos un miembro del equipo",
     },
     success: {
       wodScoreUpdated: "Tu score se ha actualizado correctamente",

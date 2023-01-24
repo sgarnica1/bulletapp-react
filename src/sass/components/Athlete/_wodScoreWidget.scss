@@ -100,14 +100,21 @@
     font-size: toRem(18);
     margin-bottom: 10px;
   }
-  
+
+  &__label {
+    color: var(--color-text);
+    font-size: toRem(14);
+    margin: 8px 0 5px 0;
+  }
+
   &__description {
     color: $color-brand;
     font-size: toRem(14);
     margin-bottom: 10px;
   }
 
-  .InputScore, .SelectButtonCategory {
+  .InputScore,
+  .SelectButtonCategory {
     margin-bottom: 0px;
   }
 }

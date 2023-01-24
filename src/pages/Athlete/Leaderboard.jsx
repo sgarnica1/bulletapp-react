@@ -58,7 +58,8 @@ function Leaderboard() {
       const filteredUsers = utils.searchDataFromInput(
         sorted,
         searchValue,
-        "username"
+        wods.teams ? "score" : "username",
+        wods.teams ? "teamMembers" : null
       );
       setSortedWodScores(filteredUsers);
     }
@@ -166,7 +167,7 @@ function Leaderboard() {
                     {score.position}
                   </span>
                   <p className="Leaderboard__body__score-name">
-                    {score.username}
+                    {wods.teams ? score.score.teamMembers : score.username}
                   </p>
                   {!score.score.timeCaped && (
                     <span className="Leaderboard__body__score-value">

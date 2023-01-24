@@ -206,16 +206,23 @@ const utils = {
     return nextDay;
   },
 
-  searchDataFromInput: (data, searchedValue, attribute) => {
-    console.log(searchedValue)
+  searchDataFromInput: (
+    data,
+    searchedValue,
+    attribute,
+    extraAttribute = null
+  ) => {
     if (searchedValue === "") return data;
     let filteredData = [];
 
     if (!searchedValue.length > 0) {
       filteredData = data;
     } else {
+      let dataText;
       filteredData = data.filter((element) => {
-        const dataText = `${element[attribute].toLowerCase()}`;
+        if (!extraAttribute) dataText = `${element[attribute].toLowerCase()}`;
+        if (extraAttribute !== null)
+          dataText = ` ${element[attribute][extraAttribute].toLowerCase()}`;
         const searchedValueText = searchedValue.toLowerCase().trim();
 
         return dataText.includes(searchedValueText);

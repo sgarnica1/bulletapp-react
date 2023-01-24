@@ -38,6 +38,7 @@ const WodScoreWidget = () => {
   const [seconds, setSeconds] = useState("");
   const [timeCaped, setTimeCaped] = useState("");
   const [wodScore, setWodScore] = useState("");
+  const [teamMembers, setTeamMembers] = useState("");
 
   const [wodScoreUpdated, setWodScoreUpdated] = useState(false);
 
@@ -132,6 +133,19 @@ const WodScoreWidget = () => {
               <InputScore value={reps} setValue={setReps} label="reps" />
             </InputScoreContainer>
           )}
+          {wod.teams && (
+            <>
+              <p className="WodScoreForm__label">Integrantes de mi equipo </p>
+              <InputScoreContainer gridColumns={1}>
+                <InputScore
+                  value={teamMembers}
+                  setValue={setTeamMembers}
+                  label="Equipo"
+                  type="text"
+                />
+              </InputScoreContainer>
+            </>
+          )}
 
           <Button
             type={info.components.button.type.submit}
@@ -156,7 +170,10 @@ const WodScoreWidget = () => {
     // REVIEW SCORE TYPE (TIME OR REPS)
     if (wod.timescore === true && !timeCaped) {
       // REVIEW EMPTY FIELDS
-      if (parseInt(minutes) === 0 && parseInt(seconds) === 0)
+      if (
+        (parseInt(minutes) === 0 && parseInt(seconds) === 0) ||
+        (minutes === "" && seconds === "")
+      )
         return setErrorMessage(info.messages.error.emptyScore);
       // REVIEW SAME SCORE
       if (
@@ -170,14 +187,21 @@ const WodScoreWidget = () => {
       if (wod.timecap < parseInt(minutes) + parseInt(seconds) / 60)
         return setErrorMessage(info.messages.error.scoreGreaterThanTimeCap);
 
+      if (wod.teams && teamMembers === "")
+        return setErrorMessage(info.messages.error.emptyTeamMembers);
+
       // SET SCORE
       score = {
         minutes: minutes === "" ? 0 : parseInt(minutes),
         seconds: seconds === "" ? 0 : parseInt(seconds),
         timeCaped: false,
+        teamMembers: teamMembers,
       };
     } else {
-      if (parseInt(rounds) === 0 && parseInt(reps) === 0)
+      if (
+        (parseInt(rounds) === 0 && parseInt(reps) === 0) ||
+        (rounds === "" && reps === "")
+      )
         return setErrorMessage(info.messages.error.emptyScore);
       // REVIEW SAME SCORE
       if (
@@ -190,6 +214,9 @@ const WodScoreWidget = () => {
 
       if (wod.reps < parseInt(reps) || wod.rounds - 1 < parseInt(rounds))
         return setErrorMessage(info.messages.error.scoreGreaterThanWod);
+
+      if (wod.teams && teamMembers === "")
+        return setErrorMessage(info.messages.error.emptyTeamMembers);
 
       const roundsVal = rounds === "" ? 0 : parseInt(rounds);
       const repsVal = reps === "" ? 0 : parseInt(reps);
@@ -207,6 +234,7 @@ const WodScoreWidget = () => {
         reps: repsVal,
         timeCaped: wod.timescore ? timeCaped : false,
         missingReps: wod.timescore ? missingReps : null,
+        teamMembers: teamMembers,
       };
     }
 

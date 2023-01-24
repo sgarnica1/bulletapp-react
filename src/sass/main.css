@@ -1222,12 +1222,18 @@ input[type=number] {
   font-size: 1.125rem;
   margin-bottom: 10px;
 }
+.WodScoreForm__label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  margin: 8px 0 5px 0;
+}
 .WodScoreForm__description {
   color: #93bb1c;
   font-size: 0.875rem;
   margin-bottom: 10px;
 }
-.WodScoreForm .InputScore, .WodScoreForm .SelectButtonCategory {
+.WodScoreForm .InputScore,
+.WodScoreForm .SelectButtonCategory {
   margin-bottom: 0px;
 }
 
