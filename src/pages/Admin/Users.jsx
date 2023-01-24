@@ -99,7 +99,6 @@ const Users = () => {
         default:
           break;
       }
-
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,7 +109,12 @@ const Users = () => {
       <ContentContainer>
         <BackButton link={info.routes.home} mb={true} />
 
-        <h1 className="app-title">Usuarios</h1>
+        <header className="MovementsLibrary__header">
+          <h1 className="app-title">Usuarios</h1>
+          {!loading && users && filteredUsers && (
+            <span className="app-meta-tag">Resultados: ({filteredUsers.length})</span>
+          )}
+        </header>
 
         <div className="Records__filters">
           <SearchBar

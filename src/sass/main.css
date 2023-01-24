@@ -3196,6 +3196,11 @@ body {
   text-decoration: underline;
 }
 
+.MovementsLibrary__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .MovementsLibrary .SearchBar,
 .MovementsLibrary .InputLoadingSkeleton.search-bar {
   margin-bottom: 0px;
