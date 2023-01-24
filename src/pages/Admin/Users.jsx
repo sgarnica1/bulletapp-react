@@ -69,7 +69,7 @@ const Users = () => {
       );
       setFilteredUsers(searchedUsers);
 
-      const usersCopy = [...filteredUsers];
+      const usersCopy = [...searchedUsers];
 
       let orderedUsers = [];
       if (info.components.sortby.options.mostRecent)
@@ -84,34 +84,34 @@ const Users = () => {
       if (info.components.sortby.options.za)
         orderedUsers = utils.sortZAOrder(usersCopy, "displayName");
 
-      if (info.components.sortby.label) setFilteredUsers(filteredUsers);
-
+      if (info.components.sortby.label) orderedUsers = usersCopy;
+      console.log(orderedUsers);
       setFilteredUsers(orderedUsers);
 
-      switch (orderByValue) {
-        case info.components.sortby.options.mostRecent:
-          orderedUsers = utils.sortByMostRecent(usersCopy, "created_at");
-          setFilteredUsers(orderedUsers);
-          break;
-        case info.components.sortby.options.oldest:
-          orderedUsers = utils.sortByOldest(usersCopy, "created_at");
-          setFilteredUsers(orderedUsers);
-          break;
-        case info.components.sortby.options.az:
-          orderedUsers = utils.sortAZOrder(usersCopy, "displayName");
-          setFilteredUsers(orderedUsers);
-          break;
-        case info.components.sortby.options.za:
-          orderedUsers = utils.sortZAOrder(usersCopy, "displayName");
-          setFilteredUsers(orderedUsers);
-          break;
+      // switch (orderByValue) {
+      //   case info.components.sortby.options.mostRecent:
+      //     orderedUsers = utils.sortByMostRecent(usersCopy, "created_at");
+      //     setFilteredUsers(orderedUsers);
+      //     break;
+      //   case info.components.sortby.options.oldest:
+      //     orderedUsers = utils.sortByOldest(usersCopy, "created_at");
+      //     setFilteredUsers(orderedUsers);
+      //     break;
+      //   case info.components.sortby.options.az:
+      //     orderedUsers = utils.sortAZOrder(usersCopy, "displayName");
+      //     setFilteredUsers(orderedUsers);
+      //     break;
+      //   case info.components.sortby.options.za:
+      //     orderedUsers = utils.sortZAOrder(usersCopy, "displayName");
+      //     setFilteredUsers(orderedUsers);
+      //     break;
 
-        case info.components.sortby.label:
-          setFilteredUsers(filteredUsers);
-          break;
-        default:
-          break;
-      }
+      //   case info.components.sortby.label:
+      //     setFilteredUsers(filteredUsers);
+      //     break;
+      //   default:
+      //     break;
+      // }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,7 +151,7 @@ const Users = () => {
               options={Array.from(availableCategories)}
               value={category}
               setValue={setCategory}
-              setSearch={setSearch}
+              // setSearch={setSearch}
               loading={loading}
             />
           </>

@@ -207,6 +207,7 @@ const utils = {
   },
 
   searchDataFromInput: (data, searchedValue, attribute) => {
+    console.log(searchedValue)
     if (searchedValue === "") return data;
     let filteredData = [];
 

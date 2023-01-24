@@ -118,7 +118,7 @@ const AuthProvider = ({ children }) => {
       );
 
       if (!userCredentials.emailVerified) {
-        setErrorMessage("Tu cuenta no ha sido verificada");
+        setErrorMessage("Tu correo electrónico no ha sido verificado (Revisa tu bandeja de entrada o spam)");
         setLoading(false);
         setLoggingIn(false);
         return logoutUser();
