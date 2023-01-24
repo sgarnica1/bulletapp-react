@@ -65,6 +65,8 @@ function Leaderboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wods, loading, searchValue]);
 
+  console.log(weekDay);
+
   return (
     <div className="Leaderboard">
       <ContentContainer sidePadding={true}>
@@ -216,7 +218,7 @@ function Leaderboard() {
   function setWodDate(weekDay) {
     const today = new Date();
     const day = today.getDay(); // Weekday as a number (0-6)
-    const diff = today.getDate() + weekDay - (day === 0 ? -6 : 1); // adjust when day is sunday
+    const diff = today.getDate() + (weekDay - day);
     return new Date(today.setDate(diff));
   }
 }
