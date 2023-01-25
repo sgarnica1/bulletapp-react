@@ -28,12 +28,12 @@ const Users = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [reloadUserCard, setReloadUserCard] = useState(false);
-  const [reloeadUserList, setReloadUserList] = useState(false);
+  // const [reloeadUserList, setReloadUserList] = useState(false);
   const [availableCategories, setAvailableCategories] = useState(new Set());
-  const [activeStateCategories, _] = useState(["Activo", "Inactivo"]);
-  const [activeStateCategory, setActiveStateCategory] = useState(
-    info.components.buttonSelectFilter.values.all
-  );
+  // const [activeStateCategories, _] = useState(["Activo", "Inactivo"]);
+  // const [activeStateCategory, setActiveStateCategory] = useState(
+  //   info.components.buttonSelectFilter.values.all
+  // );
   const [orderByValue, setOrderByValue] = useState(
     info.components.sortby.label
   );
@@ -68,11 +68,11 @@ const Users = () => {
 
       category !== "all" && setFilteredUsers(filteredUsers);
 
-      if (activeStateCategory !== "all")
-        filteredUsers = filteredUsers.filter(
-          (user) =>
-            user.active === (activeStateCategory === "Activo" ? true : false)
-        );
+      // if (activeStateCategory !== "all")
+      //   filteredUsers = filteredUsers.filter(
+      //     (user) =>
+      //       user.active === (activeStateCategory === "Activo" ? true : false)
+      //   );
 
       const searchedUsers = utils.searchDataFromInput(
         filteredUsers,
@@ -113,7 +113,7 @@ const Users = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users, loading, search, category, activeStateCategory, orderByValue]);
+  }, [users, loading, search, category, orderByValue]); // activeStateCategory
 
   return (
     <div className="MovementsLibrary">
