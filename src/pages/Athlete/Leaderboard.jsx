@@ -40,13 +40,13 @@ function Leaderboard() {
     if (refetch) actions.getWodByDateWithScores(date);
 
     // CHECK IF WOD IS AVAILABLE
-    if (
-      weekDay >= new Date().getDate() ||
-      (new Date().getDay() !== 6 && new Date().getDay() !== 0)
-    )
+    if (new Date().getDay() !== 6 && new Date().getDay() !== 0)
       setWodAvailable(false);
+    if (weekDay >= new Date().getDay()) setWodAvailable(false);
     else setWodAvailable(true);
+
     setRefetch(false);
+    console.log(weekDay >= new Date().getDay());
 
     let sorted = [];
     if (wods && wods.scores) {
@@ -63,10 +63,11 @@ function Leaderboard() {
       );
       setSortedWodScores(filteredUsers);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wods, loading, searchValue]);
 
-  console.log(weekDay);
+  console.log(wods);
 
   return (
     <div className="Leaderboard">

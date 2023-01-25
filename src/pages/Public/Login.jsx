@@ -82,7 +82,7 @@ function Login() {
                 }}
               ></span>
             </InputContainer>
-            {errorMessage ? (
+            {errorMessage && !errorMessage ? (
               <div className="Login__error">{errorMessage}</div>
             ) : null}
             {error ? <div className="Login__error">{error}</div> : null}

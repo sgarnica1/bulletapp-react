@@ -2806,7 +2806,7 @@ input[type=number] {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 }
 @media (min-width: 768px) {

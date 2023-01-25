@@ -16,11 +16,14 @@ import InvisibleIcon from "../../assets/icon/invisible.svg";
 import VisibleIcon from "../../assets/icon/visible.svg";
 
 function ChangePassword() {
-  const { changePassword } = useAuth();
-  const { setErrorMessage, setSuccessMessage } = useDashboard();
+  const { user, loginUser, changePassword, error } = useAuth();
+  const { setErrorMessage, setSuccessMessage, errorMessage } = useDashboard();
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [visibleCurrentPassword, setVisibleCurrentPassword] = useState(false);
+  const [invalidCurrentPassword, setInvalidCurrentPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [matchingPassword, setMatchingPassword] = useState("");
   const [invalidPassword, setInvalidPassword] = useState(false);
@@ -28,30 +31,31 @@ function ChangePassword() {
 
   const [loading, setLoading] = useState(false);
 
-  const passwordVerifier = () => {
-    const regex = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[/#@$!%*?&])[a-zA-Z\d/#@$!%*?&]{8,}$/i
-    );
-    const validation = password.match(regex);
-    setInvalidPassword(validation == null ? true : false);
-  };
-
-  const submitHandler = (event) => {
+  function submitHandler(event) {
     event.preventDefault();
     if (!matchingPassword || password !== matchingPassword || invalidPassword)
       return setInvalidMatchingPassword(true);
 
     setLoading(true);
-    changePassword(
-      password,
-      setSuccessMessage,
-      setErrorMessage,
-      setLoading,
-      () => {
-        navigate(info.routes.home);
-      }
+    loginUser(
+      null,
+      { email: user.email, password: currentPassword },
+      setErrorMessage
     );
-  };
+
+    if (!error && !errorMessage) {
+      console.log("update password");
+      changePassword(
+        password,
+        setSuccessMessage,
+        setErrorMessage,
+        setLoading,
+        () => {
+          navigate(info.routes.home);
+        }
+      );
+    }
+  }
 
   useEffect(() => {}, [password, matchingPassword]);
 
@@ -64,11 +68,40 @@ function ChangePassword() {
           className="ChangePassword__form"
           onSubmit={(event) => submitHandler(event)}
         >
+          <div className={`ChangePassword__input`}>
+            {/* CURRENT PASSWORD */}
+            <span className="app-meta-tag">Contraseña actual</span>
+            <div className="ChangePassword__input-container">
+              <input
+                type={visibleCurrentPassword ? "text" : "password"}
+                placeholder="Contraseña actual"
+                value={currentPassword}
+                onChange={(event) => {
+                  setCurrentPassword(event.target.value);
+                }}
+              />
+              <img
+                src={visibleCurrentPassword ? VisibleIcon : InvisibleIcon}
+                alt={visibleCurrentPassword ? "Eye icon" : "Closed eye icon"}
+                onClick={() =>
+                  setVisibleCurrentPassword(!visibleCurrentPassword)
+                }
+              />
+            </div>
+            {/* {invalidPassword && (
+              <p className="ChangePassword__input-error">
+                {info.messages.error.invalidPassword}
+              </p>
+            )} */}
+          </div>
+
           <div
             className={`ChangePassword__input ${
               invalidPassword ? "invalid" : ""
             }`}
           >
+            {/* NEW PASSWORD */}
+            <span className="app-meta-tag">Nueva contraseña</span>
             <div className="ChangePassword__input-container">
               <input
                 type={visible ? "text" : "password"}
@@ -98,9 +131,10 @@ function ChangePassword() {
               invalidMatchingPassword ? "invalid" : ""
             }`}
           >
+            <span className="app-meta-tag">Confirmar contraseña</span>
             <div className="ChangePassword__input-container">
               <input
-                type={visible ? "text" : "password"}
+                type="password"
                 placeholder="Confirma la contraseña"
                 value={matchingPassword}
                 onChange={(event) => {
@@ -110,7 +144,9 @@ function ChangePassword() {
                 }}
                 onBlur={(event) => {
                   passwordVerifier();
-                  setInvalidMatchingPassword(!matchingPassword || password !== matchingPassword)
+                  setInvalidMatchingPassword(
+                    !matchingPassword || password !== matchingPassword
+                  );
                 }}
               />
             </div>
@@ -136,6 +172,14 @@ function ChangePassword() {
       </ContentContainer>
     </div>
   );
+
+  function passwordVerifier() {
+    const regex = new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@/!"#$%&/()=?¡'¿*-_])[a-zA-Z\d@/!"#$%&/()=?¡'¿*-_]{8,}$/i
+    );
+    const validation = password.match(regex);
+    setInvalidPassword(validation == null ? true : false);
+  }
 }
 
 export { ChangePassword };

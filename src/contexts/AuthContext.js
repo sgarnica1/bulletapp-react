@@ -91,7 +91,7 @@ const AuthProvider = ({ children }) => {
     if (event) event.preventDefault();
     setLoading(true);
     setLoggingIn(true);
-    setErrorMessage(false);
+    if (setErrorMessage) setErrorMessage(false);
 
     const email =
       loginData && loginData.email
@@ -118,7 +118,10 @@ const AuthProvider = ({ children }) => {
       );
 
       if (!userCredentials.emailVerified) {
-        setErrorMessage("Tu correo electrónico no ha sido verificado (Revisa tu bandeja de entrada o spam)");
+        if (setErrorMessage)
+          setErrorMessage(
+            "Tu correo electrónico no ha sido verificado (Revisa tu bandeja de entrada o spam)"
+          );
         setLoading(false);
         setLoggingIn(false);
         return logoutUser();
@@ -126,9 +129,10 @@ const AuthProvider = ({ children }) => {
 
       if (!userCredentials.data.active) {
         console.log("here");
-        setErrorMessage(
-          "Tu cuenta no ha sido activada. Por favor contacta a tu coach"
-        );
+        if (setErrorMessage)
+          setErrorMessage(
+            "Tu cuenta no ha sido activada. Por favor contacta a tu coach"
+          );
         setLoading(false);
         setLoggingIn(false);
         return logoutUser();
@@ -165,6 +169,8 @@ const AuthProvider = ({ children }) => {
       console.log(err.message);
 
       setError("Ocurrió un error. Por favor intenta de nuevo");
+      if (setErrorMessage)
+        setErrorMessage("Ocurrió un error. Por favor intenta de nuevo");
       // Review error messages
       if (
         err.message === info.firebase.errors.auth.wrongPassword ||
@@ -172,6 +178,19 @@ const AuthProvider = ({ children }) => {
         err.message === info.firebase.errors.auth.invalidEmail
       ) {
         setError("Correo electrónico o contraseña incorrectos");
+        if (setErrorMessage)
+          setErrorMessage("Correo electrónico o contraseña incorrectos");
+      }
+
+      if (err.message === info.firebase.errors.auth.wrongPassword) {
+        if (setErrorMessage)
+          setErrorMessage("Tu contraseña actual es incorrecta");
+      }
+
+      if (err.message === info.firebase.errors.auth.temporaryDisabled) {
+        setError(
+          "Tu cuenta ha sido temporalmente deshabilitada debido a demasiados intentos fallidos al iniciar sesión o cambiar la contraseña. Por favor contacta a tu coach"
+        );
       }
 
       if (err.message === info.firebase.errors.auth.insufficientPermissions) {
@@ -263,7 +282,6 @@ const AuthProvider = ({ children }) => {
 
   // SEND PASSWORD RESET EMAIL
   function sendPasswordReset(email, setSuccess, setError, callback) {
-
     sendPasswordResetEmail(auth, email)
       .then(() => {
         setSuccess(true);

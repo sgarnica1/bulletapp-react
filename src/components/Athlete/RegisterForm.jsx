@@ -190,7 +190,7 @@ function RegisterForm() {
             placeholder={"Contraseña"}
             validationHandler={(value) => {
               const regex = new RegExp(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[/#@$!%*?&()])[a-zA-Z\d/#@$!%*?&()]{8,}$/i
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@/!"#$%&/()=?¡'¿*-_])[a-zA-Z\d@/!"#$%&/()=?¡'¿*-_]{8,}$/i
               );
               const validation = value.match(regex);
               if (!validation) setInvalidPasswordFormat(true);

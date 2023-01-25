@@ -62,8 +62,8 @@ const info = {
       scoreType: {
         onTime: "En tiempo",
         timeCaped: "Fuera de tiempo",
-      }
-    }
+      },
+    },
   },
   data: {
     days: [
@@ -374,6 +374,8 @@ const info = {
     },
     errors: {
       auth: {
+        temporaryDisabled:
+          "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).",
         wrongPassword: "Firebase: Error (auth/wrong-password).",
         invalidEmail: "Firebase: Error (auth/invalid-email).",
         networkFailed: "Firebase: Error (auth/network-request-failed).",
@@ -408,7 +410,8 @@ const info = {
       missingData: "Este campo es requerido",
       sameScore: "El score que ingresaste es el mismo que ya tienes registrado",
       scoreGreaterThanTimeCap: "El score no puede ser mayor al timecap",
-      scoreGreaterThanWod: "Tu score no puede ser mayor a las rondas totales y reps del WOD",
+      scoreGreaterThanWod:
+        "Tu score no puede ser mayor a las rondas totales y reps del WOD",
       wodAlreadyExists: "Ya existe un WOD registrado para esta fecha",
       scoreMustBeGreaterThanZero: "El score debe ser mayor a 0",
       emptyTeamMembers: "Por favor ingresa al menos un miembro del equipo",
