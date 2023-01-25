@@ -23,7 +23,6 @@ function ChangePassword() {
   const [visible, setVisible] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [visibleCurrentPassword, setVisibleCurrentPassword] = useState(false);
-  const [invalidCurrentPassword, setInvalidCurrentPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [matchingPassword, setMatchingPassword] = useState("");
   const [invalidPassword, setInvalidPassword] = useState(false);

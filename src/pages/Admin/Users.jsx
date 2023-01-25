@@ -28,7 +28,12 @@ const Users = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [reloadUserCard, setReloadUserCard] = useState(false);
+  const [reloeadUserList, setReloadUserList] = useState(false);
   const [availableCategories, setAvailableCategories] = useState(new Set());
+  const [activeStateCategories, _] = useState(["Activo", "Inactivo"]);
+  const [activeStateCategory, setActiveStateCategory] = useState(
+    info.components.buttonSelectFilter.values.all
+  );
   const [orderByValue, setOrderByValue] = useState(
     info.components.sortby.label
   );
@@ -62,6 +67,12 @@ const Users = () => {
         filteredUsers = users.filter((user) => user.group === category);
 
       category !== "all" && setFilteredUsers(filteredUsers);
+
+      if (activeStateCategory !== "all")
+        filteredUsers = filteredUsers.filter(
+          (user) =>
+            user.active === (activeStateCategory === "Activo" ? true : false)
+        );
 
       const searchedUsers = utils.searchDataFromInput(
         filteredUsers,
@@ -102,7 +113,7 @@ const Users = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users, loading, search, category, orderByValue]);
+  }, [users, loading, search, category, activeStateCategory, orderByValue]);
 
   return (
     <div className="MovementsLibrary">
@@ -112,7 +123,9 @@ const Users = () => {
         <header className="MovementsLibrary__header">
           <h1 className="app-title">Usuarios</h1>
           {!loading && users && filteredUsers && (
-            <span className="app-meta-tag">Resultados: ({filteredUsers.length})</span>
+            <span className="app-meta-tag">
+              Resultados: ({filteredUsers.length})
+            </span>
           )}
         </header>
 
@@ -143,11 +156,23 @@ const Users = () => {
               options={Array.from(availableCategories)}
               value={category}
               setValue={setCategory}
-              // setSearch={setSearch}
               loading={loading}
             />
           </>
         )}
+
+        {/* {activeStateCategories && (
+          <>
+            <p className="app-meta-tag">Filtrar por estado</p>
+            <ButtonSelectFilter
+              options={Array.from(activeStateCategories)}
+              value={activeStateCategory}
+              setValue={setActiveStateCategory}
+              loading={loading}
+              onClick={() => setReloadUserCard(!reloadUserCard)}
+            />
+          </>
+        )} */}
 
         <section className="Records__history">
           {/* Movement LIST */}
@@ -177,7 +202,12 @@ const Users = () => {
               users &&
               filteredUsers &&
               filteredUsers.map((user, index) => (
-                <UserCard key={index} user={user} reload={reloadUserCard} />
+                <UserCard
+                  key={index}
+                  user={user}
+                  reload={reloadUserCard}
+                  setReload={setReloadUserCard}
+                />
               ))}
           </div>
         </section>

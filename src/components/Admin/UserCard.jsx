@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useUsers } from "../../hooks/useUser";
 import { utils } from "../../utils/utils";
 
-const UserCard = ({ user, reload }) => {
+const UserCard = ({ user, reload, setReload }) => {
   const [updateUser, setUpdateUser] = useState(false);
   const [activeState, setActiveState] = useState(user.active);
   const { actions, users } = useUsers();
 
   useEffect(() => {
-    console.log(user.displayName);
-    setActiveState(user.active)
+    // console.log("reload user card")
+    setActiveState(user.active);
 
     if (updateUser) {
       if (user.active) {
@@ -60,7 +60,10 @@ const UserCard = ({ user, reload }) => {
           className={`UserCard__category ${
             activeState ? "active" : "inactive"
           }`}
-          onClick={() => setUpdateUser(true)}
+          onClick={() => {
+            setUpdateUser(true)
+            setReload(!reload)
+          }}
         >
           {activeState ? "Activo" : "Inactivo"}
         </button>
