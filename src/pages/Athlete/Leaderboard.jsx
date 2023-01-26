@@ -179,11 +179,21 @@ function Leaderboard() {
                       {score.score.seconds < 10
                         ? `0${score.score.seconds}`
                         : `${score.score.seconds}`}
+                      <span className="Leaderboard__body__score-value--weight">
+                        {wods.weightscore && score.score.weight
+                          ? ` - ${score.score.weight} lbs `
+                          : ` - 0 lbs`}
+                      </span>
                     </span>
                   )}
                   {score.score.timeCaped && (
                     <span className="Leaderboard__body__score-value">
                       +{score.score.missingReps} reps
+                      <span className="Leaderboard__body__score-value--weight">
+                        {wods.weightscore && score.score.weight
+                          ? ` - ${score.score.weight} lbs `
+                          : ` - 0 lbs`}
+                      </span>
                     </span>
                   )}
                 </div>

@@ -398,6 +398,7 @@ const info = {
       emptyScore: "Por favor ingresa un score",
       emptyFields: "Todos los campos son requeridos",
       errorWriting: "Ocurrió un error, por favor vuelve a intentarlo.",
+      emptyWeight: "Por favor ingresa un peso",
       errorUpdating: "Ocurrió un error, por favor vuelve a intentarlo.",
       fetchError: "Error en la conexión",
       insufficientPermissions: "No tienes permisos para realizar esta acción",

@@ -169,6 +169,11 @@
       &-name {
         margin-right: 10px;
       }
+
+      &-value--weight {
+        color: $color-brand;
+        font-weight: 600;
+      }
     }
 
     // &__score:nth-child(2n) {

@@ -32,6 +32,7 @@ const WodScoreWidget = () => {
     info.components.wodScoreForm.scoreType.onTime,
     info.components.wodScoreForm.scoreType.timeCaped,
   ]);
+  const [weight, setWeight] = useState("");
   const [reps, setReps] = useState("");
   const [rounds, setRounds] = useState("");
   const [minutes, setMinutes] = useState("");
@@ -65,6 +66,7 @@ const WodScoreWidget = () => {
               : info.components.wodScoreForm.scoreType.timeCaped
           );
           setTeamMembers(doc.score.teamMembers ? doc.score.teamMembers : "");
+          setWeight(doc.score.weight ? doc.score.weight : "");
         }
       });
     }
@@ -106,22 +108,26 @@ const WodScoreWidget = () => {
                   />
                 ))}
               </InputScoreContainer>
+
               {selectedScoreOption ===
                 info.components.wodScoreForm.scoreType.onTime && (
-                <InputScoreContainer gridColumns={2}>
-                  <InputScore
-                    value={minutes}
-                    setValue={setMinutes}
-                    label="min"
-                    max={59}
-                  />
-                  <InputScore
-                    value={seconds}
-                    setValue={setSeconds}
-                    label="seg"
-                    max={59}
-                  />
-                </InputScoreContainer>
+                <>
+                  <p className="WodScoreForm__label">Tiempo </p>
+                  <InputScoreContainer gridColumns={2}>
+                    <InputScore
+                      value={minutes}
+                      setValue={setMinutes}
+                      label="min"
+                      max={59}
+                    />
+                    <InputScore
+                      value={seconds}
+                      setValue={setSeconds}
+                      label="seg"
+                      max={59}
+                    />
+                  </InputScoreContainer>
+                </>
               )}
             </>
           )}
@@ -129,11 +135,26 @@ const WodScoreWidget = () => {
           {(!wod.timescore ||
             selectedScoreOption ===
               info.components.wodScoreForm.scoreType.timeCaped) && (
-            <InputScoreContainer gridColumns={2}>
-              <InputScore value={rounds} setValue={setRounds} label="rounds" />
-              <InputScore value={reps} setValue={setReps} label="reps" />
+            <>
+              <p className="WodScoreForm__label">Reps </p>
+              <InputScoreContainer gridColumns={2}>
+                <InputScore
+                  value={rounds}
+                  setValue={setRounds}
+                  label="rounds"
+                />
+                <InputScore value={reps} setValue={setReps} label="reps" />
+              </InputScoreContainer>
+            </>
+          )}
+
+          {wod.weightscore && selectedScoreOption !== "" && (
+            <InputScoreContainer gridColumns={1}>
+              <p className="WodScoreForm__label">Peso </p>
+              <InputScore value={weight} setValue={setWeight} label="lbs" />
             </InputScoreContainer>
           )}
+
           {wod.teams && (
             <>
               <p className="WodScoreForm__label">Integrantes de mi equipo </p>
@@ -237,6 +258,13 @@ const WodScoreWidget = () => {
         missingReps: wod.timescore ? missingReps : null,
         teamMembers: teamMembers,
       };
+    }
+
+    if (wod.weightscore) {
+      if (weight === "" || parseInt(weight) === 0)
+        return setErrorMessage(info.messages.error.emptyWeight);
+
+      score.weight = parseInt(weight);
     }
 
     console.log(score);

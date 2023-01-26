@@ -148,13 +148,13 @@ function Home() {
           </div>
 
           <div className="Home__column">
-            <h3 className="app-subtitle">Añade un nuevo logro</h3>
+            <h3 className="app-subtitle">Tu progreso</h3>
             {/* ADD NEW Record */}
             <AddButton
               link={info.routes.movements.path}
               img={AthleteImg}
               alt="CrossFit Athlete Front Rack Position"
-              title="Añadir Nuevo Record"
+              title="Añadir Registro Personal"
             />
 
             {/* ADD NEW GOAL */}
