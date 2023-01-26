@@ -28,12 +28,12 @@ const Users = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [reloadUserCard, setReloadUserCard] = useState(false);
-  // const [reloeadUserList, setReloadUserList] = useState(false);
+  const [reloeadUserList, setReloadUserList] = useState(false);
   const [availableCategories, setAvailableCategories] = useState(new Set());
-  // const [activeStateCategories, _] = useState(["Activo", "Inactivo"]);
-  // const [activeStateCategory, setActiveStateCategory] = useState(
-  //   info.components.buttonSelectFilter.values.all
-  // );
+  const [activeStateCategories, _] = useState(["Activo", "Inactivo"]);
+  const [activeStateCategory, setActiveStateCategory] = useState(
+    info.components.buttonSelectFilter.values.all
+  );
   const [orderByValue, setOrderByValue] = useState(
     info.components.sortby.label
   );
@@ -42,7 +42,7 @@ const Users = () => {
   );
 
   useEffect(() => {
-    if (!users) actions.getUsers();
+    if (!users || reloeadUserList) actions.getUsers();
 
     setActiveView(info.views.users);
     if (loading) setSearch("");
@@ -68,11 +68,11 @@ const Users = () => {
 
       category !== "all" && setFilteredUsers(filteredUsers);
 
-      // if (activeStateCategory !== "all")
-      //   filteredUsers = filteredUsers.filter(
-      //     (user) =>
-      //       user.active === (activeStateCategory === "Activo" ? true : false)
-      //   );
+      if (activeStateCategory !== "all")
+        filteredUsers = filteredUsers.filter(
+          (user) =>
+            user.active === (activeStateCategory === "Activo" ? true : false)
+        );
 
       const searchedUsers = utils.searchDataFromInput(
         filteredUsers,
@@ -112,8 +112,18 @@ const Users = () => {
       }
     }
 
+    setReloadUserList(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users, loading, search, category, orderByValue]); // activeStateCategory
+  }, [
+    users,
+    loading,
+    search,
+    category,
+    orderByValue,
+    activeStateCategory,
+    reloeadUserList,
+  ]); // activeStateCategory
 
   return (
     <div className="MovementsLibrary">
@@ -161,7 +171,7 @@ const Users = () => {
           </>
         )}
 
-        {/* {activeStateCategories && (
+        {activeStateCategories && (
           <>
             <p className="app-meta-tag">Filtrar por estado</p>
             <ButtonSelectFilter
@@ -169,10 +179,9 @@ const Users = () => {
               value={activeStateCategory}
               setValue={setActiveStateCategory}
               loading={loading}
-              onClick={() => setReloadUserCard(!reloadUserCard)}
             />
           </>
-        )} */}
+        )}
 
         <section className="Records__history">
           {/* Movement LIST */}
@@ -206,7 +215,7 @@ const Users = () => {
                   key={index}
                   user={user}
                   reload={reloadUserCard}
-                  setReload={setReloadUserCard}
+                  onClickHandler={() => setReloadUserList(true)}
                 />
               ))}
           </div>

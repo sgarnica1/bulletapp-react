@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useUsers } from "../../hooks/useUser";
 import { utils } from "../../utils/utils";
 
-const UserCard = ({ user, reload, setReload }) => {
+const UserCard = ({ user, reload, onClickHandler }) => {
   const [updateUser, setUpdateUser] = useState(false);
   const [activeState, setActiveState] = useState(user.active);
   const { actions, users } = useUsers();
@@ -61,8 +61,8 @@ const UserCard = ({ user, reload, setReload }) => {
             activeState ? "active" : "inactive"
           }`}
           onClick={() => {
-            setUpdateUser(true)
-            setReload(!reload)
+            setUpdateUser(true);
+            onClickHandler();
           }}
         >
           {activeState ? "Activo" : "Inactivo"}
