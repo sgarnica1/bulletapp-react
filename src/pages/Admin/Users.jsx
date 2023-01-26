@@ -30,7 +30,7 @@ const Users = () => {
   const [reloadUserCard, setReloadUserCard] = useState(false);
   const [reloeadUserList, setReloadUserList] = useState(false);
   const [availableCategories, setAvailableCategories] = useState(new Set());
-  const [activeStateCategories, _] = useState(["Activo", "Inactivo"]);
+  const [activeStateCategories] = useState(["Activo", "Inactivo"]);
   const [activeStateCategory, setActiveStateCategory] = useState(
     info.components.buttonSelectFilter.values.all
   );
