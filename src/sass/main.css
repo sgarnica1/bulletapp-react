@@ -1225,7 +1225,7 @@ input[type=number] {
 .WodScoreForm__label {
   color: var(--color-text);
   font-size: 0.875rem;
-  margin: 8px 0 5px 0;
+  margin: 5px 0 5px 0;
 }
 .WodScoreForm__description {
   color: #93bb1c;
@@ -3061,6 +3061,10 @@ input[type=number] {
 }
 .Leaderboard__body__score-name {
   margin-right: 10px;
+}
+.Leaderboard__body__score-value--weight {
+  color: #93bb1c;
+  font-weight: 500;
 }
 
 body {
