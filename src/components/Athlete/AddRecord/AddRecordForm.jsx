@@ -174,6 +174,7 @@ const AddRecordForm = ({
           </>
         )}
 
+        {/* WEIGHT */}
         {!timescore &&
           weightInputVisible &&
           selectedRegisterType ===
@@ -209,6 +210,7 @@ const AddRecordForm = ({
             </>
           )}
 
+        {/* DISTANCE */}
         {distancescore &&
           selectedRegisterType ===
             info.components.addRecordForm.recordType.setsXDistance && (
@@ -228,6 +230,7 @@ const AddRecordForm = ({
             </>
           )}
 
+        {/* TIME */}
         {(timescore || distancescore) && (
           <>
             <p className="app-meta-tag white">Tiempo</p>
@@ -279,7 +282,7 @@ const AddRecordForm = ({
           fill={true}
           disabled={
             ((weightInputVisible || timescore || distancescore) &&
-              selectedRegisterType === "") ||
+              (selectedRegisterType === "" && !timescore)) ||
             !validDate
           }
         />
@@ -318,8 +321,6 @@ const AddRecordForm = ({
 
     // VALID DATE
     if ((!isSkill && update) || (isSkill && update)) {
-      // if (!validDate) return setSubmitError(true);
-
       if (
         isNaN(reps) ||
         (selectedRegisterType === setsXReps &&
@@ -340,8 +341,10 @@ const AddRecordForm = ({
       if (
         isNaN(minutes) ||
         ((selectedRegisterType === setsXDistance ||
-          selectedRegisterType === bestTime) &&
-          (parseInt(minutes) === 0 || minutes === "" || minutes === "0"))
+          selectedRegisterType === bestTime ||
+          timescore) &&
+          (parseInt(minutes) === 0 || minutes === "" || minutes === "0") &&
+          (parseInt(seconds) === 0 || seconds === "" || seconds === "0"))
       ) {
         return setValidationError(
           "Por favor ingresa un valor válido para 'min' "
@@ -350,8 +353,10 @@ const AddRecordForm = ({
       if (
         isNaN(seconds) ||
         ((selectedRegisterType === setsXDistance ||
-          selectedRegisterType === bestTime) &&
-          (parseInt(seconds) === 0 || seconds === "" || seconds === "0"))
+          selectedRegisterType === bestTime ||
+          timescore) &&
+          (parseInt(seconds) === 0 || seconds === "" || seconds === "0") &&
+          (parseInt(minutes) === 0 || minutes === "" || minutes === "0"))
       ) {
         return setValidationError(
           "Por favor ingresa un valor válido para 'sec' "
@@ -376,6 +381,7 @@ const AddRecordForm = ({
           "Por favor ingresa un valor válido para 'distancia' "
         );
       }
+      if (!validDate) return setSubmitError(true);
 
       setValidationError(null);
     }
@@ -415,20 +421,17 @@ const AddRecordForm = ({
       [distancescoreRef]: distancescore,
     };
 
-    // console.log("submitting...", newPR);
-
     // NEW SKILL DATA
     const newSkill = {
       [movName]: movementName,
       [movID]: movementID,
       [dateField]: new Date(),
     };
-    // console.log("submitting...", newSkill);
 
     // UPDATE LAST RECORD
     actions.updateLatestAcivity(uid, newPR, newSkill, !update && isSkill);
 
-    //   // UNLOCK SKILL
+      // UNLOCK SKILL
     if (!update && isSkill) {
       skillsActions.postSkill(uid, newSkill, (error) => {
         if (error) {

@@ -46,7 +46,6 @@ function Leaderboard() {
     else setWodAvailable(true);
 
     setRefetch(false);
-    console.log(weekDay >= new Date().getDay());
 
     let sorted = [];
     if (wods && wods.scores) {
@@ -66,8 +65,6 @@ function Leaderboard() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekDay, wods, loading, searchValue]);
-
-  console.log(wods);
 
   return (
     <div className="Leaderboard">
@@ -179,21 +176,25 @@ function Leaderboard() {
                       {score.score.seconds < 10
                         ? `0${score.score.seconds}`
                         : `${score.score.seconds}`}
-                      <span className="Leaderboard__body__score-value--weight">
-                        {wods.weightscore && score.score.weight
-                          ? ` - ${score.score.weight} lbs `
-                          : ` - 0 lbs`}
-                      </span>
+                      {wods.weightscore && (
+                        <span className="Leaderboard__body__score-value--weight">
+                          {score.score.weight
+                            ? ` - ${score.score.weight} lbs `
+                            : ` - 0 lbs`}
+                        </span>
+                      )}
                     </span>
                   )}
                   {score.score.timeCaped && (
                     <span className="Leaderboard__body__score-value">
                       +{score.score.missingReps} reps
-                      <span className="Leaderboard__body__score-value--weight">
-                        {wods.weightscore && score.score.weight
-                          ? ` - ${score.score.weight} lbs `
-                          : ` - 0 lbs`}
-                      </span>
+                      {wods.weightscore && (
+                        <span className="Leaderboard__body__score-value--weight">
+                          {score.score.weight
+                            ? ` - ${score.score.weight} lbs `
+                            : ` - 0 lbs`}
+                        </span>
+                      )}
                     </span>
                   )}
                 </div>

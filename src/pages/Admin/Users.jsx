@@ -24,7 +24,6 @@ const Users = () => {
   const { setActiveView } = useDashboard();
 
   // INITIAL STATES
-  // TODO - Allow sorting
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [reloadUserCard, setReloadUserCard] = useState(false);

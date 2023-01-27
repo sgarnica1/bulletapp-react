@@ -110,7 +110,6 @@ function Home() {
                           ")"
                         : ""
                     }`}
-                    link={info.routes.movements.path}
                     score={latestactivity.register.scores[0]}
                     timescore={latestactivity.register.timescore}
                     distancescore={latestactivity.register.distancescore}
@@ -119,7 +118,6 @@ function Home() {
                 {/* Rep max */}
                 {latestactivity.repmax && (
                   <StatWidget
-                    link={info.routes.movements.path}
                     metaDescription={"1RM más reciente"}
                     title={`${latestactivity.repmax.movement}`}
                     score={{
@@ -127,7 +125,7 @@ function Home() {
                       units: latestactivity.repmax.units,
                       date: latestactivity.repmax.date,
                       reps: latestactivity.repmax.reps,
-                      sets:  latestactivity.repmax.sets,
+                      sets: latestactivity.repmax.sets,
                     }}
                     timescore={latestactivity.repmax.timescore}
                   />
@@ -135,7 +133,6 @@ function Home() {
 
                 {latestactivity.skill && (
                   <StatWidget
-                    link={info.routes.movements.path}
                     metaDescription={"Skill más reciente"}
                     title={latestactivity.skill.movement}
                     score={{

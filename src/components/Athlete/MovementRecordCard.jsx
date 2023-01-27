@@ -21,13 +21,12 @@ const MovementRecordCard = ({
       {seconds > 0 && (
         <p className="MovementRecordCard__value">
           {utils.secondsToTime(seconds)}
-          {" / "}
           <span>
             {`${
               distance > 0 && sets > 0
                 ? sets > 1
                   ? sets + " x " + distance + " " + units
-                  : distance + " " + units
+                  : " / " + distance + " " + units
                 : ""
             }`}
           </span>

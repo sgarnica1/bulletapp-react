@@ -67,12 +67,20 @@ const getUserInfoApi = async (user, id) => {
 };
 
 const postUserApi = async (uid, user, callback) => {
+  // first name capitalize and rest lower case
+  const firstName =
+    user[firtsNameKey].charAt(0).toUpperCase() +
+    user[firtsNameKey].slice(1).toLowerCase();
+  const lastName =
+    user[lastNameKey].charAt(0).toUpperCase() +
+    user[lastNameKey].slice(1).toLowerCase();
+
   try {
     const res = await setDoc(doc(db, "users", uid), {
-      [firtsNameKey]: user[firtsNameKey],
-      [lastNameKey]: user[lastNameKey],
-      [displayNameKey]: user[firtsNameKey] + " " + user[lastNameKey],
-      [emailKey]: user[emailKey],
+      [firtsNameKey]: firstName,
+      [lastNameKey]: lastName,
+      [displayNameKey]: firstName + " " + lastName,
+      [emailKey]: user[emailKey].toLowerCase(),
       [planKey]: user[planKey],
       [groupKey]: user[groupKey],
       [roleKey]: info.firebase.values.roles.athlete,
