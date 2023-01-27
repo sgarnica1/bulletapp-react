@@ -232,6 +232,7 @@ const Wods = () => {
                     index < (indexPage + 1) * indexStep
                   )
                     return <WodCard key={wod.id} wod={wod} />;
+                  return null;
                 })}
               </div>
             </>
