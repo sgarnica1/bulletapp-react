@@ -119,12 +119,12 @@ const navMenu = {
           elements: [
             {
               name: info.views.wods,
-              route: info.routes.wods.path,
+              route: info.routes.programming.nested.wods.path,
               active: true,
             },
             {
               name: info.views.addWod,
-              route: info.routes.wods.nested.add.absolutePath,
+              route: info.routes.programming.nested.wods.nested.add.absolutePath,
               active: true,
             },
           ],

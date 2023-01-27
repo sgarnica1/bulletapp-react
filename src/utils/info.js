@@ -483,20 +483,23 @@ const info = {
         },
       },
     },
-    wods: {
-      path: "/wods",
-      value: "wods",
-      nested: {
-        add: {
-          absolutePath: "/wods/nuevo",
-          path: "/nuevo",
-          value: "nuevo",
-        },
-      },
-    },
+
     programming: {
       path: "/programacion",
       value: "programacion",
+      nested: {
+        wods: {
+          path: "/programacion/wods",
+          value: "wods",
+          nested: {
+            add: {
+              absolutePath: "/programacion/wods/nuevo",
+              path: "/nuevo",
+              value: "nuevo",
+            },
+          },
+        },
+      },
     },
     videos: {
       path: "/videos",

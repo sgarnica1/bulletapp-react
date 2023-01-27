@@ -114,7 +114,7 @@ function AddWodForm() {
         return setErrorMessage(info.messages.error.errorWriting);
       }
       setSuccessMessage(info.messages.success.wodCreated);
-      navigate(info.routes.wods.path);
+      navigate(info.routes.programming.nested.wods.path);
       setSubmitLoading(false);
     });
   }

@@ -1,0 +1,61 @@
+.Wods {
+  &__today {
+    margin-bottom: 50px;
+  }
+
+  &__subtitle {
+    color: var(--color-text);
+    font-size: toRem(18);
+    font-weight: 600;
+  }
+
+  &__nav-btns {
+    display: flex;
+    gap: 10px;
+
+    &--next,
+    &--prev {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      background: transparent;
+      outline: none;
+      border: 1px solid $color-brand;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      transform: scale(1);
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__results--header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    margin-top: 40px;
+  }
+
+  &__list {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 20px;
+
+    @include mq(md) {
+      grid-template-columns: repeat(2, 1fr);
+      .CardContainer {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+}

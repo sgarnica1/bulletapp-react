@@ -1,0 +1,59 @@
+.WodCard {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+
+  &__date {
+    color: var(--color-text);
+    opacity: 0.7;
+    margin-bottom: 10px;
+    font-size: toRem(12);
+  }
+
+  &__title {
+    margin-bottom: 5px;
+    font-size: toRem(16);
+    color: $color-brand;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  &__categories {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  &__category {
+    padding: 1px 7px;
+    border-radius: 20px;
+    background: var(--bg-input-2);
+    font-weight: 500;
+    font-size: toRem(10);
+    color: var(--color-text);
+    opacity: 0.8;
+    outline: none;
+  }
+
+  &__description--line {
+    color: var(--color-text);
+    font-size: toRem(13);
+  }
+
+  &__description {
+    margin-bottom: 10px;
+  }
+
+  &__timecap {
+    font-size: toRem(12);
+    color: var(--color-text);
+
+    span {
+      font-weight: bold;
+      color: $color-brand;
+    }
+  }
+}

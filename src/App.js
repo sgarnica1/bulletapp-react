@@ -34,6 +34,7 @@ import { AddWod } from "./pages/Admin/AddWod";
 import { Programming } from "./pages/Admin/Programming";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
 import { Users } from "./pages/Admin/Users";
+import { Wods } from "./pages/Admin/Wods";
 
 // PROTECTED ROUTES
 import ScrollToTop from "./utils/components/ScrollToTop";
@@ -127,13 +128,20 @@ function App() {
                 element={<AddMovement />}
               />
 
+              {/* /usuarios */}
               <Route path={info.routes.users.path} element={<Users />} />
 
-              <Route path={info.routes.wods.path}>
-                <Route
-                  path={info.routes.wods.nested.add.value}
-                  element={<AddWod />}
-                />
+              {/* /programacion */}
+              <Route path={info.routes.programming.path}>
+                <Route index={true} element={<Programming />} />
+
+                <Route path={info.routes.programming.nested.wods.value}>
+                  <Route index={true} element={<Wods />} />
+                  <Route
+                    path={info.routes.programming.nested.wods.nested.add.value}
+                    element={<AddWod />}
+                  />
+                </Route>
               </Route>
 
               {/* /atletas */}
@@ -148,11 +156,6 @@ function App() {
                   element={<SingleAthlete />}
                 />
               </Route>
-
-              <Route
-                path={info.routes.programming.path}
-                element={<Programming />}
-              />
             </Route>
 
             {/* ---------- OTHER ---------- */}
