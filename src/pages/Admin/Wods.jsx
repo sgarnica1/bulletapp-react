@@ -117,7 +117,14 @@ const Wods = () => {
         {!loading && wods && wodOfTheDay && (
           <div className="Wods__today">
             <h2 className="app-title">WOD del día</h2>
-            <WodCard wod={wodOfTheDay} />
+            <WodCard
+              wod={wodOfTheDay}
+              link={
+                info.routes.programming.nested.wods.nested.update.absolutePathNoParms +
+                "/" +
+                wodOfTheDay.id
+              }
+            />
           </div>
         )}
 
@@ -231,7 +238,18 @@ const Wods = () => {
                     index >= indexPage * indexStep &&
                     index < (indexPage + 1) * indexStep
                   )
-                    return <WodCard key={wod.id} wod={wod} />;
+                    return (
+                      <WodCard
+                        key={wod.id}
+                        wod={wod}
+                        link={
+                          info.routes.programming.nested.wods.nested.update
+                            .absolutePathNoParms +
+                          "/" +
+                          wod.id
+                        }
+                      />
+                    );
                   return null;
                 })}
               </div>

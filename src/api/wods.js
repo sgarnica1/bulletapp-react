@@ -2,8 +2,11 @@ import {
   addDoc,
   collection,
   getDocs,
+  getDoc,
+  doc,
   query,
   where,
+  updateDoc,
   Timestamp,
 } from "firebase/firestore/lite";
 import { db } from "../firebase/index";
@@ -149,10 +152,23 @@ const getWodByDateApi = async (date, callback) => {
   }
 };
 
+const getWodByIdApi = async (id, callback) => {
+  try {
+    const ref = doc(db, info.firebase.collections.wods, id);
+    const docSnap = await getDoc(ref);
+    if (!docSnap.exists()) return -1;
+
+    const data = { id: docSnap.id, ...docSnap.data() };
+    if (callback) callback(data);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const postWodApi = async (wodData, callback) => {
   const date = new Date(wodData.date);
   date.setHours(0, 0, 0, 0);
-  console.log(wodData);
 
   try {
     const ref = collection(db, info.firebase.collections.wods);
@@ -185,11 +201,44 @@ const postWodApi = async (wodData, callback) => {
   }
 };
 
+const updateWodApi = async (idWod, wodData, callback) => {
+  const date = new Date(wodData.date);
+  date.setHours(0, 0, 0, 0);
+
+  try {
+    const ref = doc(db, `/${info.firebase.collections.wods}/${idWod}`);
+    const res = await updateDoc(ref, {
+      [dateKey]: Timestamp.fromDate(date),
+      [titleKey]: wodData[titleKey],
+      [descriptionKey]: wodData[descriptionKey],
+      [categoryKey]: wodData[categoryKey],
+      [timecapKey]: wodData[timecapKey],
+      [timeScoreKey]: wodData[timeScoreKey],
+      [teamsKey]: wodData[teamsKey],
+      [repsKey]: wodData[repsKey],
+      [roundsKey]: wodData[roundsKey],
+      timestamps: {
+        [info.firebase.docKeys.wods.timestamps.updatedAt]: Timestamp.fromDate(
+          new Date()
+        ),
+      },
+    });
+    if (callback) callback(res);
+    return res;
+  } catch (err) {
+    if (callback) callback(err);
+    console.log(err);
+    throw err;
+  }
+};
+
 export {
   getAllWodsApi,
   getWeeklyWodsApi,
   getTodaysWodApi,
   getWodByDateApi,
+  getWodByIdApi,
   getWodCategoriesApi,
   postWodApi,
+  updateWodApi,
 };

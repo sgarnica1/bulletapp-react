@@ -422,6 +422,7 @@ const info = {
       wodScoreUpdated: "Tu score se ha actualizado correctamente",
       wodScoreCreated: "Score registrado correctamente",
       wodCreated: "WOD registrado correctamente",
+      wodUpdated: "WOD actualizado correctamente",
       movementCreated: "Movimiento añadido correctamente",
       passwordUpdated: "Contraseña actualizada correctamente",
       userCreated:
@@ -498,6 +499,12 @@ const info = {
               path: "/nuevo",
               value: "nuevo",
             },
+            update: {
+              absolutePath: "/programacion/wods/:id",
+              absolutePathNoParms: "/programacion/wods",
+              path: "/:id",
+              value: ":id",
+            }
           },
         },
       },

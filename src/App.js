@@ -31,6 +31,7 @@ import { Athletes } from "./pages/Admin/Athletes";
 import { AddAthlete } from "./pages/Admin/AddAthlete";
 import { AddMovement } from "./pages/Admin/AddMovement";
 import { AddWod } from "./pages/Admin/AddWod";
+import { UpdateWod } from "./pages/Admin/UpdateWod";
 import { Programming } from "./pages/Admin/Programming";
 import { SingleAthlete } from "./pages/Admin/SingleAthlete";
 import { Users } from "./pages/Admin/Users";
@@ -135,11 +136,16 @@ function App() {
               <Route path={info.routes.programming.path}>
                 <Route index={true} element={<Programming />} />
 
+                {/* /programacion/wods */}
                 <Route path={info.routes.programming.nested.wods.value}>
                   <Route index={true} element={<Wods />} />
                   <Route
                     path={info.routes.programming.nested.wods.nested.add.value}
                     element={<AddWod />}
+                  />
+                  <Route
+                    path={info.routes.programming.nested.wods.nested.update.value}
+                    element={<UpdateWod />}
                   />
                 </Route>
               </Route>

@@ -2,9 +2,9 @@ import React from "react";
 import { CardContainer } from "../Public/CardContainer";
 import { utils } from "../../utils/utils";
 
-const WodCard = ({ wod }) => {
+const WodCard = ({ wod, link }) => {
   return (
-    <CardContainer link={"#"} extraClassName="fit-height">
+    <CardContainer link={link} extraClassName="fit-height">
       <div className={`WodCard`}>
         <div className="WodCard__content">
           <p className="WodCard__title">{wod.title}</p>

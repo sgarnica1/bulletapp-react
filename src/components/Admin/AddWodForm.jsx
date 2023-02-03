@@ -16,8 +16,9 @@ import { TextAreaScore } from "../Athlete/AddRecord/TextAreaScore";
 import { WidgetLoadingSkeleton } from "../Layout/LoadingSkeletons/WidgetLoadingSkeleton";
 
 import { info } from "../../utils/info";
+import { utils } from "../../utils/utils";
 
-function AddWodForm() {
+function AddWodForm(props) {
   const { wods, actions: wodActions, error } = useWods();
   const {
     wodCategories,
@@ -28,13 +29,25 @@ function AddWodForm() {
   const { setSuccessMessage, setErrorMessage } = useDashboard();
   const navigate = useNavigate();
 
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [rounds, setRounds] = useState("");
-  const [reps, setReps] = useState("");
-  const [timecap, setTimecap] = useState("");
-  const [wodTitle, setWodTitle] = useState("");
-  const [wodDescription, setWodDescription] = useState("");
-  const [wodDate, setWodDate] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(() =>
+    props.category ? props.category : "all"
+  );
+  const [rounds, setRounds] = useState(() =>
+    props.rounds ? props.rounds : ""
+  );
+  const [reps, setReps] = useState(() => (props.reps ? props.reps : ""));
+  const [timecap, setTimecap] = useState(() =>
+    props.timecap ? props.timecap : ""
+  );
+  const [wodTitle, setWodTitle] = useState(() =>
+    props.title ? props.title : ""
+  );
+  const [wodDescription, setWodDescription] = useState(() =>
+    props.description ? props.description : ""
+  );
+  const [wodDate, setWodDate] = useState(() =>
+    props.date ? utils.formatISODate(new Date(props.date.seconds * 1000)) : ""
+  );
 
   const [submitLoading, setSubmitLoading] = useState(false);
   const [validationError, setValidationError] = useState(false);
@@ -122,7 +135,9 @@ function AddWodForm() {
       {/* SUBMIT BUTTON */}
       <Button
         type={info.components.button.type.submit}
-        text={submitLoading ? "Cargando..." : "Crear WOD"}
+        text={
+          submitLoading ? "Cargando..." : props.id ? "Actualizar" : "Crear WOD"
+        }
         size={info.components.button.classes.lg}
         style={info.components.button.classes.primary}
         fill={true}
@@ -185,6 +200,20 @@ function AddWodForm() {
     };
 
     if (selectedCategory === "TEAMS") newWod[teamsKey] = true;
+
+    if (props.id) {
+      wodActions.updateWod(props.id, newWod, props.date, (error) => {
+        if (error) {
+          setSubmitLoading(false);
+          return setErrorMessage(info.messages.error.errorWriting);
+        }
+        setSuccessMessage(info.messages.success.wodUpdated);
+        navigate(info.routes.programming.nested.wods.path);
+        setSubmitLoading(false);
+      });
+
+      return;
+    }
 
     wodActions.postWod(newWod, (error) => {
       if (error) {

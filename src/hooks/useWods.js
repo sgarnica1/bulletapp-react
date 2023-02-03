@@ -3,7 +3,9 @@ import {
   getAllWodsApi,
   getTodaysWodApi,
   getWodByDateApi,
+  getWodByIdApi,
   postWodApi,
+  updateWodApi,
 } from "../api/wods";
 import { getWodScoresByWodIdApi } from "../api/wodscores";
 import { info } from "../utils/info";
@@ -65,6 +67,23 @@ const useWods = () => {
     }
   };
 
+  const getWodById = async (id, callback) => {
+    try {
+      setWods(null);
+      setLoading(true);
+      const res = await getWodByIdApi(id, callback);
+      setWods(res);
+      setLoading(false);
+    } catch (err) {
+      if (err.message === info.firebase.errors.auth.networkFailed) {
+        setError("Error en la red");
+      } else {
+        setError(err);
+      }
+      setLoading(false);
+    }
+  };
+
   const getWodByDateWithScores = async (date) => {
     try {
       setWods(null);
@@ -106,14 +125,39 @@ const useWods = () => {
     }
   };
 
+  const updateWod = async (wodID, wodData, initialDate, callback) => {
+    try {
+      setLoading(true);
+      const wod = await getWodByDateApi(wodData.date);
+      if (wod !== -1 && wod.date.seconds !== initialDate.seconds)
+        throw new Error(info.messages.error.wodAlreadyExists);
+
+      const res = await updateWodApi(wodID, wodData, callback);
+      setWods(res);
+      setError(false);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      if (err.message === info.firebase.errors.auth.networkFailed)
+        return setError(info.messages.error.networkFailed);
+
+      if (err.message === info.firebase.errors.auth.insufficientPermissions)
+        return setError(info.messages.error.insufficientPermissions);
+
+      setError(err);
+    }
+  };
+
   const resetWodsState = () => setWods(null);
 
   const actions = {
     getAllWods,
     getTodaysWod,
     getWodByDate,
+    getWodById,
     getWodByDateWithScores,
     postWod,
+    updateWod,
     resetWodsState,
   };
 
