@@ -22,7 +22,6 @@ const useWodCategories = () => {
       }
       const res = await getWodCategoriesApi();
       setStoredWodCategories(res);
-      console.log(res);
       setWodCategories(res);
       setLoading(false);
     } catch (err) {

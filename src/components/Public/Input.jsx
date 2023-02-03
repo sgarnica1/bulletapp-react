@@ -25,8 +25,8 @@ const Input = ({
   ...props
 }) => {
   const [value, setValue] = useState("");
-  const [sets, setSets] = useState(1);
-  const [reps, setReps] = useState(1);
+  const [sets, setSets] = useState("");
+  const [reps, setReps] = useState("");
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,16 +51,13 @@ const Input = ({
   const invalidDateMessage = "Fecha inválida";
 
   useEffect(() => {
-    if (type === typeRounds) {
-      setReps("");
-      setSets("");
-    }
-
     if (submitError) {
       if (type === typeTime) {
         validateData(minutes, seconds);
+      } else if (type === typeRounds) {
+        console.log("Rounds");
+        validateData(sets, reps);
       } else {
-
         validateData(value);
       }
     }
@@ -70,6 +67,8 @@ const Input = ({
     if (value) {
       if (type === typeTime) {
         validateData(minutes, seconds);
+      } else if (type === typeRounds) {
+        validateData(sets, reps);
       } else if (type === typeWeight) {
         validateData({ sets, reps, score: value });
       } else {
@@ -525,7 +524,7 @@ const Input = ({
         {type !== typeDate && (
           <p className={`Input__units ${errorMessage && "error"}`}>{units}</p>
         )}
-        {type === typePassword && props.allowShowPassword&& (
+        {type === typePassword && props.allowShowPassword && (
           <img
             onClick={() => setShowPassword(!showPassword)}
             src={showPassword ? VisibleIcon : InvisibleIcon}

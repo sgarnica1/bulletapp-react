@@ -19,6 +19,7 @@ const dateKey = info.firebase.docKeys.wods.date;
 const repsKey = info.firebase.docKeys.wods.reps;
 const roundsKey = info.firebase.docKeys.wods.rounds;
 const timeScoreKey = info.firebase.docKeys.wods.timescore;
+const teamsKey = info.firebase.docKeys.wods.teams;
 
 const getAllWodsApi = async (callback) => {
   try {
@@ -163,6 +164,7 @@ const postWodApi = async (wodData, callback) => {
       [categoryKey]: wodData[categoryKey],
       [timecapKey]: wodData[timecapKey],
       [timeScoreKey]: wodData[timeScoreKey],
+      [teamsKey]: wodData[teamsKey],
       [repsKey]: wodData[repsKey],
       [roundsKey]: wodData[roundsKey],
       timestamps: {

@@ -355,6 +355,7 @@ const info = {
         reps: "reps",
         rounds: "rounds",
         timescore: "timescore",
+        teams: "teams",
         scoreType: "score_type",
         timestamps: {
           createdAt: "created_at",

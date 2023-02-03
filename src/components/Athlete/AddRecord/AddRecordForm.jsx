@@ -282,7 +282,8 @@ const AddRecordForm = ({
           fill={true}
           disabled={
             ((weightInputVisible || timescore || distancescore) &&
-              (selectedRegisterType === "" && !timescore)) ||
+              selectedRegisterType === "" &&
+              !timescore) ||
             !validDate
           }
         />
@@ -320,24 +321,30 @@ const AddRecordForm = ({
     const bestTime = info.components.addRecordForm.recordType.bestTime;
 
     // VALID DATE
-    if ((!isSkill && update) || (isSkill && update)) {
-      if (
-        isNaN(reps) ||
-        (selectedRegisterType === setsXReps &&
-          (parseInt(reps) === 0 || reps === "" || reps === "0"))
-      ) {
-        setValidationError("Por favor ingresa un valor válido para 'reps' ");
-      }
+    if ((!isSkill && update) || (isSkill && update) || (!isSkill && !update)) {
       if (
         isNaN(sets) ||
         ((selectedRegisterType === setsXDistance ||
-          selectedRegisterType === setsXReps) &&
+          selectedRegisterType === setsXReps ||
+          (!timescore && !weightInputVisible && !distancescore)) &&
           (parseInt(sets) === 0 || sets === "" || sets === "0"))
       ) {
         return setValidationError(
           "Por favor ingresa un valor válido para 'sets' "
         );
       }
+
+      if (
+        isNaN(reps) ||
+        ((selectedRegisterType === setsXReps ||
+          (!timescore && !weightInputVisible && !distancescore)) &&
+          (parseInt(reps) === 0 || reps === "" || reps === "0"))
+      ) {
+        return setValidationError(
+          "Por favor ingresa un valor válido para 'reps' "
+        );
+      }
+
       if (
         isNaN(minutes) ||
         ((selectedRegisterType === setsXDistance ||
@@ -428,10 +435,12 @@ const AddRecordForm = ({
       [dateField]: new Date(),
     };
 
+    console.log("submitting...", newPR);
+
     // UPDATE LAST RECORD
     actions.updateLatestAcivity(uid, newPR, newSkill, !update && isSkill);
 
-      // UNLOCK SKILL
+    // UNLOCK SKILL
     if (!update && isSkill) {
       skillsActions.postSkill(uid, newSkill, (error) => {
         if (error) {

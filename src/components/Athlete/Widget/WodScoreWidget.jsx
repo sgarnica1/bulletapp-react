@@ -164,6 +164,7 @@ const WodScoreWidget = () => {
                   setValue={setTeamMembers}
                   label="Equipo"
                   type="text"
+                  placeholder="Atleta 1, Atleta 2, Atleta 3, ..."
                 />
               </InputScoreContainer>
             </>

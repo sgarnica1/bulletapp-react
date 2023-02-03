@@ -10,6 +10,7 @@ const InputScore = ({
   setOption,
   max,
   type = "number",
+  placeholder,
   readOnly = false,
 }) => {
   if (type === "text") {
@@ -19,7 +20,7 @@ const InputScore = ({
       >
         <input
           type="text"
-          placeholder="Atleta 1, Atleta 2, Atleta 3, ..."
+          placeholder={placeholder}
           className="InputScore__input"
           name="score"
           value={value}

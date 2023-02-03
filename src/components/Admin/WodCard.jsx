@@ -9,7 +9,7 @@ const WodCard = ({ wod }) => {
         <div className="WodCard__content">
           <p className="WodCard__title">{wod.title}</p>
           <p className="WodCard__date">
-            {utils.formatDate(new Date(wod.date.seconds * 1000))}
+            {utils.formatDateLong(new Date(wod.date.seconds * 1000))}
           </p>
           <div className="WodCard__categories">
             <span className="WodCard__category">{wod.category}</span>
