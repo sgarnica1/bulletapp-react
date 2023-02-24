@@ -1,15 +1,6 @@
-import { useState } from "react";
 import { utils } from "../../../utils/utils";
 
-const DateScore = ({
-  value,
-  setValue,
-  label,
-  error,
-  max,
-  placeholder,
-  readOnly = false,
-}) => {
+const DateScore = ({ value, setValue, error, max, readOnly = false }) => {
   return (
     <div
       className={`InputScore datescore ${error && "error"} ${
