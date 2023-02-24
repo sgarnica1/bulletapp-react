@@ -10,8 +10,6 @@ const DateScore = ({
   placeholder,
   readOnly = false,
 }) => {
-  const [type, setType] = useState("text");
-
   return (
     <div
       className={`InputScore datescore ${error && "error"} ${
@@ -19,7 +17,7 @@ const DateScore = ({
       }`}
     >
       <input
-        type={type}
+        type="date"
         placeholder="dd/mm/aaaa"
         className="InputScore__input"
         name="score"
@@ -29,8 +27,6 @@ const DateScore = ({
         onChange={(event) => {
           setValue(event.target.value);
         }}
-        onFocus={() => setType("date")}
-        onBlur={() => (!value ? setType("text") : null)}
         readOnly={readOnly}
       />
       <label
