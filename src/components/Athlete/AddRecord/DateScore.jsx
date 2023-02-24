@@ -1,6 +1,8 @@
 import { utils } from "../../../utils/utils";
 
 const DateScore = ({ value, setValue, error, max, readOnly = false }) => {
+  console.log(value);
+
   return (
     <div
       className={`InputScore datescore ${error && "error"} ${
@@ -12,7 +14,7 @@ const DateScore = ({ value, setValue, error, max, readOnly = false }) => {
         placeholder="dd/mm/aaaa"
         className="InputScore__input"
         name="score"
-        value={value}
+        value={value != "" ? value : utils.formatISODate(new Date())}
         max={max}
         min={0}
         onChange={(event) => {
@@ -23,11 +25,11 @@ const DateScore = ({ value, setValue, error, max, readOnly = false }) => {
       <label
         htmlFor="score"
         className="InputScore__label"
-        onClick={() => {
-          setValue(utils.formatISODate(new Date()));
-        }}
+        // onClick={() => {
+        //   setValue(utils.formatISODate(new Date()));
+        // }}
       >
-        HOY
+        FECHA
       </label>
     </div>
   );
