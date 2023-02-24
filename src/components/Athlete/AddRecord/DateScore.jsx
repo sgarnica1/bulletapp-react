@@ -14,7 +14,7 @@ const DateScore = ({ value, setValue, error, max, readOnly = false }) => {
         placeholder="dd/mm/aaaa"
         className="InputScore__input"
         name="score"
-        value={value != "" ? value : utils.formatISODate(new Date())}
+        value={value !== "" ? value : utils.formatISODate(new Date())}
         max={max}
         min={0}
         onChange={(event) => {
